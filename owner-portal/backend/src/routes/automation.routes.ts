@@ -129,7 +129,7 @@ router.get('/saft/:propertyId/:year/:month',
     </Company>
     <TaxAccountingBasis>F</TaxAccountingBasis>
     <StartDate>${year}-${month.toString().padStart(2, '0')}-01</StartDate>
-    <EndDate>${year}-${month.toString().padStart(2, '0')}-${new Date(year, month, 0).getDate()}</EndDate>
+    <EndDate>${year}-${month.toString().padStart(2, '0')}-${new Date(parseInt(year), parseInt(month), 0).getDate()}</EndDate>
     <CurrencyCode>EUR</CurrencyCode>
     <DateCreated>${new Date().toISOString().split('T')[0]}</DateCreated>
     <TaxEntity>Property ${propertyId}</TaxEntity>
