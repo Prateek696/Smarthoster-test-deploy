@@ -29,11 +29,11 @@ router.get('/property/:id', async (req, res) => {
         message: `Property ${propertyId} not found`
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Error in debug endpoint:', error);
     res.status(500).json({
       success: false,
-      error: error.message
+      error: error.message || 'Unknown error occurred'
     });
   }
 });
