@@ -1,3 +1,4 @@
+// @ts-ignore
 import PDFDocument from 'pdfkit';
 import { stringify } from 'csv-stringify/sync';
 
