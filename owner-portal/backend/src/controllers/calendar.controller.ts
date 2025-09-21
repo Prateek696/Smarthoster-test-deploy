@@ -12,7 +12,7 @@ import {
   updateHostawayCalendarAvailability,
   getHostawayDailyCalendar
 } from "../integrations/hostaway.api";
-import { getReservations } from "../integrations/hostkit.api";
+import { getHostkitReservations } from "../integrations/hostkit.api";
 import { sendBlockUnblockNotification } from "../services/notification.service";
 
 // Get bookings + blocked dates for a property
@@ -261,8 +261,8 @@ export const getCalendarMonthPricing = async (req: Request, res: Response) => {
     
     if (calendarData.result && Array.isArray(calendarData.result)) {
       console.log('Processing Hostaway data, total days:', calendarData.result.length);
-      console.log('First few dates from Hostaway:', calendarData.result.slice(0, 3).map(d => d.date));
-      console.log('Last few dates from Hostaway:', calendarData.result.slice(-3).map(d => d.date));
+      console.log('First few dates from Hostaway:', calendarData.result.slice(0, 3).map((d: any) => d.date));
+      console.log('Last few dates from Hostaway:', calendarData.result.slice(-3).map((d: any) => d.date));
       
       calendarData.result.forEach((dayData: any) => {
         if (dayData.date) {
