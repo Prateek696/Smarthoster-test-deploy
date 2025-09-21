@@ -38,7 +38,7 @@ export async function fetchAutomations(propertyId?: number) {
     // Transform MongoDB _id to id for frontend compatibility
     return automations.map(automation => ({
       ...automation.toObject(),
-      id: automation._id.toString()
+      id: (automation._id as any).toString()
     }));
   } catch (error) {
     console.error('Error fetching automations:', error);
@@ -160,7 +160,7 @@ export async function createAutomation(automationData: any, userId: string) {
     await automation.save();
     return {
       ...automation.toObject(),
-      id: automation._id.toString()
+      id: (automation._id as any).toString()
     };
   } catch (error) {
     console.error('Error creating automation:', error);
@@ -183,7 +183,7 @@ export async function updateAutomation(id: string, updateData: any, userId: stri
     
     return {
       ...automation.toObject(),
-      id: automation._id.toString()
+      id: (automation._id as any).toString()
     };
   } catch (error) {
     console.error('Error updating automation:', error);
@@ -220,7 +220,7 @@ export async function toggleAutomation(id: string, status: string, userId: strin
     
     return {
       ...automation.toObject(),
-      id: automation._id.toString()
+      id: (automation._id as any).toString()
     };
   } catch (error) {
     console.error('Error toggling automation:', error);
