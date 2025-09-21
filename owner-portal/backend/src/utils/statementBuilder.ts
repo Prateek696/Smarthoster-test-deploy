@@ -53,7 +53,7 @@ function formatDate(raw: string): string {
 
 // Generic table renderer with auto pagination
 function renderTable(
-  doc: PDFKit.PDFDocument,
+  doc: PDFDocument,
   title: string,
   headers: string[],
   rows: (string | number)[][],
@@ -114,7 +114,7 @@ export function createStatementPDF(data: StatementData): Promise<Buffer> {
     try {
       const doc = new PDFDocument({ size: 'A4', margin: 50 });
       const buffers: Buffer[] = [];
-      doc.on('data', (chunk) => buffers.push(chunk));
+      doc.on('data', (chunk: Buffer) => buffers.push(chunk));
       doc.on('end', () => resolve(Buffer.concat(buffers)));
 
       // Header
