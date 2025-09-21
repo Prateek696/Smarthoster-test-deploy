@@ -1,7 +1,7 @@
 // hostkitProperty.service.ts
 import axios from 'axios';
 import { env } from '../config/env';
-import { PropertyModel } from '../models/property.model';
+import PropertyModel from '../models/property.model';
 
 interface HostkitPropertyResponse {
   owner: string;
