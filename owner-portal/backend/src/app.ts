@@ -32,6 +32,7 @@ import debugRoutes from './routes/debug.routes';
 import imageUploadRoutes from './routes/imageUpload.routes';
 import settingsRoutes from './routes/settings.routes';
 import adminRoutes from './routes/admin.routes';
+import testRoutes from './routes/test.routes';
 
 const app = express();
 app.use('/saft/files', express.static(path.join(__dirname, 'saft_files')));
@@ -78,6 +79,7 @@ app.use("/reviews", reviewRoutes);
 app.use("/portfolio", portfolioRoutes);
 app.use("/settings", settingsRoutes);
 app.use("/admin", adminRoutes);
+app.use("/test", testRoutes);
 
 app.use(statementsRoutes);
 
