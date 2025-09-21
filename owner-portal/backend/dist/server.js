@@ -14,13 +14,17 @@ const startServer = async () => {
 };
 // For Vercel deployment
 if (process.env.NODE_ENV === 'production') {
-    // Initialize database connection for Vercel with error handling
-    (0, db_1.connectDB)().then(() => {
-        console.log('✅ Database connection initialized');
-    }).catch((error) => {
-        console.error('❌ Database connection failed:', error.message);
-        console.log('⚠️ App will continue without database connection');
-    });
+    // Initialize database connection for Vercel synchronously
+    (async () => {
+        try {
+            await (0, db_1.connectDB)();
+            console.log('✅ Database connection initialized');
+        }
+        catch (error) {
+            console.error('❌ Database connection failed:', error.message);
+            console.log('⚠️ App will continue without database connection');
+        }
+    })();
     // Export the app for Vercel
     module.exports = app_1.default;
 }

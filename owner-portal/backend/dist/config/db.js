@@ -18,9 +18,7 @@ const connectDB = async () => {
             serverSelectionTimeoutMS: 10000, // 10 seconds
             connectTimeoutMS: 10000, // 10 seconds
             socketTimeoutMS: 10000, // 10 seconds
-            maxPoolSize: 1, // Reduce pool size for serverless
-            bufferCommands: false, // Disable mongoose buffering
-            bufferMaxEntries: 0 // Disable mongoose buffering
+            maxPoolSize: 1 // Reduce pool size for serverless
         });
         console.log("✅ MongoDB connected successfully");
         console.log("✅ Connection state:", mongoose_1.default.connection.readyState);
