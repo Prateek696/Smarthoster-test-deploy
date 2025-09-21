@@ -9,6 +9,8 @@ export interface IUser extends Document {
   password: string;
   role: UserRole;
   isVerified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const userSchema = new Schema<IUser>(
