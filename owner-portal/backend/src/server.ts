@@ -11,6 +11,8 @@ const startServer = async () => {
 
 // For Vercel deployment
 if (process.env.NODE_ENV === 'production') {
+  // Initialize database connection for Vercel
+  connectDB().catch(console.error);
   // Export the app for Vercel
   module.exports = app;
 } else {
