@@ -27,7 +27,8 @@ interface PropertyRequest {
 export const getPropertyService = async (request: PropertyRequest): Promise<HostkitPropertyResponse> => {
   const { propertyId } = request;
   
-  // Map property ID to Hostkit ID and get the corresponding API key
+  // TODO: Make this dynamic by fetching from database
+  // For now, using hardcoded mapping - this needs to be moved to database
   const propertyToHostkitMap: { [key: string]: string } = {
     '392776': '10027', // Piece of Heaven
     '392779': '10028', // Lote 12 4-A
@@ -40,10 +41,10 @@ export const getPropertyService = async (request: PropertyRequest): Promise<Host
 
   const hostkitId = propertyToHostkitMap[propertyId];
   if (!hostkitId) {
-    throw new Error(`No Hostkit API key configured for property ${propertyId}`);
+    throw new Error(`No Hostkit API key configured for property ${propertyId}. Please add this property to the mapping or database.`);
   }
 
-  const apiKey = env.hostkit.apiKeys[hostkitId];
+  const apiKey = env.hostkit.apiKeys[hostkitId as keyof typeof env.hostkit.apiKeys];
   if (!apiKey) {
     throw new Error(`HOSTKIT_API_KEY_${hostkitId} environment variable is not set for property ${propertyId}`);
   }
