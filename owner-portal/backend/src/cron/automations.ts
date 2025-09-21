@@ -34,16 +34,27 @@ cron.schedule('0 9 2 * *', async () => {
           if (saftResult.saft) {
             // Convert base64 to buffer for email attachment
             const saftBuffer = Buffer.from(saftResult.saft, 'base64');
+            const tempFilePath = `/tmp/saft_${propertyId}_${monthStr}.xml`;
+            
+            // Write buffer to temporary file
+            require('fs').writeFileSync(tempFilePath, saftBuffer);
+            
             await sendEmailWithAttachments(
               owner.email,
               `Monthly SAFT Report - ${monthStr}`,
               `Please find attached your monthly SAFT report for ${monthStr}.`,
               [{ 
                 filename: `saft_${propertyId}_${monthStr}.xml`, 
-                content: saftBuffer,
-                contentType: 'application/xml'
+                path: tempFilePath
               }]
             );
+            
+            // Clean up temporary file
+            try {
+              require('fs').unlinkSync(tempFilePath);
+            } catch (cleanupError) {
+              console.error('Error cleaning up temp file:', cleanupError);
+            }
           }
         }
         
