@@ -21,8 +21,8 @@ async function generateAndSendDailyDigest() {
     for (const owner of owners) {
       try {
         // Get properties for this owner from the database
-        const ownerProperties = await getPropertiesService(owner._id.toString());
-        const propertyIds = ownerProperties.map(prop => prop.id);
+        const ownerProperties = await getPropertiesService((owner._id as any).toString());
+        const propertyIds = ownerProperties.properties.map((prop: any) => prop.id);
         
         let totalNewBookings = 0;
         let totalNewInvoices = 0;
