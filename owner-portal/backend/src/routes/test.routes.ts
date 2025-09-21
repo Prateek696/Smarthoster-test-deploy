@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
     message: "Smart Hoster Owner Portal API is running!",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    version: "1.0.0",
+    version: "1.0.1",
     endpoints: {
       test: "/test/test",
       admin: "/admin/check-admin-exists",
