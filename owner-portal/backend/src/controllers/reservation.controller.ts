@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { getHostkitReservations, getHostkitReservation } from '../integrations/hostkit.api';
-import { validateRequest } from '../middlewares/validate.middleware';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { requireOwnerOrAccountant } from '../middlewares/role.middleware';
 
