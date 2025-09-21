@@ -51,7 +51,6 @@ export const getAllPropertiesCityTax = async (req: Request, res: Response) => {
       try {
         const cityTaxData = await getCityTaxService(parseInt(propertyId), startDate, endDate, filterType || 'checkin');
         allPropertiesData.push({
-          propertyId: parseInt(propertyId),
           hostkitApid,
           ...cityTaxData
         });
@@ -79,7 +78,7 @@ export const getAllPropertiesCityTax = async (req: Request, res: Response) => {
       totals: {
         totalCityTaxNights: allPropertiesData.reduce((sum, p) => sum + (p.cityTaxNights || 0), 0),
         totalChildrenNights: allPropertiesData.reduce((sum, p) => sum + (p.childrenNights || 0), 0),
-        totalNights: allPropertiesData.reduce((sum, p) => sum + (p.hostkitTotalNights || 0), 0),
+        totalNights: allPropertiesData.reduce((sum, p) => sum + ((p as any).hostkitTotalNights || 0), 0),
         totalBookings: allPropertiesData.reduce((sum, p) => sum + (p.totalBookings || 0), 0),
         totalGuests: allPropertiesData.reduce((sum, p) => sum + (p.totalGuests || 0), 0)
       }
@@ -217,7 +216,7 @@ export const debugTouristTax = async (req: Request, res: Response) => {
       
       // Test service
       try {
-        const serviceResult = await getTouristTaxService(propertyId, range.start, range.end);
+        const serviceResult = await getCityTaxService(propertyId, range.start, range.end);
         results.testResults[range.name].serviceResult = serviceResult;
       } catch (serviceError: any) {
         results.testResults[range.name].serviceError = serviceError.message;
