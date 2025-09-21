@@ -1,6 +1,6 @@
-import { getPerformanceService } from './performance.service';
+import { getMonthlyPerformanceService } from './performance.service';
 import { getBookingsService } from './booking.service';
-import { getTouristTaxService } from './touristTax.service';
+import { getCityTaxService } from './touristTax.service';
 
 export const getPortfolioOverview = async (propertyIds: number[], month: string) => {
   try {
@@ -8,7 +8,7 @@ export const getPortfolioOverview = async (propertyIds: number[], month: string)
       propertyIds.map(async (propertyId) => {
         try {
           // Get performance data for each property
-          const performance = await getPerformanceService(propertyId, month);
+          const performance = await getMonthlyPerformanceService(propertyId, month);
           
           // Get booking data for occupancy calculation
           const startDate = `${month}-01`;
@@ -16,7 +16,7 @@ export const getPortfolioOverview = async (propertyIds: number[], month: string)
           const bookings = await getBookingsService(propertyId, startDate, endDate);
           
           // Get tourist tax data
-          const touristTax = await getTouristTaxService(propertyId, startDate, endDate);
+          const touristTax = await getCityTaxService(propertyId, startDate, endDate);
           
           // Calculate occupancy rate
           const totalNights = bookings.summary?.totalNights || 0;
