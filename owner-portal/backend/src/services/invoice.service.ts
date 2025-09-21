@@ -9,6 +9,7 @@ interface Invoice {
   closed: boolean;
   partial: boolean;
   invoice_url: string;
+  series: string;
 }
 
 // Property ID to Series mapping (based on Hostkit API response analysis)
@@ -114,7 +115,8 @@ export const getInvoicesService = async (
           date: invoiceDate.toISOString(),
           closed: isClosedOrPaid,
           partial: isPartial,
-          invoice_url: inv.invoice_url || inv.url || inv.download_url || '#'
+          invoice_url: inv.invoice_url || inv.url || inv.download_url || '#',
+          series: inv.series || ''
         };
       } catch (mapError) {
         console.error(`[INVOICE DEBUG] Error mapping invoice ${index}:`, mapError);
@@ -125,7 +127,8 @@ export const getInvoicesService = async (
           date: new Date().toISOString(),
           closed: false,
           partial: false,
-          invoice_url: '#'
+          invoice_url: '#',
+          series: ''
         };
       }
     });
