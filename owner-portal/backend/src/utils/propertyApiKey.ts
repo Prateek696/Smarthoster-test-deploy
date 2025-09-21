@@ -33,7 +33,8 @@ export const getHostkitApiKey = async (propertyId: number): Promise<string | nul
     }
 
     // Fallback to old hardcoded system for backward compatibility
-    const hostkitId = PROPERTY_TO_HOSTKIT_MAPPING[propertyId];
+    const propertyMapping = await getPropertyToHostkitMapping();
+    const hostkitId = propertyMapping[propertyId];
     if (hostkitId && env.hostkit.apiKeys && env.hostkit.apiKeys[hostkitId as keyof typeof env.hostkit.apiKeys]) {
       console.log(`⚠️ Using fallback env API key for property ${propertyId}`);
       return env.hostkit.apiKeys[hostkitId as keyof typeof env.hostkit.apiKeys];
