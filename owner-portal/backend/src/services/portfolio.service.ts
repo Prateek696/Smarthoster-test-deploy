@@ -36,7 +36,7 @@ export const getPortfolioOverview = async (propertyIds: number[], month: string)
             netPayout: performance.netPayout || 0,
             bookingCount: bookings.total || 0,
             touristTax: touristTax.totalTax || 0,
-            commission: performance.commission || 0,
+            commission: performance.commissionTotal || 0,
             cleaningFees: performance.cleaningFees || 0
           };
         } catch (error) {
