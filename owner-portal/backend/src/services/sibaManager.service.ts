@@ -324,7 +324,7 @@ const getAllProperties = async (): Promise<Array<{id: number, name: string, host
     const properties = await getPropertiesService('default-owner'); // You might want to pass actual owner ID
     
     // Convert to the format expected by SIBA Manager
-    return properties.map((property: any) => ({
+    return properties.properties.map((property: any) => ({
       id: property.hostkitId || property._id, // Use hostkitId if available, otherwise MongoDB _id
       name: property.name || `Property ${property._id}`,
       hostkitId: property.hostkitId,
