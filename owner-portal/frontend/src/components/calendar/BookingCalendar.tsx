@@ -29,6 +29,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   const [isLoadingDateData, setIsLoadingDateData] = useState(false);
   const [monthlyPricingData, setMonthlyPricingData] = useState<{[key: string]: {price: number, minimumStay: number, status: string}}>({});
   const [isLoadingPricing, setIsLoadingPricing] = useState(false);
+  
+  // Edit form state
+  const [editPrice, setEditPrice] = useState<number>(0);
+  const [editMinimumStay, setEditMinimumStay] = useState<number>(1);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   // Calculate date range for current month view with buffer for cross-month bookings
   const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1).toISOString().split('T')[0];

@@ -32,6 +32,8 @@ interface OwnerStatement {
     other: number;
     status?: 'available' | 'coming_soon';
   };
+  reservations: any[];
+  invoices: any[];
   netPayout: number;
   currency: string;
   status: 'draft' | 'sent' | 'paid';

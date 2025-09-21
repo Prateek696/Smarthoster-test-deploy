@@ -91,7 +91,7 @@ const OwnerManagement: React.FC = () => {
       name: owner.name,
       email: owner.email,
       phone: owner.phone || '',
-      role: owner.role,
+      role: owner.role as 'owner' | 'accountant',
       password: ''
     })
     setShowModal(true)

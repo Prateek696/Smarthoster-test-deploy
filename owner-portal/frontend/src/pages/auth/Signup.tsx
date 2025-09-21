@@ -27,6 +27,40 @@ const Signup: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { isLoading, isAuthenticated, error } = useSelector((state: RootState) => state.auth)
 
+  const validateForm = (): Record<string, string> => {
+    const newErrors: Record<string, string> = {}
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required'
+    }
+    
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required'
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid'
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone is required'
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match'
+    }
+    
+    return newErrors
+  }
+
   // Check if admin already exists
   useEffect(() => {
     const checkAdmin = async () => {

@@ -30,7 +30,8 @@ interface ForgotPasswordData {
 }
 
 interface ResetPasswordData {
-  token: string
+  email: string
+  otp: string
   password: string
 }
 
