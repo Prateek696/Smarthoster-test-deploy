@@ -58,8 +58,8 @@ export const getAirbnbReviews = async (
           }
         ],
         pagination: {
-          has_more: false,
-          offset: 0
+          has_next_page: false,
+          next_cursor: null
         },
         summary: {
           total_reviews: 1,

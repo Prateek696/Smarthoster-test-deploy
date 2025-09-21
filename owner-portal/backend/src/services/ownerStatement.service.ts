@@ -10,7 +10,7 @@ import { generateStatement } from './statements.service';
 import { getInvoicesService } from './invoice.service';
 import { fetchExpenses } from './expense.service';
 import { getHostkitReservations } from '../integrations/hostkit.api';
-import { getTouristTaxService } from './touristTax.service';
+import { getCityTaxService } from './touristTax.service';
 
 // Helper function to get real statement data
 async function getRealStatementData(propertyId: number, year: number, month: number) {

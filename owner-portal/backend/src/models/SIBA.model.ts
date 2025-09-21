@@ -36,6 +36,11 @@ export const sendSibaService = async (reservationId: number, propertyId: number)
   }
 };
 
+export const getSibaStatusService = async (propertyId: number) => {
+  // Mock implementation - replace with actual logic
+  return { propertyId, status: 'pending' };
+};
+
 export const bulkSibaStatusService = async (propertyIds: number[]) => {
   return Promise.all(propertyIds.map(pid => getSibaStatusService(pid)));
 };
