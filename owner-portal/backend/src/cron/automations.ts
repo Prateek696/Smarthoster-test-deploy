@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { generateSaftService } from '../services/saft.service';
+import { getSaftService } from '../services/saft.service';
 import { getSibaStatusService } from '../services/siba.service';
 import { sendEmailWithAttachments } from '../utils/emailSender';
 import { UserModel } from '../models/User.model';
@@ -23,15 +23,28 @@ cron.schedule('0 9 2 * *', async () => {
         const properties = [392776, 392777, 392778]; // Mock property IDs
         
         for (const propertyId of properties) {
-          const saftResult = await generateSaftService(propertyId.toString(), startDate, endDate);
+          const saftResult = await getSaftService({
+            propertyId: propertyId.toString(),
+            year: lastMonth.getFullYear(),
+            month: lastMonth.getMonth() + 1, // JavaScript months are 0-based
+            invoicingNif: '123456789' // Default NIF, should be configurable
+          });
           
           // Email SAFT to owner
-          await sendEmailWithAttachments(
-            owner.email,
-            `Monthly SAFT Report - ${monthStr}`,
-            `Please find attached your monthly SAFT report for ${monthStr}.`,
-            [{ filename: `saft_${propertyId}_${startDate}_${endDate}.xml`, path: saftResult.url }]
-          );
+          if (saftResult.saft) {
+            // Convert base64 to buffer for email attachment
+            const saftBuffer = Buffer.from(saftResult.saft, 'base64');
+            await sendEmailWithAttachments(
+              owner.email,
+              `Monthly SAFT Report - ${monthStr}`,
+              `Please find attached your monthly SAFT report for ${monthStr}.`,
+              [{ 
+                filename: `saft_${propertyId}_${monthStr}.xml`, 
+                content: saftBuffer,
+                contentType: 'application/xml'
+              }]
+            );
+          }
         }
         
         console.log(`SAFT generated and emailed to ${owner.email}`);
