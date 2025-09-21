@@ -57,6 +57,8 @@
     "@types/nodemailer": "^6.4.19",
     "@types/pdfkit": "^0.17.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.11"
   }
 }
