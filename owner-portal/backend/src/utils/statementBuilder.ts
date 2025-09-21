@@ -54,7 +54,7 @@ function formatDate(raw: string): string {
 
 // Generic table renderer with auto pagination
 function renderTable(
-  doc: PDFDocument,
+  doc: any,
   title: string,
   headers: string[],
   rows: (string | number)[][],
