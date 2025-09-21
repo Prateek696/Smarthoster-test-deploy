@@ -1,0 +1,175 @@
+
+{
+  "title": "Política de Cookies",
+  "lastUpdated": "Última atualização: 1 de junho de 2025",
+  "companyInfo": {
+    "title": "Informações da Empresa",
+    "effectiveDate": "Data de Entrada em Vigor:",
+    "effectiveDateValue": "1 de junho de 2025",
+    "entityName": "Nome da Entidade:",
+    "entityNameValue": "BBAR Unipessoal LDA",
+    "operatingAs": "Opera Como:",
+    "operatingAsValue": "SmartHoster.io",
+    "vatNipc": "NIF/NIPC:",
+    "vatNipcValue": "PT514142057",
+    "registeredOffice": "Sede Social:",
+    "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+    "contactEmail": "Email de Contacto:",
+    "contactEmailValue": "admin@smarthoster.io"
+  },
+  "sections": [
+    {
+      "number": "1",
+      "title": "Introdução",
+      "content": [
+        "Esta Política de Cookies explica como a SmartHoster.io (\"SmartHoster\", \"nós\", \"nosso\", \"nossa\" ou \"nos\") utiliza cookies e tecnologias de rastreamento similares em todo o seu website, portais, aplicações e ferramentas de marketing.",
+        "Ao continuar a utilizar o nosso website, consente a utilização de cookies conforme descrito abaixo.",
+        "Cumprimos todos os regulamentos de proteção de dados aplicáveis, incluindo o Regulamento Geral sobre a Proteção de Dados (RGPD – Regulamento UE 2016/679), a Diretiva ePrivacy (2002/58/CE) e as leis locais relativas à utilização de cookies e tecnologias similares."
+      ]
+    },
+    {
+      "number": "2",
+      "title": "O que são Cookies?",
+      "content": [
+        "Os cookies são pequenos ficheiros de texto que são armazenados no seu dispositivo quando visita um website. Permitem que o website reconheça o seu dispositivo e armazene certas informações sobre as suas preferências, utilização ou identidade."
+      ]
+    },
+    {
+      "number": "3",
+      "title": "Tipos de Cookies que Utilizamos",
+      "content": [
+        "Utilizamos as seguintes categorias de cookies:"
+      ],
+      "subsections": [
+        {
+          "title": "a) Cookies Estritamente Necessários",
+          "content": [
+            "Essenciais para a funcionalidade central do site, incluindo:"
+          ],
+          "list": [
+            "Autenticação de login e sessão",
+            "Funcionalidades de segurança",
+            "Balanceamento de carga e integridade da infraestrutura",
+            "Gestão de consentimento"
+          ]
+        },
+        {
+          "title": "b) Cookies Funcionais",
+          "content": [
+            "Permitem funcionalidades melhoradas e preferências do utilizador:"
+          ],
+          "list": [
+            "Configurações de idioma",
+            "Seleção de região",
+            "Memorização de escolhas do utilizador",
+            "Opções de pré-preenchimento de formulários"
+          ]
+        },
+        {
+          "title": "c) Cookies de Desempenho e Análise",
+          "content": [
+            "Ajudam-nos a compreender o comportamento do utilizador e melhorar o desempenho do site:"
+          ],
+          "list": [
+            "Google Analytics / GA4",
+            "Hotjar",
+            "Microsoft Clarity",
+            "Amplitude ou similares"
+          ]
+        },
+        {
+          "title": "d) Cookies de Marketing e Retargeting",
+          "content": [
+            "Utilizados para fornecer anúncios personalizados e medir a eficácia das campanhas:"
+          ],
+          "list": [
+            "Google Ads / Google Tag Manager",
+            "Meta Pixel (Facebook / Instagram)",
+            "LinkedIn Insight Tag",
+            "TikTok Pixel",
+            "YouTube (conteúdo incorporado)",
+            "Pinterest Tag",
+            "Twitter/X Ads"
+          ]
+        },
+        {
+          "title": "e) Cookies de Afiliados e Terceiros",
+          "content": [
+            "Utilizados para rastreamento de referências e integração com serviços externos:"
+          ],
+          "list": [
+            "Rede de Afiliados Booking.com",
+            "Ferramentas Profissionais de Alojamento Airbnb",
+            "Widgets Stripe, Plaid ou bancários",
+            "Integrações Calendly, HubSpot ou CRM"
+          ]
+        },
+        {
+          "title": "f) Perfilagem Comportamental e NAI (Network Advertising Initiative)",
+          "content": [
+            "Podemos utilizar cookies para construir perfis pseudónimos para relevância publicitária, otimização de campanhas e segmentação de utilizadores. Estes podem cumprir ou participar em:"
+          ],
+          "list": [
+            "NAI (www.networkadvertising.org)",
+            "EDAA (www.youronlinechoices.eu)",
+            "DAA (Digital Advertising Alliance)"
+          ]
+        }
+      ]
+    },
+    {
+      "number": "4",
+      "title": "Como Gerir Cookies",
+      "content": [
+        "Tem controlo total sobre as suas preferências de cookies.",
+        "✅ Gestão de Consentimento",
+        "Na sua primeira visita, um banner de consentimento permitir-lhe-á aceitar ou rejeitar cookies opcionais. Pode ajustar as preferências a qualquer momento:",
+        "• Clicando na ligação \"Definições de Cookies\" no nosso rodapé",
+        "• Visitando a secção de controlo de cookies do seu navegador",
+        "🔧 Controlos do Navegador",
+        "Pode desativar cookies através das configurações do seu navegador. Note que isto pode prejudicar certas funcionalidades do website.",
+        "• Google Chrome",
+        "• Mozilla Firefox",
+        "• Safari",
+        "• Microsoft Edge"
+      ]
+    },
+    {
+      "number": "5",
+      "title": "Cookies de Terceiros",
+      "content": [
+        "Não controlamos cookies de terceiros. Estes cookies são regidos pelas respetivas políticas de privacidade e cookies de cada fornecedor terceiro. Recomendamos que reveja essas políticas diretamente:",
+        "• Privacidade e Termos Google",
+        "• Meta (Facebook e Instagram)",
+        "• LinkedIn",
+        "• Stripe",
+        "• Membros NAI"
+      ]
+    },
+    {
+      "number": "6",
+      "title": "Retenção de Dados",
+      "content": [
+        "Os cookies podem persistir por:",
+        "• Cookies baseados em sessão: apagados quando fecha o navegador",
+        "• Cookies persistentes: retidos de 1 dia até 24 meses",
+        "• Pode eliminar todos os cookies armazenados do seu navegador a qualquer momento"
+      ]
+    },
+    {
+      "number": "7",
+      "title": "Alterações a Esta Política",
+      "content": [
+        "Podemos atualizar esta Política de Cookies a qualquer momento para refletir alterações na lei, configurações da plataforma ou tecnologias de rastreamento.",
+        "Última atualização: 1 de junho de 2025"
+      ]
+    }
+  ],
+  "contact": {
+    "title": "Contacto",
+    "description": "Se tiver questões ou preocupações sobre esta Política de Cookies ou as nossas práticas de dados, contacte:",
+    "companyName": "BBAR Unipessoal LDA",
+    "address": "Rua do Molhe 575 1°",
+    "city": "4150-503 Porto, Portugal"
+  }
+}

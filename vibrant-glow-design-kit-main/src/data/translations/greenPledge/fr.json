@@ -1,0 +1,135 @@
+
+{
+  "greenPledge": {
+    "hero": {
+      "headline": "Notre Engagement pour un Avenir Durable",
+      "subheadline": "Hospitalité éco-responsable alimentée par la technologie intelligente et des choix réfléchis."
+    },
+    "pledge": {
+      "title": "Notre Engagement Vert",
+      "description": "Chez SmartHoster, la durabilité est au cœur de nos opérations. Nous nous engageons à réduire notre impact environnemental grâce à des initiatives comme une flotte entièrement électrique, l'éclairage LED, des équipements d'économie d'eau et des produits de nettoyage écologiques. En intégrant des technologies intelligentes et en éduquant nos invités, nous visons à protéger l'environnement tout en offrant un service exceptionnel.",
+      "icons": {
+        "electric": "Véhicules Électriques",
+        "recycling": "Recyclage",
+        "solar": "Panneaux Solaires",
+        "wind": "Énergie Éolienne",
+        "water": "Conservation de l'Eau",
+        "eco": "Éco-Responsable"
+      }
+    },
+    "initiatives": {
+      "title": "Nos Principales Initiatives Vertes",
+      "items": {
+        "electricVehicles": {
+          "title": "Flotte Entièrement Électrique",
+          "description": "Notre flotte est entièrement électrique, réduisant les émissions et s'alignant avec notre objectif de minimiser notre empreinte carbone."
+        },
+        "tailoredBedding": {
+          "title": "Literie et Serviettes Personnalisées",
+          "description": "Nous fournissons uniquement le nombre exact de lits et de serviettes nécessaires pour chaque invité, réduisant le blanchissage inutile et conservant l'eau et l'énergie."
+        },
+        "ledLighting": {
+          "title": "Éclairage LED dans Toutes les Propriétés",
+          "description": "L'éclairage LED écoénergétique consomme moins d'énergie et dure plus longtemps que les ampoules traditionnelles, réduisant l'usage d'électricité et les déchets."
+        },
+        "waterSaving": {
+          "title": "Équipements d'Économie d'Eau",
+          "description": "Les robinets et pommeaux de douche à faible débit conservent l'eau sans compromettre le confort des invités."
+        },
+        "ecoFriendlyCleaning": {
+          "title": "Produits de Nettoyage Écologiques",
+          "description": "Nous utilisons des produits de nettoyage biodégradables et non toxiques pour garantir que nos pratiques de nettoyage sont sûres pour l'environnement."
+        },
+        "reusableDispensers": {
+          "title": "Distributeurs Réutilisables pour Savon",
+          "description": "Remplacer les contenants de savon à usage unique par des distributeurs réutilisables réduit les déchets plastiques."
+        },
+        "recyclingProgram": {
+          "title": "Programme de Recyclage avec Bacs Séparés",
+          "description": "Des bacs clairement étiquetés dans chaque propriété aident les invités à séparer efficacement les déchets, réduisant les contributions aux décharges."
+        },
+        "energyEfficient": {
+          "title": "Appareils Écoénergétiques",
+          "description": "Nos propriétés sont équipées d'appareils qui répondent à des normes élevées d'efficacité énergétique, minimisant la consommation d'énergie."
+        },
+        "smartThermostats": {
+          "title": "Thermostats Intelligents et Sensibilisation à l'Usage Énergétique",
+          "description": "Les thermostats intelligents optimisent le chauffage et la climatisation en fonction de l'occupation, réduisant l'usage énergétique."
+        },
+        "solarPower": {
+          "title": "Intégration de l'Énergie Solaire",
+          "description": "Incorporer des panneaux solaires là où c'est faisable nous permet d'exploiter l'énergie renouvelable, réduisant la dépendance à l'électricité du réseau."
+        }
+      }
+    },
+    "whyGreen": {
+      "title": "Pourquoi les Initiatives Vertes Comptent",
+      "description": "De petits changements peuvent mener à des impacts significatifs. Nos initiatives vertes ne concernent pas seulement la conformité ; elles visent à créer un avenir durable. En choisissant SmartHoster, vous vous joignez à nous dans notre engagement à protéger la planète, réduire les émissions de carbone, conserver les ressources naturelles et promouvoir un environnement plus sain pour tous.",
+      "benefits": {
+        "health": "Environnement Plus Sain",
+        "conservation": "Conservation des Ressources"
+      }
+    },
+    "guestHelp": {
+      "title": "Comment les Invités Peuvent Aider",
+      "description": "Chaque invité a le pouvoir de faire la différence. Pendant votre séjour, aidez-nous à protéger l'environnement en :",
+      "actions": {
+        "recycle": {
+          "title": "Recycler Correctement",
+          "description": "Utilisez les bacs fournis pour séparer efficacement les déchets."
+        },
+        "conserveWater": {
+          "title": "Conserver l'Eau",
+          "description": "Réutilisez les serviettes et limitez l'usage de l'eau pendant votre séjour."
+        },
+        "turnOffElectricity": {
+          "title": "Éteignez l'Électricité",
+          "description": "Éteignez la climatisation et le chauffage quand vous quittez la propriété."
+        },
+        "useEcoAmenities": {
+          "title": "Profitez des Équipements Écologiques",
+          "description": "Utilisez nos produits et caractéristiques durables."
+        },
+        "supportTailoredBedding": {
+          "title": "Soutenez la Literie Personnalisée",
+          "description": "Utilisez uniquement les lits préparés pour votre séjour."
+        },
+        "mindfulEnergy": {
+          "title": "Soyez Conscient de l'Énergie",
+          "description": "Éteignez les lumières et débranchez les appareils quand ils ne sont pas utilisés."
+        }
+      },
+      "cta": "En Savoir Plus Sur Nos Initiatives Vertes"
+    },
+    "faqs": {
+      "title": "Questions Fréquemment Posées",
+      "questions": {
+        "ledLighting": {
+          "question": "Comment l'utilisation de l'éclairage LED fait-elle la différence ?",
+          "answer": "Les ampoules LED utilisent jusqu'à 80% moins d'énergie que l'éclairage traditionnel, réduisant les émissions de gaz à effet de serre et les coûts de services publics. Elles durent aussi significativement plus longtemps, diminuant les déchets des remplacements fréquents d'ampoules."
+        },
+        "tailoredBedding": {
+          "question": "Pourquoi fournissez-vous de la literie et des serviettes personnalisées ?",
+          "answer": "Fournir uniquement les lits et serviettes nécessaires conserve l'eau et l'énergie en réduisant le blanchissage inutile, minimisant ainsi notre empreinte environnementale sans sacrifier le confort des invités."
+        },
+        "energyConservation": {
+          "question": "Comment les invités peuvent-ils aider à la conservation d'énergie dans les propriétés avec climatisation et systèmes de chauffage ?",
+          "answer": "Les invités peuvent aider en éteignant la climatisation et le chauffage quand ils quittent la propriété. Cette action simple réduit significativement la consommation d'énergie et l'impact environnemental."
+        },
+        "solarPanels": {
+          "question": "Comment les panneaux solaires bénéficient-ils à l'environnement ?",
+          "answer": "Nos panneaux solaires exploitent l'énergie renouvelable pour générer de l'électricité et chauffer l'eau, réduisant significativement les émissions de carbone et diminuant la dépendance aux sources d'énergie non renouvelables."
+        },
+        "guestContribution": {
+          "question": "Les invités peuvent-ils contribuer à vos objectifs de durabilité ?",
+          "answer": "Absolument ! Les invités peuvent aider en recyclant, utilisant l'eau et l'électricité consciemment, éteignant les appareils quand ils ne sont pas utilisés, et participant à nos efforts de conservation des serviettes et de la literie."
+        }
+      }
+    },
+    "joinUs": {
+      "title": "Rejoignez-nous pour Faire la Différence",
+      "description": "Vivez un séjour où la durabilité rencontre le confort. En choisissant SmartHoster, vous ne profitez pas seulement d'une hospitalité exceptionnelle, mais vous contribuez aussi à un avenir plus vert. Ensemble, nous pouvons avoir un impact positif sur l'environnement—un séjour à la fois.",
+      "cta": "Réservez Votre Séjour Durable Aujourd'hui"
+    }
+  }
+}

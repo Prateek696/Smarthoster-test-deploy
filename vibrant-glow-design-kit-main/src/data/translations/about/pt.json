@@ -1,0 +1,101 @@
+
+{
+  "about": {
+    "hero": {
+      "title": "Sobre a SmartHoster",
+      "description": "A SmartHoster é uma empresa de gestão de propriedades de serviço completo que ajuda proprietários em todo Portugal a desbloquear o potencial total dos seus alojamentos de curta duração. Através de automação, apoio local especializado e um compromisso com a transparência, oferecemos paz de espírito e melhor desempenho — sem complicações."
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Missão",
+        "content": "Na SmartHoster, capacitamos proprietários a alcançar sucesso financeiro através de gestão de propriedades sem stress e eficiente."
+      },
+      "vision": {
+        "title": "Visão",
+        "content": "Ao simplificar a gestão de propriedades e aproveitar tecnologia de ponta, pretendemos estabelecer um novo padrão para experiências excecionais de hóspedes e desempenho otimizado de propriedades."
+      }
+    },
+    "origin": {
+      "title": "Porque Começámos a SmartHoster",
+      "content": "A SmartHoster começou com uma ideia simples: a gestão de propriedades não deveria ser frustrante. Depois de ver em primeira mão como podia ser desorganizada e opaca, decidimos criar um sistema que prioriza os proprietários, automatiza a complexidade e traz transparência real à mesa."
+    },
+    "values": {
+      "title": "Os Nossos Valores Fundamentais",
+      "ownerFirst": {
+        "title": "Serviço proprietário-primeiro, sempre",
+        "description": "Cada decisão que tomamos coloca os proprietários em primeiro lugar"
+      },
+      "transparency": {
+        "title": "Transparência radical em todas as áreas",
+        "description": "Abertura completa em todas as nossas operações e comunicações"
+      },
+      "humanSupport": {
+        "title": "Apoio humano, não apenas bots",
+        "description": "Pessoas reais fornecendo assistência genuína quando precisar"
+      },
+      "automation": {
+        "title": "Automação que realmente funciona",
+        "description": "Tecnologia inteligente que simplifica sem complicar"
+      },
+      "sustainability": {
+        "title": "Sustentabilidade sem greenwashing",
+        "description": "Compromisso ambiental genuíno em tudo o que fazemos"
+      }
+    },
+    "team": {
+      "title": "Conheça a Equipa por Trás da SmartHoster",
+      "description": "A nossa equipa dedicada combina especialização local com tecnologia de ponta para fornecer serviços excecionais de gestão de propriedades.",
+      "members": {
+        "miguel": {
+          "role": "Fundador e CEO",
+          "description": "Líder visionário que impulsiona a missão da SmartHoster de revolucionar a gestão de propriedades em Portugal."
+        },
+        "patricia": {
+          "role": "Gestora de Operações",
+          "description": "Coordenadora especialista que garante operações diárias sem falhas e entrega de serviço excecional."
+        },
+        "shubanshu": {
+          "role": "Chefe de TI",
+          "description": "Inovador tecnológico que desenvolve soluções de ponta para automação de gestão de propriedades."
+        },
+        "raimundo": {
+          "role": "Chefe de Manutenção e Reparações",
+          "description": "Líder especializado que supervisiona todas as operações de manutenção e garante que as propriedades excedem as expectativas dos hóspedes."
+        },
+        "carlos": {
+          "role": "Consultor Contabilístico e Jurídico",
+          "description": "Profissional especializado em finanças e questões legais, garantindo conformidade e operações empresariais ideais."
+        },
+        "adolfo": {
+          "role": "Programador Principal",
+          "description": "Arquiteto de software que constrói sistemas robustos que alimentam as capacidades da nossa plataforma."
+        },
+        "sofia": {
+          "role": "Gestora de Relações com Clientes",
+          "description": "Defensora dedicada que garante que cada cliente recebe atenção personalizada e apoio."
+        },
+        "zara": {
+          "role": "Estrategista de Marketing e Marca",
+          "description": "Estrategista criativa que constrói a marca SmartHoster e conecta com proprietários de propriedades."
+        }
+      }
+    },
+    "green": {
+      "title": "Compromisso de Sustentabilidade",
+      "content": "Estamos comprometidos com práticas sustentáveis que beneficiam tanto o ambiente quanto os seus resultados financeiros.",
+      "features": {
+        "led": "Instalações de iluminação LED",
+        "appliances": "Eletrodomésticos eficientes em energia",
+        "water": "Acessórios poupadores de água",
+        "linens": "Roupas de cama reutilizáveis e dispensadores",
+        "upgrades": "Melhorias eco-conscientes"
+      },
+      "cta": "Saiba Mais Sobre o Nosso Compromisso Verde"
+    },
+    "cta": {
+      "title": "Marque uma Consulta Gratuita",
+      "description": "Pronto para transformar a sua experiência de gestão de propriedades? Vamos discutir como a SmartHoster pode ajudá-lo a alcançar os seus objetivos.",
+      "button": "Agende a Sua Consulta"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+
+{
+  "learnMore": {
+    "hero": {
+      "title": "Saiba Mais Sobre SmartHoster.io",
+      "description": "Descubra como a nossa solução abrangente de gestão imobiliária pode transformar o seu negócio de arrendamento com tecnologia de ponta, expertise local e resultados comprovados."
+    },
+    "overview": {
+      "title": "Solução Completa de Gestão Imobiliária",
+      "description": "A SmartHoster.io fornece serviços de gestão imobiliária de ponta a ponta desenhados especificamente para o mercado português. A nossa plataforma combina tecnologia avançada com expertise local para maximizar a sua receita de arrendamento enquanto minimiza a sua sobrecarga operacional.",
+      "benefits": {
+        "revenue": "Aumente a receita de arrendamento até 35%",
+        "compliance": "100% de conformidade legal com regulamentações portuguesas",
+        "automation": "Operações automatizadas reduzem a sua carga de trabalho em 90%",
+        "support": "Suporte ao cliente 24/7 multilingue"
+      }
+    },
+    "services": {
+      "title": "Tratamos de Tudo — Do Início ao Fim",
+      "subtitle": "Especialmente se acabou de comprar uma propriedade, orientamos através de cada passo da configuração — e executamos a maioria em seu nome.",
+      "setupServices": [
+        "Fornecimento completo de mobiliário e decoração",
+        "Configuração de utilities, internet, TV e fechadura inteligente",
+        "Fotografia profissional e optimização de listagens",
+        "Registo de Alojamento Local (AL)",
+        "Aprovação da Câmara Municipal + sinalização",
+        "Livro de reclamações e de hóspedes multilingue",
+        "Integração SEF / AIMA para relatórios de hóspedes",
+        "Registo e automatização de taxas turísticas",
+        "Relatórios INE, registo no Banco de Portugal, submissão Modelo 30",
+        "Conformidade de segurança contra incêndios",
+        "Configuração de seguros e responsabilidade",
+        "Formação de empresa (LDA/Unipessoal) e registo de IVA"
+      ],
+      "important": {
+        "title": "Importante:",
+        "description": "Embora estes serviços de configuração e legalização façam parte do nosso processo de gestão, são negociados separadamente durante o onboarding com base nas necessidades da sua propriedade. Não há duas configurações iguais — e adaptamos tudo à sua situação."
+      },
+      "marketing": {
+        "title": "Marketing e Distribuição",
+        "description": "Fotografia profissional, listagens optimizadas em mais de 50 plataformas e preços estratégicos para maximizar visibilidade e reservas."
+      },
+      "guest": {
+        "title": "Gestão de Hóspedes",
+        "description": "Comunicação completa com hóspedes, check-in/check-out automatizado, suporte 24/7 e experiências personalizadas para hóspedes."
+      },
+      "operations": {
+        "title": "Operações de Propriedade",
+        "description": "Limpeza coordenada, manutenção, inspecções e garantia de qualidade para manter a sua propriedade em perfeitas condições."
+      },
+      "financial": {
+        "title": "Gestão Financeira",
+        "description": "Facturação automatizada, rastreamento de comissões, relatórios fiscais e análises financeiras detalhadas e relatórios."
+      }
+    },
+    "technology": {
+      "title": "O que acontece após a configuração?",
+      "description": "Uma vez concluída a configuração, a SmartHoster assume a gestão diária do seu arrendamento — combinando automatização, suporte humano e sistemas comprovados.",
+      "ongoingServices": [
+        "Check-ins automatizados (fechaduras inteligentes ou recepcionistas)",
+        "Comunicação com hóspedes desde pré-reserva até pós-avaliação",
+        "Automatização de facturação SAF/AT e submissão opcional de taxa municipal",
+        "Painéis ao vivo mostrando ganhos e ocupação",
+        "Horários de limpeza, roupa de cama e reabastecimento",
+        "Prevenção de danos, resolução de reclamações",
+        "Gestão de manutenção",
+        "Portal do proprietário para total transparência e controlo",
+        "Suporte multilingue 24/7 para hóspedes (EN/PT/FR e mais)",
+        "Testes de Performance e Optimização de Listagens"
+      ],
+      "optimizationNote": "Testamos regularmente títulos, descrições e fotos para melhorar as suas classificações e maximizar reservas nas plataformas.",
+      "slogans": {
+        "automation": "Se pode ser automatizado — automatizamos.",
+        "manual": "Se precisa de cuidado personalizado — tratamos disso."
+      },
+      "features": {
+        "automation": "Automação inteligente para tarefas rotineiras",
+        "analytics": "Análises de desempenho em tempo real",
+        "integrations": "Mais de 70 integrações de plataformas",
+        "mobile": "Painel de gestão optimizado para mobile"
+      }
+    },
+    "locations": {
+      "title": "Onde está disponível a SmartHoster?",
+      "description": "A SmartHoster opera em todas as principais cidades de Portugal:",
+      "tagline": "Equipas locais. Infraestrutura nacional."
+    },
+    "differentiators": {
+      "title": "O que torna a SmartHoster diferente de outros gestores imobiliários?",
+      "subtitle": "A SmartHoster é o único serviço em Portugal que oferece:",
+      "items": [
+        "Configuração completa incluindo AL, SEF, impostos e sinalização",
+        "Automatização para comunicações com hóspedes, check-ins, facturação e relatórios",
+        "Coordenação local de manutenção e limpeza",
+        "Transparência do proprietário com painéis ao vivo e relatórios",
+        "Suporte humano real tanto para proprietários como hóspedes",
+        "Práticas eco-responsáveis: roupa reutilizável, limpeza verde, configurações energeticamente eficientes",
+        "Onboarding estratégico — incluindo mobiliário e trabalho legal se necessário"
+      ],
+      "dataOptimization": {
+        "title": "Preços e Optimização Orientados por Dados",
+        "description": "Analisamos constantemente as tendências do mercado para ajustar preços e aumentar reservas — para que a sua propriedade se mantenha competitiva durante todo o ano."
+      },
+      "tagline": "A maioria das empresas arrenda o seu apartamento. Nós gerimos o seu arrendamento como um negócio."
+    },
+    "abroad": {
+      "title": "Vivo no estrangeiro. Posso ainda usar a SmartHoster?",
+      "subtitle": "Absolutamente. Muitos dos nossos clientes vivem no estrangeiro.",
+      "benefits": [
+        "Onboarding e consultoria remotos",
+        "Acesso inteligente para hóspedes (sem necessidade de entrega de chaves)",
+        "Suporte WhatsApp/email para proprietários",
+        "Controlo de calendário e visibilidade total de qualquer lugar",
+        "Não é necessário envolvimento presencial"
+      ],
+      "digitalContracting": {
+        "title": "Contratação totalmente digital",
+        "description": "Tratamos de toda a papelada legal e financeira remotamente — sem impressão, correio ou morada portuguesa necessária."
+      },
+      "tagline": "Você mantém o controlo. Nós mantemo-nos no terreno."
+    },
+    "testimonials": {
+      "title": "O que dizem os clientes da SmartHoster?",
+      "items": [
+        {
+          "quote": "Não sabia como registar para AL ou preparar o meu apartamento para hóspedes. A SmartHoster tratou de tudo — até o livro de reclamações e Modelo 30.",
+          "author": "Teresa F., Lisboa"
+        },
+        {
+          "quote": "Estou no Brasil. Mobilaram, legalizaram e lançaram a minha propriedade remotamente. Não pus lá os pés até depois dos primeiros hóspedes fazerem check-out.",
+          "author": "Rafael M., Olhão"
+        },
+        {
+          "quote": "Tinha uma óptima propriedade, mas não queria geri-la. Agora nem penso nisso — e está a render mais do que nunca.",
+          "author": "Sofia L., Cascais"
+        }
+      ]
+    },
+    "consultation": {
+      "title": "O que acontece na chamada gratuita?",
+      "description": "Vamos guiá-lo através de:",
+      "points": [
+        "O potencial de rendimento da sua propriedade",
+        "Requisitos de configuração legal (baseados na localização)",
+        "Como funciona o onboarding e configuração",
+        "Quaisquer melhorias que recomendamos",
+        "O que está incluído a longo prazo",
+        "Quaisquer Perguntas que Possa Ter"
+      ],
+      "finalNote": "Responderemos a todas as suas preocupações específicas — desde contratos a limpezas, impostos a toalhas. Nada está fora dos limites."
+    },
+    "results": {
+      "title": "Resultados Comprovados",
+      "description": "Junte-se a centenas de proprietários imobiliários bem-sucedidos que transformaram o seu negócio de arrendamento com SmartHoster.io.",
+      "metrics": {
+        "revenue": "35% de aumento médio de receita",
+        "occupancy": "15% de taxas de ocupação mais altas",
+        "automation": "90% de redução em tarefas manuais",
+        "satisfaction": "98% de taxa de satisfação do cliente"
+      }
+    },
+    "cta": {
+      "title": "Pronto para Começar?",
+      "description": "Marque uma consulta gratuita com os nossos especialistas em gestão imobiliária e descubra como a SmartHoster.io pode transformar o seu negócio de arrendamento.",
+      "button": "Marcar Consulta Gratuita",
+      "guarantee": "Garantia de reembolso de 30 dias • Sem taxas de configuração • Cancele a qualquer momento"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+
+{
+  "header": {
+    "logo": "SmartHoster.io",
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "features": "Features",
+      "properties": "Properties",
+      "howItWorks": "How It Works",
+      "testimonials": "Testimonials",
+      "pricing": "Pricing",
+      "integrations": "Integrations",
+      "services": "Services"
+    },
+    "cta": {
+      "signIn": "Sign In",
+      "getStarted": "Get Started",
+      "getStartedToday": "Get Started Today"
+    },
+    "services": {
+      "enhancedDirectBookings": "Enhanced Direct Bookings",
+      "fullServiceManagement": "Full-Service Management",
+      "advancedAutomation": "Advanced Automation & Smart Tech",
+      "localExpertise": "Local Expertise",
+      "incomeStrategy": "Income Strategy",
+      "legalCompliance": "Legal Compliance & SEF/AIMA Reporting",
+      "automatedBilling": "Automated Billing & Legal Reporting",
+      "greenPledge": "Green Pledge"
+    }
+  },
+  "footer": {
+    "description": "Professional property management, trusted by hosts in Portugal and beyond.",
+    "contact": {
+      "email": "contact@smarthoster.io",
+      "phone": "+351 933 683 981",
+      "address": "Lisbon, Portugal"
+    },
+    "offices": {
+      "title": "Our Offices in Portugal",
+      "emails": [
+        "algarve@smarthoster.io",
+        "lisbon@smarthoster.io",
+        "porto@smarthoster.io"
+      ]
+    },
+    "sections": {
+      "platform": {
+        "title": "Platform",
+        "links": ["Features", "Pricing", "Integrations", "API", "Security"]
+      },
+      "company": {
+        "title": "Company",
+        "links": ["About Us", "Careers", "Press", "Blog", "Contact"]
+      },
+      "support": {
+        "title": "Support",
+        "links": ["Help Center", "Documentation", "Community", "Training", "Status"]
+      },
+      "legal": {
+        "title": "Legal",
+        "links": ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR Compliance", "Compliance"]
+      }
+    },
+    "copyright": "All rights reserved.",
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy",
+      "gdpr": "GDPR Compliance"
+    },
+    "complaintsBook": "Complaints Book"
+  }
+}

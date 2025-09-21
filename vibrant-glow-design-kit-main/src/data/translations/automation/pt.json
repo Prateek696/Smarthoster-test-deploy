@@ -1,0 +1,107 @@
+
+{
+  "hero": {
+    "headline": "Tecnologia Inteligente. Hospedagem Mais Inteligente.",
+    "subheadline": "Acesso confiável, cobertura 24/7 e sistemas inteligentes que crescem com sua propriedade—alimentados pela plataforma SmartTag da SmartHoster e parceiros como Nuki e HOMINT.",
+    "cta": "Solicitar Avaliação Gratuita de Automação"
+  },
+  "multiLayeredAccess": {
+    "title": "Entrada à Prova de Falhas, Sempre.",
+    "description": "Na SmartHoster, não dependemos de um único método de check-in. Nosso sistema de acesso de três camadas garante confiabilidade não importa o que aconteça:",
+    "features": [
+      "Fechaduras Inteligentes Digitais — via Nuki e HOMINT, integradas com reservas de hóspedes",
+      "Caixas de Chaves Manuais — como backups seguros e offline",
+      "Equipe de Plantão — disponível 24/7 para auxiliar com acesso, resolver problemas ou abrir portas pessoalmente"
+    ],
+    "conclusion": "Seja um hóspede chegando à meia-noite, perdendo internet ou digitando o código errado—o acesso é garantido."
+  },
+  "smartLocks": {
+    "title": "Sem Contato, Confiável, Automatizado",
+    "description": "Fazemos parceria com os principais fornecedores de fechaduras inteligentes da Europa—Nuki e HOMINT—para trazer acesso totalmente digital à sua propriedade. Cada reserva gera automaticamente um código de acesso único ou chave digital, enviado ao hóspede pouco antes da chegada.",
+    "features": [
+      "Sem chaves físicas",
+      "Sem complicação de coordenação",
+      "Nenhum hóspede fica esperando na porta"
+    ]
+  },
+  "buildingAccess": {
+    "title": "Da Rua ao Apartamento",
+    "description": "Para apartamentos e condomínios, nossos sistemas se integram com interfones da entrada principal. Isso significa que seus hóspedes podem entrar no prédio e na unidade usando a mesma chave baseada no telefone—sem controles remotos separados, sem campainhas, sem confusão.",
+    "conclusion": "Isso é especialmente valioso em Lisboa, Porto e outras cidades com prédios de acesso em camadas."
+  },
+  "lockboxes": {
+    "title": "Baixa Tecnologia. Ainda Inteligente.",
+    "description": "Sistemas digitais não são infalíveis—e nos planejamos adequadamente. Cada propriedade inclui uma caixa de chaves manual, discretamente instalada e pré-configurada como ponto de acesso secundário. Hóspedes com problemas podem recuperar uma chave tradicional conforme necessário.",
+    "conclusion": "Rotacionamos e mantemos essas proativamente como parte do nosso sistema."
+  },
+  "humanOversight": {
+    "title": "Pessoas Reais. Tempo Real.",
+    "description": "Nossa equipe local está sempre de plantão, pronta para:",
+    "features": [
+      "Ajudar hóspedes que não conseguem acessar uma unidade",
+      "Destrancar unidades manualmente via app seguro",
+      "Visitar propriedades quando necessário, rapidamente"
+    ],
+    "conclusion": "Combinamos automação com presença real—porque tranquilidade precisa de ambos."
+  },
+  "smartTag": {
+    "title": "Além do Acesso—Construído para Confiabilidade",
+    "description": "Nossa plataforma SmartTag é mais que apenas fechaduras. Inclui sistemas inteligentes de agendamento e alerta que automatizam os processos de backend da sua propriedade:",
+    "features": [
+      "Notifica automaticamente a equipe de limpeza após o check-out",
+      "Dispara lembretes de manutenção para serviços recorrentes",
+      "Verifica timing de check-in/check-out e status de acesso",
+      "Sincroniza com calendários de reservas e painéis de propriedade"
+    ],
+    "conclusion": "O resultado? Menos ligações. Menos surpresas. Operações mais suaves."
+  },
+  "portfolioManagement": {
+    "title": "Um App. Qualquer Porta.",
+    "description": "Se você gerencia mais de uma propriedade, a SmartHoster facilita controlar todas a partir de um painel.",
+    "features": [
+      "Conceder ou revogar acesso instantaneamente",
+      "Visualizar logs de atividade",
+      "Coordenar prestadores de serviços",
+      "Monitorar horários de chegada de hóspedes em unidades"
+    ],
+    "conclusion": "Tudo sem pisar no local."
+  },
+  "whyItWorks": {
+    "title": "Automação não é sobre tecnologia—é sobre confiança.",
+    "description": "Hóspedes esperam check-ins modernos e suaves. Proprietários esperam confiabilidade. A SmartHoster entrega ambos.",
+    "subtitle": "Nosso sistema em camadas garante:",
+    "features": [
+      "Sem bloqueios",
+      "Sem check-ins perdidos",
+      "Sem atrasos de serviço",
+      "E sem suposições para proprietários ou hóspedes"
+    ],
+    "conclusion": "Isso leva a melhores avaliações, mais reservas repetidas e uma experiência de hospedagem sem estresse."
+  },
+  "faqs": {
+    "title": "Perguntas Frequentes",
+    "questions": {
+      "apartments": {
+        "question": "Este sistema pode funcionar em prédios de apartamentos?",
+        "answer": "Sim. Tanto Nuki quanto HOMINT se integram com interfones, dando aos hóspedes acesso da porta da frente ao apartamento."
+      },
+      "malfunction": {
+        "question": "E se a fechadura parar de funcionar?",
+        "answer": "Cada propriedade inclui uma caixa de chaves de backup e equipe de suporte 24/7 para auxiliar em tempo real."
+      },
+      "installation": {
+        "question": "A instalação está incluída?",
+        "answer": "Sim—para clientes em nosso pacote de serviço completo, fornecemos instalação sem custo adicional. Para outros, oferecemos um orçamento detalhado após uma avaliação gratuita."
+      },
+      "portfolio": {
+        "question": "Quantas propriedades posso gerenciar de uma vez?",
+        "answer": "Quantas quiser. Nosso painel escala para portfólios grandes e pequenos."
+      }
+    }
+  },
+  "finalCta": {
+    "headline": "Solicite Sua Avaliação Gratuita de Acesso",
+    "description": "Quer automatizar o acesso, evitar problemas de check-in e modernizar seus aluguéis? Agende sua revisão gratuita no local hoje.",
+    "cta": "Agendar Minha Avaliação"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "title": "Our Services, Clearly Defined",
+  "subtitle": "We believe in transparency, accountability, and doing the work. Here's exactly what we handle — and what you can expect from us at each level.",
+  "plans": {
+    "basic": {
+      "name": "BASIC",
+      "fee": "10% Management Fee",
+      "description": "For owners who want bookings and legal compliance — and manage the rest themselves.",
+      "buttonText": "Let's Start Simple"
+    },
+    "premium": {
+      "name": "PREMIUM",
+      "fee": "25% Management Fee",
+      "description": "Full-service operations, cleaning, guest support, and compliance — done for you.",
+      "popular": "MOST POPULAR",
+      "buttonText": "I Want Full Management"
+    },
+    "superPremium": {
+      "name": "SUPER PREMIUM ADD-ON",
+      "fee": "+5% Add-On (30% Total)",
+      "description": "For high-end properties and owners who want zero interruption and maximum guest delight.",
+      "buttonText": "I Want the VIP Experience"
+    }
+  },
+  "features": {
+    "basic": [
+      "Airbnb + Booking.com listing setup",
+      "Calendar sync",
+      "Auto guest messaging (business hours only)",
+      "Monthly performance summary",
+      "SEF registration + guest file submission",
+      "Cleaning coordination (external team)"
+    ],
+    "premium": [
+      "Dynamic pricing & listing optimization",
+      "24/7 guest communication",
+      "SmartHoster linens & towels",
+      "Internal cleaning & laundry",
+      "Amenity restocking & coordination",
+      "Maintenance coordination (with owner approval)",
+      "SEF + AL compliance",
+      "Tourist tax registration & reporting (owner-paid)",
+      "Monthly SAF-T invoicing",
+      "Automated billing",
+      "Owner dashboard (calendar + revenue)",
+      "Guest welcome gift (e.g., local wine)",
+      "Quarterly pricing strategy review"
+    ],
+    "superPremium": [
+      "Unlimited amenity restocking",
+      "Unlimited toilet paper, soap, bin bags, detergent, etc.",
+      "Fresh welcome bouquet for every guest",
+      "Wine or gift per stay",
+      "Weekly cleanings for long-term guests (7+ nights)",
+      "Repairs under €100 auto-handled (3/month)",
+      "Vendor payments managed directly",
+      "Guest issue resolution without owner involvement",
+      "Dedicated WhatsApp account manager",
+      "Proactive review management & performance alerts"
+    ]
+  },
+  "sections": {
+    "setup": {
+      "title": "From Empty Apartment to Guest-Ready Rental",
+      "subtitle": "We furnish, design, and prepare your property — professionally.",
+      "features": [
+        "Interior layout planning & furniture sourcing",
+        "Durable, high-performance furnishing (beds, sofas, dining, etc.)",
+        "Appliance selection & installation (TV, WiFi, kitchen, AC)",
+        "Full kitchen + bathroom outfitting",
+        "Design & styling",
+        "Utility activation (electricity, gas, water, internet)",
+        "Deep cleaning + walkthrough for handover"
+      ],
+      "button": "Schedule Setup Call"
+    },
+    "upgrade": {
+      "title": "From Existing Apartment to 5-Star-Ready Rental",
+      "subtitle": "Already furnished? We upgrade, optimize, and elevate it — with a full audit and targeted improvements.",
+      "note": "📌 Ideal for previously rented units or furnished homes that need a 5-star boost.",
+      "features": [
+        "On-site walkthrough & audit of current setup",
+        "Upgrade recommendations (bedding, linens, lighting, decor)",
+        "Guest experience optimization",
+        "Smart tech integration",
+        "Wi-Fi & streaming validation",
+        "Cleaning team onboarding",
+        "Final styling & optional test stay"
+      ],
+      "button": "Schedule Upgrade Call"
+    },
+    "compliance": {
+      "title": "From Fully Furnished Apartment to Fully Licensed Short-Term Rental",
+      "subtitle": "We handle all the legal, safety, and compliance steps to make your property fully licensed and guest-ready.",
+      "note": "📌 Perfect if your apartment is furnished but not yet legally ready to rent.",
+      "setupFee": "Setup fee: €300 + VAT",
+      "features": [
+        "\"Alojamento Local\" (AL) short-term rental registration and municipal submission",
+        "City Tax (Taxa Municipal Turística) setup",
+        "SEF / AIMA accommodation bulletin activation, coordination, and guest reporting",
+        "Short-term rental insurance coordination (civil liability and fire coverage)",
+        "Legal compliance equipment: fire extinguisher, fire blanket, smoke and CO detectors, first aid kit",
+        "Emergency contact signage and evacuation plan",
+        "Complaints Book setup — both physical and online",
+        "Guest information manual in multiple languages (Portuguese, English, and at least two others)",
+        "Guest-facing signage including trash rules, appliance guides, and building regulations",
+        "Final compliance walkthrough and handover"
+      ],
+      "button": "Book Compliance Setup"
+    }
+  },
+  "trust": {
+    "title": "Why owners choose SmartHoster",
+    "points": [
+      "Proven local operations team",
+      "Real experience, not just software",
+      "Transparent billing & vendor handling",
+      "Excellent guest ratings",
+      "Legally compliant and SAF-T ready"
+    ]
+  },
+  "footer": {
+    "title": "Not sure where to start? Contact us and we'll walk you through it.",
+    "button": "Talk to a Real Person"
+  }
+}

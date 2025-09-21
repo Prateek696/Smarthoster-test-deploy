@@ -1,0 +1,162 @@
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Mail, ArrowLeft, ArrowRight } from 'lucide-react'
+import LoadingSpinner from '../../components/common/LoadingSpinner'
+import { authAPI } from '../../services/auth.api'
+
+const ForgotPassword: React.FC = () => {
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    
+    try {
+      await authAPI.forgotPassword({ email })
+      setIsSubmitted(true)
+    } catch (error: any) {
+      console.error('Error:', error)
+      alert(error.response?.data?.message || 'Failed to send reset OTP')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-green-100 flex">
+        {/* Left side - Success message */}
+        <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+          <div className="mx-auto w-full max-w-sm lg:w-96">
+            {/* Logo and header */}
+            <div className="text-center mb-8">
+              <div className="flex justify-center mb-6">
+                <div className="flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200">
+                  <Mail className="h-10 w-10 text-green-600" />
+                </div>
+              </div>
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
+                Check your email
+              </h2>
+              <p className="text-base text-gray-600 leading-relaxed">
+                We've sent a password reset OTP to <strong className="text-gray-900">{email}</strong>
+              </p>
+              <p className="mt-2 text-sm text-gray-500">
+                Didn't receive the email? Check your spam folder or contact support.
+              </p>
+            </div>
+
+            {/* Action buttons */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-6 space-y-4">
+              <Link 
+                to="/auth/reset-password" 
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Enter OTP to reset password
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/auth/login" 
+                className="w-full flex justify-center items-center py-3 px-4 border border-gray-200 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-green-100 flex">
+      {/* Left side - Forgot password form */}
+      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-sm lg:w-96">
+          {/* Logo and header */}
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-6">
+              <div className="flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200">
+                <Mail className="h-10 w-10 text-green-600" />
+              </div>
+            </div>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
+              Forgot your password?
+            </h2>
+            <p className="text-base text-gray-600 leading-relaxed">
+              No worries! Enter your email and we'll send you a reset OTP.
+            </p>
+          </div>
+
+          {/* Forgot password form */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-500 mb-2">
+                  Email address
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300"
+                    placeholder="Enter your email"
+                  />
+                </div>
+              </div>
+
+              {/* Submit button */}
+              <div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isLoading ? (
+                    <>
+                      <LoadingSpinner size="sm" className="mr-2" />
+                      Sending reset OTP...
+                    </>
+                  ) : (
+                    <>
+                      Send reset OTP
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Back to login link */}
+          <div className="text-center">
+            <Link 
+              to="/auth/login" 
+              className="text-sm text-green-600 hover:text-green-700 font-medium transition-colors duration-200 flex items-center justify-center"
+            >
+              <ArrowLeft className="h-4 w-4 mr-1" />
+              Back to login
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default ForgotPassword
+
+
+

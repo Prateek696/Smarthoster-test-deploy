@@ -1,0 +1,135 @@
+
+{
+  "greenPledge": {
+    "hero": {
+      "headline": "Our Commitment to a Sustainable Future",
+      "subheadline": "Eco-friendly hospitality powered by smart technology and thoughtful choices."
+    },
+    "pledge": {
+      "title": "Our Green Pledge",
+      "description": "At SmartHoster, sustainability is at the heart of our operations. We are committed to reducing our environmental impact through initiatives like an all-electric vehicle fleet, LED lighting, water-saving fixtures, and eco-friendly cleaning products. By integrating smart technologies and educating our guests, we aim to protect the environment while delivering exceptional service.",
+      "icons": {
+        "electric": "Electric Vehicles",
+        "recycling": "Recycling",
+        "solar": "Solar Panels",
+        "wind": "Wind Energy",
+        "water": "Water Conservation",
+        "eco": "Eco-Friendly"
+      }
+    },
+    "initiatives": {
+      "title": "Our Key Green Initiatives",
+      "items": {
+        "electricVehicles": {
+          "title": "All-Electric Vehicle Fleet",
+          "description": "Our fleet is fully electric, reducing emissions and aligning with our goal to minimize our carbon footprint."
+        },
+        "tailoredBedding": {
+          "title": "Tailored Bedding and Towel Supplies",
+          "description": "We provide only the exact number of beds and towels needed for each guest, reducing unnecessary laundry and conserving water and energy."
+        },
+        "ledLighting": {
+          "title": "LED Lighting in All Properties",
+          "description": "Energy-efficient LED lighting consumes less energy and lasts longer than traditional bulbs, reducing electricity usage and waste."
+        },
+        "waterSaving": {
+          "title": "Water-Saving Fixtures",
+          "description": "Low-flow faucets and showerheads conserve water without compromising guest comfort."
+        },
+        "ecoFriendlyCleaning": {
+          "title": "Eco-Friendly Cleaning Products",
+          "description": "We use biodegradable, non-toxic cleaning products to ensure our cleaning practices are safe for the environment."
+        },
+        "reusableDispensers": {
+          "title": "Reusable Dispensers for Soap",
+          "description": "Replacing single-use soap containers with reusable dispensers cuts down on plastic waste."
+        },
+        "recyclingProgram": {
+          "title": "Recycling Program with Separate Bins",
+          "description": "Clearly labeled bins in each property help guests separate waste effectively, reducing landfill contributions."
+        },
+        "energyEfficient": {
+          "title": "Energy-Efficient Appliances",
+          "description": "Our properties are equipped with appliances that meet high energy efficiency standards, minimizing energy consumption."
+        },
+        "smartThermostats": {
+          "title": "Smart Thermostats and Energy Use Awareness",
+          "description": "Smart thermostats optimize heating and cooling based on occupancy, reducing energy usage."
+        },
+        "solarPower": {
+          "title": "Solar Power Integration",
+          "description": "Incorporating solar panels where feasible allows us to harness renewable energy, reducing reliance on grid power."
+        }
+      }
+    },
+    "whyGreen": {
+      "title": "Why Green Initiatives Matter",
+      "description": "Small changes can lead to significant impacts. Our green initiatives are about more than compliance; they're about creating a sustainable future. By choosing SmartHoster, you're joining us in our commitment to protecting the planet, reducing carbon emissions, conserving natural resources, and promoting a healthier environment for all.",
+      "benefits": {
+        "health": "Healthier Environment",
+        "conservation": "Resource Conservation"
+      }
+    },
+    "guestHelp": {
+      "title": "How Guests Can Help",
+      "description": "Every guest has the power to make a difference. During your stay, please help us protect the environment by:",
+      "actions": {
+        "recycle": {
+          "title": "Recycle Properly",
+          "description": "Use the provided bins to separate waste effectively."
+        },
+        "conserveWater": {
+          "title": "Conserve Water",
+          "description": "Reuse towels and limit water usage during your stay."
+        },
+        "turnOffElectricity": {
+          "title": "Turn Off Electricity",
+          "description": "Switch off AC and heating when away from the property."
+        },
+        "useEcoAmenities": {
+          "title": "Enjoy Eco-Friendly Amenities",
+          "description": "Make use of our sustainable products and features."
+        },
+        "supportTailoredBedding": {
+          "title": "Support Tailored Bedding",
+          "description": "Only use the beds prepared for your stay."
+        },
+        "mindfulEnergy": {
+          "title": "Be Mindful of Energy",
+          "description": "Turn off lights and unplug devices when not in use."
+        }
+      },
+      "cta": "Learn More About Our Green Initiatives"
+    },
+    "faqs": {
+      "title": "Frequently Asked Questions",
+      "questions": {
+        "ledLighting": {
+          "question": "How does using LED lighting make a difference?",
+          "answer": "LED lights use up to 80% less energy than traditional lighting, reducing greenhouse gas emissions and utility costs. They also last significantly longer, decreasing waste from frequent bulb replacements."
+        },
+        "tailoredBedding": {
+          "question": "Why do you provide tailored bedding and towel supplies?",
+          "answer": "Providing only the beds and towels needed conserves water and energy by reducing unnecessary laundry, thus minimizing our environmental footprint without sacrificing guest comfort."
+        },
+        "energyConservation": {
+          "question": "How can guests help with energy conservation in properties with AC and heating systems?",
+          "answer": "Guests can help by turning off the AC and heating when they're away from the property. This simple action significantly reduces energy consumption and environmental impact."
+        },
+        "solarPanels": {
+          "question": "How do solar panels benefit the environment?",
+          "answer": "Our solar panels harness renewable energy to generate electricity and heat water, significantly lowering carbon emissions and reducing reliance on non-renewable energy sources."
+        },
+        "guestContribution": {
+          "question": "Can guests contribute to your sustainability goals?",
+          "answer": "Absolutely! Guests can help by recycling, using water and electricity mindfully, turning off appliances when not in use, and participating in our towel and bedding conservation efforts."
+        }
+      }
+    },
+    "joinUs": {
+      "title": "Join Us in Making a Difference",
+      "description": "Experience a stay where sustainability meets comfort. By choosing SmartHoster, you're not only enjoying exceptional hospitality but also contributing to a greener future. Together, we can make a positive impact on the environment—one stay at a time.",
+      "cta": "Book Your Sustainable Stay Today"
+    }
+  }
+}

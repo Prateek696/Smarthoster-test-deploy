@@ -1,0 +1,96 @@
+
+{
+  "hero": {
+    "title": "Stay Compliant. Stay Confident.",
+    "subtitle": "Automated legal compliance, tax reporting, and seamless integration with Portuguese authorities—ensuring your rental operates within the law.",
+    "cta": "Learn More About Our Compliance Services"
+  },
+  "sefAima": {
+    "title": "Understanding SEF/AIMA Reporting Obligations",
+    "subtitle": "Legal Requirements for Short-Term Rentals in Portugal",
+    "description": "Operating a short-term rental in Portugal entails specific legal obligations, notably the requirement to report guest information to the Portuguese Immigration and Borders Service. As of October 29, 2023, the responsibilities previously held by SEF (Serviço de Estrangeiros e Fronteiras) have been transferred to AIMA (Agência para a Imigração e Mobilidade), the new agency overseeing immigration and mobility matters. This reporting is conducted through the SIBA (Sistema de Informação de Boletins de Alojamento) platform."
+  },
+  "whyImportant": {
+    "title": "Why SEF/AIMA Reporting Is Important",
+    "legalCompliance": {
+      "title": "Legal Compliance",
+      "mandatory": "Mandatory Requirement: All accommodation providers must collect and report specific information about foreign guests to AIMA within three working days of their arrival.",
+      "security": "National Security: Assists in monitoring foreign nationals, contributing to national security and immigration control.",
+      "transparency": "Transparency: Helps prevent illegal activities such as human trafficking and visa overstays."
+    },
+    "professionalism": {
+      "title": "Professionalism",
+      "credibility": "Credibility: Demonstrates your commitment to legal obligations.",
+      "trust": "Trust Building: Increases guest confidence in booking with compliant hosts."
+    }
+  },
+  "challenges": {
+    "title": "Challenges and Our Solution",
+    "complexity": {
+      "title": "Complexity of Compliance",
+      "understanding": "Understanding Requirements: The process involves legal nuances and timely submissions.",
+      "hesitation": "Guest Hesitation: Guests may be reluctant to share personal information."
+    },
+    "solution": {
+      "title": "How SmartHoster Assists",
+      "streamlined": "Streamlined Process: We handle all aspects of SEF/AIMA reporting on your behalf.",
+      "communication": "Clear Communication: We educate guests about legal requirements respectfully.",
+      "security": "Secure Data Handling: We collect necessary information efficiently and in compliance with data protection laws."
+    }
+  },
+  "refusal": {
+    "title": "Legal Obligation to Refuse Accommodation",
+    "description": "Under Portuguese law (Articles 15 and 16 of Law No. 23/2007 of 4 July), you must refuse accommodation if a guest declines to provide the required information.",
+    "support": {
+      "title": "Our Support",
+      "compliance": "Ensuring Compliance: We manage data collection to minimize such situations.",
+      "education": "Guest Education: We explain the necessity of information provision.",
+      "protection": "Legal Protection: We safeguard you from potential legal issues due to non-compliance."
+    }
+  },
+  "penalties": {
+    "title": "Penalties for Non-Compliance",
+    "financial": {
+      "title": "Financial Penalties",
+      "individuals": "Individuals: Fines ranging from €100 to €5,000 per infraction.",
+      "corporations": "Corporations: Fines from €2,000 to €10,000 per infraction."
+    },
+    "legal": {
+      "title": "Legal Consequences",
+      "criminal": "Criminal Charges: Possible for deliberate or repeated violations.",
+      "imprisonment": "Imprisonment: Sentences ranging from one to five years in severe cases.",
+      "restrictions": "Operational Restrictions: Potential suspension or revocation of your rental license."
+    },
+    "condominium": {
+      "title": "Impact on Condominium Properties",
+      "intervention": "Condominium Intervention: Non-compliance may lead to efforts by the condominium association to shut down your rental operation.",
+      "grounds": "Legal Grounds: Other owners might challenge your rental activities based on legal violations."
+    }
+  },
+  "management": {
+    "title": "How SmartHoster Manages SEF/AIMA Reporting",
+    "inclusive": "Inclusive Service: SEF/AIMA reporting is part of all our management packages.",
+    "expert": "Expert Team: Handles data collection and timely submission accurately.",
+    "systems": "Advanced Systems: Utilizes software to reduce errors and streamline reporting.",
+    "security": "Data Security: Ensures all guest information is secure and GDPR-compliant."
+  },
+  "touristTax": {
+    "title": "Tourist Tax Collection",
+    "description": "In addition to SEF/AIMA reporting, short-term rental operators in Portugal are required to collect Municipal Tourist Taxes (Taxa Municipal Turística) from guests, where applicable.",
+    "support": {
+      "title": "Our Support",
+      "calculation": "Automated Calculation: We calculate the appropriate tax based on your property's location and applicable rates.",
+      "collection": "Transparent Collection: We communicate the tax clearly to guests during the booking process.",
+      "remittance": "Timely Remittance: We ensure that collected taxes are remitted to the appropriate municipal authorities on schedule."
+    }
+  },
+  "conclusion": {
+    "title": "Conclusion",
+    "description": "Compliance with SEF/AIMA reporting and tourist tax obligations is essential for your rental business's success and legal standing in Portugal. SmartHoster takes the complexity out of this process, allowing you to focus on providing excellent hospitality while we handle the legal obligations."
+  },
+  "cta": {
+    "title": "Get Started with SmartHoster",
+    "description": "Contact us to learn more about our services and how we can customize them to fit your needs.",
+    "button": "Schedule a Free Compliance Consultation"
+  }
+}

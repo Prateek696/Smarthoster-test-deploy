@@ -1,0 +1,416 @@
+{
+  "languageBand": {
+    "tagline": "Ajudamos Anfitriões, Facilitamos Estadias"
+  },
+  "header": {
+    "logo": "SmartHoster.io",
+    "nav": {
+      "home": "Início",
+      "about": "Sobre Nós",
+      "features": "Funcionalidades",
+      "properties": "Propriedades",
+      "howItWorks": "Como Funciona",
+      "testimonials": "Testemunhos",
+      "pricing": "Preços",
+      "blog": "Blog"
+    },
+    "cta": {
+      "signIn": "Entrar",
+      "getStarted": "Começar",
+      "getStartedToday": "Começar Hoje"
+    }
+  },
+  "hero": {
+    "trustBadge": "Confiança de proprietários em todo Portugal",
+    "title": {
+      "empowering": "Ajudamos",
+      "hosts": "Anfitriões,",
+      "simplifying": "Facilitamos",
+      "stays": "Estadias"
+    },
+    "description": "Soluções inteligentes para gestão imobiliária sem complicações, ajudando-o a maximizar o potencial da sua propriedade com tecnologia de ponta.",
+    "cta": {
+      "getStarted": "Começar",
+      "learnMore": "Saber Mais"
+    },
+    "trustBadges": {
+      "sslCertified": "Certificado SSL",
+      "bankLevel": "Segurança Bancária",
+      "googleVerified": "Verificado pelo Google",
+      "trustedBusiness": "Negócio de Confiança"
+    },
+    "metrics": {
+      "incomeIncrease": "+35%",
+      "incomeLabel": "Aumento de Rendimentos",
+      "compliance": "100%",
+      "complianceLabel": "Conformidade Legal",
+      "support": "24/7",
+      "supportLabel": "Suporte"
+    }
+  },
+  "aboutUs": {
+    "title": "Sobre a SmartHoster.io",
+    "description": "Combinamos tecnologia de ponta com expertise local portuguesa para criar soluções de gestão imobiliária sustentáveis e rentáveis que respeitam tanto o nosso ambiente como as nossas comunidades.",
+    "values": {
+      "technology": {
+        "title": "Excelência Tecnológica",
+        "description": "Soluções de ponta que otimizam operações"
+      },
+      "expertise": {
+        "title": "Expertise Local",
+        "description": "Compreensão profunda da dinâmica do mercado português"
+      },
+      "sustainability": {
+        "title": "Compromisso com Sustentabilidade",
+        "description": "Práticas ecológicas para hospedagem responsável"
+      },
+      "standards": {
+        "title": "Padrões Globais",
+        "description": "Melhores práticas internacionais, implementação local"
+      }
+    },
+    "partners": {
+      "title": "Rede de Parceiros de Confiança"
+    }
+  },
+  "features": {
+    "title": "Funcionalidades Premium para",
+    "subtitle": "Sucesso Máximo",
+    "description": "Cada funcionalidade projetada com um objetivo: maximizar o potencial de receita da sua propriedade enquanto minimiza a sua sobrecarga operacional.",
+    "learnMore": "Saber Mais",
+    "list": {
+      "maxIncome": {
+        "title": "Rendimentos de Arrendamento Maximizados",
+        "description": "Algoritmos de preços dinâmicos e análise de mercado para garantir que obtém os retornos mais altos possíveis do seu investimento imobiliário."
+      },
+      "fullService": {
+        "title": "Gestão Imobiliária de Serviço Completo",
+        "description": "Gestão completa de ponta a ponta incluindo limpeza, manutenção, comunicação com hóspedes e garantia de qualidade."
+      },
+      "legalCompliance": {
+        "title": "Conformidade Legal e Relatórios SEF",
+        "description": "Conformidade legal automatizada, relatórios fiscais e integração perfeita com autoridades portuguesas e requisitos SEF."
+      },
+      "automation": {
+        "title": "Automação Avançada e Tecnologia Inteligente",
+        "description": "Integração IoT, fechaduras inteligentes, check-ins automatizados e otimização da experiência do hóspede alimentada por IA."
+      },
+      "billing": {
+        "title": "Faturação e Facturação Automatizadas",
+        "description": "Gestão financeira simplificada com faturação automatizada, processamento de pagamentos e relatórios abrangentes."
+      },
+      "directBookings": {
+        "title": "Reservas Diretas Melhoradas",
+        "description": "Sites de reserva personalizados e estratégias de marketing para reduzir taxas de comissão e aumentar reservas diretas."
+      },
+      "clientPortal": {
+        "title": "Acesso ao Portal do Cliente",
+        "description": "Acesso ao painel em tempo real para ver reservas, ganhos, desempenho da propriedade e análises detalhadas."
+      },
+      "localExpertise": {
+        "title": "Expertise Local Dedicada",
+        "description": "Especialistas do mercado português oferecendo serviço personalizado e insights locais para desempenho ótimo."
+      },
+      "greenPledge": {
+        "title": "O Nosso Compromisso Verde",
+        "description": "Práticas de hospedagem sustentáveis, comodidades ecológicas e programas de compensação de carbono para turismo responsável."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Testemunhos de Clientes",
+    "description": "Ouça proprietários em todo Portugal que transformaram a sua experiência de hospedagem com SmartHoster.io",
+    "roles": {
+      "villaOwner": "Proprietário de Villa",
+      "apartmentHost": "Anfitrião de Apartamento", 
+      "propertyInvestor": "Investidor Imobiliário",
+      "vacationRentalHost": "Anfitrião de Alojamento de Férias",
+      "boutiqueHotelOwner": "Proprietário de Hotel Boutique",
+      "countrysideVillaHost": "Anfitrião de Villa Rural"
+    },
+    "quotes": {
+      "luis": "A SmartHoster.io transformou a minha villa junto à praia num gerador consistente de rendimentos. A automação e expertise local fizeram toda a diferença - a minha receita aumentou 40% em apenas 6 meses.",
+      "maria": "As funcionalidades de conformidade legal são incríveis. Nunca me preocupo com relatórios SEF ou obrigações fiscais. Tudo é tratado profissionalmente e automaticamente.",
+      "carlos": "Gerir múltiplas propriedades era esmagador até encontrar a SmartHoster. Agora concentro-me em expandir o meu portfólio enquanto eles tratam de todas as operações perfeitamente.",
+      "ana": "As iniciativas verdes e práticas sustentáveis alinham perfeitamente com os meus valores. Os meus hóspedes adoram a abordagem ecológica, e as reservas duplicaram desde a mudança.",
+      "pedro": "Integraram o meu hotel boutique em todas as principais plataformas e configuraram um sistema de mensagens automatizado que realmente parece humano. Poupa-me horas todas as semanas — e os hóspedes adoram.",
+      "sofia": "Com a configuração de reservas diretas, cortei custos de comissão e agora ganho mais com hóspedes repetidos."
+    }
+  },
+  "successStories": {
+    "title": "Histórias de Sucesso de Clientes",
+    "description": "Resultados reais de proprietários reais que transformaram o seu negócio de hospedagem com SmartHoster.io",
+    "readFullStory": "Ler História Completa",
+    "propertyGallery": "Galeria da Propriedade",
+    "successBadge": "SUCESSO",
+    "caseStudy": "Estudo de Caso",
+    "stories": [
+      {
+        "name": "João Silva",
+        "property": "Villa à Beira-Mar",
+        "location": "Algarve",
+        "results": [
+          { "label": "Aumento de Receitas", "value": "+35%" },
+          { "label": "Taxa de Ocupação", "value": "+30%" },
+          { "label": "Avaliação de Hóspedes", "value": "4.9/5" },
+          { "label": "Status Superhost", "value": "Conquistado" }
+        ],
+        "story": "Quando conheci a equipa da SmartHoster, a minha propriedade à beira-mar tinha um potencial incrível — mas estava com desempenho abaixo do esperado. A empresa de gestão anterior tinha deixado as coisas negligenciadas. Repintámos, fizemos algumas melhorias no interior e obtivemos novas fotos profissionais. Mas a maior mudança? Instalar um sistema completo de check-in automático.",
+        "fullStory": "Quando conheci a equipa da SmartHoster, a minha propriedade à beira-mar tinha um potencial incrível — mas estava com desempenho abaixo do esperado. A empresa de gestão anterior tinha deixado as coisas negligenciadas. Os hóspedes queixavam-se de check-ins difíceis, a comunicação era lenta, e o lugar precisava simplesmente de uma renovação.\n\nRepintámos, fizemos algumas melhorias no interior e obtivemos novas fotos profissionais. Mas a maior mudança? Instalar um sistema completo de check-in automático — no portão de entrada e na porta da frente. De repente, os hóspedes chegavam sem problemas, sem espera, sem stress.\n\nTambém reconstruímos as minhas contas do zero. As minhas listagens anteriores tiveram um início difícil, então reiniciámos e relançámos no Airbnb, Booking.com e VRBO. As primeiras semanas foram calmas, mas após as primeiras 10 avaliações de cinco estrelas, as reservas começaram a aparecer.\n\nA SmartHoster cuidou dos detalhes que eu não sabia que estava a perder. Agora tenho ocupação consistente, hóspedes mais felizes, e muito menos com que me preocupar."
+      },
+      {
+        "name": "Maria Fernandes",
+        "property": "Apartamentos Urbanos",
+        "location": "Porto",
+        "results": [
+          { "label": "Crescimento de Receitas", "value": "+42%" },
+          { "label": "Conformidade Legal", "value": "100%" },
+          { "label": "Tempo Admin Poupado", "value": "-80%" },
+          { "label": "Classificação Plataforma", "value": "5★" }
+        ],
+        "story": "Costumávamos gerir todos os nossos apartamentos nós mesmos — fazendo malabarismos com reservas, limpezas, relatórios SEF, e tentando manter as contas em ordem. Funcionava, mas era uma luta constante. Então a SmartHoster apareceu.",
+        "fullStory": "Costumávamos gerir todos os nossos apartamentos nós mesmos — fazendo malabarismos com reservas, limpezas, relatórios SEF, e tentando manter as contas em ordem. Funcionava, mas era uma luta constante. Então a SmartHoster apareceu.\n\nAinda usamos as nossas próprias equipas de limpeza de confiança, mas a SmartHoster trata de todo o resto: comunicação com hóspedes, sistemas de check-in automático, conformidade, Modelo 30s, relatórios SEF, finanças, divisões de receitas — tudo. O nosso contabilista adora. Os dashboards são claros, os números são precisos, e não perdemos tempo a perseguir papelada.\n\nO que costumava ocupar horas de tempo administrativo agora está totalmente automatizado. Demos um passo atrás operacionalmente e focámo-nos em expandir o nosso portfólio aqui no Porto. Tudo funciona sob um sistema. É estruturado, limpo e escalável. Honestamente, faz sentido."
+      },
+      {
+        "name": "Carlos Mendes",
+        "property": "Casa Histórica",
+        "location": "Óbidos",
+        "results": [
+          { "label": "Valor das Reservas", "value": "+28%" },
+          { "label": "Reservas Diretas", "value": "+45%" },
+          { "label": "Satisfação Hóspedes", "value": "98%" },
+          { "label": "Receita por Mês", "value": "€4,200" }
+        ],
+        "story": "A minha casa histórica em Óbidos era encantadora, mas não estava a conseguir reservas suficientes — especialmente nos meses mais frios. Então a SmartHoster entrou com soluções criativas que transformaram completamente o meu negócio.",
+        "fullStory": "A minha casa histórica em Óbidos era encantadora, mas não estava a conseguir reservas suficientes — especialmente nos meses mais frios. Então a SmartHoster entrou. Ajudaram-me a refazer as fotos da propriedade, melhorar a qualidade da roupa de cama, e repensar como apresentava o espaço.\n\nA maior surpresa? Um jacuzzi insuflável de €400 e um deck de madeira personalizado de €250 à volta dele. Só isso — e mudou completamente o jogo. De repente, estava a conseguir reservas de inverno, os hóspedes adoravam o ambiente acolhedor exterior, e as minhas avaliações subiram.\n\nA SmartHoster não só gere as coisas — acrescenta valor de formas que nunca esperei. Agora ganho mais, com menos stress, e a casa está reservada durante todo o ano."
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "description": "Processo simples de 5 passos para transformar a sua propriedade num investimento de arrendamento de alto desempenho",
+    "steps": {
+      "reachOut": {
+        "title": "Entre em Contacto",
+        "description": "Contacte a nossa equipa para uma consulta personalizada sobre a sua propriedade"
+      },
+      "evaluation": {
+        "title": "Avaliação",
+        "description": "Avaliação abrangente da propriedade e análise de mercado para posicionamento ótimo"
+      },
+      "onboarding": {
+        "title": "Integração",
+        "description": "Processo de configuração perfeito com suporte dedicado e integração de plataforma"
+      },
+      "goLive": {
+        "title": "Entrar em Funcionamento",
+        "description": "Lance a sua propriedade em todas as plataformas com marketing profissional"
+      },
+      "enjoy": {
+        "title": "Desfrute dos Benefícios",
+        "description": "Relaxe enquanto gerimos tudo e maximizamos os seus retornos"
+      }
+    },
+    "cta": {
+      "title": "Pronto para Começar?",
+      "description": "Junte-se a centenas de proprietários bem-sucedidos que confiam na SmartHoster.io",
+      "benefits": {
+        "platform": "Plataforma profissional de gestão imobiliária",
+        "specialist": "Especialista dedicado de integração",
+        "expertise": "Expertise local no mercado português",
+        "compliance": "Suporte abrangente de conformidade legal"
+      },
+      "button": "Começar Hoje",
+      "ssl": "Processo Seguro SSL",
+      "support": "Suporte profissional incluído"
+    }
+  },
+  "pricing": {
+    "title": "Preços Simples e Transparentes",
+    "description": "Escolha o nível de gestão que se adequa às suas necessidades. Sem taxas ocultas, sem surpresas - apenas preços transparentes que crescem com o seu sucesso.",
+    "managementFee": "taxa de gestão",
+    "getStarted": "Começar com",
+    "plans": {
+      "essential": {
+        "name": "Essencial",
+        "fee": "15%",
+        "description": "Perfeito para novos anfitriões a começar a sua jornada de arrendamento"
+      },
+      "premium": {
+        "name": "Premium",
+        "fee": "30%",
+        "description": "Gestão completa sem intervenção para retornos máximos",
+        "popular": "Mais Popular"
+      }
+    },
+    "features": {
+      "essential": [
+        "Otimização de listagem de propriedade",
+        "Gestão básica de calendário",
+        "Suporte de comunicação com hóspedes",
+        "Relatórios mensais de desempenho",
+        "Relatórios de conformidade SEF",
+        "Suporte de emergência 24/7",
+        "Coordenação básica de limpeza"
+      ],
+      "premium": [
+        "Tudo no plano Essencial",
+        "Otimização de preços dinâmica",
+        "Fotografia profissional",
+        "Gestão imobiliária de serviço completo",
+        "Campanhas de marketing avançadas",
+        "Serviços de concierge para hóspedes",
+        "Coordenação de manutenção de propriedade",
+        "Site de reserva direta",
+        "Consultoria de otimização de receita",
+        "Suporte ao cliente prioritário"
+      ]
+    },
+    "cta": {
+      "title": "Precisa de uma Solução Personalizada?",
+      "description": "Oferecemos preços personalizados para grandes portfólios e requisitos únicos",
+      "button": "Contacte-nos"
+    }
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "description": "Obtenha respostas às perguntas mais comuns sobre os nossos serviços de gestão imobiliária",
+    "questions": {
+      "setup": {
+        "question": "Quanto tempo demora o processo de configuração?",
+        "answer": "O processo completo de integração normalmente demora 7-14 dias desde a consulta inicial até entrar em funcionamento. Isto inclui avaliação da propriedade, fotografia profissional, configuração de plataforma e documentação de conformidade. Orgulhamo-nos de ter um dos tempos de configuração mais rápidos da indústria mantendo os mais altos padrões de qualidade."
+      },
+      "fees": {
+        "question": "Há taxas ocultas além da percentagem de gestão?",
+        "answer": "Não há taxas ocultas. O nosso modelo de preços transparente significa que só paga a percentagem de gestão acordada das reservas bem-sucedidas. Isto cobre todos os nossos serviços incluindo marketing, suporte ao hóspede, coordenação de limpeza e gestão de conformidade. Nunca receberá cobranças surpresa ou taxas de serviço adicionais."
+      },
+      "compliance": {
+        "question": "Como garantem a conformidade legal com as regulamentações portuguesas?",
+        "answer": "Mantemos parcerias com especialistas legais e mantemo-nos atualizados com todas as regulamentações portuguesas de arrendamento de curto prazo. O nosso sistema trata automaticamente dos relatórios SEF, obrigações fiscais e requisitos de licenciamento. Fornecemos suporte completo de documentação e garantimos 100% de conformidade com leis locais e requisitos de registo."
+      },
+      "emergency": {
+        "question": "O que acontece durante emergências ou situações urgentes?",
+        "answer": "A nossa equipa de resposta de emergência 24/7 está sempre disponível para situações urgentes. Temos relações estabelecidas com empreiteiros locais, profissionais de manutenção e serviços de segurança. Os hóspedes recebem assistência imediata, e os proprietários são notificados de quaisquer incidentes com documentação completa e atualizações de resolução."
+      },
+      "personal": {
+        "question": "Posso ainda usar a minha propriedade para estadias pessoais?",
+        "answer": "Absolutamente! Trabalhamos em torno do seu horário pessoal e bloqueamos datas quando quer usar a sua propriedade. O nosso sistema de gestão de calendário facilita reservar tempo para si, visitas familiares ou férias pessoais. Mantém controlo completo sobre a disponibilidade da sua propriedade."
+      },
+      "cleaningFees": {
+        "question": "Como funcionam as taxas de limpeza?",
+        "answer": "As taxas de limpeza são pagas pelo hóspede, não pelo proprietário.\nSão adicionadas a cada reserva e passadas diretamente à equipa de limpeza.\n\nTratamos do resto — agendamento, comunicação e controlo de qualidade.\nNão paga do seu bolso, e não faz parte da nossa percentagem de gestão."
+      },
+      "cancellation": {
+        "question": "Qual é a política de cancelamento?",
+        "answer": "Oferecemos uma política de cancelamento de 15 dias nos acordos de gestão.\nNão fica preso a contratos longos — isto dá-lhe flexibilidade para mudar ou pausar serviços conforme necessário."
+      },
+      "payment": {
+        "question": "Como funciona o pagamento?",
+        "answer": "Somos flexíveis.\n\nPode receber pagamentos de hóspedes diretamente e nós faturamos-lhe a nossa percentagem —\nou, podemos recolher tudo e transferir os seus ganhos menos a nossa taxa.\n\nO que funcionar melhor para si."
+      },
+      "contract": {
+        "question": "O contrato é mês-a-mês?",
+        "answer": "Sim. Todos os acordos de gestão são mês-a-mês com aviso de 15 dias.\nSem compromissos a longo prazo, sem dores de cabeça."
+      },
+      "cleaningTeam": {
+        "question": "Tenho de usar a vossa equipa de limpeza?",
+        "answer": "Não — oferecemos coordenação de limpeza interna, mas é opcional.\n\nSe tem o seu próprio pessoal de limpeza, podemos integrá-lo no horário.\nCaso contrário, tratamos de tudo para si com equipas profissionais verificadas."
+      }
+    }
+  },
+  "contact": {
+    "title": {
+      "ready": "Pronto para",
+      "started": "Começar?"
+    },
+    "description": "Contacte a nossa equipa para uma consulta personalizada sobre as suas necessidades de gestão imobiliária",
+    "getInTouch": "Entre em Contacto",
+    "email": {
+      "label": "Email"
+    },
+    "phone": {
+      "label": "Telefone"
+    },
+    "trust": {
+      "ssl": "Comunicação Segura SSL",
+      "gdpr": "Conforme RGPD"
+    },
+    "form": {
+      "fullName": {
+        "label": "Nome Completo",
+        "placeholder": "O seu nome completo"
+      },
+      "email": {
+        "label": "Endereço de Email",
+        "placeholder": "seuemail@exemplo.com"
+      },
+      "phone": {
+        "label": "Número de Telefone",
+        "placeholder": "+351 XXX XXX XXX"
+      },
+      "message": {
+        "label": "Mensagem",
+        "placeholder": "Conte-nos sobre a sua propriedade e como podemos ajudar..."
+      },
+      "optional": "Opcional",
+      "consent": {
+        "text": "Consinto em receber atualizações e comunicações da",
+        "unsubscribe": "Pode cancelar a subscrição a qualquer momento. Veja a nossa",
+        "privacy": "Política de Privacidade"
+      },
+      "submit": "Enviar Mensagem",
+      "sending": "A enviar...",
+      "validation": {
+        "title": "Por favor preencha todos os campos obrigatórios",
+        "description": "Certifique-se de preencher o seu nome, email, mensagem e aceitar a política de privacidade."
+      },
+      "error": {
+        "title": "Erro ao enviar mensagem",
+        "description": "Por favor tente novamente ou contacte-nos diretamente."
+      },
+      "success": {
+        "title": "Mensagem Enviada com Sucesso!",
+        "description": "Obrigado por nos contactar. Entraremos em contacto consigo dentro de 24 horas.",
+        "button": "Fechar"
+      },
+      "emailSubject": "Submissão de Formulário de Contacto do SmartHoster.io",
+      "notProvided": "Não fornecido",
+      "consentConfirmation": "O utilizador concordou em receber comunicações."
+    },
+    "cta": {
+      "getStarted": "Começar Hoje"
+    }
+  },
+  "footer": {
+    "description": "Plataforma profissional de gestão imobiliária em que confiam milhares de anfitriões mundialmente.",
+    "contact": {
+      "email": "suporte@smarthoster.io",
+      "phone": "1-800-SMARTHOST",
+      "address": "Lisboa, Portugal"
+    },
+    "sections": {
+      "platform": {
+        "title": "Plataforma",
+        "links": ["Funcionalidades", "Preços", "Integrações", "API", "Segurança"]
+      },
+      "company": {
+        "title": "Empresa",
+        "links": ["Sobre Nós", "Carreiras", "Imprensa", "Blog", "Contacto"]
+      },
+      "support": {
+        "title": "Suporte",
+        "links": ["Centro de Ajuda", "Documentação", "Comunidade", "Formação", "Estado"]
+      },
+      "legal": {
+        "title": "Legal",
+        "links": ["Política de Privacidade", "Termos de Serviço", "Política de Cookies", "RGPD", "Conformidade"]
+      }
+    },
+    "copyright": "© 2024 SmartHoster.io. Todos os direitos reservados.",
+    "legal": {
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço",
+      "cookies": "Configurações de Cookies"
+    }
+  }
+}

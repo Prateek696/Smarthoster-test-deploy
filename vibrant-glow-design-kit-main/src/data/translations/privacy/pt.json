@@ -1,0 +1,145 @@
+
+{
+  "privacy": {
+    "title": "Política de Privacidade",
+    "effectiveDate": "Data de Entrada em Vigor: Domingo, 1 de junho de 2025",
+    "entityName": "BBAR Unipessoal LDA",
+    "operatingAs": "Opera Como: SmartHoster.io",
+    "vat": "IVA/NIPC: PT514142057",
+    "address": "Morada Registada: Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+    "email": "Email de Contacto: admin@smarthoster.io",
+    "sections": {
+      "purpose": {
+        "title": "1. Finalidade e Âmbito",
+        "content": "Esta Política de Privacidade descreve como a BBAR Unipessoal LDA (\"SmartHoster\", \"nós\", \"nosso\" ou \"nossa\") recolhe, processa, armazena, protege e, quando necessário, divulga dados pessoais. Estamos comprometidos em proteger a sua privacidade e tratar os seus dados em total conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD – Regulamento UE 2016/679) e todas as leis portuguesas e europeias aplicáveis de proteção de dados.\n\nEsta política aplica-se a todos os utilizadores, clientes, proprietários, hóspedes, subcontratados, fornecedores e visitantes do website que interagem com a SmartHoster.io por qualquer meio, incluindo portais web, canais de comunicação e plataformas integradas."
+      },
+      "controller": {
+        "title": "2. Responsável pelo Tratamento",
+        "content": "O responsável pelo tratamento de todos os dados pessoais processados sob esta política é:\n\nBBAR Unipessoal LDA\nRua do Molhe 575 1°, 4150-503 Porto, Portugal\nIVA/NIPC: PT514142057\nEmail: admin@smarthoster.io"
+      },
+      "dataCollection": {
+        "title": "3. Dados Pessoais que Recolhemos",
+        "content": "Podemos recolher e processar as seguintes categorias de dados pessoais:",
+        "categories": [
+          "Dados de Identidade: Nome completo, data de nascimento, número de identificação nacional, número de passaporte, NIF (Número de Identificação Fiscal)",
+          "Dados de Contacto: Número de telefone, endereço de email, morada física",
+          "Dados Financeiros: IBAN, informações de conta bancária, morada de faturação, método de pagamento",
+          "Dados de Propriedade: Documentação de propriedade, credenciais de acesso (ex: fechaduras inteligentes), histórico de manutenção",
+          "Dados de Utilização: Endereços IP, identificadores de dispositivo, detalhes do navegador, geolocalização, metadados de sessão",
+          "Dados de Interação de Serviço: Registos de reserva, histórico de hóspedes, horários de limpeza, registos de comunicação",
+          "Dados Legais e de Conformidade: Dados necessários para relatórios ao SEF, AIMA, AT e outras autoridades",
+          "Dados Média e Visuais: Imagens e gravações de intercomunicadores, sistemas de fechaduras inteligentes ou CCTV (quando aplicável)"
+        ]
+      },
+      "lawfulBases": {
+        "title": "4. Bases Legais para o Tratamento",
+        "content": "Processamos os seus dados pessoais com base nos seguintes fundamentos legais:",
+        "bases": [
+          "Execução de contrato: Quando celebramos ou executamos um acordo consigo",
+          "Obrigação legal: Para conformidade com regulamentações fiscais, de imigração e habitação",
+          "Interesse legítimo: Para manter a qualidade do serviço, segurança, prevenção de fraude ou administração interna",
+          "Consentimento: Para comunicações opcionais ou recolha de dados não essenciais (revogável a qualquer momento)",
+          "Interesse público: Quando necessário cooperar com entidades públicas sob a lei"
+        ]
+      },
+      "dataUse": {
+        "title": "5. Como Utilizamos os Seus Dados",
+        "content": "Utilizamos os seus dados pessoais para:",
+        "purposes": [
+          "Operar e fornecer os serviços de gestão imobiliária e alojamento de hóspedes da SmartHoster.io",
+          "Registar dados de hóspedes em sistemas nacionais (ex: SEF, AIMA, eFatura)",
+          "Coordenar e rastrear limpezas, manutenção e operações de acesso",
+          "Comunicar consigo sobre reservas, serviços, pagamentos e questões legais",
+          "Emitir documentos legais como faturas e relatórios",
+          "Cumprir a conformidade de alojamento local, incluindo cobrança de taxa turística",
+          "Manter segurança operacional, incluindo videovigilância e registos de acesso",
+          "Realizar análise estatística e acompanhamento de desempenho",
+          "Responder a consultas, disputas e pedidos de apoio ao cliente"
+        ]
+      },
+      "dataSharing": {
+        "title": "6. Partilha de Dados",
+        "content": "Podemos partilhar dados pessoais com:",
+        "parties": [
+          "Autoridades governamentais: SEF (Serviços de Estrangeiros e Fronteiras), AIMA, Autoridade Tributária, Banco de Portugal",
+          "Parceiros tecnológicos: ex: Nuki, Stripe, Hostaway, HostKit, Notion, Tawk, outras integrações de serviços",
+          "Profissionais subcontratados: Equipas de limpeza, fornecedores de manutenção, técnicos licenciados",
+          "Auditores, contabilistas, consultores legais: Sob NDA ou acordo de confidencialidade equivalente",
+          "Seguradores: Para reclamações relacionadas com danos, responsabilidade ou cobertura"
+        ],
+        "noSale": "Não vendemos, alugamos ou comercializamos os seus dados a terceiros.",
+        "transfers": "Quando os dados são transferidos para fora da UE/EEE, garantimos que existem salvaguardas legais, como Cláusulas Contratuais Padrão (CCP) ou proteções equivalentes."
+      },
+      "retention": {
+        "title": "7. Retenção de Dados",
+        "content": "Retemos dados pessoais apenas pelo período necessário para cumprir o seu propósito e cumprir obrigações legais:",
+        "periods": [
+          "Registos de faturação, fiscais e contratuais: 10 anos",
+          "Dados de cliente e serviço: Durante a duração da relação, e até 3 anos após término",
+          "Registos de marketing e comunicação: Até retirada do consentimento",
+          "Imagens de acesso e vigilância: Máximo de 30 dias, exceto se legalmente obrigatório reter por mais tempo"
+        ],
+        "erasure": "Todos os dados são apagados ou anonimizados de forma segura após expiração do período de retenção."
+      },
+      "rights": {
+        "title": "8. Os Seus Direitos",
+        "content": "Sob o RGPD e lei portuguesa, tem os seguintes direitos relativos aos seus dados pessoais:",
+        "list": [
+          "Direito de acesso: Obter uma cópia dos seus dados pessoais",
+          "Direito de retificação: Corrigir dados incorretos ou incompletos",
+          "Direito ao apagamento: Solicitar eliminação de dados, sujeito a limites legais",
+          "Direito à limitação: Limitar como utilizamos os seus dados",
+          "Direito de oposição: Opor-se a certas utilizações dos seus dados, incluindo marketing direto",
+          "Direito à portabilidade: Receber os seus dados num formato estruturado e legível por máquina",
+          "Direito de retirar consentimento: A qualquer momento, para tratamento baseado em consentimento",
+          "Direito de apresentar queixa: À Comissão Nacional de Proteção de Dados (CNPD)"
+        ],
+        "contact": "Para exercer os seus direitos, contacte-nos em admin@smarthoster.io"
+      },
+      "security": {
+        "title": "9. Segurança de Dados",
+        "content": "Levamos a proteção de dados a sério e utilizamos as seguintes salvaguardas:",
+        "measures": [
+          "Encriptação: Todos os dados sensíveis são encriptados durante transmissão e armazenamento",
+          "Controlo de Acesso: Acesso baseado em funções, autenticação multifator, registos de auditoria",
+          "Minimização de Dados: Apenas recolhemos o que é estritamente necessário",
+          "Infraestrutura Segura: Firewalls, monitorização, protocolos de backup e segurança física",
+          "Formação de Funcionários: Todo o pessoal e contratados estão vinculados por obrigações de confidencialidade"
+        ],
+        "breach": "Em caso de violação de dados, notificaremos a CNPD e os indivíduos afetados conforme exigido por lei."
+      },
+      "minors": {
+        "title": "10. Menores",
+        "content": "Não recolhemos conscientemente dados pessoais de crianças menores de 16 anos, exceto em casos onde a identificação de hóspedes é legalmente exigida para registo SEF, e o consentimento é fornecido por um pai ou tutor legal."
+      },
+      "cookies": {
+        "title": "11. Cookies e Tecnologias de Rastreamento",
+        "content": "A SmartHoster.io utiliza cookies e tecnologias similares para melhorar a experiência do utilizador, analisar tráfego e gerir sessões.\n\nUtilizamos:",
+        "types": [
+          "Cookies essenciais: Para login, navegação e funcionalidade básica do site",
+          "Cookies analíticos: ex: Google Analytics, para melhorar o desempenho",
+          "Cookies funcionais: Para lembrar preferências e configurações"
+        ],
+        "disclosure": "O uso de cookies é divulgado na nossa Política de Cookies separada, e o consentimento é obtido quando necessário."
+      },
+      "automated": {
+        "title": "12. Processamento Automatizado e Perfilagem",
+        "content": "Podemos usar formas limitadas de processamento automatizado para:",
+        "uses": [
+          "Detetar comportamento fraudulento ou acesso anormal",
+          "Otimizar preços de aluguer usando ferramentas de calendário dinâmico",
+          "Acionar lembretes de manutenção ou alertas em atraso"
+        ],
+        "impact": "Estes processos não resultam em decisões automatizadas com impacto legal ou significativo sem intervenção humana."
+      },
+      "changes": {
+        "title": "13. Alterações a esta Política",
+        "content": "Podemos atualizar esta Política de Privacidade para refletir mudanças na lei ou serviços. A versão mais recente estará sempre disponível no nosso website. Mudanças significativas serão comunicadas via email ou notificação na aplicação."
+      },
+      "contact": {
+        "title": "14. Contacto",
+        "content": "Se tiver questões, preocupações ou pedidos de dados, pode contactar-nos em:\n\nBBAR Unipessoal LDA\nRua do Molhe 575 1°, 4150-503 Porto, Portugal\nEmail: admin@smarthoster.io"
+      }
+    }
+  }
+}

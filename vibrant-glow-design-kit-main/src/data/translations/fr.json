@@ -1,0 +1,416 @@
+{
+  "languageBand": {
+    "tagline": "Autonomiser les Hôtes, Simplifier les Séjours"
+  },
+  "header": {
+    "logo": "SmartHoster.io",
+    "nav": {
+      "home": "Accueil",
+      "about": "À Propos",
+      "features": "Fonctionnalités",
+      "properties": "Propriétés",
+      "howItWorks": "Comment Ça Marche",
+      "testimonials": "Témoignages",
+      "pricing": "Tarifs",
+      "blog": "Blog"
+    },
+    "cta": {
+      "signIn": "Se Connecter",
+      "getStarted": "Commencer",
+      "getStartedToday": "Commencer Aujourd'hui"
+    }
+  },
+  "hero": {
+    "trustBadge": "Fait confiance par les propriétaires à travers le Portugal",
+    "title": {
+      "empowering": "Autonomiser",
+      "hosts": "les Hôtes,",
+      "simplifying": "Simplifier",
+      "stays": "les Séjours"
+    },
+    "description": "Solutions intelligentes pour une gestion immobilière sans tracas, vous aidant à maximiser le potentiel de votre propriété avec une technologie de pointe.",
+    "cta": {
+      "getStarted": "Commencer",
+      "learnMore": "En Savoir Plus"
+    },
+    "trustBadges": {
+      "sslCertified": "Certifié SSL",
+      "bankLevel": "Sécurité Bancaire",
+      "googleVerified": "Vérifié par Google",
+      "trustedBusiness": "Entreprise de Confiance"
+    },
+    "metrics": {
+      "incomeIncrease": "+35%",
+      "incomeLabel": "Augmentation des Revenus",
+      "compliance": "100%",
+      "complianceLabel": "Conformité Légale",
+      "support": "24/7",
+      "supportLabel": "Support"
+    }
+  },
+  "aboutUs": {
+    "title": "À Propos de SmartHoster.io",
+    "description": "Nous combinons une technologie de pointe avec une expertise locale française pour créer des solutions de gestion immobilière durables et rentables qui respectent à la fois notre environnement et nos communautés.",
+    "values": {
+      "technology": {
+        "title": "Excellence Technologique",
+        "description": "Solutions de pointe qui optimisent les opérations"
+      },
+      "expertise": {
+        "title": "Expertise Locale",
+        "description": "Compréhension approfondie de la dynamique du marché français"
+      },
+      "sustainability": {
+        "title": "Engagement Durable",
+        "description": "Pratiques écologiques pour un hébergement responsable"
+      },
+      "standards": {
+        "title": "Standards Globaux",
+        "description": "Meilleures pratiques internationales, mise en œuvre locale"
+      }
+    },
+    "partners": {
+      "title": "Réseau de Partenaires de Confiance"
+    }
+  },
+  "features": {
+    "title": "Fonctionnalités Premium pour",
+    "subtitle": "un Succès Maximum",
+    "description": "Chaque fonctionnalité conçue avec un objectif : maximiser le potentiel de revenus de votre propriété tout en minimisant votre charge opérationnelle.",
+    "learnMore": "En Savoir Plus",
+    "list": {
+      "maxIncome": {
+        "title": "Revenus de Location Maximisés",
+        "description": "Algorithmes de tarification dynamique et analyse de marché pour garantir que vous obtenez les retours les plus élevés possibles de votre investissement immobilier."
+      },
+      "fullService": {
+        "title": "Gestion Immobilière de Service Complet",
+        "description": "Gestion complète de bout en bout incluant nettoyage, maintenance, communication avec les clients et assurance qualité."
+      },
+      "legalCompliance": {
+        "title": "Conformité Légale et Rapports",
+        "description": "Conformité légale automatisée, rapports fiscaux et intégration transparente avec les autorités françaises et exigences réglementaires."
+      },
+      "automation": {
+        "title": "Automatisation Avancée et Technologie Intelligente",
+        "description": "Intégration IoT, serrures intelligentes, enregistrements automatisés et optimisation de l'expérience client alimentée par l'IA."
+      },
+      "billing": {
+        "title": "Facturation et Facturación Automatisées",
+        "description": "Gestion financière simplifiée avec facturation automatisée, traitement des paiements et rapports complets."
+      },
+      "directBookings": {
+        "title": "Réservations Directes Améliorées",
+        "description": "Sites de réservation personnalisés et stratégies marketing pour réduire les frais de commission et augmenter les réservations directes."
+      },
+      "clientPortal": {
+        "title": "Accès au Portail Client",
+        "description": "Accès au tableau de bord en temps réel pour voir les réservations, gains, performance de propriété et analyses détaillées."
+      },
+      "localExpertise": {
+        "title": "Expertise Locale Dédiée",
+        "description": "Spécialistes du marché français offrant un service personnalisé et des insights locaux pour une performance optimale."
+      },
+      "greenPledge": {
+        "title": "Notre Engagement Vert",
+        "description": "Pratiques d'hébergement durables, commodités écologiques et programmes de compensation carbone pour un tourisme responsable."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Témoignages de Clients",
+    "description": "Écoutez les propriétaires à travers la France qui ont transformé leur expérience d'hébergement avec SmartHoster.io",
+    "roles": {
+      "villaOwner": "Propriétaire de Villa",
+      "apartmentHost": "Hôte d'Appartement", 
+      "propertyInvestor": "Investisseur Immobilier",
+      "vacationRentalHost": "Hôte de Location de Vacances",
+      "boutiqueHotelOwner": "Propriétaire d'Hôtel Boutique",
+      "countrysideVillaHost": "Hôte de Villa Campagnarde"
+    },
+    "quotes": {
+      "luis": "SmartHoster.io a transformé ma villa en front de mer en générateur de revenus constant. L'automatisation et l'expertise locale ont fait toute la différence - mes revenus ont augmenté de 40% en seulement 6 mois.",
+      "maria": "Les fonctionnalités de conformité légale sont incroyables. Je ne m'inquiète jamais des rapports ou des obligations fiscales. Tout est géré professionnellement et automatiquement.",
+      "carlos": "Gérer plusieurs propriétés était accablant jusqu'à ce que je trouve SmartHoster. Maintenant je me concentre sur l'expansion de mon portefeuille pendant qu'ils gèrent toutes les opérations sans problème.",
+      "ana": "Les initiatives vertes et pratiques durables s'alignent parfaitement avec mes valeurs. Mes clients adorent l'approche écologique, et les réservations ont doublé depuis le changement.",
+      "pedro": "Ils ont intégré mon hôtel boutique sur toutes les principales plateformes et mis en place un système de messagerie automatisé qui semble vraiment humain. Cela me fait économiser des heures chaque semaine — et les clients adorent.",
+      "sofia": "Avec leur configuration de réservation directe, j'ai réduit les coûts de commission et gagne maintenant plus avec les clients récurrents."
+    }
+  },
+  "successStories": {
+    "title": "Histoires de Succès Clients",
+    "description": "Résultats réels de vrais propriétaires qui ont transformé leur entreprise d'hébergement avec SmartHoster.io",
+    "readFullStory": "Lire l'Histoire Complète",
+    "propertyGallery": "Galerie de la Propriété",
+    "successBadge": "SUCCÈS",
+    "caseStudy": "Étude de Cas",
+    "stories": [
+      {
+        "name": "João Silva",
+        "property": "Villa en Bord de Mer",
+        "location": "Algarve",
+        "results": [
+          { "label": "Augmentation des Revenus", "value": "+35%" },
+          { "label": "Taux d'Occupation", "value": "+30%" },
+          { "label": "Note des Invités", "value": "4.9/5" },
+          { "label": "Statut Superhost", "value": "Obtenu" }
+        ],
+        "story": "Quand j'ai rencontré l'équipe SmartHoster, ma propriété en bord de mer avait un potentiel incroyable — mais elle était sous-performante. L'ancienne société de gestion avait laissé les choses négligées. Nous avons repeint, fait quelques améliorations intérieures et obtenu de nouvelles photos professionnelles. Mais le plus grand changement ? Installer un système complet d'enregistrement automatique.",
+        "fullStory": "Quand j'ai rencontré l'équipe SmartHoster, ma propriété en bord de mer avait un potentiel incroyable — mais elle était sous-performante. L'ancienne société de gestion avait laissé les choses négligées. Les invités se plaignaient d'enregistrements difficiles, la communication était lente, et l'endroit avait juste besoin d'être rafraîchi.\n\nNous avons repeint, fait quelques améliorations intérieures et obtenu de nouvelles photos professionnelles. Mais le plus grand changement ? Installer un système complet d'enregistrement automatique — au portail d'entrée et à la porte d'entrée. Soudain, les invités arrivaient en douceur, sans attente, sans stress.\n\nNous avons aussi reconstruit mes comptes depuis le début. Mes anciennes annonces avaient eu un début difficile, alors nous avons remis à zéro et relancé sur Airbnb, Booking.com et VRBO. Les premières semaines ont été calmes, mais après les 10 premiers avis cinq étoiles, les réservations ont commencé à affluer.\n\nSmartHoster s'est occupé des détails que je ne savais pas que je ratais. Maintenant j'ai une occupation constante, des invités plus heureux, et beaucoup moins de soucis."
+      },
+      {
+        "name": "Maria Fernandes",
+        "property": "Appartements Urbains",
+        "location": "Porto",
+        "results": [
+          { "label": "Croissance des Revenus", "value": "+42%" },
+          { "label": "Conformité Légale", "value": "100%" },
+          { "label": "Temps Admin Économisé", "value": "-80%" },
+          { "label": "Note Plateforme", "value": "5★" }
+        ],
+        "story": "Nous gérions tous nos appartements nous-mêmes — jonglant avec les réservations, le nettoyage, les rapports SEF, et essayant de maintenir les comptes en ordre. Ça marchait, mais c'était un combat constant. Puis SmartHoster est arrivé.",
+        "fullStory": "Nous gérions tous nos appartements nous-mêmes — jonglant avec les réservations, le nettoyage, les rapports SEF, et essayant de maintenir les comptes en ordre. Ça marchait, mais c'était un combat constant. Puis SmartHoster est arrivé.\n\nNous utilisons toujours nos propres équipes de nettoyage de confiance, mais SmartHoster gère tout le reste : communication avec les invités, systèmes d'enregistrement automatique, conformité, Modèle 30s, rapports SEF, finances, partage des revenus — tout. Notre comptable adore. Les tableaux de bord sont clairs, les chiffres sont précis, et nous ne perdons pas de temps à courir après la paperasse.\n\nCe qui prenait des heures de temps administratif est maintenant entièrement automatisé. Nous avons pris du recul opérationnellement et nous nous sommes concentrés sur l'expansion de notre portefeuille ici à Porto. Tout fonctionne sous un seul système. C'est structuré, propre et évolutif. Honnêtement, ça a du sens."
+      },
+      {
+        "name": "Carlos Mendes",
+        "property": "Maison Historique",
+        "location": "Óbidos",
+        "results": [
+          { "label": "Valeur des Réservations", "value": "+28%" },
+          { "label": "Réservations Directes", "value": "+45%" },
+          { "label": "Satisfaction Invités", "value": "98%" },
+          { "label": "Revenus par Mois", "value": "€4,200" }
+        ],
+        "story": "Ma maison historique à Óbidos était charmante, mais je n'obtenais pas assez de réservations — surtout pendant les mois froids. Puis SmartHoster est intervenu avec des solutions créatives qui ont complètement transformé mon entreprise.",
+        "fullStory": "Ma maison historique à Óbidos était charmante, mais je n'obtenais pas assez de réservations — surtout pendant les mois froids. Puis SmartHoster est intervenu. Ils m'ont aidé à refaire les photos de la propriété, améliorer la qualité de la literie, et repenser comment je présentais l'espace.\n\nLa plus grande surprise ? Un jacuzzi gonflable à 400€ et une terrasse en bois personnalisée à 250€ autour. C'est tout — et ça a complètement changé la donne. Soudain, j'obtenais des réservations d'hiver, les invités adoraient l'ambiance extérieure cosy, et mes avis ont augmenté.\n\nSmartHoster ne se contente pas de gérer les choses — ils ajoutent de la valeur de façons que je n'avais jamais imaginées. Je gagne maintenant plus, avec moins de stress, et la maison est réservée toute l'année."
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "Comment Ça Marche",
+    "description": "Processus simple en 5 étapes pour transformer votre propriété en un investissement locatif haute performance",
+    "steps": {
+      "reachOut": {
+        "title": "Prenez Contact",
+        "description": "Contactez notre équipe pour une consultation personnalisée sur votre propriété"
+      },
+      "evaluation": {
+        "title": "Évaluation",
+        "description": "Évaluation complète de la propriété et analyse de marché pour un positionnement optimal"
+      },
+      "onboarding": {
+        "title": "Intégration",
+        "description": "Processus de configuration transparent avec support dédié et intégration de plateforme"
+      },
+      "goLive": {
+        "title": "Mise en Service",
+        "description": "Lancez votre propriété sur toutes les plateformes avec marketing professionnel"
+      },
+      "enjoy": {
+        "title": "Profitez des Avantages",
+        "description": "Détendez-vous pendant que nous gérons tout et maximisons vos retours"
+      }
+    },
+    "cta": {
+      "title": "Prêt à Commencer ?",
+      "description": "Rejoignez des centaines de propriétaires prospères qui font confiance à SmartHoster.io",
+      "benefits": {
+        "platform": "Plateforme professionnelle de gestion immobilière",
+        "specialist": "Spécialiste dédié d'intégration",
+        "expertise": "Expertise locale du marché français",
+        "compliance": "Support complet de conformité légale"
+      },
+      "button": "Commencer Aujourd'hui",
+      "ssl": "Processus Sécurisé SSL",
+      "support": "Support professionnel inclus"
+    }
+  },
+  "pricing": {
+    "title": "Tarifs Simples et Transparents",
+    "description": "Choisissez le niveau de gestion qui convient à vos besoins. Pas de frais cachés, pas de surprises - juste des prix transparents qui grandissent avec votre succès.",
+    "managementFee": "frais de gestion",
+    "getStarted": "Commencer avec",
+    "plans": {
+      "essential": {
+        "name": "Essentiel",
+        "fee": "15%",
+        "description": "Parfait pour les nouveaux hôtes qui commencent leur parcours locatif"
+      },
+      "premium": {
+        "name": "Premium",
+        "fee": "30%",
+        "description": "Gestion complète sans intervention pour des retours maximums",
+        "popular": "Le Plus Populaire"
+      }
+    },
+    "features": {
+      "essential": [
+        "Optimisation de listing de propriété",
+        "Gestion de calendrier de base",
+        "Support de communication avec les clients",
+        "Rapports de performance mensuels",
+        "Rapports de conformité",
+        "Support d'urgence 24/7",
+        "Coordination de nettoyage de base"
+      ],
+      "premium": [
+        "Tout dans le plan Essentiel",
+        "Optimisation de prix dynamique",
+        "Photographie professionnelle",
+        "Gestion immobilière de service complet",
+        "Campagnes marketing avancées",
+        "Services de conciergerie pour clients",
+        "Coordination de maintenance de propriété",
+        "Site de réservation directe",
+        "Conseil en optimisation de revenus",
+        "Support client prioritaire"
+      ]
+    },
+    "cta": {
+      "title": "Besoin d'une Solution Personnalisée ?",
+      "description": "Nous offrons des prix personnalisés pour de grands portefeuilles et des exigences uniques",
+      "button": "Nous Contacter"
+    }
+  },
+  "faq": {
+    "title": "Questions Fréquemment Posées",
+    "description": "Obtenez des réponses aux questions les plus courantes sur nos services de gestion immobilière",
+    "questions": {
+      "setup": {
+        "question": "Combien de temps prend le processus de configuration ?",
+        "answer": "Le processus complet d'intégration prend généralement 7-14 jours depuis la consultation initiale jusqu'à la mise en service. Cela inclut l'évaluation de propriété, la photographie professionnelle, la configuration de plateforme et la documentation de conformité. Nous sommes fiers d'avoir l'un des temps de configuration les plus rapides de l'industrie tout en maintenant les plus hauts standards de qualité."
+      },
+      "fees": {
+        "question": "Y a-t-il des frais cachés en plus du pourcentage de gestion ?",
+        "answer": "Il n'y a pas de frais cachés. Notre modèle de prix transparent signifie que vous ne payez que le pourcentage de gestion convenu sur les réservations réussies. Cela couvre tous nos services incluant marketing, support client, coordination de nettoyage et gestion de conformité. Vous ne recevrez jamais de charges surprises ou de frais de service supplémentaires."
+      },
+      "compliance": {
+        "question": "Comment assurez-vous la conformité légale avec les réglementations françaises ?",
+        "answer": "Nous maintenons des partenariats avec des experts légaux et restons à jour avec toutes les réglementations françaises de location courte durée. Notre système gère automatiquement les rapports réglementaires, obligations fiscales et exigences de licence. Nous fournissons un support complet de documentation et garantissons 100% de conformité avec les lois locales et exigences d'enregistrement."
+      },
+      "emergency": {
+        "question": "Que se passe-t-il lors d'urgences ou de situations urgentes ?",
+        "answer": "Notre équipe de réponse d'urgence 24/7 est toujours disponible pour les situations urgentes. Nous avons des relations établies avec des entrepreneurs locaux, professionnels de maintenance et services de sécurité. Les clients reçoivent une assistance immédiate, et les propriétaires sont notifiés de tout incident avec documentation complète et mises à jour de résolution."
+      },
+      "personal": {
+        "question": "Puis-je encore utiliser ma propriété pour des séjours personnels ?",
+        "answer": "Absolument ! Nous travaillons autour de votre horaire personnel et bloquons les dates quand vous voulez utiliser votre propriété. Notre système de gestion de calendrier facilite la réservation de temps pour vous, visites familiales ou vacances personnelles. Vous gardez un contrôle complet sur la disponibilité de votre propriété."
+      },
+      "cleaningFees": {
+        "question": "Comment fonctionnent les frais de nettoyage ?",
+        "answer": "Les frais de nettoyage sont payés par le client, pas par le propriétaire.\nIls sont ajoutés à chaque réservation et transmis directement à l'équipe de nettoyage.\n\nNous gérons le reste — planification, communication et contrôle qualité.\nVous ne payez pas de votre poche, et ce n'est pas inclus dans notre pourcentage de gestion."
+      },
+      "cancellation": {
+        "question": "Quelle est la politique d'annulation ?",
+        "answer": "Nous offrons une politique d'annulation de 15 jours sur les accords de gestion.\nVous n'êtes pas lié à des contrats longs — cela vous donne la flexibilité de changer ou suspendre les services selon vos besoins."
+      },
+      "payment": {
+        "question": "Comment fonctionne le paiement ?",
+        "answer": "Nous sommes flexibles.\n\nVous pouvez recevoir les paiements des clients directement et nous vous facturons notre pourcentage —\nou, nous pouvons tout collecter et transférer vos gains moins notre commission.\n\nCe qui fonctionne le mieux pour vous."
+      },
+      "contract": {
+        "question": "Le contrat est-il mois par mois ?",
+        "answer": "Oui. Tous les accords de gestion sont mois-a-mois avec un préavis de 15 jours.\nPas d'engagements à long terme, pas de maux de tête."
+      },
+      "cleaningTeam": {
+        "question": "Dois-je utiliser votre équipe de nettoyage ?",
+        "answer": "Non — nous offrons la coordination de nettoyage interne, mais c'est optionnel.\n\nSi vous avez votre propre personnel de nettoyage, nous pouvons l'intégrer dans l'horaire.\nSinon, nous gérons tout pour vous avec des équipes professionnelles vérifiées."
+      }
+    }
+  },
+  "contact": {
+    "title": {
+      "ready": "Prêt à",
+      "started": "Commencer?"
+    },
+    "description": "Contactez notre équipe pour une consultation personnalisée sur votre propriété",
+    "getInTouch": "Entrer en Contact",
+    "email": {
+      "label": "Email"
+    },
+    "phone": {
+      "label": "Téléphone"
+    },
+    "trust": {
+      "ssl": "Communication Sécurisée SSL",
+      "gdpr": "Conforme RGPD"
+    },
+    "form": {
+      "fullName": {
+        "label": "Nom Complet",
+        "placeholder": "Votre nom complet"
+      },
+      "email": {
+        "label": "Adresse Email",
+        "placeholder": "votre.email@exemple.com"
+      },
+      "phone": {
+        "label": "Numéro de Téléphone",
+        "placeholder": "+33 X XX XX XX XX"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Parlez-nous de votre propriété et comment nous pouvons vous aider..."
+      },
+      "optional": "Optionnel",
+      "consent": {
+        "text": "Je consens à recevoir des mises à jour et communications de",
+        "unsubscribe": "Vous pouvez vous désabonner à tout moment. Voir notre",
+        "privacy": "Politique de Confidentialité"
+      },
+      "submit": "Envoyer le Message",
+      "sending": "Envoi...",
+      "validation": {
+        "title": "Veuillez remplir tous les champs obligatoires",
+        "description": "Assurez-vous de remplir votre nom, email, message et d'accepter la politique de confidentialité."
+      },
+      "error": {
+        "title": "Erreur lors de l'envoi du message",
+        "description": "Veuillez réessayer ou nous contacter directement."
+      },
+      "success": {
+        "title": "Message Envoyé avec Succès !",
+        "description": "Merci de nous avoir contactés. Nous vous recontacterons dans les 24 heures.",
+        "button": "Fermer"
+      },
+      "emailSubject": "Soumission de Formulaire de Contact SmartHoster.io",
+      "notProvided": "Non fourni",
+      "consentConfirmation": "L'utilisateur a accepté de recevoir des communications."
+    },
+    "cta": {
+      "getStarted": "Commencer Aujourd'hui"
+    }
+  },
+  "footer": {
+    "description": "Plateforme professionnelle de gestion immobilière en qui font confiance des milliers d'hôtes dans le monde entier.",
+    "contact": {
+      "email": "support@smarthoster.io",
+      "phone": "1-800-SMARTHOST",
+      "address": "Paris, France"
+    },
+    "sections": {
+      "platform": {
+        "title": "Plateforme",
+        "links": ["Fonctionnalités", "Tarifs", "Intégrations", "API", "Sécurité"]
+      },
+      "company": {
+        "title": "Entreprise",
+        "links": ["À Propos", "Carrières", "Presse", "Blog", "Contact"]
+      },
+      "support": {
+        "title": "Support",
+        "links": ["Centre d'Aide", "Documentation", "Communauté", "Formation", "Statut"]
+      },
+      "legal": {
+        "title": "Légal",
+        "links": ["Politique de Confidentialité", "Conditions de Service", "Politique des Cookies", "RGPD", "Conformité"]
+      }
+    },
+    "copyright": "© 2024 SmartHoster.io. Tous droits réservés.",
+    "legal": {
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions de Service",
+      "cookies": "Paramètres des Cookies"
+    }
+  }
+}

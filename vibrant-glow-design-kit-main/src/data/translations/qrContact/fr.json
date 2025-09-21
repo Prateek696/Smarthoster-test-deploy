@@ -1,0 +1,70 @@
+{
+  "title": "Contactez SmartHoster.io & SmartCondo.io",
+  "subtitle": "Contactez les deux entreprises pour tous vos besoins de gestion immobilière",
+  "smartHoster": {
+    "title": "SmartHoster.io",
+    "description": "Gestion Airbnb et Location Saisonnière",
+    "tagline": "Autonomiser les Hôtes, Simplifier les Séjours™"
+  },
+  "smartCondo": {
+    "title": "SmartCondo.io",
+    "description": "Gestion de Copropriétés et Propriétés",
+    "tagline": "Gestion Plus Intelligente, Vie Plus Intelligente"
+  },
+  "contact": {
+    "phone": "+351 933 683 981",
+    "smartHosterEmail": "info@smarthoster.io",
+    "smartCondoEmail": "info@smartcondo.io"
+  },
+  "actions": {
+    "emailSmartHoster": "Email SmartHoster",
+    "emailSmartCondo": "Email SmartCondo",
+    "callUs": "Appeler",
+    "visitSmartHoster": "Visiter SmartHoster.io",
+    "visitSmartCondo": "Visiter SmartCondo.io",
+    "downloadSmartHosterCard": "Sauvegarder Contact SmartHoster",
+    "downloadSmartCondoCard": "Sauvegarder Contact SmartCondo"
+  },
+  "qrCode": {
+    "title": "Vous avez scanné notre code QR !",
+    "description": "Merci pour votre intérêt. Voici comment nous contacter :"
+  },
+  "downloadSuccess": "Contact sauvegardé avec succès !",
+  "downloadError": "Erreur lors de la sauvegarde du contact. Veuillez réessayer.",
+  "features": {
+    "keyFeatures": "Fonctionnalités Clés :",
+    "smartHosterFeatures": {
+      "pricing": "Revenus supérieurs grâce au pricing dynamique",
+      "support": "Communication et assistance aux invités 24h/24",
+      "photography": "Ménage professionnel et turnovers",
+      "compliance": "Conformité au SEF et aux règlements locaux"
+    },
+    "smartCondoFeatures": {
+      "management": "Rapports financiers transparents",
+      "screening": "Maintenance préventive et réparations",
+      "maintenance": "Communication claire avec les copropriétaires",
+      "reporting": "Conformité légale et administrative"
+    }
+  },
+  "whyChoose": {
+    "title": "Pourquoi Choisir Nos Services ?",
+    "rating": {
+      "title": "5★ Note",
+      "description": "Fait confiance par plus de 500 propriétaires au Portugal"
+    },
+    "compliant": {
+      "title": "100% Conforme",
+      "description": "Conformité légale complète avec les réglementations portugaises"
+    },
+    "support": {
+      "title": "Support 24/7",
+      "description": "Support continu pour vous et vos invités"
+    }
+  },
+  "cta": {
+    "title": "Prêt à Commencer ?",
+    "description": "Contactez-nous aujourd'hui pour une consultation gratuite",
+    "emailUs": "Nous Écrire",
+    "bookCall": "Réserver Appel"
+  }
+}

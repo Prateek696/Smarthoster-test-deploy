@@ -1,0 +1,175 @@
+
+{
+  "title": "Cookie Policy",
+  "lastUpdated": "Last updated: June 1, 2025",
+  "companyInfo": {
+    "title": "Company Information",
+    "effectiveDate": "Effective Date:",
+    "effectiveDateValue": "June 1, 2025",
+    "entityName": "Entity Name:",
+    "entityNameValue": "BBAR Unipessoal LDA",
+    "operatingAs": "Operating As:",
+    "operatingAsValue": "SmartHoster.io",
+    "vatNipc": "VAT/NIPC:",
+    "vatNipcValue": "PT514142057",
+    "registeredOffice": "Registered Office:",
+    "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+    "contactEmail": "Contact Email:",
+    "contactEmailValue": "admin@smarthoster.io"
+  },
+  "sections": [
+    {
+      "number": "1",
+      "title": "Introduction",
+      "content": [
+        "This Cookie Policy explains how SmartHoster.io (\"SmartHoster\", \"we\", \"our\", or \"us\") uses cookies and similar tracking technologies across its website, portals, applications, and marketing tools.",
+        "By continuing to use our website, you consent to the use of cookies as outlined below.",
+        "We comply with all applicable data protection regulations, including the General Data Protection Regulation (GDPR – EU Regulation 2016/679), the ePrivacy Directive (2002/58/EC), and local laws regarding the use of cookies and similar technologies."
+      ]
+    },
+    {
+      "number": "2",
+      "title": "What Are Cookies?",
+      "content": [
+        "Cookies are small text files that are stored on your device when you visit a website. They allow the website to recognize your device and store certain information about your preferences, usage, or identity."
+      ]
+    },
+    {
+      "number": "3",
+      "title": "Types of Cookies We Use",
+      "content": [
+        "We use the following categories of cookies:"
+      ],
+      "subsections": [
+        {
+          "title": "a) Strictly Necessary Cookies",
+          "content": [
+            "Essential for core site functionality, including:"
+          ],
+          "list": [
+            "Login and session authentication",
+            "Security features", 
+            "Load balancing and infrastructure integrity",
+            "Consent management"
+          ]
+        },
+        {
+          "title": "b) Functional Cookies",
+          "content": [
+            "Enable enhanced functionality and user preferences:"
+          ],
+          "list": [
+            "Language settings",
+            "Region selection",
+            "Remembering user choices",
+            "Form pre-fill options"
+          ]
+        },
+        {
+          "title": "c) Performance & Analytics Cookies",
+          "content": [
+            "Help us understand user behavior and improve site performance:"
+          ],
+          "list": [
+            "Google Analytics / GA4",
+            "Hotjar",
+            "Microsoft Clarity",
+            "Amplitude or similar"
+          ]
+        },
+        {
+          "title": "d) Marketing & Retargeting Cookies",
+          "content": [
+            "Used to deliver personalized ads and measure the effectiveness of campaigns:"
+          ],
+          "list": [
+            "Google Ads / Google Tag Manager",
+            "Meta Pixel (Facebook / Instagram)",
+            "LinkedIn Insight Tag",
+            "TikTok Pixel",
+            "YouTube (embedded content)",
+            "Pinterest Tag",
+            "Twitter/X Ads"
+          ]
+        },
+        {
+          "title": "e) Affiliate & Third-Party Cookies",
+          "content": [
+            "Used for referral tracking and integration with external services:"
+          ],
+          "list": [
+            "Booking.com Affiliate Network",
+            "Airbnb Professional Hosting Tools",
+            "Stripe, Plaid, or banking widgets",
+            "Calendly, HubSpot, or CRM integrations"
+          ]
+        },
+        {
+          "title": "f) Behavioral Profiling & NAI (Network Advertising Initiative)",
+          "content": [
+            "We may use cookies to build pseudonymous profiles for advertising relevance, campaign optimization, and user segmentation. These may comply with or participate in:"
+          ],
+          "list": [
+            "NAI (www.networkadvertising.org)",
+            "EDAA (www.youronlinechoices.eu)",
+            "DAA (Digital Advertising Alliance)"
+          ]
+        }
+      ]
+    },
+    {
+      "number": "4",
+      "title": "How to Manage Cookies",
+      "content": [
+        "You have full control over your cookie preferences.",
+        "✅ Consent Management",
+        "On your first visit, a consent banner will allow you to accept or reject optional cookies. You may adjust preferences at any time by:",
+        "• Clicking the \"Cookie Settings\" link in our footer",
+        "• Visiting your browser's cookie control section",
+        "🔧 Browser Controls",
+        "You can disable cookies via your browser settings. Please note this may impair certain features of the website.",
+        "• Google Chrome",
+        "• Mozilla Firefox", 
+        "• Safari",
+        "• Microsoft Edge"
+      ]
+    },
+    {
+      "number": "5",
+      "title": "Third-Party Cookies",
+      "content": [
+        "We do not control third-party cookies. These cookies are governed by the respective privacy and cookie policies of each third-party provider. We recommend reviewing those policies directly:",
+        "• Google Privacy & Terms",
+        "• Meta (Facebook & Instagram)",
+        "• LinkedIn",
+        "• Stripe",
+        "• NAI Members"
+      ]
+    },
+    {
+      "number": "6",
+      "title": "Data Retention",
+      "content": [
+        "Cookies may persist for:",
+        "• Session-based cookies: cleared once you close your browser",
+        "• Persistent cookies: retained from 1 day up to 24 months",
+        "• You can delete all stored cookies from your browser at any time"
+      ]
+    },
+    {
+      "number": "7",
+      "title": "Changes to This Policy",
+      "content": [
+        "We may update this Cookie Policy at any time to reflect changes in law, platform settings, or tracking technologies.",
+        "Last updated: June 1, 2025"
+      ]
+    }
+  ],
+  "contact": {
+    "title": "Contact",
+    "description": "If you have any questions or concerns about this Cookie Policy or our data practices, please contact:",
+    "companyName": "BBAR Unipessoal LDA",
+    "address": "Rua do Molhe 575 1°",
+    "city": "4150-503 Porto, Portugal"
+  }
+}

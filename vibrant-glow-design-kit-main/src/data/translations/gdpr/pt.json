@@ -1,0 +1,158 @@
+
+{
+  "title": "Declaração de Conformidade com o RGPD",
+  "lastUpdated": "Última atualização: Domingo, 1 de junho de 2025",
+  "companyInfo": {
+    "title": "Informações da Empresa",
+    "effectiveDate": "Data de Vigência:",
+    "effectiveDateValue": "1 de junho de 2025",
+    "entityName": "Nome da Entidade:",
+    "entityNameValue": "BBAR Unipessoal LDA",
+    "operatingAs": "Operando como:",
+    "operatingAsValue": "SmartHoster.io",
+    "vatNipc": "NIPC/NIF:",
+    "vatNipcValue": "PT514142057",
+    "registeredOffice": "Morada:",
+    "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+    "contactEmail": "Email de Contacto:",
+    "contactEmailValue": "admin@smarthoster.io"
+  },
+  "sections": [
+    {
+      "number": "1",
+      "title": "Compromisso com a Proteção de Dados",
+      "content": [
+        "A SmartHoster.io está totalmente comprometida em proteger a privacidade, integridade e segurança dos dados pessoais sob o seu controlo, em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD – Regulamento UE 2016/679) e a legislação portuguesa aplicável (Lei n.º 58/2019)."
+      ]
+    },
+    {
+      "number": "2",
+      "title": "Base Legal para o Tratamento",
+      "content": [
+        "Todos os dados pessoais recolhidos, tratados ou armazenados pela SmartHoster.io são manuseados de forma legal, justa e transparente. As nossas bases legais para o tratamento incluem:"
+      ],
+      "list": [
+        "Necessidade contratual (por exemplo, contratos de serviço com proprietários)",
+        "Obrigações legais (por exemplo, registo de hóspedes via SEF/AIMA)",
+        "Interesse legítimo (por exemplo, prevenção de fraude, análises)",
+        "Consentimento (quando aplicável, especialmente para marketing ou cookies)"
+      ]
+    },
+    {
+      "number": "3",
+      "title": "Práticas de Recolha de Dados",
+      "content": [
+        "Recolhemos e tratamos dados pessoais apenas conforme necessário para operar os nossos serviços. As categorias de dados podem incluir:"
+      ],
+      "list": [
+        "Informações de identificação e contacto",
+        "Dados financeiros e relacionados com pagamentos",
+        "Detalhes do registo de hóspedes (conforme exigido por lei)",
+        "Histórico de reservas e ocupação",
+        "Metadados de utilização da plataforma"
+      ],
+      "additional": "Limitamos a recolha de dados ao que é estritamente necessário e relevante para o propósito."
+    },
+    {
+      "number": "4",
+      "title": "Encriptação e Segurança de Dados",
+      "content": [
+        "Todos os dados pessoais transmitidos ou armazenados pela SmartHoster.io são protegidos por protocolos de encriptação padrão da indústria."
+      ],
+      "list": [
+        "Os dados são encriptados em trânsito (via SSL/TLS) e em repouso (quando aplicável)",
+        "Cópias de segurança e servidores são geridos de forma segura",
+        "O acesso aos dados é limitado a pessoal autorizado sob obrigações rígidas de confidencialidade",
+        "Os sistemas são regularmente atualizados e monitorizados para vulnerabilidades"
+      ]
+    },
+    {
+      "number": "5",
+      "title": "Subcontratantes Terceiros",
+      "content": [
+        "A SmartHoster.io contrata fornecedores de serviços terceiros verificados para infraestrutura técnica, gestão de reservas, automação e comunicações. Estes fornecedores atuam como subcontratantes de dados sob o RGPD e operam sob acordos formais que cumprem os padrões regulamentares.",
+        "Os principais subcontratantes incluem (mas não se limitam a):"
+      ],
+      "list": [
+        "HostKit – plataforma de calendário, reservas e gestão de hóspedes (encriptada)",
+        "Nuki – fornecedor de fechaduras inteligentes (acesso a dispositivos, códigos PIN)",
+        "Stripe – processamento de pagamentos (conforme PCI DSS)",
+        "Ferramentas de email e mensagens – para comunicações operacionais"
+      ],
+      "additional": [
+        "Cada subcontratante é contratualmente obrigado a:",
+        "• Tratar dados apenas sob as nossas instruções documentadas",
+        "• Implementar medidas de segurança adequadas",
+        "• Cumprir as obrigações de proteção de dados do RGPD",
+        "• Notificar-nos prontamente em caso de violação de dados",
+        "",
+        "Mantemos controlo total sobre os seus dados e monitorizamos de perto todo o acesso de terceiros."
+      ]
+    },
+    {
+      "number": "6",
+      "title": "Direitos dos Titulares dos Dados",
+      "content": [
+        "Sob o RGPD, tem o direito de:"
+      ],
+      "list": [
+        "Aceder aos seus dados pessoais",
+        "Solicitar correção ou eliminação de dados incorretos",
+        "Opor-se ao tratamento ou restringir certos tipos de utilização",
+        "Receber os seus dados num formato portátil",
+        "Retirar o consentimento a qualquer momento",
+        "Apresentar queixa à Comissão Nacional de Proteção de Dados (CNPD)"
+      ],
+      "additional": "Para exercer estes direitos, contacte-nos em: admin@smarthoster.io"
+    },
+    {
+      "number": "7",
+      "title": "Retenção e Minimização de Dados",
+      "content": [
+        "Apenas retemos dados pessoais pelo tempo necessário para cumprir as nossas obrigações, incluindo:"
+      ],
+      "list": [
+        "Conformidade legal/fiscal (tipicamente 10 anos para faturação)",
+        "Registos operacionais (para contratos ativos)",
+        "Suporte ao utilizador e histórico da conta",
+        "Registos de consentimento para cookies e marketing (até serem retirados)"
+      ],
+      "additional": "Quando os dados já não são necessários, são eliminados de forma segura ou anonimizados."
+    },
+    {
+      "number": "8",
+      "title": "Transferências de Dados",
+      "content": [
+        "A SmartHoster.io não transfere dados pessoais para fora do Espaço Económico Europeu (EEE) a menos que:"
+      ],
+      "list": [
+        "A transferência esteja sujeita a uma decisão de adequação (por exemplo, Quadro de Privacidade de Dados UE-EUA);",
+        "Cláusulas Contratuais Padrão (CCP) estejam em vigor;",
+        "O destinatário tenha implementado salvaguardas apropriadas."
+      ]
+    },
+    {
+      "number": "9",
+      "title": "Notificação de Violação",
+      "content": [
+        "Em caso de violação de dados que afete os seus dados pessoais, iremos:"
+      ],
+      "list": [
+        "Notificar a CNPD no prazo de 72 horas (se exigido por lei)",
+        "Informar os indivíduos afetados sem demora indevida",
+        "Fornecer total transparência, documentação e ação corretiva"
+      ]
+    },
+    {
+      "number": "10",
+      "title": "Contacto",
+      "content": [
+        "Se tiver questões sobre esta política do RGPD, ou desejar submeter um pedido de direitos de dados, contacte:",
+        "",
+        "BBAR Unipessoal LDA",
+        "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+        "Email: admin@smarthoster.io"
+      ]
+    }
+  ]
+}

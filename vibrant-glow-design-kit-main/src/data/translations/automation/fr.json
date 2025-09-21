@@ -1,0 +1,107 @@
+
+{
+  "hero": {
+    "headline": "Technologie Intelligente. Hébergement Plus Intelligent.",
+    "subheadline": "Accès fiable, couverture 24/7 et systèmes intelligents qui évoluent avec votre propriété—alimentés par la plateforme SmartTag de SmartHoster et des partenaires comme Nuki et HOMINT.",
+    "cta": "Demander une Évaluation Gratuite d'Automatisation"
+  },
+  "multiLayeredAccess": {
+    "title": "Entrée Infaillible, À Chaque Fois.",
+    "description": "Chez SmartHoster, nous ne comptons pas sur une seule méthode d'enregistrement. Notre système d'accès à trois niveaux garantit la fiabilité quoi qu'il arrive :",
+    "features": [
+      "Serrures Intelligentes Numériques — via Nuki et HOMINT, intégrées avec les réservations d'invités",
+      "Boîtes à Clés Manuelles — comme sauvegardes sécurisées et hors ligne",
+      "Personnel de Garde — disponible 24/7 pour aider avec l'accès, résoudre les problèmes ou ouvrir les portes en personne"
+    ],
+    "conclusion": "Qu'un invité arrive à minuit, perde internet ou tape mal son code—l'accès est garanti."
+  },
+  "smartLocks": {
+    "title": "Sans Contact, Fiable, Automatisé",
+    "description": "Nous nous associons avec les principaux fournisseurs de serrures intelligentes d'Europe—Nuki et HOMINT—pour apporter un accès entièrement numérique à votre propriété. Chaque réservation génère automatiquement un code d'accès unique ou une clé numérique, envoyée à l'invité juste avant l'arrivée.",
+    "features": [
+      "Pas de clés physiques",
+      "Pas de tracas de coordination",
+      "Aucun invité laissé en attente à la porte"
+    ]
+  },
+  "buildingAccess": {
+    "title": "De la Rue à la Suite",
+    "description": "Pour les appartements et copropriétés, nos systèmes s'intègrent avec les interphones d'entrée principale. Cela signifie que vos invités peuvent entrer dans le bâtiment et l'unité en utilisant la même clé basée sur téléphone—pas de télécommandes séparées, pas de sonnettes, pas de confusion.",
+    "conclusion": "Ceci est particulièrement précieux à Lisbonne, Porto et d'autres villes avec des bâtiments à accès en couches."
+  },
+  "lockboxes": {
+    "title": "Basse Technologie. Toujours Intelligent.",
+    "description": "Les systèmes numériques ne sont pas infaillibles—et nous planifions en conséquence. Chaque propriété inclut une boîte à clés manuelle, discrètement installée et préconfigurée comme point d'accès secondaire. Les invités avec des problèmes peuvent récupérer une clé traditionnelle au besoin.",
+    "conclusion": "Nous faisons tourner et maintenons celles-ci de manière proactive dans le cadre de notre système."
+  },
+  "humanOversight": {
+    "title": "Vraies Personnes. Temps Réel.",
+    "description": "Notre équipe locale est toujours de garde, prête à :",
+    "features": [
+      "Aider les invités qui ne peuvent pas accéder à une unité",
+      "Déverrouiller manuellement les unités via une app sécurisée",
+      "Visiter les propriétés quand nécessaire, rapidement"
+    ],
+    "conclusion": "Nous combinons l'automatisation avec une présence réelle—parce que la tranquillité d'esprit a besoin des deux."
+  },
+  "smartTag": {
+    "title": "Au-delà de l'Accès—Conçu pour la Fiabilité",
+    "description": "Notre plateforme SmartTag est plus que juste des serrures. Elle inclut des systèmes intelligents de planification et d'alerte qui automatisent les processus backend de votre propriété :",
+    "features": [
+      "Notifie automatiquement le personnel de nettoyage après le départ",
+      "Déclenche des rappels de maintenance pour les services récurrents",
+      "Vérifie le timing d'arrivée/départ et le statut d'accès",
+      "Se synchronise avec les calendriers de réservation et tableaux de bord de propriété"
+    ],
+    "conclusion": "Le résultat ? Moins d'appels. Moins de surprises. Des opérations plus fluides."
+  },
+  "portfolioManagement": {
+    "title": "Une App. N'importe Quelle Porte.",
+    "description": "Si vous gérez plus d'une propriété, SmartHoster facilite leur contrôle depuis un seul tableau de bord.",
+    "features": [
+      "Accorder ou révoquer l'accès instantanément",
+      "Voir les journaux d'activité",
+      "Coordonner les prestataires de services",
+      "Surveiller les heures d'arrivée des invités dans les unités"
+    ],
+    "conclusion": "Tout sans mettre les pieds sur place."
+  },
+  "whyItWorks": {
+    "title": "L'automatisation ne concerne pas la technologie—c'est une question de confiance.",
+    "description": "Les invités s'attendent à des enregistrements modernes et fluides. Les propriétaires s'attendent à la fiabilité. SmartHoster livre les deux.",
+    "subtitle": "Notre système en couches garantit :",
+    "features": [
+      "Pas de verrouillages",
+      "Pas d'enregistrements manqués",
+      "Pas de retards de service",
+      "Et pas de devinettes pour les propriétaires ou invités"
+    ],
+    "conclusion": "Cela mène à de meilleures critiques, plus de réservations répétées et une expérience d'hébergement sans stress."
+  },
+  "faqs": {
+    "title": "Questions Fréquemment Posées",
+    "questions": {
+      "apartments": {
+        "question": "Ce système peut-il fonctionner dans les immeubles d'appartements ?",
+        "answer": "Oui. Nuki et HOMINT s'intègrent tous deux avec les interphones, donnant aux invités accès de la porte d'entrée à l'appartement."
+      },
+      "malfunction": {
+        "question": "Que se passe-t-il si la serrure cesse de fonctionner ?",
+        "answer": "Chaque propriété inclut une boîte à clés de secours et un personnel de support 24/7 pour aider en temps réel."
+      },
+      "installation": {
+        "question": "L'installation est-elle incluse ?",
+        "answer": "Oui—pour les clients sur notre forfait de service complet, nous fournissons l'installation sans coût supplémentaire. Pour les autres, nous offrons un devis détaillé après une évaluation gratuite."
+      },
+      "portfolio": {
+        "question": "Combien de propriétés puis-je gérer à la fois ?",
+        "answer": "Autant que vous le souhaitez. Notre tableau de bord s'adapte aux portefeuilles grands et petits."
+      }
+    }
+  },
+  "finalCta": {
+    "headline": "Demandez Votre Évaluation Gratuite d'Accès",
+    "description": "Vous voulez automatiser l'accès, éviter les problèmes d'enregistrement et moderniser vos locations ? Planifiez votre examen gratuit sur site aujourd'hui.",
+    "cta": "Planifier Mon Évaluation"
+  }
+}

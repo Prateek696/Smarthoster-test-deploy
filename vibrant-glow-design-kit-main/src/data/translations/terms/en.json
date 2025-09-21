@@ -1,0 +1,161 @@
+
+{
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Effective Date: June 1, 2025",
+    "companyInfo": {
+      "title": "Company Information",
+      "effectiveDate": "Effective Date:",
+      "effectiveDateValue": "June 1, 2025",
+      "legalEntity": "Legal Entity:",
+      "legalEntityValue": "BBAR Unipessoal LDA (VAT: PT514142057)",
+      "businessName": "Business Name:",
+      "businessNameValue": "SmartHoster.io",
+      "registeredOffice": "Registered Office:",
+      "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+      "contactEmail": "Contact Email:",
+      "contactEmailValue": "admin@smarthoster.io"
+    },
+    "introduction": "SmartHoster.io (\"we,\" \"us,\" \"our,\" or \"SmartHoster\") is a digital and physical service provider operated by BBAR Unipessoal LDA, offering short-term rental property management, automation tools, and infrastructure to property owners (\"you,\" \"your,\" or \"Client\"). By using our services or accessing our platform, you agree to these Terms of Service.",
+    "sections": [
+      {
+        "number": "1",
+        "title": "Eligibility and Acceptance",
+        "content": [
+          "To use SmartHoster services, you must be:"
+        ],
+        "list": [
+          "At least 18 years old and legally capable of entering into contracts;",
+          "The legal owner or authorized agent of the property listed;",
+          "In compliance with all applicable local, national, and international laws."
+        ]
+      },
+      {
+        "number": "2",
+        "title": "Scope of Service",
+        "content": [
+          "SmartHoster provides:"
+        ],
+        "list": [
+          "Property listing setup and channel integration (e.g. Airbnb, Booking.com)",
+          "Guest communication and check-in coordination (including smart lock systems)",
+          "Cleaning and maintenance scheduling",
+          "Local lodging compliance support (SEF/AIMA/AT/eFatura)",
+          "Revenue reporting, accounting summaries, and fiscal documentation",
+          "Optional supply, towel, and linen programs via internal vendors"
+        ]
+      },
+      {
+        "number": "3",
+        "title": "Client Responsibilities",
+        "content": [
+          "You agree to:"
+        ],
+        "list": [
+          "Provide accurate and up-to-date property and ownership information;",
+          "Maintain your property in a safe and habitable condition;",
+          "Pay fees promptly and comply with payment terms outlined in any signed agreement;",
+          "Abide by all applicable housing, tax, and short-term rental laws;",
+          "Notify us in writing of any property damage, guest disputes, or legal proceedings related to your unit(s)."
+        ]
+      },
+      {
+        "number": "4",
+        "title": "Payment Terms",
+        "content": [
+          "SmartHoster generally charges a commission-based fee structure (e.g. 30% of gross booking value) unless otherwise agreed in writing.",
+          "Cleaning fees are passed through to third-party or internal cleaning teams. Any additional services (e.g. linen provision, onboarding, or photography) will be billed separately. SmartHoster may deduct its fees automatically via booking channels or direct invoicing.",
+          "Late payments may incur administrative fees or suspension of services."
+        ]
+      },
+      {
+        "number": "5",
+        "title": "Liability Limitations",
+        "content": [
+          "To the fullest extent permitted by law:"
+        ],
+        "list": [
+          "SmartHoster shall not be liable for indirect, incidental, punitive, or consequential damages, including loss of income, data, reputation, or goodwill.",
+          "We are not liable for any issues arising from third-party platforms (e.g. Airbnb, VRBO, Booking.com), including guest cancellations, system outages, or pricing fluctuations.",
+          "We are not responsible for force majeure events, such as strikes, natural disasters, pandemics, regulatory changes, or internet failures.",
+          "All liability is strictly capped to the total fees paid by you to SmartHoster in the 12 months preceding any claim."
+        ]
+      },
+      {
+        "number": "6",
+        "title": "No Guarantee of Occupancy or Revenue",
+        "content": [
+          "While we use industry-leading tools and strategies to maximize bookings and returns, SmartHoster does not guarantee any specific occupancy rate, revenue, or return on investment. Past performance is not a predictor of future results."
+        ]
+      },
+      {
+        "number": "7",
+        "title": "Account Access and Communications",
+        "content": [
+          "You may be provided with access to SmartHoster dashboards, portals, or tools. You agree:"
+        ],
+        "list": [
+          "Not to share login credentials or grant unauthorized access;",
+          "That we may communicate via email, SMS, WhatsApp, or platform notifications;",
+          "That some communications (e.g. system updates, invoice notices) are mandatory."
+        ]
+      },
+      {
+        "number": "8",
+        "title": "Intellectual Property",
+        "content": [
+          "All content, branding, tools, and documentation provided through SmartHoster.io are the intellectual property of BBAR Unipessoal LDA.",
+          "You are granted a limited, revocable, non-transferable license to use these tools solely for your personal or business use within SmartHoster's scope.",
+          "You may not copy, reverse-engineer, sublicense, or exploit any part of our technology or content."
+        ]
+      },
+      {
+        "number": "9",
+        "title": "Termination",
+        "content": [
+          "SmartHoster may suspend or terminate services at any time, with or without cause, by providing written notice. Immediate termination may occur for:"
+        ],
+        "list": [
+          "Failure to pay fees;",
+          "Violation of legal obligations;",
+          "Misuse of the platform or technology;",
+          "Behavior harmful to guests, partners, or reputation."
+        ]
+      },
+      {
+        "number": "10",
+        "title": "Data & Privacy",
+        "content": [
+          "SmartHoster processes personal data in accordance with its Privacy Policy. By using our services, you consent to such processing and confirm that all data provided is lawful and authorized.",
+          "We may process guest data on your behalf for the purpose of regulatory compliance (e.g. SEF, AIMA) under a data processor agreement."
+        ]
+      },
+      {
+        "number": "11",
+        "title": "Dispute Resolution",
+        "content": [
+          "These Terms are governed by Portuguese law. Any dispute arising under or in connection with these Terms shall be resolved in the courts of Porto, Portugal.",
+          "BBAR Unipessoal LDA reserves the right to seek injunctive or equitable relief in any jurisdiction to protect its rights or confidential information."
+        ]
+      },
+      {
+        "number": "12",
+        "title": "Amendments",
+        "content": [
+          "We may modify these Terms of Service from time to time. Updated versions will be published at https://www.smarthoster.io/terms. Continued use of our services after updates constitutes acceptance of the revised Terms."
+        ]
+      },
+      {
+        "number": "13",
+        "title": "Entire Agreement",
+        "content": [
+          "These Terms, along with any signed service agreement or supplementary policy, represent the entire understanding between the parties and supersede all prior negotiations, representations, or agreements, whether oral or written."
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Questions?",
+      "description": "Contact us at"
+    }
+  }
+}

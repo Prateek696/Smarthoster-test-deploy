@@ -1,0 +1,169 @@
+
+{
+  "learnMore": {
+    "hero": {
+      "title": "En Savoir Plus Sur SmartHoster.io",
+      "description": "Découvrez comment notre solution complète de gestion immobilière peut transformer votre entreprise de location avec une technologie de pointe, une expertise locale et des résultats prouvés."
+    },
+    "overview": {
+      "title": "Solution Complète de Gestion Immobilière",
+      "description": "SmartHoster.io fournit des services de gestion immobilière de bout en bout conçus spécifiquement pour le marché portugais. Notre plateforme combine une technologie avancée avec une expertise locale pour maximiser vos revenus locatifs tout en minimisant votre charge opérationnelle.",
+      "benefits": {
+        "revenue": "Augmentez les revenus locatifs jusqu'à 35%",
+        "compliance": "100% de conformité légale avec les réglementations portugaises",
+        "automation": "Les opérations automatisées réduisent votre charge de travail de 90%",
+        "support": "Support client 24/7 multilingue"
+      }
+    },
+    "services": {
+      "title": "Nous Nous Occupons de Tout — Du Début à la Fin",
+      "subtitle": "Surtout si vous venez d'acheter une propriété, nous vous guidons à travers chaque étape de la configuration — et exécutons la majorité en votre nom.",
+      "setupServices": [
+        "Fourniture complète de mobilier et décoration",
+        "Configuration des services publics, internet, TV et serrure intelligente",
+        "Photographie professionnelle et optimisation d'annonces",
+        "Enregistrement Alojamento Local (AL)",
+        "Approbation Câmara Municipal + signalisation",
+        "Livre de réclamations et d'invités multilingue",
+        "Intégration SEF / AIMA pour rapports d'invités",
+        "Enregistrement et automatisation des taxes touristiques",
+        "Rapports INE, enregistrement Banque du Portugal, dépôt Modèle 30",
+        "Conformité sécurité incendie",
+        "Configuration assurance et responsabilité",
+        "Formation d'entreprise (LDA/Unipessoal) et enregistrement TVA"
+      ],
+      "important": {
+        "title": "Important :",
+        "description": "Bien que ces services de configuration et de légalisation fassent partie de notre processus de gestion, ils sont négociés séparément lors de l'intégration en fonction des besoins de votre propriété. Aucune configuration n'est identique — et nous adaptons tout à votre situation."
+      },
+      "marketing": {
+        "title": "Marketing et Distribution",
+        "description": "Photographie professionnelle, annonces optimisées sur plus de 50 plateformes et tarification stratégique pour maximiser la visibilité et les réservations."
+      },
+      "guest": {
+        "title": "Gestion des Clients",
+        "description": "Communication complète avec les clients, enregistrement automatisé, support 24/7 et expériences client personnalisées."
+      },
+      "operations": {
+        "title": "Opérations de Propriété",
+        "description": "Nettoyage coordonné, maintenance, inspections et assurance qualité pour maintenir votre propriété en parfait état."
+      },
+      "financial": {
+        "title": "Gestion Financière",
+        "description": "Facturation automatisée, suivi des commissions, rapports fiscaux et analyses financières détaillées et rapports."
+      }
+    },
+    "technology": {
+      "title": "Que se passe-t-il après la configuration ?",
+      "description": "Une fois la configuration terminée, SmartHoster prend en charge la gestion quotidienne de votre location — combinant automatisation, support humain et systèmes éprouvés.",
+      "ongoingServices": [
+        "Enregistrements automatisés (serrures intelligentes ou hôtes d'accueil)",
+        "Communication avec les clients de la pré-réservation à l'après-avis",
+        "Automatisation de facturation SAF/AT et dépôt optionnel de taxe municipale",
+        "Tableaux de bord en direct montrant revenus et occupation",
+        "Programmes de nettoyage, linge et réapprovisionnement",
+        "Prévention des dommages, résolution des plaintes",
+        "Gestion de la maintenance",
+        "Portail propriétaire pour transparence et contrôle complets",
+        "Support multilingue 24/7 pour les clients (EN/PT/FR et plus)",
+        "Tests de Performance et Optimisation d'Annonces"
+      ],
+      "optimizationNote": "Nous testons régulièrement les titres, descriptions et photos pour améliorer vos classements et maximiser les réservations sur les plateformes.",
+      "slogans": {
+        "automation": "Si cela peut être automatisé — nous l'automatisons.",
+        "manual": "Si cela nécessite des soins personnalisés — nous nous en occupons."
+      },
+      "features": {
+        "automation": "Automatisation intelligente pour les tâches routinières",
+        "analytics": "Analyses de performance en temps réel",
+        "integrations": "Plus de 70 intégrations de plateformes",
+        "mobile": "Tableau de bord de gestion optimisé mobile"
+      }
+    },
+    "locations": {
+      "title": "Où SmartHoster est-elle disponible ?",
+      "description": "SmartHoster opère dans toutes les grandes villes du Portugal :",
+      "tagline": "Équipes locales. Infrastructure nationale."
+    },
+    "differentiators": {
+      "title": "Qu'est-ce qui rend SmartHoster différente des autres gestionnaires immobiliers ?",
+      "subtitle": "SmartHoster est le seul service au Portugal offrant :",
+      "items": [
+        "Configuration complète incluant AL, SEF, taxes et signalisation",
+        "Automatisation pour communications clients, enregistrements, facturation et rapports",
+        "Coordination locale de maintenance et nettoyage",
+        "Transparence propriétaire avec tableaux de bord et rapports en direct",
+        "Support humain réel pour propriétaires et clients",
+        "Pratiques éco-responsables : linge réutilisable, nettoyage vert, configurations économes en énergie",
+        "Intégration stratégique — incluant mobilier et travail légal si nécessaire"
+      ],
+      "dataOptimization": {
+        "title": "Tarification et Optimisation Basées sur les Données",
+        "description": "Nous analysons constamment les tendances du marché pour ajuster les prix et augmenter les réservations — pour que votre propriété reste compétitive toute l'année."
+      },
+      "tagline": "La plupart des entreprises louent votre appartement. Nous gérons votre location comme une entreprise."
+    },
+    "abroad": {
+      "title": "Je vis à l'étranger. Puis-je encore utiliser SmartHoster ?",
+      "subtitle": "Absolument. Beaucoup de nos clients vivent à l'étranger.",
+      "benefits": [
+        "Intégration et consultation à distance",
+        "Accès intelligent pour les clients (pas besoin de remise de clés)",
+        "Support WhatsApp/email pour propriétaires",
+        "Contrôle de calendrier et visibilité complète de n'importe où",
+        "Aucune implication en personne requise"
+      ],
+      "digitalContracting": {
+        "title": "Contrat entièrement numérique",
+        "description": "Nous nous occupons de toute la paperasse légale et financière à distance — pas d'impression, d'envoi postal ou d'adresse portugaise requise."
+      },
+      "tagline": "Vous gardez le contrôle. Nous restons sur le terrain."
+    },
+    "testimonials": {
+      "title": "Que disent les clients SmartHoster ?",
+      "items": [
+        {
+          "quote": "Je ne savais pas comment m'inscrire pour AL ou préparer mon appartement pour les clients. SmartHoster s'est occupé de tout — même le livre de réclamations et le Modèle 30.",
+          "author": "Teresa F., Lisbonne"
+        },
+        {
+          "quote": "Je suis au Brésil. Ils ont meublé, légalisé et lancé ma propriété à distance. Je n'y ai pas mis les pieds jusqu'après le départ des premiers clients.",
+          "author": "Rafael M., Olhão"
+        },
+        {
+          "quote": "J'avais une excellente propriété, mais je ne voulais pas la gérer. Maintenant je n'y pense même plus — et elle rapporte plus que jamais.",
+          "author": "Sofia L., Cascais"
+        }
+      ]
+    },
+    "consultation": {
+      "title": "Que se passe-t-il lors de l'appel gratuit ?",
+      "description": "Nous vous guiderons à travers :",
+      "points": [
+        "Le potentiel de revenus de votre propriété",
+        "Exigences de configuration légale (basées sur l'emplacement)",
+        "Comment fonctionnent l'intégration et la configuration",
+        "Toutes améliorations que nous recommandons",
+        "Ce qui est inclus à long terme",
+        "Toutes Questions que Vous Pourriez Avoir"
+      ],
+      "finalNote": "Nous répondrons à toutes vos préoccupations spécifiques — des contrats aux nettoyages, des taxes aux serviettes. Rien n'est hors limites."
+    },
+    "results": {
+      "title": "Résultats Prouvés",
+      "description": "Rejoignez des centaines de propriétaires immobiliers prospères qui ont transformé leur entreprise de location avec SmartHoster.io.",
+      "metrics": {
+        "revenue": "35% d'augmentation moyenne des revenus",
+        "occupancy": "15% de taux d'occupation plus élevés",
+        "automation": "90% de réduction des tâches manuelles",
+        "satisfaction": "98% de taux de satisfaction client"
+      }
+    },
+    "cta": {
+      "title": "Prêt à Commencer?",
+      "description": "Réservez une consultation gratuite avec nos experts en gestion immobilière et découvrez comment SmartHoster.io peut transformer votre entreprise de location.",
+      "button": "Réserver Consultation Gratuite",
+      "guarantee": "Garantie de remboursement de 30 jours • Pas de frais de configuration • Annulez à tout moment"
+    }
+  }
+}

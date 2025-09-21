@@ -1,0 +1,119 @@
+
+{
+  "hero": {
+    "title": "Full Automation. Total Confidence.",
+    "subtitle": "Forget spreadsheets, confusion, and manual reporting. SmartHoster automates every legal and financial aspect of your short-term rental in Portugal—accurately, instantly, and effortlessly.",
+    "cta": "Schedule Your Introduction"
+  },
+  "certifiedBilling": {
+    "title": "Certified Billing – No Software Required",
+    "description": "We issue certified invoices for your guests and commission splits. Everything is 100% automated—from booking to invoice to monthly SAF-T export.",
+    "features": [
+      "Certified by the Portuguese Tax Authority (AT No. 2549)",
+      "Automatic invoice generation for every reservation and commission",
+      "Split billing per co-owner or revenue stream",
+      "Full multi-account support (multiple NIFs, series, or service types)",
+      "SAF-T submission prep: monthly export-ready",
+      "Error-free processing based on real reservation data",
+      "No need for your own invoicing software"
+    ],
+    "tagline": "You stay compliant. We stay precise."
+  },
+  "aimaReporting": {
+    "title": "AIMA/SIBA Guest Reports",
+    "description": "We automatically generate and send guest information bulletins to the authorities (AIMA/SIBA)—so you're always on time, always compliant.",
+    "features": [
+      "Unlimited guest bulletin submissions",
+      "Manual or fully automated mode",
+      "Custom schedule for transmission",
+      "Full transparency: status and confirmation history",
+      "Reduces legal risk, avoids fines, and ensures peace of mind"
+    ],
+    "tagline": "Integrated seamlessly into the booking flow."
+  },
+  "modelo30": {
+    "title": "Modelo 30 Reporting",
+    "description": "We handle Modelo 30 generation, splitting, and export—so you don't have to go detective-hunting for Airbnb's NIF.",
+    "features": [
+      "Auto-calculation of commissions paid to non-resident portals",
+      "Fully compatible XML export for submission to Autoridade Tributária",
+      "Full completion of Quadro 8",
+      "Income classified as Type 8 earnings",
+      "Full reporting history always available"
+    ],
+    "tagline": "Airbnb, Booking, Vrbo—we've got you covered."
+  },
+  "touristTax": {
+    "title": "Municipal Tourist Tax (TMT)",
+    "description": "We auto-calculate, charge, invoice, and submit tourist tax (TMT)—no Excel sheets, no confusion.",
+    "features": [
+      "Real-time calculation based on age, dates, number of nights, and guests",
+      "Platform-specific rules supported",
+      "Auto-charge via Stripe with markup options",
+      "Legally compliant invoicing",
+      "Integrated with 360City for eligible regions"
+    ],
+    "tagline": "You never touch a calculator."
+  },
+  "ineReporting": {
+    "title": "INE Reporting (IPHH & IPCAMP)",
+    "description": "Don't waste a single second—INE reports are automatically submitted.",
+    "features": [
+      "Monthly auto-submission to Instituto Nacional de Estatística",
+      "Separate reports per unit or grouped by project",
+      "ICAO-compliant country codes",
+      "Intuitive tables and searchable history",
+      "Historical archives always accessible"
+    ],
+    "tagline": "Portugal's most confusing report—simplified."
+  },
+  "copeReporting": {
+    "title": "COPE Reporting – Banco de Portugal",
+    "description": "If you earn over €250,000/year via online platforms, you must submit COPE reports. We automate it all.",
+    "features": [
+      "Monthly XML reports auto-generated",
+      "Tracks inbound/outbound platform payments",
+      "Data auto-collected from your bookings",
+      "Covers all active billing accounts",
+      "Transparent archive access anytime"
+    ],
+    "tagline": "One less deadline to worry about."
+  },
+  "airbnbInvoicing": {
+    "title": "Airbnb Commission Invoicing",
+    "description": "Still downloading Airbnb invoices manually? We've automated that too.",
+    "features": [
+      "Use VATinvoicer.com to fetch Airbnb commission invoices",
+      "Chrome extension + license key (with 10% discount for SmartHoster clients)",
+      "Just paste reservation codes—done."
+    ],
+    "tagline": "Airbnb. Automated. Finally."
+  },
+  "propertyTypes": {
+    "title": "Designed for Every Property Type",
+    "description": "SmartHoster's billing engine scales across:",
+    "types": [
+      "Local accommodation managers",
+      "Hotel and resort operators",
+      "Glamping, camping, boats, hostels, villas",
+      "Mixed-use projects and fractional ownership"
+    ],
+    "tagline": "Whatever your setup, we handle it."
+  },
+  "dailyOps": {
+    "title": "Daily Operations Synced with Compliance",
+    "description": "Our reservation system does more than calendar sync—it powers your billing, taxes, reporting, and financial clarity.",
+    "features": [
+      "Clean dashboard with multi-property calendar",
+      "Real-time indicators for billing and legal status",
+      "Guidebooks, check-in flows, and payment add-ons—all synced to invoicing",
+      "Current account, expenses, and commissions linked to every transaction"
+    ],
+    "tagline": "Daily ops = legal compliance. By design."
+  },
+  "cta": {
+    "title": "Ready to Streamline Your Operations?",
+    "description": "Schedule a consultation with our team to discuss how we can help automate your property management and compliance needs.",
+    "button": "Book Your Consultation"
+  }
+}

@@ -1,0 +1,119 @@
+
+{
+  "integrations": {
+    "title": "Powerful Integrations",
+    "description": "Connect with leading platforms to enhance your property management experience",
+    "stats": {
+      "platforms": {
+        "label": "Connected Platforms",
+        "description": "Leading property management platforms"
+      },
+      "compliance": {
+        "label": "Compliance Coverage",
+        "description": "Full regulatory compliance"
+      },
+      "uptime": {
+        "label": "System Uptime",
+        "description": "Reliable performance"
+      }
+    },
+    "cta": {
+      "title": "Ready to Experience Seamless Integration?",
+      "description": "Discover how our integrations can transform your property management workflow",
+      "button": "View All Integrations",
+      "gdpr": "GDPR Compliant"
+    },
+    "hero": {
+      "title": "Discover More: How Integrations Benefit You",
+      "description": "SmartHoster connects with over 70 of the industry's leading platforms — not because we need them, but because they give you more flexibility, visibility, and control.",
+      "subtitle": "Our core operations are fully in-house: we manage billing, compliance, maintenance, and communication ourselves — with powerful automation and our own custom-built tools. But when you want more — or want to plug into your favorite platforms — our system is ready."
+    },
+    "whyMatter": {
+      "title": "Why Integrations Still Matter",
+      "description": "At SmartHoster, we've already automated 90% of what matters: Our invoicing software handles all commission and payout logic, SEF and eFatura reporting is handled internally or semi-automated, Smart pricing, calendar syncing, and guest communication are built-in. But we're not a walled garden. If you want to connect to external tools — for cleaning, smart locks, pricing, or analytics — we're integrated and ready to go. This is about optional power. And it's all plug-and-play."
+    },
+    "ecosystem": {
+      "title": "Our Integration Ecosystem"
+    },
+    "categories": {
+      "smartLocks": {
+        "title": "Smart Locks & Access Control",
+        "description": "Guests self-check-in securely. Our team can also open doors remotely — no one's left outside."
+      },
+      "payments": {
+        "title": "Optional Invoicing & Payments",
+        "description": "While we use our own system, you can sync external tools to mirror or track your billing if needed."
+      },
+      "compliance": {
+        "title": "Government & Compliance Portals",
+        "description": "Whether via our own system or integrated channels, all reporting is covered — reliably and on time."
+      },
+      "cleaning": {
+        "title": "Cleaning & Operational Services",
+        "description": "Available for partial management plans or external coordination — and if you prefer, we're happy to help coordinate cleanings using our own trusted in-house teams."
+      },
+      "pricing": {
+        "title": "Pricing & Calendar Tools",
+        "description": "We already optimize pricing internally, but external pricing engines can be synced for clients who prefer more granular control."
+      },
+      "guestExperience": {
+        "title": "Guest Experience Enhancers",
+        "description": "Enhance check-ins and guest guides with branded digital experiences — fully optional, easily integrated."
+      },
+      "travel": {
+        "title": "Travel & Logistics Add-ons",
+        "description": "Add extra services to boost guest satisfaction — they plug right in, no extra effort."
+      },
+      "insurance": {
+        "title": "Insurance & Damage Management",
+        "description": "Offer owners peace of mind and automate protection flows."
+      }
+    },
+    "whyWorks": {
+      "title": "Why It Works for You"
+    },
+    "benefits": {
+      "operations": {
+        "title": "Streamlined Operations",
+        "description": "Automated property management workflows"
+      },
+      "legal": {
+        "title": "Legal Compliance",
+        "description": "Automated legal requirements handling"
+      },
+      "visibility": {
+        "title": "Enhanced Visibility",
+        "description": "Complete oversight of your properties"
+      }
+    },
+    "additionalBenefits": {
+      "optional": "All integrations are optional and non-disruptive",
+      "coreHandled": "We handle the core systems — no duplicate work",
+      "extendable": "You can extend functionality if needed — and we'll help configure it",
+      "autoCommissions": "Your commissions are always calculated automatically",
+      "noContracts": "No long-term contracts — we operate on a month-to-month basis",
+      "cleaningSupport": "If you want to use our cleaning teams in partial management, we're happy to help coordinate that too"
+    },
+    "flexibility": {
+      "title": "True Flexibility, Backed by Full Service",
+      "description": "Want to use your own cleaners? You can. Want to plug in Stripe, PriceLabs, or a lock system you already use? We've got it covered. Prefer everything fully managed by our team? That's our specialty.",
+      "subtitle": "SmartHoster was built to adapt — not force you into a box."
+    },
+    "bottomLine": {
+      "title": "Here's the Bottom Line",
+      "sync": "Everything syncs",
+      "noBreaks": "Nothing breaks",
+      "performance": "Your property performs",
+      "control": "You stay in control",
+      "accountability": "We stay accountable",
+      "seamlessExperience": "Guests get a seamless experience",
+      "scaling": "And if you ever want to scale, adjust, or simplify — the system flexes with you."
+    },
+    "cta": {
+      "title": "Book Your Free 30-Minute Consultation",
+      "description": "We'll walk you through what's built-in, what's optional, and how we plug into your property with zero friction.",
+      "subtitle": "Month-to-month. No setup traps. Just clarity, automation, and growth.",
+      "button": "Book Free Consultation"
+    }
+  }
+}

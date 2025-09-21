@@ -1,0 +1,119 @@
+
+{
+  "integrations": {
+    "title": "Intégrations Puissantes",
+    "description": "Connectez-vous avec des plateformes leaders pour améliorer votre expérience de gestion immobilière",
+    "stats": {
+      "platforms": {
+        "label": "Plateformes Connectées",
+        "description": "Plateformes leaders de gestion immobilière"
+      },
+      "compliance": {
+        "label": "Couverture de Conformité",
+        "description": "Conformité réglementaire complète"
+      },
+      "uptime": {
+        "label": "Temps de Fonctionnement",
+        "description": "Performance fiable"
+      }
+    },
+    "benefits": {
+      "operations": {
+        "title": "Opérations Simplifiées",
+        "description": "Flux de travail automatisés de gestion immobilière"
+      },
+      "legal": {
+        "title": "Conformité Légale",
+        "description": "Traitement automatisé des exigences légales"
+      },
+      "visibility": {
+        "title": "Visibilité Améliorée",
+        "description": "Supervision complète de vos propriétés"
+      }
+    },
+    "cta": {
+      "title": "Prêt à Expérimenter une Intégration Fluide ?",
+      "description": "Découvrez comment nos intégrations peuvent transformer votre flux de travail de gestion immobilière",
+      "button": "Voir Toutes les Intégrations",
+      "gdpr": "Conforme RGPD"
+    },
+    "hero": {
+      "title": "Découvrez Plus : Comment les Intégrations Vous Bénéficient",
+      "description": "SmartHoster se connecte avec plus de 70 des principales plateformes de l'industrie — non pas parce que nous en avons besoin, mais parce qu'elles vous donnent plus de flexibilité, de visibilité et de contrôle.",
+      "subtitle": "Nos opérations centrales sont entièrement internes : nous gérons la facturation, la conformité, la maintenance et la communication nous-mêmes — avec une automatisation puissante et nos propres outils personnalisés. Mais quand vous voulez plus — ou voulez vous connecter à vos plateformes préférées — notre système est prêt."
+    },
+    "whyMatter": {
+      "title": "Pourquoi les Intégrations Comptent Encore",
+      "description": "Chez SmartHoster, nous avons déjà automatisé 90% de ce qui compte : Notre logiciel de facturation gère toute la logique de commission et de paiement, les rapports SEF et eFatura sont gérés en interne ou semi-automatisés, la tarification intelligente, la synchronisation de calendrier et la communication avec les clients sont intégrées. Mais nous ne sommes pas un jardin clos. Si vous voulez vous connecter à des outils externes — pour le nettoyage, les serrures intelligentes, la tarification ou l'analyse — nous sommes intégrés et prêts. Il s'agit de puissance optionnelle. Et tout est plug-and-play."
+    },
+    "ecosystem": {
+      "title": "Notre Écosystème d'Intégrations"
+    },
+    "categories": {
+      "smartLocks": {
+        "title": "Serrures Intelligentes et Contrôle d'Accès",
+        "description": "Les clients s'enregistrent en toute sécurité. Notre équipe peut aussi ouvrir les portes à distance — personne n'est laissé dehors."
+      },
+      "payments": {
+        "title": "Facturation et Paiements Optionnels",
+        "description": "Bien que nous utilisions notre propre système, vous pouvez synchroniser des outils externes pour refléter ou suivre votre facturation si nécessaire."
+      },
+      "compliance": {
+        "title": "Portails Gouvernementaux et de Conformité",
+        "description": "Que ce soit via notre propre système ou des canaux intégrés, tous les rapports sont couverts — de manière fiable et à temps."
+      },
+      "cleaning": {
+        "title": "Services de Nettoyage et Opérationnels",
+        "description": "Disponible pour les plans de gestion partielle ou la coordination externe — et si vous préférez, nous sommes heureux d'aider à coordonner les nettoyages en utilisant nos propres équipes internes de confiance."
+      },
+      "pricing": {
+        "title": "Outils de Tarification et de Calendrier",
+        "description": "Nous optimisons déjà la tarification en interne, mais les moteurs de tarification externes peuvent être synchronisés pour les clients qui préfèrent plus de contrôle granulaire."
+      },
+      "guestExperience": {
+        "title": "Améliorateurs d'Expérience Client",
+        "description": "Améliorez les enregistrements et les guides clients avec des expériences numériques de marque — entièrement optionnel, facilement intégré."
+      },
+      "travel": {
+        "title": "Add-ons de Voyage et Logistique",
+        "description": "Ajoutez des services supplémentaires pour augmenter la satisfaction des clients — ils se branchent directement, sans effort supplémentaire."
+      },
+      "insurance": {
+        "title": "Assurance et Gestion des Dommages",
+        "description": "Offrez aux propriétaires la tranquillité d'esprit et automatisez les flux de protection."
+      }
+    },
+    "whyWorks": {
+      "title": "Pourquoi Ça Marche Pour Vous"
+    },
+    "additionalBenefits": {
+      "optional": "Toutes les intégrations sont optionnelles et non perturbatrices",
+      "coreHandled": "Nous gérons les systèmes centraux — pas de travail en double",
+      "extendable": "Vous pouvez étendre la fonctionnalité si nécessaire — et nous aiderons à la configurer",
+      "autoCommissions": "Vos commissions sont toujours calculées automatiquement",
+      "noContracts": "Pas de contrats à long terme — nous opérons au mois",
+      "cleaningSupport": "Si vous voulez utiliser nos équipes de nettoyage dans la gestion partielle, nous sommes heureux d'aider à coordonner cela aussi"
+    },
+    "flexibility": {
+      "title": "Vraie Flexibilité, Soutenue par un Service Complet",
+      "description": "Vous voulez utiliser vos propres nettoyeurs ? Vous pouvez. Vous voulez brancher Stripe, PriceLabs ou un système de serrures que vous utilisez déjà ? Nous l'avons couvert. Vous préférez tout entièrement géré par notre équipe ? C'est notre spécialité.",
+      "subtitle": "SmartHoster a été construit pour s'adapter — pas pour vous forcer dans une boîte."
+    },
+    "bottomLine": {
+      "title": "Voici l'Essentiel",
+      "sync": "Tout se synchronise",
+      "noBreaks": "Rien ne casse",
+      "performance": "Votre propriété performe",
+      "control": "Vous gardez le contrôle",
+      "accountability": "Nous restons responsables",
+      "seamlessExperience": "Les clients ont une expérience fluide",
+      "scaling": "Et si vous voulez jamais évoluer, ajuster ou simplifier — le système s'adapte avec vous."
+    },
+    "cta": {
+      "title": "Réservez Votre Consultation Gratuite de 30 Minutes",
+      "description": "Nous vous guiderons à travers ce qui est intégré, ce qui est optionnel et comment nous nous branchons à votre propriété avec zéro friction.",
+      "subtitle": "Au mois. Pas de pièges de configuration. Juste clarté, automatisation et croissance.",
+      "button": "Réserver Consultation Gratuite"
+    }
+  }
+}

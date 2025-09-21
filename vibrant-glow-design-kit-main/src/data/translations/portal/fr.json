@@ -1,0 +1,60 @@
+{
+  "welcome": "Bon retour",
+  "tagline": "Voici ce qui se passe avec vos propriétés aujourd'hui.",
+  "signOut": "Se Déconnecter",
+  "tabs": {
+    "overview": "Aperçu",
+    "calendar": "Calendrier",
+    "financial": "Financier",
+    "properties": "Propriétés"
+  },
+  "stats": {
+    "totalProperties": "Total des Propriétés",
+    "occupancyRate": "Taux d'Occupation",
+    "monthlyRevenue": "Revenus Mensuels",
+    "activeBookings": "Réservations Actives",
+    "changes": {
+      "thisMonth": "ce mois",
+      "vsLastMonth": "vs mois dernier",
+      "checkingInToday": "arrivée aujourd'hui"
+    }
+  },
+  "upcomingEvents": {
+    "title": "Événements à Venir",
+    "subtitle": "Votre planning pour les prochains jours",
+    "types": {
+      "checkIn": "Arrivée",
+      "checkOut": "Départ",
+      "cleaning": "Nettoyage"
+    },
+    "services": {
+      "deepClean": "Nettoyage Profond"
+    }
+  },
+  "financial": {
+    "totalEarnings": "Gains Totaux",
+    "cleaningFees": "Frais de Nettoyage",
+    "managementFees": "Frais de Gestion",
+    "netIncome": "Revenu Net",
+    "grossRevenue": "Revenus bruts des réservations",
+    "additionalIncome": "Revenu supplémentaire",
+    "smartHosterCommission": "Commission SmartHoster",
+    "afterAllFees": "Après tous les frais",
+    "commissionBreakdown": "Répartition des Commissions",
+    "grossEarnings": "Gains Bruts",
+    "managementCommission": "Commission de Gestion",
+    "recentInvoices": "Factures Récentes",
+    "noInvoicesFound": "Aucune facture trouvée",
+    "download": "Télécharger"
+  },
+  "properties": {
+    "overview": "Aperçu des Propriétés",
+    "noPropertiesFound": "Aucune Propriété Trouvée",
+    "contactSupport": "Contactez le support SmartHoster pour configurer vos propriétés.",
+    "type": "Type :",
+    "maxGuests": "Max Invités :",
+    "currentBookings": "Réservations Actuelles :",
+    "occupancyRate": "Taux d'Occupation :",
+    "nextCheckin": "Prochaine Arrivée :"
+  }
+}

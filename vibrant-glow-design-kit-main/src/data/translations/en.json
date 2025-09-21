@@ -1,0 +1,416 @@
+{
+  "languageBand": {
+    "tagline": "Empowering Hosts, Simplifying Stays"
+  },
+  "header": {
+    "logo": "SmartHoster.io",
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "features": "Features",
+      "properties": "Properties",
+      "howItWorks": "How It Works",
+      "testimonials": "Testimonials",
+      "pricing": "Pricing",
+      "blog": "Blog"
+    },
+    "cta": {
+      "signIn": "Sign In",
+      "getStarted": "Get Started",
+      "getStartedToday": "Get Started Today"
+    }
+  },
+  "hero": {
+    "trustBadge": "Trusted by property owners across Portugal",
+    "title": {
+      "empowering": "Empowering",
+      "hosts": "Hosts,",
+      "simplifying": "Simplifying",
+      "stays": "Stays"
+    },
+    "description": "Smart solutions for hassle-free property management, helping you maximize your property's potential with cutting-edge technology.",
+    "cta": {
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    },
+    "trustBadges": {
+      "sslCertified": "SSL Certified",
+      "bankLevel": "Bank-Level Security",
+      "googleVerified": "Google Verified",
+      "trustedBusiness": "Trusted Business"
+    },
+    "metrics": {
+      "incomeIncrease": "+35%",
+      "incomeLabel": "Income Increase",
+      "compliance": "100%",
+      "complianceLabel": "Legal Compliance",
+      "support": "24/7",
+      "supportLabel": "Support"
+    }
+  },
+  "aboutUs": {
+    "title": "About SmartHoster.io",
+    "description": "We combine cutting-edge technology with local Portuguese expertise to create sustainable and profitable property management solutions that respect both our environment and our communities.",
+    "values": {
+      "technology": {
+        "title": "Technological Excellence",
+        "description": "Cutting-edge solutions that optimize operations"
+      },
+      "expertise": {
+        "title": "Local Expertise",
+        "description": "Deep understanding of Portuguese market dynamics"
+      },
+      "sustainability": {
+        "title": "Sustainability Commitment",
+        "description": "Eco-friendly practices for responsible hosting"
+      },
+      "standards": {
+        "title": "Global Standards",
+        "description": "International best practices, local implementation"
+      }
+    },
+    "partners": {
+      "title": "Trusted Partner Network"
+    }
+  },
+  "features": {
+    "title": "Premium Features for",
+    "subtitle": "Maximum Success",
+    "description": "Every feature designed with one goal: maximize your property's revenue potential while minimizing your operational overhead.",
+    "learnMore": "Learn More",
+    "list": {
+      "maxIncome": {
+        "title": "Maximized Rental Income",
+        "description": "Dynamic pricing algorithms and market analysis to ensure you get the highest possible returns from your property investment."
+      },
+      "fullService": {
+        "title": "Full-Service Property Management",
+        "description": "Complete end-to-end management including cleaning, maintenance, guest communication, and quality assurance."
+      },
+      "legalCompliance": {
+        "title": "Legal Compliance and SEF Reporting",
+        "description": "Automated legal compliance, tax reporting, and seamless integration with Portuguese authorities and SEF requirements."
+      },
+      "automation": {
+        "title": "Advanced Automation and Smart Technology",
+        "description": "IoT integration, smart locks, automated check-ins, and AI-powered guest experience optimization."
+      },
+      "billing": {
+        "title": "Automated Billing and Invoicing",
+        "description": "Streamlined financial management with automated billing, payment processing, and comprehensive reporting."
+      },
+      "directBookings": {
+        "title": "Enhanced Direct Bookings",
+        "description": "Custom booking websites and marketing strategies to reduce commission fees and increase direct bookings."
+      },
+      "clientPortal": {
+        "title": "Client Portal Access",
+        "description": "Real-time dashboard access to view bookings, earnings, property performance, and detailed analytics."
+      },
+      "localExpertise": {
+        "title": "Dedicated Local Expertise",
+        "description": "Portuguese market specialists providing personalized service and local insights for optimal performance."
+      },
+      "greenPledge": {
+        "title": "Our Green Pledge",
+        "description": "Sustainable hosting practices, eco-friendly amenities, and carbon offset programs for responsible tourism."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Client Testimonials",
+    "description": "Hear from property owners across Portugal who have transformed their hosting experience with SmartHoster.io",
+    "roles": {
+      "villaOwner": "Villa Owner",
+      "apartmentHost": "Apartment Host", 
+      "propertyInvestor": "Property Investor",
+      "vacationRentalHost": "Vacation Rental Host",
+      "boutiqueHotelOwner": "Boutique Hotel Owner",
+      "countrysideVillaHost": "Countryside Villa Host"
+    },
+    "quotes": {
+      "luis": "SmartHoster.io transformed my beachfront villa into a consistent income generator. The automation and local expertise made all the difference - my revenue increased 40% in just 6 months.",
+      "maria": "The legal compliance features are incredible. I never worry about SEF reporting or tax obligations anymore. Everything is handled professionally and automatically.",
+      "carlos": "Managing multiple properties was overwhelming until I found SmartHoster. Now I focus on expanding my portfolio while they handle all operations seamlessly.",
+      "ana": "The green initiatives and sustainable practices align perfectly with my values. My guests love the eco-friendly approach, and bookings have doubled since switching.",
+      "pedro": "They integrated my boutique hotel across all major platforms and set up an automated messaging system that actually feels human. It saves me hours every week — and guests love it.",
+      "sofia": "With their direct booking setup, I cut commission costs and now earn more from repeat guests."
+    }
+  },
+  "successStories": {
+    "title": "Client Success Stories",
+    "description": "Real results from real property owners who transformed their hosting business with SmartHoster.io",
+    "readFullStory": "Read Full Story",
+    "propertyGallery": "Property Gallery",
+    "successBadge": "SUCCESS",
+    "caseStudy": "Case Study",
+    "stories": [
+      {
+        "name": "João Silva",
+        "property": "Beachfront Villa",
+        "location": "Algarve",
+        "results": [
+          { "label": "Income Increase", "value": "+35%" },
+          { "label": "Occupancy Rate", "value": "+30%" },
+          { "label": "Guest Rating", "value": "4.9/5" },
+          { "label": "Superhost Status", "value": "Achieved" }
+        ],
+        "story": "When I met the SmartHoster team, my beachfront property had incredible potential — but it was underperforming. The previous management company had left things neglected. We repainted, made a few interior upgrades, and got new professional photos. But the biggest change? Installing a full self-check-in system.",
+        "fullStory": "When I met the SmartHoster team, my beachfront property had incredible potential — but it was underperforming. The previous management company had left things neglected. Guests complained about difficult check-ins, communication was slow, and the place just needed a refresh.\n\nWe repainted, made a few interior upgrades, and got new professional photos. But the biggest change? Installing a full self-check-in system — at the entrance gate and the front door. Suddenly, guests arrived smoothly, no waiting, no stress.\n\nWe also rebuilt my accounts from the ground up. My previous listings had a rough start, so we reset and relaunched on Airbnb, Booking.com, and VRBO. The first few weeks were quiet, but after the first 10 five-star reviews, bookings started pouring in.\n\nSmartHoster took care of the details I didn't know I was missing. Now I have consistent occupancy, happier guests, and far less to worry about."
+      },
+      {
+        "name": "Maria Fernandes",
+        "property": "Urban Apartments",
+        "location": "Porto",
+        "results": [
+          { "label": "Revenue Growth", "value": "+42%" },
+          { "label": "Legal Compliance", "value": "100%" },
+          { "label": "Admin Time Saved", "value": "-80%" },
+          { "label": "Platform Rating", "value": "5★" }
+        ],
+        "story": "We used to manage all of our apartments ourselves — juggling bookings, cleanings, SEF reporting, and trying to keep the accounts straight. It worked, but it was a constant grind. Then SmartHoster came in.",
+        "fullStory": "We used to manage all of our apartments ourselves — juggling bookings, cleanings, SEF reporting, and trying to keep the accounts straight. It worked, but it was a constant grind. Then SmartHoster came in.\n\nWe still use our own trusted cleaning teams, but SmartHoster handles everything else: guest communication, self-check-in systems, compliance, Model 30s, SEF reports, financials, revenue splits — you name it. Our accountant loves it. The dashboards are clear, the numbers are accurate, and we don't waste time chasing paperwork.\n\nWhat used to take up hours of admin time is now fully automated. We've taken a step back operationally and focused on expanding our portfolio here in Porto. Everything runs under one system. It's structured, clean, and scalable. Honestly, it just makes sense."
+      },
+      {
+        "name": "Carlos Mendes",
+        "property": "Historic Townhouse",
+        "location": "Óbidos",
+        "results": [
+          { "label": "Booking Value", "value": "+28%" },
+          { "label": "Direct Bookings", "value": "+45%" },
+          { "label": "Guest Satisfaction", "value": "98%" },
+          { "label": "Revenue per Month", "value": "€4,200" }
+        ],
+        "story": "My historic townhouse in Óbidos was charming, but I wasn't getting enough bookings — especially in the colder months. Then SmartHoster stepped in with creative solutions that completely transformed my business.",
+        "fullStory": "My historic townhouse in Óbidos was charming, but I wasn't getting enough bookings — especially in the colder months. Then SmartHoster stepped in. They helped me redo the property photos, improve the bedding quality, and rethink how I presented the space.\n\nThe biggest surprise? A €400 inflatable jacuzzi and a €250 custom wood deck around it. That's it — and it completely changed the game. Suddenly, I was getting winter bookings, guests loved the cozy outdoor vibe, and my reviews went up.\n\nSmartHoster doesn't just manage things — they add value in ways I never expected. I'm now earning more, with less stress, and the house is booked year-round."
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "description": "Simple 5-step process to transform your property into a high-performing rental investment",
+    "steps": {
+      "reachOut": {
+        "title": "Reach Out",
+        "description": "Contact our team for a personalized consultation about your property"
+      },
+      "evaluation": {
+        "title": "Evaluation",
+        "description": "Comprehensive property assessment and market analysis for optimal positioning"
+      },
+      "onboarding": {
+        "title": "Onboarding",
+        "description": "Seamless setup process with dedicated support and platform integration"
+      },
+      "goLive": {
+        "title": "Go Live",
+        "description": "Launch your property across all platforms with professional marketing"
+      },
+      "enjoy": {
+        "title": "Enjoy the Benefits",
+        "description": "Relax while we manage everything and maximize your returns"
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "description": "Join hundreds of successful property owners who trust SmartHoster.io",
+      "benefits": {
+        "platform": "Professional property management platform",
+        "specialist": "Dedicated onboarding specialist",
+        "expertise": "Local Portuguese market expertise",
+        "compliance": "Comprehensive legal compliance support"
+      },
+      "button": "Start Today",
+      "ssl": "Secure SSL Process",
+      "support": "Professional support included"
+    }
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "description": "Choose the management level that fits your needs. No hidden fees, no surprises - just transparent pricing that grows with your success.",
+    "managementFee": "management fee",
+    "getStarted": "Get started with",
+    "plans": {
+      "essential": {
+        "name": "Essential",
+        "fee": "15%",
+        "description": "Perfect for new hosts starting their rental journey"
+      },
+      "premium": {
+        "name": "Premium",
+        "fee": "30%",
+        "description": "Complete hands-off management for maximum returns",
+        "popular": "Most Popular"
+      }
+    },
+    "features": {
+      "essential": [
+        "Property listing optimization",
+        "Basic calendar management",
+        "Guest communication support",
+        "Monthly performance reports",
+        "SEF compliance reporting",
+        "24/7 emergency support",
+        "Basic cleaning coordination"
+      ],
+      "premium": [
+        "Everything in Essential plan",
+        "Dynamic pricing optimization",
+        "Professional photography",
+        "Full-service property management",
+        "Advanced marketing campaigns",
+        "Guest concierge services",
+        "Property maintenance coordination",
+        "Direct booking website",
+        "Revenue optimization consulting",
+        "Priority customer support"
+      ]
+    },
+    "cta": {
+      "title": "Need a Custom Solution?",
+      "description": "We offer customized pricing for large portfolios and unique requirements",
+      "button": "Contact Us"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Get answers to the most common questions about our property management services",
+    "questions": {
+      "setup": {
+        "question": "How long does the setup process take?",
+        "answer": "The complete onboarding process typically takes 7-14 days from initial consultation to going live. This includes property assessment, professional photography, platform setup, and compliance documentation. We pride ourselves on having one of the fastest setup times in the industry while maintaining the highest quality standards."
+      },
+      "fees": {
+        "question": "Are there any hidden fees beyond the management percentage?",
+        "answer": "There are no hidden fees. Our transparent pricing model means you only pay the agreed management percentage on successful bookings. This covers all our services including marketing, guest support, cleaning coordination, and compliance management. You'll never receive surprise charges or additional service fees."
+      },
+      "compliance": {
+        "question": "How do you ensure legal compliance with Portuguese regulations?",
+        "answer": "We maintain partnerships with legal experts and stay current with all Portuguese short-term rental regulations. Our system automatically handles SEF reporting, tax obligations, and licensing requirements. We provide complete documentation support and ensure 100% compliance with local laws and registration requirements."
+      },
+      "emergency": {
+        "question": "What happens during emergencies or urgent situations?",
+        "answer": "Our 24/7 emergency response team is always available for urgent situations. We have established relationships with local contractors, maintenance professionals, and security services. Guests receive immediate assistance, and property owners are notified of any incidents with complete documentation and resolution updates."
+      },
+      "personal": {
+        "question": "Can I still use my property for personal stays?",
+        "answer": "Absolutely! We work around your personal schedule and block out dates when you want to use your property. Our calendar management system makes it easy to reserve time for yourself, family visits, or personal vacations. You maintain complete control over your property's availability."
+      },
+      "cleaningFees": {
+        "question": "How do cleaning fees work?",
+        "answer": "Cleaning fees are paid by the guest, not the property owner.\nThey're added to each booking and passed directly to the cleaning team.\n\nWe handle the rest — scheduling, communication, and quality control.\nYou don't pay out of pocket, and it's not part of our management percentage."
+      },
+      "cancellation": {
+        "question": "What's the cancellation policy?",
+        "answer": "We offer a 15-day cancellation policy on management agreements.\nYou're not locked into long contracts — this gives you flexibility to change or pause services as needed."
+      },
+      "payment": {
+        "question": "How does payment work?",
+        "answer": "We're flexible.\n\nYou can receive guest payments directly and we bill you our percentage —\nor, we can collect everything and transfer your earnings minus our fee.\n\nWhatever works best for you."
+      },
+      "contract": {
+        "question": "Is the contract month-to-month?",
+        "answer": "Yes. All management agreements are month-to-month with 15-day notice.\nNo long-term commitments, no headaches."
+      },
+      "cleaningTeam": {
+        "question": "Do I have to use your cleaning team?",
+        "answer": "No — we offer in-house cleaning coordination, but it's optional.\n\nIf you have your own cleaning staff, we can integrate them into the schedule.\nOtherwise, we handle everything for you with verified professional teams."
+      }
+    }
+  },
+  "contact": {
+    "title": {
+      "ready": "Ready to",
+      "started": "Get Started?"
+    },
+    "description": "Contact our team for a personalized consultation about your property management needs",
+    "getInTouch": "Get In Touch",
+    "email": {
+      "label": "Email"
+    },
+    "phone": {
+      "label": "Phone"
+    },
+    "trust": {
+      "ssl": "Secure SSL Communication",
+      "gdpr": "GDPR Compliant"
+    },
+    "form": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Your full name"
+      },
+      "email": {
+        "label": "Email Address",
+        "placeholder": "youremail@example.com"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "+351 XXX XXX XXX"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Tell us about your property and how we can help..."
+      },
+      "optional": "Optional",
+      "consent": {
+        "text": "I consent to receive updates and communications from",
+        "unsubscribe": "You can unsubscribe at any time. See our",
+        "privacy": "Privacy Policy"
+      },
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "validation": {
+        "title": "Please fill in all required fields",
+        "description": "Make sure to fill in your name, email, message, and accept the privacy policy."
+      },
+      "error": {
+        "title": "Error sending message",
+        "description": "Please try again or contact us directly."
+      },
+      "success": {
+        "title": "Message Sent Successfully!",
+        "description": "Thank you for contacting us. We'll get back to you within 24 hours.",
+        "button": "Close"
+      },
+      "emailSubject": "SmartHoster.io Contact Form Submission",
+      "notProvided": "Not provided",
+      "consentConfirmation": "User agreed to receive communications."
+    },
+    "cta": {
+      "getStarted": "Get Started Today"
+    }
+  },
+  "footer": {
+    "description": "Professional property management platform trusted by thousands of hosts worldwide.",
+    "contact": {
+      "email": "support@smarthoster.io",
+      "phone": "1-800-SMARTHOST",
+      "address": "Lisbon, Portugal"
+    },
+    "sections": {
+      "platform": {
+        "title": "Platform",
+        "links": ["Features", "Pricing", "Integrations", "API", "Security"]
+      },
+      "company": {
+        "title": "Company",
+        "links": ["About Us", "Careers", "Press", "Blog", "Contact"]
+      },
+      "support": {
+        "title": "Support",
+        "links": ["Help Center", "Documentation", "Community", "Training", "Status"]
+      },
+      "legal": {
+        "title": "Legal",
+        "links": ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR", "Compliance"]
+      }
+    },
+    "copyright": "© 2024 SmartHoster.io. All rights reserved.",
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Settings"
+    }
+  }
+}

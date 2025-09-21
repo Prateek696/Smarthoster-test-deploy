@@ -1,0 +1,101 @@
+
+{
+  "about": {
+    "hero": {
+      "title": "À Propos de SmartHoster",
+      "description": "SmartHoster est une entreprise de gestion immobilière à service complet aidant les propriétaires à travers le Portugal à libérer le plein potentiel de leurs locations de courte durée. Grâce à l'automatisation, au support local expert et à un engagement envers la transparence, nous offrons la tranquillité d'esprit et de meilleures performances — sans tracas."
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Mission",
+        "content": "Chez SmartHoster, nous permettons aux propriétaires d'atteindre le succès financier grâce à une gestion immobilière fluide et sans stress."
+      },
+      "vision": {
+        "title": "Vision",
+        "content": "En simplifiant la gestion immobilière et en exploitant une technologie de pointe, nous visons à établir une nouvelle norme pour des expériences d'hôtes exceptionnelles et des performances immobilières optimisées."
+      }
+    },
+    "origin": {
+      "title": "Pourquoi Nous Avons Créé SmartHoster",
+      "content": "SmartHoster a commencé avec une idée simple : la gestion immobilière ne devrait pas être frustrante. Après avoir vu de première main à quel point elle pouvait être désorganisée et opaque, nous avons décidé de créer un système qui priorise les propriétaires, automatise la complexité et apporte une vraie transparence."
+    },
+    "values": {
+      "title": "Nos Valeurs Fondamentales",
+      "ownerFirst": {
+        "title": "Service propriétaire d'abord, toujours",
+        "description": "Chaque décision que nous prenons place les propriétaires en premier"
+      },
+      "transparency": {
+        "title": "Transparence radicale sur tous les fronts",
+        "description": "Ouverture complète dans toutes nos opérations et communications"
+      },
+      "humanSupport": {
+        "title": "Support humain, pas seulement des bots",
+        "description": "De vraies personnes fournissant une assistance authentique quand vous en avez besoin"
+      },
+      "automation": {
+        "title": "Automatisation qui fonctionne vraiment",
+        "description": "Technologie intelligente qui simplifie sans compliquer"
+      },
+      "sustainability": {
+        "title": "Durabilité sans écoblanchiment",
+        "description": "Engagement environnemental authentique dans tout ce que nous faisons"
+      }
+    },
+    "team": {
+      "title": "Rencontrez l'Équipe Derrière SmartHoster",
+      "description": "Notre équipe dévouée combine l'expertise locale avec une technologie de pointe pour fournir des services de gestion immobilière exceptionnels.",
+      "members": {
+        "miguel": {
+          "role": "Fondateur et PDG",
+          "description": "Leader visionnaire qui mène la mission de SmartHoster de révolutionner la gestion immobilière au Portugal."
+        },
+        "patricia": {
+          "role": "Responsable des Opérations",
+          "description": "Coordinatrice experte assurant des opérations quotidiennes fluides et une prestation de service exceptionnelle."
+        },
+        "shubanshu": {
+          "role": "Responsable IT",
+          "description": "Innovateur technologique développant des solutions de pointe pour l'automatisation de la gestion immobilière."
+        },
+        "raimundo": {
+          "role": "Responsable Maintenance et Réparations",
+          "description": "Leader expert supervisant toutes les opérations de maintenance et s'assurant que les propriétés dépassent les attentes des invités."
+        },
+        "carlos": {
+          "role": "Conseiller Comptable et Juridique",
+          "description": "Professionnel expert en finance et juridique assurant la conformité et des opérations commerciales optimales."
+        },
+        "adolfo": {
+          "role": "Programmeur Principal",
+          "description": "Architecte logiciel construisant des systèmes robustes qui alimentent les capacités de notre plateforme."
+        },
+        "sofia": {
+          "role": "Responsable Relations Clients",
+          "description": "Défenseure dévouée s'assurant que chaque client reçoit une attention personnalisée et du support."
+        },
+        "zara": {
+          "role": "Stratège Marketing et Marque",
+          "description": "Stratège créative construisant la marque SmartHoster et connectant avec les propriétaires immobiliers."
+        }
+      }
+    },
+    "green": {
+      "title": "Engagement de Durabilité",
+      "content": "Nous nous engageons à des pratiques durables qui profitent à la fois à l'environnement et à vos résultats financiers.",
+      "features": {
+        "led": "Installations d'éclairage LED",
+        "appliances": "Appareils électroménagers économes en énergie",
+        "water": "Installations d'économie d'eau",
+        "linens": "Linge réutilisable et distributeurs",
+        "upgrades": "Améliorations éco-conscientes"
+      },
+      "cta": "En Savoir Plus Sur Notre Engagement Vert"
+    },
+    "cta": {
+      "title": "Réservez une Consultation Gratuite",
+      "description": "Prêt à transformer votre expérience de gestion immobilière ? Discutons de comment SmartHoster peut vous aider à atteindre vos objectifs.",
+      "button": "Planifiez Votre Consultation"
+    }
+  }
+}

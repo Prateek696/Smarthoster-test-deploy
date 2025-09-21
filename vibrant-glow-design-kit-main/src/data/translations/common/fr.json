@@ -1,0 +1,74 @@
+
+{
+  "header": {
+    "logo": "SmartHoster.io",
+    "nav": {
+      "home": "Accueil",
+      "about": "À Propos",
+      "features": "Fonctionnalités",
+      "properties": "Propriétés",
+      "howItWorks": "Comment Ça Marche",
+      "testimonials": "Témoignages",
+      "pricing": "Tarifs",
+      "integrations": "Intégrations",
+      "services": "Services"
+    },
+    "cta": {
+      "signIn": "Se Connecter",
+      "getStarted": "Commencer",
+      "getStartedToday": "Commencer Aujourd'hui"
+    },
+    "services": {
+      "enhancedDirectBookings": "Réservations Directes Améliorées",
+      "fullServiceManagement": "Gestion de Service Complet",
+      "advancedAutomation": "Automatisation Avancée et Technologie Intelligente",
+      "localExpertise": "Expertise Locale",
+      "incomeStrategy": "Stratégie de Revenus",
+      "legalCompliance": "Conformité Légale et Rapports SEF/AIMA",
+      "automatedBilling": "Facturation Automatisée et Rapports Légaux",
+      "greenPledge": "Engagement Vert"
+    }
+  },
+  "footer": {
+    "description": "Gestion professionnelle de propriétés, approuvée par des hôtes au Portugal et au-delà.",
+    "contact": {
+      "email": "contact@smarthoster.io",
+      "phone": "+351 933 683 981",
+      "address": "Lisbonne, Portugal"
+    },
+    "offices": {
+      "title": "Nos bureaux au Portugal",
+      "emails": [
+        "algarve@smarthoster.io",
+        "lisbon@smarthoster.io",
+        "porto@smarthoster.io"
+      ]
+    },
+    "sections": {
+      "platform": {
+        "title": "Plateforme",
+        "links": ["Fonctionnalités", "Tarifs", "Intégrations", "API", "Sécurité"]
+      },
+      "company": {
+        "title": "Entreprise",
+        "links": ["À Propos", "Carrières", "Presse", "Blog", "Contact"]
+      },
+      "support": {
+        "title": "Support",
+        "links": ["Centre d'Aide", "Documentation", "Communauté", "Formation", "Statut"]
+      },
+      "legal": {
+        "title": "Légal",
+        "links": ["Politique de Confidentialité", "Conditions de Service", "Politique des Cookies", "Conformité RGPD", "Conformité"]
+      }
+    },
+    "copyright": "Tous droits réservés.",
+    "legal": {
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions de Service",
+      "cookies": "Politique des Cookies",
+      "gdpr": "Conformité RGPD"
+    },
+    "complaintsBook": "Registre des Réclamations"
+  }
+}

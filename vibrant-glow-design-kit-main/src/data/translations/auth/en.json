@@ -1,0 +1,28 @@
+{
+  "title": "SmartHoster",
+  "subtitle": "Client Portal",
+  "backToHome": "Back to Home",
+  "welcomeBack": "Welcome Back",
+  "createAccount": "Create Account",
+  "resetPassword": "Reset Password",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+  "password": "Password",
+  "signIn": "Sign In",
+  "signUp": "Create Account",
+  "pleaseWait": "Please wait...",
+  "sendResetEmail": "Send Reset Email",
+  "forgotPassword": "Forgot your password?",
+  "dontHaveAccount": "Don't have an account? ",
+  "alreadyHaveAccount": "Already have an account? ",
+  "signUpLink": "Sign up",
+  "signInLink": "Sign in",
+  "backToSignIn": "Back to sign in",
+  "messages": {
+    "resetEmailSent": "Password reset email sent! Check your inbox.",
+    "welcomeBack": "Welcome back!",
+    "accountCreated": "Account created! Please check your email to verify your account.",
+    "somethingWrong": "Something went wrong"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "title": "Contact SmartHoster.io & SmartCondo.io",
+  "subtitle": "Get in touch with both companies for all your property management needs",
+  "smartHoster": {
+    "title": "SmartHoster.io",
+    "description": "Airbnb & Short-Term Rental Management",
+    "tagline": "Empowering Hosts, Simplifying Stays™"
+  },
+  "smartCondo": {
+    "title": "SmartCondo.io", 
+    "description": "Condo & Long-Term Rental Management",
+    "tagline": "Smarter Management, Smarter Living"
+  },
+  "contact": {
+    "phone": "+351 933 683 981",
+    "smartHosterEmail": "info@smarthoster.io",
+    "smartCondoEmail": "info@smartcondo.io"
+  },
+  "actions": {
+    "emailSmartHoster": "Email SmartHoster",
+    "emailSmartCondo": "Email SmartCondo", 
+    "callUs": "Call Us",
+    "visitSmartHoster": "Visit SmartHoster.io",
+    "visitSmartCondo": "Visit SmartCondo.io",
+    "downloadSmartHosterCard": "Save SmartHoster Contact",
+    "downloadSmartCondoCard": "Save SmartCondo Contact"
+  },
+  "qrCode": {
+    "title": "You scanned our QR code!",
+    "description": "Thank you for your interest. Here's how to contact us:"
+  },
+  "downloadSuccess": "Contact saved successfully!",
+  "downloadError": "Error saving contact. Please try again.",
+  "features": {
+    "keyFeatures": "Key Features:",
+    "smartHosterFeatures": {
+      "pricing": "Higher Revenue with Dynamic Pricing",
+      "support": "24/7 Guest Communication and Support",
+      "photography": "Professional Cleaning and Turnovers",
+      "compliance": "SEF and Local Regulation Compliance"
+    },
+    "smartCondoFeatures": {
+      "management": "Transparent Financial Reporting",
+      "screening": "Preventive Maintenance and Repairs",
+      "maintenance": "Clear Owner Communication",
+      "reporting": "Legal and Administrative Compliance"
+    }
+  },
+  "whyChoose": {
+    "title": "Why Choose Our Services?",
+    "rating": {
+      "title": "5★ Rating",
+      "description": "Trusted by 500+ property owners across Portugal"
+    },
+    "compliant": {
+      "title": "100% Compliant", 
+      "description": "Full legal compliance with Portuguese regulations"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Round-the-clock support for you and your guests"
+    }
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "description": "Contact us today for a free consultation",
+    "emailUs": "Email Us",
+    "bookCall": "Book Call"
+  }
+}

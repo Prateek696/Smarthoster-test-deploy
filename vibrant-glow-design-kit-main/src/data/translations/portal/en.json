@@ -1,0 +1,60 @@
+{
+  "welcome": "Welcome back",
+  "tagline": "Here's what's happening with your properties today.",
+  "signOut": "Sign Out",
+  "tabs": {
+    "overview": "Overview",
+    "calendar": "Calendar",
+    "financial": "Financial",
+    "properties": "Properties"
+  },
+  "stats": {
+    "totalProperties": "Total Properties",
+    "occupancyRate": "Occupancy Rate",
+    "monthlyRevenue": "Monthly Revenue",
+    "activeBookings": "Active Bookings",
+    "changes": {
+      "thisMonth": "this month",
+      "vsLastMonth": "vs last month",
+      "checkingInToday": "checking in today"
+    }
+  },
+  "upcomingEvents": {
+    "title": "Upcoming Events",
+    "subtitle": "Your schedule for the next few days",
+    "types": {
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "cleaning": "Cleaning"
+    },
+    "services": {
+      "deepClean": "Deep Clean"
+    }
+  },
+  "financial": {
+    "totalEarnings": "Total Earnings",
+    "cleaningFees": "Cleaning Fees",
+    "managementFees": "Management Fees",
+    "netIncome": "Net Income",
+    "grossRevenue": "Gross bookings revenue",
+    "additionalIncome": "Additional income",
+    "smartHosterCommission": "SmartHoster commission",
+    "afterAllFees": "After all fees",
+    "commissionBreakdown": "Commission Breakdown",
+    "grossEarnings": "Gross Earnings",
+    "managementCommission": "Management Commission",
+    "recentInvoices": "Recent Invoices",
+    "noInvoicesFound": "No invoices found",
+    "download": "Download"
+  },
+  "properties": {
+    "overview": "Property Overview",
+    "noPropertiesFound": "No Properties Found",
+    "contactSupport": "Contact SmartHoster support to set up your properties.",
+    "type": "Type:",
+    "maxGuests": "Max Guests:",
+    "currentBookings": "Current Bookings:",
+    "occupancyRate": "Occupancy Rate:",
+    "nextCheckin": "Next Check-in:"
+  }
+}
