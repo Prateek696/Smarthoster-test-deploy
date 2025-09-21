@@ -14,7 +14,7 @@ export const connectDB = async () => {
     
     console.log("✅ MongoDB connected successfully");
     console.log("✅ Connection state:", mongoose.connection.readyState);
-  } catch (err) {
+  } catch (err: any) {
     console.error("❌ MongoDB connection failed:", err);
     console.error("❌ Error details:", err.message);
     // Don't exit in production, just log the error
