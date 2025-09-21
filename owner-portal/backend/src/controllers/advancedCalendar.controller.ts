@@ -65,7 +65,7 @@ export const getAdvancedCalendarEvents = async (req: Request, res: Response) => 
     }
 
     // Process calendar events
-    const events = [];
+    const events: any[] = [];
     
     // Process Hostaway calendar data
     if (hostawayCalendar.result && Array.isArray(hostawayCalendar.result)) {
@@ -336,10 +336,11 @@ export const createBulkOperation = async (req: Request, res: Response) => {
       parameters: parameters || {},
       status: 'processing',
       createdAt: new Date().toISOString(),
+      completedAt: '',
       results: {
         success: 0,
         failed: 0,
-        errors: []
+        errors: [] as string[]
       }
     };
 
@@ -347,7 +348,7 @@ export const createBulkOperation = async (req: Request, res: Response) => {
     const results = {
       success: 0,
       failed: 0,
-      errors: []
+      errors: [] as string[]
     };
 
     for (const propertyId of properties) {
