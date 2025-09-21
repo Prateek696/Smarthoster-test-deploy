@@ -75,7 +75,6 @@ export const getOwnerStatements = async (req: Request, res: Response) => {
       updatedAt: new Date().toISOString(),
       // Include detailed data for debugging
       reservations: result.reservations,
-      invoices: result.invoices || [],
       summary: result.summary
     }];
 
