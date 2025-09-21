@@ -5,7 +5,9 @@ export const signupSchema = z.object({
   email: z.string().email(),
   phone: z.string().optional(),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.enum(["admin", "owner", "accountant", "user"]).optional()
+  role: z.string().refine((val) => ["admin", "owner", "accountant", "user"].includes(val), {
+    message: "Role must be one of: admin, owner, accountant, user"
+  }).optional()
 });
 
 export const loginSchema = z.object({
