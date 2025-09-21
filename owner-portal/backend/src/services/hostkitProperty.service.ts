@@ -1,6 +1,7 @@
 // hostkitProperty.service.ts
 import axios from 'axios';
 import { env } from '../config/env';
+import { PropertyModel } from '../models/Property.model';
 
 interface HostkitPropertyResponse {
   owner: string;
@@ -27,26 +28,49 @@ interface PropertyRequest {
 export const getPropertyService = async (request: PropertyRequest): Promise<HostkitPropertyResponse> => {
   const { propertyId } = request;
   
-  // TODO: Make this dynamic by fetching from database
-  // For now, using hardcoded mapping - this needs to be moved to database
-  const propertyToHostkitMap: { [key: string]: string } = {
-    '392776': '10027', // Piece of Heaven
-    '392779': '10028', // Lote 12 4-A
-    '392778': '10029', // Lote 8 4-B
-    '392777': '10030', // Lote 16 Pt 1 3-B
-    '392781': '10031', // Lote 7 3-A
-    '392780': '10032', // Lote 16 Pt1 4-B
-    '414661': '12602', // Waterfront Pool Penthouse View
-  };
-
-  const hostkitId = propertyToHostkitMap[propertyId];
-  if (!hostkitId) {
-    throw new Error(`No Hostkit API key configured for property ${propertyId}. Please add this property to the mapping or database.`);
+  // Fetch property from database to get Hostkit configuration
+  const property = await PropertyModel.findOne({ id: parseInt(propertyId) });
+  if (!property) {
+    throw new Error(`Property ${propertyId} not found in database`);
   }
 
-  const apiKey = env.hostkit.apiKeys[hostkitId as keyof typeof env.hostkit.apiKeys];
-  if (!apiKey) {
-    throw new Error(`HOSTKIT_API_KEY_${hostkitId} environment variable is not set for property ${propertyId}`);
+  // Get Hostkit ID and API key from database
+  const hostkitId = property.hostkitId;
+  const apiKey = property.hostkitApiKey;
+
+  let finalHostkitId: string;
+  let finalApiKey: string;
+
+  // Use database values if available, otherwise fallback to environment variables
+  if (hostkitId && apiKey) {
+    finalHostkitId = hostkitId;
+    finalApiKey = apiKey;
+  } else {
+    console.warn(`Property ${propertyId} missing Hostkit configuration in database, falling back to environment variables`);
+    
+    // Fallback to hardcoded mapping for backward compatibility
+    const propertyToHostkitMap: { [key: string]: string } = {
+      '392776': '10027', // Piece of Heaven
+      '392779': '10028', // Lote 12 4-A
+      '392778': '10029', // Lote 8 4-B
+      '392777': '10030', // Lote 16 Pt 1 3-B
+      '392781': '10031', // Lote 7 3-A
+      '392780': '10032', // Lote 16 Pt1 4-B
+      '414661': '12602', // Waterfront Pool Penthouse View
+    };
+
+    const fallbackHostkitId = propertyToHostkitMap[propertyId];
+    if (!fallbackHostkitId) {
+      throw new Error(`No Hostkit configuration found for property ${propertyId}. Please configure Hostkit ID and API key in the property settings.`);
+    }
+
+    const fallbackApiKey = env.hostkit.apiKeys[fallbackHostkitId as keyof typeof env.hostkit.apiKeys];
+    if (!fallbackApiKey) {
+      throw new Error(`HOSTKIT_API_KEY_${fallbackHostkitId} environment variable is not set for property ${propertyId}`);
+    }
+
+    finalHostkitId = fallbackHostkitId;
+    finalApiKey = fallbackApiKey;
   }
 
   // Validate input
@@ -58,8 +82,8 @@ export const getPropertyService = async (request: PropertyRequest): Promise<Host
     // Call Hostkit API
     const response = await axios.get(`${env.hostkit.apiUrl}/getProperty`, {
       params: {
-        APIKEY: apiKey,
-        id: propertyId
+        APIKEY: finalApiKey,
+        id: finalHostkitId
       },
       timeout: 30000 // 30 second timeout
     });
