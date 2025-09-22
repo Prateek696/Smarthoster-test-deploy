@@ -62,7 +62,7 @@ const SAFT: React.FC = () => {
         invoicing_nif: invoicingNif
       });
 
-      const response = await fetch(`/api/saft?${params}`, {
+      const response = await fetch(`/properties/saft/get?${params}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
