@@ -92,48 +92,6 @@ const Signup: React.FC = () => {
     }
   }
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required'
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required'
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format'
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required'
-    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = 'Invalid phone number format'
-    }
-
-    if (!formData.password.trim()) {
-      newErrors.password = 'Password is required'
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters'
-    }
-
-    if (!formData.confirmPassword.trim()) {
-      newErrors.confirmPassword = 'Please confirm your password'
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match'
-    }
-
-    if (!formData.role) {
-      newErrors.role = 'Please select a role'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

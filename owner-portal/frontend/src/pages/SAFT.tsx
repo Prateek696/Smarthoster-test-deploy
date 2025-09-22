@@ -179,7 +179,7 @@ const SAFT: React.FC = () => {
         {/* Retrieve Button */}
         <div className="mt-6">
           <button
-            onClick={getSAFT}
+            onClick={() => getSAFT()}
             disabled={isLoading || !invoicingNif}
             className="w-full md:w-auto px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
@@ -221,7 +221,7 @@ const SAFT: React.FC = () => {
                   <p><strong>Sent:</strong> {new Date(saftData.sent).toLocaleString()}</p>
                 </div>
                 <button
-                  onClick={downloadSAFT}
+                  onClick={() => downloadSAFT()}
                   className="mt-3 inline-flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
                 >
                   <Download className="w-4 h-4" />

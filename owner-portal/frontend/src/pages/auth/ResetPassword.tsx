@@ -71,7 +71,7 @@ const ResetPassword: React.FC = () => {
       await authAPI.resetPassword({
         email: formData.email,
         otp: formData.otp,
-        newPassword: formData.password
+        password: formData.password
       })
       setIsSuccess(true)
     } catch (error: any) {
