@@ -1,0 +1,169 @@
+
+{
+  "learnMore": {
+    "hero": {
+      "title": "Learn More About SmartHoster.io",
+      "description": "Discover how our comprehensive property management solution can transform your rental business with cutting-edge technology, local expertise, and proven results."
+    },
+    "overview": {
+      "title": "Complete Property Management Solution",
+      "description": "SmartHoster.io provides end-to-end property management services designed specifically for the Portuguese market. Our platform combines advanced technology with local expertise to maximize your rental income while minimizing your operational overhead.",
+      "benefits": {
+        "revenue": "Increase rental revenue by up to 35%",
+        "compliance": "100% legal compliance with Portuguese regulations",
+        "automation": "Automated operations reduce your workload by 90%",
+        "support": "24/7 multilingual customer support"
+      }
+    },
+    "services": {
+      "title": "We Handle Everything — Start to Finish",
+      "subtitle": "Especially if you've just purchased a property, we'll guide you through every step of setup — and execute the majority of it on your behalf.",
+      "setupServices": [
+        "Full furnishing & decor sourcing",
+        "Utilities, internet, TV, and smart lock setup",
+        "Professional photography & listing optimization",
+        "Alojamento Local (AL) registration",
+        "Câmara Municipal approval + signage",
+        "Multilingual guestbook & complaints book",
+        "SEF / AIMA integration for guest reporting",
+        "Tourist tax registration & automation",
+        "INE reporting, Bank of Portugal registration, Model 30 filing",
+        "Fire safety compliance",
+        "Insurance & liability setup",
+        "Company formation (LDA/Unipessoal) and VAT registration"
+      ],
+      "important": {
+        "title": "Important:",
+        "description": "While these setup and legalization services are part of our management process, they are negotiated separately during onboarding based on your property's needs. No two setups are the same — and we tailor everything to your situation."
+      },
+      "marketing": {
+        "title": "Marketing & Distribution",
+        "description": "Professional photography, optimized listings across 50+ platforms, and strategic pricing to maximize visibility and bookings."
+      },
+      "guest": {
+        "title": "Guest Management",
+        "description": "Complete guest communication, automated check-in/check-out, 24/7 support, and personalized guest experiences."
+      },
+      "operations": {
+        "title": "Property Operations",
+        "description": "Coordinated cleaning, maintenance, inspections, and quality assurance to keep your property in perfect condition."
+      },
+      "financial": {
+        "title": "Financial Management",
+        "description": "Automated invoicing, commission tracking, tax reporting, and detailed financial analytics and reporting."
+      }
+    },
+    "technology": {
+      "title": "What happens after setup?",
+      "description": "Once setup is complete, SmartHoster takes over the day-to-day management of your rental — combining automation, human support, and proven systems.",
+      "ongoingServices": [
+        "Automated check-ins (smart locks or greeters)",
+        "Guest communication from pre-booking to post-review",
+        "SAF/AT billing automation and optional city tax filing",
+        "Live dashboards showing earnings and occupancy",
+        "Cleaning schedules, linens, and restocking",
+        "Damage prevention, complaint resolution",
+        "Maintenance management",
+        "Owner portal for full transparency and control",
+        "24/7 multilingual guest support (EN/PT/FR and more)",
+        "Performance Testing & Listing Optimization"
+      ],
+      "optimizationNote": "We regularly test headlines, descriptions, and photos to improve your rankings and maximize bookings across platforms.",
+      "slogans": {
+        "automation": "If it can be automated — we automate it.",
+        "manual": "If it needs hands-on care — we handle it."
+      },
+      "features": {
+        "automation": "Smart automation for routine tasks",
+        "analytics": "Real-time performance analytics",
+        "integrations": "70+ platform integrations",
+        "mobile": "Mobile-optimized management dashboard"
+      }
+    },
+    "locations": {
+      "title": "Where is SmartHoster available?",
+      "description": "SmartHoster operates across all major cities in Portugal:",
+      "tagline": "Local teams. National infrastructure."
+    },
+    "differentiators": {
+      "title": "What makes SmartHoster different from other property managers?",
+      "subtitle": "SmartHoster is the only service in Portugal offering:",
+      "items": [
+        "End-to-end setup including AL, SEF, taxes, and signage",
+        "Automation for guest comms, check-ins, invoicing, and reporting",
+        "Local maintenance and cleaning coordination",
+        "Owner transparency with live dashboards and reporting",
+        "Real human support for both owners and guests",
+        "Eco-responsible practices: reusable linens, green cleaning, energy-efficient setups",
+        "Strategic onboarding — including furnishing and legal work if needed"
+      ],
+      "dataOptimization": {
+        "title": "Data-Driven Pricing & Optimization",
+        "description": "We constantly analyze market trends to adjust pricing and boost bookings — so your property stays competitive all year."
+      },
+      "tagline": "Most companies rent your apartment. We run your rental like a business."
+    },
+    "abroad": {
+      "title": "I live abroad. Can I still use SmartHoster?",
+      "subtitle": "Absolutely. Many of our clients live abroad.",
+      "benefits": [
+        "Remote onboarding and consultation",
+        "Smart access for guests (no need for key handovers)",
+        "WhatsApp/email support for owners",
+        "Calendar control and full visibility from anywhere",
+        "No in-person involvement required"
+      ],
+      "digitalContracting": {
+        "title": "Fully digital contracting",
+        "description": "We handle all legal and financial paperwork remotely — no printing, mailing, or Portuguese address required."
+      },
+      "tagline": "You stay in control. We stay on the ground."
+    },
+    "testimonials": {
+      "title": "What do SmartHoster clients say?",
+      "items": [
+        {
+          "quote": "I didn't know how to register for AL or get my apartment guest-ready. SmartHoster handled everything — even the complaints book and Model 30.",
+          "author": "Teresa F., Lisbon"
+        },
+        {
+          "quote": "I'm in Brazil. They furnished, legalized, and launched my property remotely. I didn't set foot in it until after the first guests checked out.",
+          "author": "Rafael M., Olhão"
+        },
+        {
+          "quote": "I had a great property, but I didn't want to manage it. Now I don't even think about it — and it's earning more than ever.",
+          "author": "Sofia L., Cascais"
+        }
+      ]
+    },
+    "consultation": {
+      "title": "What happens on the free call?",
+      "description": "We'll walk you through:",
+      "points": [
+        "Your property's income potential",
+        "Legal setup requirements (based on location)",
+        "How onboarding and setup work",
+        "Any improvements we recommend",
+        "What's included long-term",
+        "Any Questions You May Have"
+      ],
+      "finalNote": "We'll answer all your specific concerns — from contracts to cleanings, taxes to towels. Nothing is off-limits."
+    },
+    "results": {
+      "title": "Proven Results",
+      "description": "Join hundreds of successful property owners who have transformed their rental business with SmartHoster.io.",
+      "metrics": {
+        "revenue": "35% average revenue increase",
+        "occupancy": "15% higher occupancy rates",
+        "automation": "90% reduction in manual tasks",
+        "satisfaction": "98% client satisfaction rate"
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "description": "Book a free consultation with our property management experts and discover how SmartHoster.io can transform your rental business.",
+      "button": "Book Free Consultation",
+      "guarantee": "30-day money-back guarantee • No setup fees • Cancel anytime"
+    }
+  }
+}

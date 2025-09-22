@@ -1,0 +1,119 @@
+
+{
+  "hero": {
+    "title": "Automatisation Totale. Confiance Absolue.",
+    "subtitle": "Oubliez les feuilles de calcul, la confusion et les rapports manuels. SmartHoster automatise tous les aspects légaux et financiers de votre location courte durée au Portugal—avec précision, instantanément et sans effort.",
+    "cta": "Planifiez Votre Introduction"
+  },
+  "certifiedBilling": {
+    "title": "Facturation Certifiée – Aucun Logiciel Requis",
+    "description": "Nous émettons des factures certifiées pour vos clients et les répartitions de commissions. Tout est automatisé à 100%—de la réservation à la facture à l'export SAF-T mensuel.",
+    "features": [
+      "Certifié par l'Autorité Fiscale Portugaise (AT No. 2549)",
+      "Génération automatique de factures pour chaque réservation et commission",
+      "Facturation répartie par co-propriétaire ou flux de revenus",
+      "Support multi-compte complet (plusieurs NIFs, séries ou types de service)",
+      "Préparation de soumission SAF-T: export mensuel prêt",
+      "Traitement sans erreur basé sur des données de réservation réelles",
+      "Pas besoin de votre propre logiciel de facturation"
+    ],
+    "tagline": "Vous restez conforme. Nous restons précis."
+  },
+  "aimaReporting": {
+    "title": "Rapports d'Invités AIMA/SIBA",
+    "description": "Nous générons et envoyons automatiquement les bulletins d'information des invités aux autorités (AIMA/SIBA)—pour être toujours à l'heure, toujours conforme.",
+    "features": [
+      "Soumissions illimitées de bulletins d'invités",
+      "Mode manuel ou entièrement automatisé",
+      "Horaire personnalisé pour la transmission",
+      "Transparence totale: statut et historique de confirmation",
+      "Réduit le risque légal, évite les amendes et assure la tranquillité d'esprit"
+    ],
+    "tagline": "Intégré parfaitement dans le flux de réservation."
+  },
+  "modelo30": {
+    "title": "Rapport Modelo 30",
+    "description": "Nous gérons la génération, la répartition et l'export du Modelo 30—pour ne pas avoir à chercher le NIF d'Airbnb.",
+    "features": [
+      "Calcul automatique des commissions payées aux portails non résidents",
+      "Export XML entièrement compatible pour soumission à l'Autoridade Tributária",
+      "Completion complète du Quadro 8",
+      "Revenus classés comme gains Type 8",
+      "Historique de rapports toujours disponible"
+    ],
+    "tagline": "Airbnb, Booking, Vrbo—nous avons tout couvert."
+  },
+  "touristTax": {
+    "title": "Taxe Touristique Municipale (TMT)",
+    "description": "Nous calculons, facturons et soumettons automatiquement la taxe touristique (TMT)—pas d'Excel, pas de confusion.",
+    "features": [
+      "Calcul en temps réel basé sur l'âge, les dates, le nombre de nuits et d'invités",
+      "Règles spécifiques à la plateforme supportées",
+      "Charge automatique via Stripe avec options de markup",
+      "Facturation légalement conforme",
+      "Intégré avec 360City pour les régions éligibles"
+    ],
+    "tagline": "Vous ne touchez jamais une calculatrice."
+  },
+  "ineReporting": {
+    "title": "Rapports INE (IPHH & IPCAMP)",
+    "description": "Ne perdez pas une seconde—les rapports INE sont soumis automatiquement.",
+    "features": [
+      "Soumission automatique mensuelle à l'Instituto Nacional de Estatística",
+      "Rapports séparés par unité ou groupés par projet",
+      "Codes pays compatibles ICAO",
+      "Tableaux intuitifs et historique consultable",
+      "Archives historiques toujours accessibles"
+    ],
+    "tagline": "Le rapport le plus confus du Portugal—simplifié."
+  },
+  "copeReporting": {
+    "title": "Rapports COPE – Banco de Portugal",
+    "description": "Si vous gagnez plus de 250 000 €/an via des plateformes en ligne, vous devez soumettre des rapports COPE. Nous automatisons tout.",
+    "features": [
+      "Rapports XML mensuels générés automatiquement",
+      "Suit les paiements entrants/sortants de la plateforme",
+      "Données collectées automatiquement depuis vos réservations",
+      "Couvre tous les comptes de facturation actifs",
+      "Accès transparent aux archives à tout moment"
+    ],
+    "tagline": "Une échéance de moins à craindre."
+  },
+  "airbnbInvoicing": {
+    "title": "Facturation des Commissions Airbnb",
+    "description": "Vous téléchargez encore les factures Airbnb manuellement? Nous avons automatisé cela aussi.",
+    "features": [
+      "Utilisez VATinvoicer.com pour récupérer les factures de commission Airbnb",
+      "Extension Chrome + clé de licence (avec 10% de réduction pour les clients SmartHoster)",
+      "Collez simplement les codes de réservation—c'est fait."
+    ],
+    "tagline": "Airbnb. Automatisé. Enfin."
+  },
+  "propertyTypes": {
+    "title": "Conçu pour Tous Types de Propriétés",
+    "description": "Le moteur de facturation de SmartHoster s'adapte à:",
+    "types": [
+      "Gestionnaires d'hébergement local",
+      "Opérateurs d'hôtels et de complexes",
+      "Glamping, camping, bateaux, auberges, villas",
+      "Projets à usage mixte et propriété fractionnée"
+    ],
+    "tagline": "Quelle que soit votre configuration, nous nous en occupons."
+  },
+  "dailyOps": {
+    "title": "Opérations Quotidiennes Synchronisées avec la Conformité",
+    "description": "Notre système de réservation fait plus que synchroniser les calendriers—il alimente votre facturation, taxes, rapports et clarté financière.",
+    "features": [
+      "Tableau de bord propre avec calendrier multi-propriétés",
+      "Indicateurs en temps réel pour le statut de facturation et légal",
+      "Guides, flux d'enregistrement et compléments de paiement—tout synchronisé avec la facturation",
+      "Compte courant, dépenses et commissions liés à chaque transaction"
+    ],
+    "tagline": "Opérations quotidiennes = conformité légale. Par conception."
+  },
+  "cta": {
+    "title": "Prêt à Optimiser Vos Opérations?",
+    "description": "Planifiez une consultation avec notre équipe pour discuter de comment nous pouvons vous aider à automatiser la gestion de votre propriété et vos besoins de conformité.",
+    "button": "Réservez Votre Consultation"
+  }
+}

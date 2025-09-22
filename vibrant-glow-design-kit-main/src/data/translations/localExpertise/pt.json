@@ -1,0 +1,83 @@
+
+{
+  "hero": {
+    "headline": "Conhecimento Local. Resultados Globais.",
+    "subheadline": "Não apenas gerimos a sua propriedade—compreendemos o seu bairro, o seu mercado e os seus hóspedes.",
+    "cta": "Marque uma Avaliação Gratuita da Propriedade"
+  },
+  "whyLocal": {
+    "title": "Porque é que a Expertise Local Importa",
+    "description": "Na SmartHoster, acreditamos que o verdadeiro conhecimento local é o segredo para superar a concorrência. Desde a estratégia de preços ideal até saber quais comodidades fazem a diferença, usamos o nosso profundo conhecimento no terreno para adaptar a sua propriedade ao sucesso. Ao contrário de gestores de propriedade genéricos ou serviços totalmente remotos, vivemos e respiramos as regiões que servimos. Seja a sua propriedade numa cidade costeira, num centro histórico, ou no campo, compreendemos o que os hóspedes na sua área realmente procuram—e ajustamos cada detalhe em conformidade."
+  },
+  "consultation": {
+    "title": "Tudo Começa com uma Visita Cuidadosa",
+    "description": "A sua jornada connosco começa com uma consulta abrangente e presencial—sem custos. Avaliamos a sua propriedade com os olhos de um hóspede e a mentalidade de um anfitrião experiente. Isto não é apenas uma lista de verificação. É um processo curado centrado no desempenho.",
+    "assessments": {
+      "bedComfort": "Conforto da cama e qualidade dos colchões",
+      "pillows": "Firmeza das almofadas, variedade e ciclos de substituição",
+      "shower": "Pressão do duche, capacidade do aquecedor de água e peculiaridades da canalização",
+      "climate": "Cobertura de AC/aquecimento e fluxo de ar",
+      "noise": "Níveis de ruído, isolamento acústico e biombos de privacidade",
+      "lighting": "Iluminação (natural e artificial)",
+      "baby": "Comodidades para bebés (berços, cadeiras altas, portões de escada, etc.)",
+      "kitchen": "Inventário da cozinha (máquinas de café, chaleiras, panelas, utensílios)",
+      "tech": "Configuração tecnológica (velocidade Wi-Fi, smart TVs, acesso streaming)",
+      "local": "Toques locais e autenticidade (garrafas de vinho, arte, guias)",
+      "arrival": "Logística de chegada dos hóspedes, segurança e acessibilidade"
+    }
+  },
+  "marketOptimization": {
+    "title": "Cada Área Tem a Sua Própria Fórmula de Reservas",
+    "description": "Sabemos o que vende em Olhão, Lagos, Porto e além—e adaptamos o seu anúncio em conformidade. Uma configuração amiga de bebés pode impulsionar reservas em áreas com muitas famílias, enquanto cortinas blackout e uma máquina de café expresso poderosa podem ser fundamentais num apartamento do centro da cidade.",
+    "services": {
+      "pricing": "Estratégias de preços baseadas em padrões de turismo e sazonalidade",
+      "targeting": "Tipos de hóspedes alvo (famílias, nómadas digitais, reformados, estadias curtas vs. longas)",
+      "amenities": "Seleção de comodidades para superar concorrentes",
+      "language": "Linguagem e tom dos anúncios para corresponder às expectativas dos hóspedes"
+    },
+    "goal": "O nosso objetivo? Transformar cada propriedade na versão mais reservável de si mesma—sem custos desnecessários."
+  },
+  "localEyes": {
+    "title": "Somos os Seus Olhos e Ouvidos Locais",
+    "description": "Não estamos apenas por perto—estamos envolvidos. Seja alertando-o para um encerramento de rua que pode afetar o check-in, sinalizando novas regulamentações, ou recomendando um canalizador local que pode vir hoje (não na próxima semana), estamos em cima da situação.",
+    "services": {
+      "events": "Monitorizar eventos locais, festivais e procura sazonal",
+      "legal": "Acompanhar requisitos legais e fiscais (incluindo licenças AL, mudanças na taxa turística, atualizações SEF)",
+      "benchmark": "Comparar desempenho com outras propriedades na sua área",
+      "decisions": "Tomar decisões em tempo real que otimizam reservas e evitam riscos"
+    },
+    "conclusion": "Com a SmartHoster, nunca é apanhado desprevenido pelo que está a acontecer localmente."
+  },
+  "babyGear": {
+    "title": "Sim, Até Verificamos os Berços",
+    "description": "As famílias são um segmento crescente no alojamento de curta duração—e fazem estadias mais longas. Ajudamo-lo a preparar a sua propriedade para famílias sem exagerar. Desde esterilizadores e cadeiras altas a portões de segurança e banheiras de bebé, aconselhamos sobre o que realmente importa para obter essas avaliações de 5 estrelas.",
+    "details": "E não é só sobre famílias. Uma porta rangente, uma luz a piscar, ou uma almofada áspera pode perder um hóspede repetido. Encontramos esses problemas antes das suas avaliações."
+  },
+  "freeAssessment": {
+    "title": "Tudo Parte da Sua Avaliação Gratuita SmartHoster",
+    "description": "Tudo o que fazemos está baseado em dados, experiência e conhecimento local—e começa com uma consulta gratuita. Avaliamos a sua unidade pessoalmente, sugerimos melhorias personalizadas, e entregamos um plano claro para maximizar reservas e reduzir dores de cabeça.",
+    "note": "Sem obrigação. Apenas clareza, ação e resultados.",
+    "cta": "Agende a Minha Revisão Gratuita da Propriedade"
+  },
+  "faqs": {
+    "title": "Perguntas Frequentes",
+    "questions": {
+      "localVsOnline": {
+        "question": "Qual é o benefício de uma consulta local vs. conselhos online?",
+        "answer": "Ferramentas online dão-lhe insights gerais. Nós damos-lhe especificidades: o que funciona no seu quarteirão, na sua cidade, para o seu tipo de hóspede."
+      },
+      "followRecommendations": {
+        "question": "Tenho de seguir todas as suas recomendações?",
+        "answer": "De todo. Mantém o controlo. Apenas mostramos o que provavelmente aumentará o desempenho—e ajudamos a implementar se quiser."
+      },
+      "visitSpeed": {
+        "question": "Com que rapidez podem visitar a minha propriedade?",
+        "answer": "Normalmente agendamos revisões presenciais em 3–5 dias, dependendo da sua região."
+      },
+      "consultationCost": {
+        "question": "Cobram por estas visitas?",
+        "answer": "Não. Este é um serviço gratuito que oferecemos antes do onboarding, porque uma propriedade bem preparada tem melhor desempenho para todos."
+      }
+    }
+  }
+}

@@ -1,0 +1,145 @@
+
+{
+  "fullService": {
+    "hero": {
+      "headline": "Gestão Imobiliária Abrangente em que Pode Confiar",
+      "subheadline": "Desde comunicação com hóspedes até limpeza, reservas e conformidade fiscal—fazemos tudo. Além disso, a sua propriedade está totalmente otimizada para motores de busca alimentados por IA através de AEO, garantindo que seja encontrada e reservada.",
+      "cta": "Agendar uma Consulta Gratuita"
+    },
+    "whatWeDo": {
+      "title": "Tudo o que o Seu Alojamento Precisa, Num Só Lugar",
+      "description": "A SmartHoster oferece uma solução de gestão completa e inclusiva, pensada para proprietários de alojamento de curta duração que querem desempenho sem complicações. Gerimos limpeza, manutenção, impostos, reservas diretas e muito mais—otimizando tudo para AEO (Otimização de Motores de Resposta), para que a sua propriedade apareça em resultados de pesquisa de IA como ChatGPT, Google Overviews e Perplexity. Garantimos que as suas listagens estão enriquecidas com conteúdo de alta qualidade e metadados estruturados, para que os motores de busca modernos não só o encontrem—mas o escolham como a resposta.",
+      "highlights": {
+        "alCompliance": {
+          "title": "Suporte Completo de Conformidade AL",
+          "description": "Assistência completa de conformidade Alojamento Local e documentação"
+        },
+        "seoAeo": {
+          "title": "Otimização SEO e AEO",
+          "description": "Otimizado em todas as plataformas incluindo Airbnb, Booking.com, Vrbo e Google"
+        },
+        "keywordRich": {
+          "title": "Descrições Ricas em Palavras-Chave",
+          "description": "Conteúdo escrito para responder a consultas reais de pesquisa de hóspedes"
+        },
+        "googleBusiness": {
+          "title": "Otimização Google My Business",
+          "description": "Visibilidade melhorada em mapas e resultados de pesquisa local"
+        },
+        "photography": {
+          "title": "Fotografia Profissional",
+          "description": "Listagens de alta conversão com visuais deslumbrantes"
+        },
+        "welcomeKits": {
+          "title": "Kits de Boas-Vindas e Vinho",
+          "description": "Amenidades totalmente abastecidas para chegadas excecionais de hóspedes"
+        },
+        "directBooking": {
+          "title": "Site de Reserva Direta",
+          "description": "Website de marca opcional com estrutura otimizada por IA"
+        }
+      }
+    },
+    "includes": {
+      "title": "O Serviço Completo SmartHoster Inclui",
+      "services": {
+        "aiOptimized": {
+          "title": "Listagens Otimizadas por IA (AEO)",
+          "description": "Títulos, descrições, FAQs e amenidades desenhadas para serem escolhidas por consultas ChatGPT e Perplexity"
+        },
+        "bookingGuest": {
+          "title": "Gestão de Reservas e Hóspedes",
+          "description": "Fluxo completo de comunicação, follow-ups de avaliações e suporte humano amigável"
+        },
+        "taxCompliance": {
+          "title": "Impostos e Conformidade",
+          "description": "Automatizamos SEF, taxa turística, SAF-T e outros relatórios com total transparência"
+        },
+        "cleaningMaintenance": {
+          "title": "Limpeza + Manutenção",
+          "description": "Agendamento automatizado, atualizações em tempo real e equipas de confiança em todas as regiões"
+        },
+        "directBookingSite": {
+          "title": "Site de Reserva Direta",
+          "description": "Microsite de marca com design mobile-first, calendário sincronizado, pagamento seguro e markup de esquema AEO"
+        },
+        "googleSeo": {
+          "title": "Google + SEO Local",
+          "description": "O seu negócio aparece onde importa — em Mapas, pesquisa e AI Overviews"
+        }
+      }
+    },
+    "whyChoose": {
+      "title": "Porquê Escolher a Nossa Gestão Imobiliária Completa?",
+      "description": "Vamos além das ferramentas básicas de hospedagem. A SmartHoster dá-lhe dados em tempo real, suporte local real e o tipo de infraestrutura otimizada por AEO que o posiciona como líder na sua região.",
+      "benefits": {
+        "maximizeIncome": {
+          "title": "Maximizar Receita",
+          "description": "Preços inteligentes + reservas diretas = menos perda de comissão"
+        },
+        "aeoAdvantage": {
+          "title": "Vantagem AEO",
+          "description": "Estruturamos o seu conteúdo para ser a resposta mais bem classificada em resultados gerados por IA"
+        },
+        "fullCompliance": {
+          "title": "Conformidade Total",
+          "description": "Sem mais suposições — cobrimos SEF, taxa turística, leis AL e toda a documentação"
+        },
+        "ownerDashboard": {
+          "title": "Painel do Proprietário",
+          "description": "Está sempre informado com o nosso portal transparente de proprietário"
+        },
+        "guestReady": {
+          "title": "Sempre Pronto para Hóspedes",
+          "description": "Cada detalhe gerido com cuidado de nível hospitaleiro"
+        }
+      }
+    },
+    "process": {
+      "title": "O Nosso Processo em 3 Passos Simples",
+      "steps": {
+        "consultation": {
+          "title": "Consulta + Configuração",
+          "description": "Integramos a sua propriedade, otimizamos listagens com conteúdo AEO e alinhamos com todos os requisitos legais"
+        },
+        "liveManagement": {
+          "title": "Gestão Ativa",
+          "description": "Limpeza, check-ins, comunicação e reservas geridas sem problemas"
+        },
+        "growthReporting": {
+          "title": "Crescimento + Relatórios",
+          "description": "Recebe relatórios mensais, insights e otimização contínua — incluindo o seu ranking AEO e sugestões"
+        }
+      }
+    },
+    "faqs": {
+      "title": "Perguntas Frequentes",
+      "questions": {
+        "whatIncludes": {
+          "question": "O que inclui a gestão de serviço completo?",
+          "answer": "Tudo: listagens, mensagens de hóspedes, impostos, reserva direta, limpezas, reparações e conformidade."
+        },
+        "howOptimized": {
+          "question": "Como são otimizadas as listagens?",
+          "answer": "Usamos as melhores práticas de SEO e AEO para melhorar rankings no Google, ChatGPT e Perplexity — combinando palavras-chave com respostas estruturadas a perguntas que hóspedes e proprietários realmente fazem."
+        },
+        "ownCleaner": {
+          "question": "Posso ainda usar a minha própria empresa de limpeza ou fazer gestão parcial?",
+          "answer": "Sim — coordenamos com a sua empresa de limpeza se estiver num pacote parcial."
+        },
+        "platforms": {
+          "question": "Em que plataformas fazem listagens?",
+          "answer": "Airbnb, Booking.com, Vrbo, Google, Tripadvisor, FlipKey, Expedia e diretórios de pesquisa local."
+        },
+        "maintenance": {
+          "question": "Como gerem a manutenção?",
+          "answer": "A nossa equipa monitora cada trabalho, regista reparações e garante resolução de problemas em tempo real com faturação transparente."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Pronto para Simplificar a Sua Gestão Imobiliária com uma Vantagem Otimizada por IA?",
+      "button": "Agendar uma Consulta Gratuita"
+    }
+  }
+}

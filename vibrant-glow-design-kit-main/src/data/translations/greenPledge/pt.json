@@ -1,0 +1,135 @@
+
+{
+  "greenPledge": {
+    "hero": {
+      "headline": "O Nosso Compromisso com um Futuro Sustentável",
+      "subheadline": "Hospitalidade ecológica impulsionada por tecnologia inteligente e escolhas conscientes."
+    },
+    "pledge": {
+      "title": "O Nosso Compromisso Verde",
+      "description": "Na SmartHoster, a sustentabilidade está no centro das nossas operações. Estamos empenhados em reduzir o nosso impacto ambiental através de iniciativas como uma frota totalmente elétrica, iluminação LED, dispositivos de poupança de água e produtos de limpeza ecológicos. Ao integrar tecnologias inteligentes e educar os nossos hóspedes, pretendemos proteger o ambiente enquanto oferecemos um serviço excecional.",
+      "icons": {
+        "electric": "Veículos Elétricos",
+        "recycling": "Reciclagem",
+        "solar": "Painéis Solares",
+        "wind": "Energia Eólica",
+        "water": "Conservação da Água",
+        "eco": "Eco-Amigável"
+      }
+    },
+    "initiatives": {
+      "title": "As Nossas Principais Iniciativas Verdes",
+      "items": {
+        "electricVehicles": {
+          "title": "Frota Totalmente Elétrica",
+          "description": "A nossa frota é totalmente elétrica, reduzindo as emissões e alinhando-se com o nosso objetivo de minimizar a pegada de carbono."
+        },
+        "tailoredBedding": {
+          "title": "Roupa de Cama e Toalhas Personalizadas",
+          "description": "Fornecemos apenas o número exato de camas e toalhas necessárias para cada hóspede, reduzindo a lavandaria desnecessária e conservando água e energia."
+        },
+        "ledLighting": {
+          "title": "Iluminação LED em Todas as Propriedades",
+          "description": "A iluminação LED energeticamente eficiente consome menos energia e dura mais tempo que as lâmpadas tradicionais, reduzindo o uso de eletricidade e o desperdício."
+        },
+        "waterSaving": {
+          "title": "Dispositivos de Poupança de Água",
+          "description": "Torneiras e chuveiros de baixo fluxo conservam água sem comprometer o conforto dos hóspedes."
+        },
+        "ecoFriendlyCleaning": {
+          "title": "Produtos de Limpeza Ecológicos",
+          "description": "Utilizamos produtos de limpeza biodegradáveis e não tóxicos para garantir que as nossas práticas de limpeza são seguras para o ambiente."
+        },
+        "reusableDispensers": {
+          "title": "Dispensadores Reutilizáveis para Sabão",
+          "description": "Substituir recipientes de sabão de uso único por dispensadores reutilizáveis reduz o desperdício de plástico."
+        },
+        "recyclingProgram": {
+          "title": "Programa de Reciclagem com Contentores Separados",
+          "description": "Contentores claramente identificados em cada propriedade ajudam os hóspedes a separar os resíduos eficazmente, reduzindo as contribuições para aterros."
+        },
+        "energyEfficient": {
+          "title": "Eletrodomésticos Eficientes Energeticamente",
+          "description": "As nossas propriedades estão equipadas com eletrodomésticos que cumprem elevados padrões de eficiência energética, minimizando o consumo de energia."
+        },
+        "smartThermostats": {
+          "title": "Termóstatos Inteligentes e Consciencialização do Uso de Energia",
+          "description": "Os termóstatos inteligentes otimizam o aquecimento e arrefecimento com base na ocupação, reduzindo o uso de energia."
+        },
+        "solarPower": {
+          "title": "Integração de Energia Solar",
+          "description": "Incorporar painéis solares onde viável permite-nos aproveitar energia renovável, reduzindo a dependência da energia da rede elétrica."
+        }
+      }
+    },
+    "whyGreen": {
+      "title": "Por Que Importam as Iniciativas Verdes",
+      "description": "Pequenas mudanças podem levar a impactos significativos. As nossas iniciativas verdes são mais do que conformidade; são sobre criar um futuro sustentável. Ao escolher a SmartHoster, está a juntar-se a nós no nosso compromisso de proteger o planeta, reduzir as emissões de carbono, conservar recursos naturais e promover um ambiente mais saudável para todos.",
+      "benefits": {
+        "health": "Ambiente Mais Saudável",
+        "conservation": "Conservação de Recursos"
+      }
+    },
+    "guestHelp": {
+      "title": "Como os Hóspedes Podem Ajudar",
+      "description": "Cada hóspede tem o poder de fazer a diferença. Durante a sua estadia, ajude-nos a proteger o ambiente:",
+      "actions": {
+        "recycle": {
+          "title": "Recicle Corretamente",
+          "description": "Use os contentores fornecidos para separar os resíduos eficazmente."
+        },
+        "conserveWater": {
+          "title": "Conserve Água",
+          "description": "Reutilize toalhas e limite o uso de água durante a sua estadia."
+        },
+        "turnOffElectricity": {
+          "title": "Desligue a Eletricidade",
+          "description": "Desligue o AC e aquecimento quando estiver fora da propriedade."
+        },
+        "useEcoAmenities": {
+          "title": "Desfrute de Comodidades Ecológicas",
+          "description": "Faça uso dos nossos produtos e características sustentáveis."
+        },
+        "supportTailoredBedding": {
+          "title": "Apoie a Roupa de Cama Personalizada",
+          "description": "Use apenas as camas preparadas para a sua estadia."
+        },
+        "mindfulEnergy": {
+          "title": "Seja Consciente da Energia",
+          "description": "Desligue as luzes e desconecte dispositivos quando não estiverem em uso."
+        }
+      },
+      "cta": "Saiba Mais Sobre as Nossas Iniciativas Verdes"
+    },
+    "faqs": {
+      "title": "Perguntas Frequentes",
+      "questions": {
+        "ledLighting": {
+          "question": "Como é que usar iluminação LED faz a diferença?",
+          "answer": "As lâmpadas LED usam até 80% menos energia que a iluminação tradicional, reduzindo as emissões de gases com efeito de estufa e os custos de utilidade. Também duram significativamente mais tempo, diminuindo o desperdício de substituições frequentes de lâmpadas."
+        },
+        "tailoredBedding": {
+          "question": "Por que fornecem roupa de cama e toalhas personalizadas?",
+          "answer": "Fornecer apenas as camas e toalhas necessárias conserva água e energia ao reduzir a lavandaria desnecessária, minimizando assim a nossa pegada ambiental sem sacrificar o conforto dos hóspedes."
+        },
+        "energyConservation": {
+          "question": "Como podem os hóspedes ajudar com a conservação de energia em propriedades com AC e sistemas de aquecimento?",
+          "answer": "Os hóspedes podem ajudar desligando o AC e aquecimento quando estão fora da propriedade. Esta ação simples reduz significativamente o consumo de energia e o impacto ambiental."
+        },
+        "solarPanels": {
+          "question": "Como beneficiam os painéis solares o ambiente?",
+          "answer": "Os nossos painéis solares aproveitam energia renovável para gerar eletricidade e aquecer água, reduzindo significativamente as emissões de carbono e diminuindo a dependência de fontes de energia não renováveis."
+        },
+        "guestContribution": {
+          "question": "Podem os hóspedes contribuir para os vossos objetivos de sustentabilidade?",
+          "answer": "Absolutamente! Os hóspedes podem ajudar reciclando, usando água e eletricidade conscientemente, desligando eletrodomésticos quando não estão em uso, e participando nos nossos esforços de conservação de toalhas e roupa de cama."
+        }
+      }
+    },
+    "joinUs": {
+      "title": "Junte-se a Nós para Fazer a Diferença",
+      "description": "Experimente uma estadia onde a sustentabilidade encontra o conforto. Ao escolher a SmartHoster, não está apenas a desfrutar de hospitalidade excecional, mas também a contribuir para um futuro mais verde. Juntos, podemos ter um impacto positivo no ambiente—uma estadia de cada vez.",
+      "cta": "Reserve a Sua Estadia Sustentável Hoje"
+    }
+  }
+}

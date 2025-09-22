@@ -1,0 +1,83 @@
+
+{
+  "hero": {
+    "headline": "Connaissance Locale. Résultats Globaux.",
+    "subheadline": "Nous ne gérons pas seulement votre propriété—nous comprenons votre quartier, votre marché et vos invités.",
+    "cta": "Réservez une Évaluation Gratuite de Propriété"
+  },
+  "whyLocal": {
+    "title": "Pourquoi l'Expertise Locale Compte",
+    "description": "Chez SmartHoster, nous croyons que la vraie connaissance locale est le secret pour surpasser la concurrence. De la stratégie de prix optimale à savoir quels équipements font la différence, nous utilisons notre perspicacité profonde sur le terrain pour adapter votre propriété au succès. Contrairement aux gestionnaires de propriété génériques ou aux services entièrement à distance, nous vivons et respirons les régions que nous servons. Que votre propriété soit dans une ville balnéaire, un centre historique, ou la campagne, nous comprenons ce que les invités de votre région recherchent réellement—et nous ajustons chaque détail en conséquence."
+  },
+  "consultation": {
+    "title": "Tout Commence par une Visite Réfléchie",
+    "description": "Votre parcours avec nous commence par une consultation complète et en personne—gratuite. Nous évaluons votre propriété avec les yeux d'un invité et l'état d'esprit d'un hôte expérimenté. Ce n'est pas juste une liste de vérification. C'est un processus organisé axé sur la performance.",
+    "assessments": {
+      "bedComfort": "Confort du lit et qualité des matelas",
+      "pillows": "Fermeté des oreillers, variété et cycles de remplacement",
+      "shower": "Pression de douche, capacité du chauffe-eau et particularités de plomberie",
+      "climate": "Couverture climatisation/chauffage et circulation d'air",
+      "noise": "Niveaux de bruit, insonorisation et écrans d'intimité",
+      "lighting": "Éclairage (naturel et artificiel)",
+      "baby": "Équipements pour bébés (berceaux, chaises hautes, barrières d'escalier, etc.)",
+      "kitchen": "Inventaire cuisine (cafetières, bouilloires, casseroles, ustensiles)",
+      "tech": "Configuration tech (vitesse Wi-Fi, smart TVs, accès streaming)",
+      "local": "Touches locales et authenticité (bouteilles de vin, art, guides)",
+      "arrival": "Logistique d'arrivée des invités, sécurité et accessibilité"
+    }
+  },
+  "marketOptimization": {
+    "title": "Chaque Zone a sa Propre Formule de Réservation",
+    "description": "Nous savons ce qui se vend à Olhão, Lagos, Porto et au-delà—et nous adaptons votre annonce en conséquence. Une configuration adaptée aux bébés peut stimuler les réservations dans les zones familiales, tandis que des rideaux occultants et une machine à expresso puissante pourraient être clés dans un appartement du centre-ville.",
+    "services": {
+      "pricing": "Stratégies de prix basées sur les modèles touristiques et la saisonnalité",
+      "targeting": "Types d'invités cibles (familles, nomades numériques, retraités, séjours courts vs. longs)",
+      "amenities": "Sélection d'équipements pour surpasser les concurrents",
+      "language": "Langue et ton des annonces pour correspondre aux attentes des invités"
+    },
+    "goal": "Notre objectif ? Transformer chaque propriété en la version la plus réservable d'elle-même—sans coûts inutiles."
+  },
+  "localEyes": {
+    "title": "Nous Sommes Vos Yeux et Oreilles Locaux",
+    "description": "Nous ne sommes pas juste dans les parages—nous sommes engagés. Que ce soit vous alerter d'une fermeture de rue qui pourrait affecter l'enregistrement, signaler de nouvelles réglementations, ou recommander un plombier local qui peut venir aujourd'hui (pas la semaine prochaine), nous sommes au courant.",
+    "services": {
+      "events": "Surveiller les événements locaux, festivals et demande saisonnière",
+      "legal": "Suivre les exigences légales et fiscales (y compris licences AL, changements taxe touristique, mises à jour SEF)",
+      "benchmark": "Comparer les performances avec d'autres propriétés de votre zone",
+      "decisions": "Prendre des décisions en temps réel qui optimisent les réservations et évitent les risques"
+    },
+    "conclusion": "Avec SmartHoster, vous n'êtes jamais pris au dépourvu par ce qui se passe localement."
+  },
+  "babyGear": {
+    "title": "Oui, Nous Vérifions Même les Berceaux",
+    "description": "Les familles sont un segment croissant dans la location court terme—et elles réservent des séjours plus longs. Nous vous aidons à rendre votre propriété adaptée aux familles sans exagérer. Des stérilisateurs et chaises hautes aux barrières de sécurité et baignoires pour bébés, nous conseillons sur ce qui compte vraiment pour obtenir ces avis 5 étoiles.",
+    "details": "Et ce n'est pas juste pour les familles. Une porte grinçante, une lumière qui clignote, ou un oreiller rugueux peut vous faire perdre un invité récurrent. Nous trouvons ces problèmes avant vos avis."
+  },
+  "freeAssessment": {
+    "title": "Tout Fait Partie de Votre Évaluation Gratuite SmartHoster",
+    "description": "Tout ce que nous faisons est basé sur les données, l'expérience et la perspicacité locale—et cela commence par une consultation gratuite. Nous évaluons votre unité en personne, suggérons des améliorations sur mesure, et livrons un plan clair pour maximiser les réservations et réduire les maux de tête.",
+    "note": "Aucune obligation. Juste clarté, action et résultats.",
+    "cta": "Planifiez Ma Révision Gratuite de Propriété"
+  },
+  "faqs": {
+    "title": "Questions Fréquemment Posées",
+    "questions": {
+      "localVsOnline": {
+        "question": "Quel est l'avantage d'une consultation locale vs. conseils en ligne ?",
+        "answer": "Les outils en ligne vous donnent des aperçus généraux. Nous vous donnons des spécificités : ce qui fonctionne dans votre bloc, dans votre ville, pour votre type d'invité."
+      },
+      "followRecommendations": {
+        "question": "Dois-je suivre toutes vos recommandations ?",
+        "answer": "Pas du tout. Vous gardez le contrôle. Nous vous montrons juste ce qui augmentera probablement les performances—et vous aidons à l'implémenter si vous voulez."
+      },
+      "visitSpeed": {
+        "question": "À quelle vitesse pouvez-vous visiter ma propriété ?",
+        "answer": "Nous planifions typiquement des révisions en personne dans 3–5 jours, selon votre région."
+      },
+      "consultationCost": {
+        "question": "Facturez-vous ces visites ?",
+        "answer": "Non. C'est un service gratuit que nous offrons avant l'intégration, parce qu'une propriété bien préparée performe mieux pour tout le monde."
+      }
+    }
+  }
+}

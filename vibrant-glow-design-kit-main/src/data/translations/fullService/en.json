@@ -1,0 +1,145 @@
+
+{
+  "fullService": {
+    "hero": {
+      "headline": "Comprehensive Property Management You Can Rely On",
+      "subheadline": "From guest communication to cleaning, bookings, and tax compliance—we do it all. Plus, your property is fully optimized for AI-powered search engines through AEO, ensuring it gets found and booked.",
+      "cta": "Schedule a Free Consultation"
+    },
+    "whatWeDo": {
+      "title": "Everything Your Rental Needs, All in One Place",
+      "description": "SmartHoster provides an all-inclusive management solution tailored for short-term rental owners who want performance without the hassle. We manage cleaning, maintenance, taxes, direct bookings, and more—while optimizing everything for AEO (Answer Engine Optimization), so your listing appears in AI search results like ChatGPT, Google Overviews, and Perplexity. We ensure your listings are enriched with high-quality content and structured metadata, so modern search engines not only find you—but choose you as the answer.",
+      "highlights": {
+        "alCompliance": {
+          "title": "Complete AL Compliance Support",
+          "description": "Full Alojamento Local compliance assistance and documentation"
+        },
+        "seoAeo": {
+          "title": "SEO and AEO Optimization",
+          "description": "Optimized across all platforms including Airbnb, Booking.com, Vrbo, and Google"
+        },
+        "keywordRich": {
+          "title": "Keyword-Rich Descriptions",
+          "description": "Content written to answer real guest search queries"
+        },
+        "googleBusiness": {
+          "title": "Google My Business Optimization",
+          "description": "Enhanced visibility in maps and local search results"
+        },
+        "photography": {
+          "title": "Professional Photography",
+          "description": "High-converting listings with stunning visuals"
+        },
+        "welcomeKits": {
+          "title": "Welcome Kits & Wine",
+          "description": "Fully stocked amenities for exceptional guest arrivals"
+        },
+        "directBooking": {
+          "title": "Direct Booking Site",
+          "description": "Optional branded website with AI-optimized structure"
+        }
+      }
+    },
+    "includes": {
+      "title": "SmartHoster Full-Service Includes",
+      "services": {
+        "aiOptimized": {
+          "title": "AI-Optimized Listings (AEO)",
+          "description": "Titles, descriptions, FAQs, and amenities designed to be picked up by ChatGPT and Perplexity queries"
+        },
+        "bookingGuest": {
+          "title": "Booking & Guest Management",
+          "description": "Full communication flow, review follow-ups, and friendly human support"
+        },
+        "taxCompliance": {
+          "title": "Tax & Compliance",
+          "description": "We automate SEF, tourist tax, SAF-T, and other reporting with full transparency"
+        },
+        "cleaningMaintenance": {
+          "title": "Cleaning + Maintenance",
+          "description": "Automated scheduling, real-time updates, and trusted teams in every region"
+        },
+        "directBookingSite": {
+          "title": "Direct Booking Site",
+          "description": "Branded microsite with mobile-first design, synced calendar, secure payment, and AEO schema markup"
+        },
+        "googleSeo": {
+          "title": "Google + Local SEO",
+          "description": "Your business shows up where it matters — on Maps, search, and AI Overviews"
+        }
+      }
+    },
+    "whyChoose": {
+      "title": "Why Choose Our Full-Service Property Management?",
+      "description": "We go beyond basic hosting tools. SmartHoster gives you real-time data, real local support, and the kind of AEO-optimized infrastructure that positions you as a leader in your region.",
+      "benefits": {
+        "maximizeIncome": {
+          "title": "Maximize Income",
+          "description": "Smart pricing + direct bookings = less commission loss"
+        },
+        "aeoAdvantage": {
+          "title": "AEO Advantage",
+          "description": "We structure your content to be the top-ranked answer in AI-generated results"
+        },
+        "fullCompliance": {
+          "title": "Full Compliance",
+          "description": "No more guessing — we cover SEF, tourist tax, AL laws, and all paperwork"
+        },
+        "ownerDashboard": {
+          "title": "Owner Dashboard",
+          "description": "You're always in the loop with our transparent owner portal"
+        },
+        "guestReady": {
+          "title": "Always Guest-Ready",
+          "description": "Every detail managed with hospitality-level care"
+        }
+      }
+    },
+    "process": {
+      "title": "Our Process in 3 Simple Steps",
+      "steps": {
+        "consultation": {
+          "title": "Consultation + Setup",
+          "description": "We onboard your property, optimize listings with AEO content, and align with all legal requirements"
+        },
+        "liveManagement": {
+          "title": "Live Management",
+          "description": "Cleaning, check-ins, communication, and bookings managed seamlessly"
+        },
+        "growthReporting": {
+          "title": "Growth + Reporting",
+          "description": "You get monthly reports, insights, and ongoing optimization — including your AEO ranking and suggestions"
+        }
+      }
+    },
+    "faqs": {
+      "title": "Frequently Asked Questions",
+      "questions": {
+        "whatIncludes": {
+          "question": "What does full-service management include?",
+          "answer": "Everything: listings, guest messages, taxes, direct booking, cleanings, repairs, and compliance."
+        },
+        "howOptimized": {
+          "question": "How are listings optimized?",
+          "answer": "We use SEO and AEO best practices to improve rankings in Google, ChatGPT, and Perplexity — combining keywords with structured answers to questions guests and owners actually ask."
+        },
+        "ownCleaner": {
+          "question": "Can I still use my own cleaner or do partial management?",
+          "answer": "Yes — we coordinate with your cleaner if you're on a partial package."
+        },
+        "platforms": {
+          "question": "What platforms do you list on?",
+          "answer": "Airbnb, Booking.com, Vrbo, Google, Tripadvisor, FlipKey, Expedia, and local search directories."
+        },
+        "maintenance": {
+          "question": "How do you handle maintenance?",
+          "answer": "Our team monitors every job, logs repairs, and ensures real-time issue resolution with transparent billing."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Ready to Simplify Your Property Management with an AI-Optimized Advantage?",
+      "button": "Schedule a Free Consultation"
+    }
+  }
+}

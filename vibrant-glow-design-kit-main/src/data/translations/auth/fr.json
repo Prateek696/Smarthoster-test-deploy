@@ -1,0 +1,28 @@
+{
+  "title": "SmartHoster",
+  "subtitle": "Portail Client",
+  "backToHome": "Retour à l'Accueil",
+  "welcomeBack": "Bon Retour",
+  "createAccount": "Créer un Compte",
+  "resetPassword": "Réinitialiser le Mot de Passe",
+  "firstName": "Prénom",
+  "lastName": "Nom",
+  "email": "Email",
+  "password": "Mot de Passe",
+  "signIn": "Se Connecter",
+  "signUp": "Créer un Compte",
+  "pleaseWait": "Veuillez patienter...",
+  "sendResetEmail": "Envoyer l'Email de Réinitialisation",
+  "forgotPassword": "Mot de passe oublié ?",
+  "dontHaveAccount": "Vous n'avez pas de compte ? ",
+  "alreadyHaveAccount": "Vous avez déjà un compte ? ",
+  "signUpLink": "Créer un compte",
+  "signInLink": "Se connecter",
+  "backToSignIn": "Retour à la connexion",
+  "messages": {
+    "resetEmailSent": "Email de réinitialisation envoyé ! Vérifiez votre boîte de réception.",
+    "welcomeBack": "Bon retour !",
+    "accountCreated": "Compte créé ! Veuillez vérifier votre email pour confirmer votre compte.",
+    "somethingWrong": "Quelque chose s'est mal passé"
+  }
+}

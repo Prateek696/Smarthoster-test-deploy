@@ -1,0 +1,83 @@
+
+{
+  "hero": {
+    "headline": "Local Knowledge. Global Results.",
+    "subheadline": "We don't just manage your property—we understand your neighborhood, your market, and your guests.",
+    "cta": "Book a Free Property Assessment"
+  },
+  "whyLocal": {
+    "title": "Why Local Expertise Matters",
+    "description": "At SmartHoster, we believe that real local knowledge is the secret to outperforming the competition. From the optimal pricing strategy to knowing which amenities make a difference, we use our deep, on-the-ground insight to tailor your property for success. Unlike generic property managers or fully remote services, we live and breathe the regions we serve. Whether your property is in a beach town, a historic center, or the countryside, we understand what guests in your area are actually looking for—and we adjust every detail accordingly."
+  },
+  "consultation": {
+    "title": "It All Starts With a Thoughtful Walkthrough",
+    "description": "Your journey with us begins with a comprehensive, in-person consultation—free of charge. We evaluate your property with the eyes of a guest and the mindset of a seasoned host. This isn't just a checklist. It's a curated process built around performance.",
+    "assessments": {
+      "bedComfort": "Bed comfort and quality of mattresses",
+      "pillows": "Pillow firmness, variety, and replacement cycles",
+      "shower": "Shower pressure, water heater capacity, and plumbing quirks",
+      "climate": "AC/heating coverage and airflow",
+      "noise": "Noise levels, soundproofing, and privacy screens",
+      "lighting": "Lighting (natural and artificial)",
+      "baby": "Baby amenities (cribs, high chairs, stair gates, etc.)",
+      "kitchen": "Kitchen inventory (coffee makers, kettles, pans, utensils)",
+      "tech": "Tech setup (Wi-Fi speed, smart TVs, streaming access)",
+      "local": "Local touches and authenticity (wine bottles, artwork, guidebooks)",
+      "arrival": "Guest arrival logistics, safety, and accessibility"
+    }
+  },
+  "marketOptimization": {
+    "title": "Each Area Has Its Own Booking Formula",
+    "description": "We know what sells in Olhão, Lagos, Porto, and beyond—and we tailor your listing accordingly. A baby-friendly setup may drive bookings in family-heavy areas, while blackout curtains and a powerful espresso machine could be key in a city-centre flat.",
+    "services": {
+      "pricing": "Pricing strategies based on tourism patterns and seasonality",
+      "targeting": "Target guest types (families, digital nomads, retirees, short vs. long stays)",
+      "amenities": "Amenity selection to outperform competitors",
+      "language": "Language and tone of listings to match guest expectations"
+    },
+    "goal": "Our goal? Turn every property into the most bookable version of itself—without unnecessary costs."
+  },
+  "localEyes": {
+    "title": "We're Your Local Eyes and Ears",
+    "description": "We're not just around—we're engaged. Whether it's alerting you to a street closure that might affect check-in, flagging new regulations, or recommending a local plumber who can come today (not next week), we're on top of it.",
+    "services": {
+      "events": "Monitor local events, festivals, and seasonal demand",
+      "legal": "Track legal and tax requirements (including AL licenses, tourist tax changes, SEF updates)",
+      "benchmark": "Benchmark performance against other properties in your area",
+      "decisions": "Make real-time decisions that optimize bookings and avoid risks"
+    },
+    "conclusion": "With SmartHoster, you're never blindsided by what's happening locally."
+  },
+  "babyGear": {
+    "title": "Yes, We Even Check the Cribs",
+    "description": "Families are a growing segment in short-term rentals—and they book longer stays. We help you make your property family-ready without going overboard. From sterilizers and high chairs to safety gates and baby bathtubs, we advise on what really matters to get those 5-star reviews.",
+    "details": "And it's not just about families. A squeaky door, a flickering light, or a scratchy pillow can lose you a repeat guest. We find those issues before your reviews do."
+  },
+  "freeAssessment": {
+    "title": "All Part of Your Free SmartHoster Assessment",
+    "description": "Everything we do is grounded in data, experience, and local insight—and it starts with a free consultation. We evaluate your unit in person, suggest tailored upgrades, and deliver a clear plan to maximize bookings and reduce headaches.",
+    "note": "No obligation. Just clarity, action, and results.",
+    "cta": "Schedule My Free Property Review"
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "questions": {
+      "localVsOnline": {
+        "question": "What's the benefit of a local consultation vs. online advice?",
+        "answer": "Online tools give you general insights. We give you specifics: what works on your block, in your city, for your guest type."
+      },
+      "followRecommendations": {
+        "question": "Do I have to follow all your recommendations?",
+        "answer": "Not at all. You stay in control. We just show you what will likely increase performance—and help you implement it if you want."
+      },
+      "visitSpeed": {
+        "question": "How quickly can you visit my property?",
+        "answer": "We typically schedule in-person reviews within 3–5 days, depending on your region."
+      },
+      "consultationCost": {
+        "question": "Do you charge for these walkthroughs?",
+        "answer": "No. This is a complimentary service we offer before onboarding, because a well-prepared property performs better for everyone."
+      }
+    }
+  }
+}

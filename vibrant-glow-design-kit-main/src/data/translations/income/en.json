@@ -1,0 +1,118 @@
+
+{
+  "hero": {
+    "headline": "More Bookings. Better Reviews. Higher Revenue.",
+    "subheadline": "It's not just about pricing—it's about consistency, reputation, and guest experience from start to finish.",
+    "cta": "Request Your Free Income Strategy Review"
+  },
+  "dynamicPricing": {
+    "title": "Every Night Counts—We Price It Right",
+    "description": "We use cutting-edge dynamic pricing tools that adapt to:",
+    "features": [
+      "Seasonality and tourism flows",
+      "Local events, holidays, and regional surges",
+      "Booking windows, cancellation trends, and demand signals",
+      "Competitor listings in your immediate area"
+    ],
+    "strategy": "Our strategy adjusts automatically—and in advance—based on AI-driven forecasts and search behavior. We factor in Google Trends, AI search engines, and market-specific event calendars to make sure you don't leave a euro on the table."
+  },
+  "directBookings": {
+    "title": "Bypass the 15–20% Booking Platform Fees",
+    "description": "Every direct booking means more profit for you—and we make it easy:",
+    "features": [
+      "Custom booking page for your property",
+      "Secure payment integration",
+      "Google My Business listing with direct booking enabled",
+      "AI Answer Engine Optimization (AEO) for visibility in ChatGPT, Perplexity, and Google AI",
+      "Repeat guest automation and CRM retargeting",
+      "Email marketing built to bring them back"
+    ],
+    "conclusion": "With SmartHoster, you build a brand, not just a listing."
+  },
+  "localStrategy": {
+    "title": "Each Area Has Its Formula. We Know It.",
+    "description": "From Olhão to Porto, we've studied what guests search for, what they expect, and what earns top reviews.",
+    "features": [
+      "Tailored setup: family-friendly vs. digital-nomad-ready",
+      "Amenity decisions that actually impact conversion",
+      "Local language and cultural cues for guest trust",
+      "Season- and event-specific positioning"
+    ],
+    "conclusion": "Your property gets a full local audit—and the right setup to attract and retain guests."
+  },
+  "reviews": {
+    "title": "The Easiest Way to Boost Revenue? 5-Star Reviews.",
+    "description": "It all starts with a flawless first impression:",
+    "features": [
+      "Seamless check-in experience (smart locks, clear instructions)",
+      "Welcome kits, local treats, and friendly follow-ups",
+      "Expectations set clearly in all listings and messages",
+      "Instant guest support for any issues",
+      "Spotless units and pre-arrival walkthroughs"
+    ],
+    "conclusion": "Our entire process is designed around review management and expectation shaping. Because the better the review, the easier the next booking—and the higher the price you can charge."
+  },
+  "visibility": {
+    "title": "If They Can't Find You, They Can't Book You",
+    "description": "We don't just list your property—we surface it at the top. Here's how:",
+    "features": [
+      "AEO (Answer Engine Optimization) so your listing shows up in AI-generated travel answers",
+      "SEO copywriting for each OTA listing",
+      "Google My Business profile setup with local keywords",
+      "Structured data markup for search engines",
+      "Automated review requests and response templates"
+    ],
+    "conclusion": "You'll be where today's travelers actually search—not just where they used to."
+  },
+  "repeatGuests": {
+    "title": "Repeat Guests = Compounding Profit",
+    "description": "Your past guests are your best marketing tool. We help you stay top of mind:",
+    "features": [
+      "Automated thank-you notes and feedback requests",
+      "Birthday and holiday offers",
+      "\"Come back soon\" discounts with one-click booking",
+      "Email drip campaigns and segmented retargeting",
+      "Custom QR codes at the property to lead guests to your direct site"
+    ],
+    "conclusion": "Every happy stay becomes a seed for the next one."
+  },
+  "fullService": {
+    "title": "No long-term contracts, no surprises, just results.",
+    "description": "We handle everything:",
+    "features": [
+      "Listing optimization and syndication",
+      "Cleaning coordination (optional)",
+      "Maintenance scheduling (optional)",
+      "Commission auto-calculated",
+      "Monthly performance dashboards",
+      "Full transparency, no markups"
+    ],
+    "conclusion": "You can cancel anytime—but no one ever does."
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "questions": {
+      "platforms": {
+        "question": "Can I still list on Airbnb and Booking.com?",
+        "answer": "Yes! We connect to all major platforms—our goal is to add profit, not limit exposure."
+      },
+      "directBookings": {
+        "question": "How do direct bookings work?",
+        "answer": "We create a custom landing page for your unit with built-in payments and auto-listing on Google My Business."
+      },
+      "aeo": {
+        "question": "What's AEO and why does it matter?",
+        "answer": "AEO (Answer Engine Optimization) means your listing appears when people ask AI tools for local stays. It's the future of search."
+      },
+      "reviews": {
+        "question": "Do you help with reviews and guest communication?",
+        "answer": "Absolutely. We manage guest messaging, follow-ups, and issue resolution to protect your 5-star average."
+      }
+    }
+  },
+  "finalCta": {
+    "headline": "Let's Turn Your Property Into a 5-Star Profit Machine",
+    "description": "We combine tech, hospitality, and local know-how to unlock your property's full potential. No guesswork. Just data-backed, guest-tested growth.",
+    "cta": "Start My Free Income Strategy Review"
+  }
+}

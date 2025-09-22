@@ -1,0 +1,113 @@
+
+{
+  "directBookings": {
+    "hero": {
+      "title": "Enhanced Direct Bookings",
+      "description": "SmartHoster doesn't just list your property — we help you own the relationship with your guests and get discovered by the next generation of travelers.",
+      "subtitle": "That means more profit, more visibility, and less reliance on third-party platforms."
+    },
+    "whyMatter": {
+      "title": "Why Direct Bookings Matter",
+      "description": "Most booking platforms (Airbnb, Booking.com, Vrbo) charge 15%+ in commissions. That's your money — gone.",
+      "solution": "With SmartHoster, you get it back by letting guests book directly through your own page, fully branded and optimized for conversion.",
+      "commission": {
+        "title": "Platform Commissions",
+        "description": "Third-party platforms take 15%+ of your revenue"
+      },
+      "profit": {
+        "title": "Your Profit",
+        "description": "Keep 100% of direct booking revenue"
+      }
+    },
+    "howItWorks": {
+      "title": "How Enhanced Direct Booking Works",
+      "subtitle": "You also own the guest relationship — we collect emails, preferences, and behavior to bring them back again and again.",
+      "brandedUrl": {
+        "title": "Branded URL",
+        "description": "Custom landing page with your property's unique branding"
+      },
+      "mobileFirst": {
+        "title": "Mobile-First Design",
+        "description": "Lightning fast, responsive design optimized for all devices"
+      },
+      "builtIn": {
+        "title": "Built-in Systems",
+        "description": "Calendar, pricing, and payment system all integrated seamlessly"
+      },
+      "directBooking": {
+        "title": "Direct Booking",
+        "description": "Guests book directly — no platform cut, no middlemen, everything syncs with Airbnb and Booking calendars"
+      }
+    },
+    "lifetimeValue": {
+      "title": "From First Booking to Lifelong Guest",
+      "subtitle": "This is lifetime value marketing — not just one-off sales.",
+      "captures": {
+        "title": "Capture Guest Data",
+        "description": "Collects guest emails and booking behavior automatically"
+      },
+      "followUp": {
+        "title": "Automated Follow-ups",
+        "description": "Sends automated follow-up emails with private rates and reminders"
+      },
+      "newsletters": {
+        "title": "Newsletter Marketing",
+        "description": "Builds newsletters for repeat clients and drives repeat stays with zero additional marketing cost"
+      }
+    },
+    "google": {
+      "title": "Get Found Where It Counts — Including Google",
+      "description": "We list your property on Google My Business and integrate your booking engine with Google Maps and location-based search results.",
+      "subtitle": "You don't just compete — you show up before OTAs do.",
+      "features": {
+        "findInSearch": "Find your rental directly in Google search",
+        "bookWithoutAirbnb": "Book without going to Airbnb",
+        "discoverProperty": "Discover your property through location-based searches"
+      }
+    },
+    "aiOptimization": {
+      "title": "Your Property, Optimized for AI Discovery",
+      "description": "Today's travelers increasingly turn to tools like ChatGPT, Google AI Overviews, and Perplexity to decide where to stay. We ensure your property appears in these AI-generated travel results through advanced Answer Engine Optimization (AEO) strategies.",
+      "subtitle": "We go beyond traditional SEO—making sure your property is not just found by people, but by the AI tools they rely on.",
+      "strategies": {
+        "structured": "Structuring content and schema for maximum machine readability",
+        "fastAnswers": "Creating clear, concise answers to popular traveler questions",
+        "semantic": "Using semantic-rich language to improve AI comprehension",
+        "aiDirectories": "Submitting listings to AI-focused directories and llms-txt indexes",
+        "llmReadable": "Building landing pages specifically designed for large language models (LLMs)"
+      }
+    },
+    "included": {
+      "title": "What's Included in Enhanced Direct Bookings",
+      "seoOptimized": "SEO + AEO-optimized booking page",
+      "googleBusiness": "Google My Business listing & sync",
+      "integratedPayments": "Integrated payments (Stripe or direct)",
+      "liveCalendar": "Live calendar and availability display",
+      "guestData": "Full guest data ownership (emails, booking history, preferences)",
+      "automatedFollowUp": "Automated follow-up email sequences",
+      "repeatGuest": "Repeat guest discounts and incentives",
+      "otaSync": "OTA sync (Airbnb, Booking.com)",
+      "brandFirst": "Brand-first design that builds long-term loyalty",
+      "totalControl": "Total control over commissions and pricing"
+    },
+    "whyItWorks": {
+      "title": "Why It Works",
+      "higherEarnings": "Higher earnings per night",
+      "noCommission": "No more 15% commission bleed",
+      "calendarControl": "Total calendar control",
+      "googleAI": "Google and AI visibility",
+      "repeatBookings": "Repeat bookings from your own guest list",
+      "longTerm": "Long-term brand and asset value creation"
+    },
+    "finalStatement": {
+      "main": "SmartHoster doesn't just list your home — we turn it into a direct booking engine, visible across Google, AI, and social platforms.",
+      "subtitle": "Most managers can't do this. We've already built the system."
+    },
+    "cta": {
+      "title": "Book Your Free 30-Minute Consultation",
+      "description": "We'll show you what your property's direct booking engine could look like — and how much more you'll earn with every guest that skips the middleman.",
+      "subtitle": "Own your audience. Own your margin. Get found by humans and AI.",
+      "button": "Book Free Consultation"
+    }
+  }
+}

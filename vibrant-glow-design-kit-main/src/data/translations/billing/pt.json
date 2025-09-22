@@ -1,0 +1,119 @@
+
+{
+  "hero": {
+    "title": "Automação Total. Confiança Completa.",
+    "subtitle": "Esqueça folhas de cálculo, confusão e relatórios manuais. A SmartHoster automatiza todos os aspetos legais e financeiros do seu alojamento de curta duração em Portugal—com precisão, instantaneamente e sem esforço.",
+    "cta": "Agende a Sua Introdução"
+  },
+  "certifiedBilling": {
+    "title": "Faturação Certificada – Sem Software Necessário",
+    "description": "Emitimos faturas certificadas para os seus hóspedes e divisão de comissões. Tudo 100% automatizado—da reserva à fatura à exportação SAF-T mensal.",
+    "features": [
+      "Certificado pela Autoridade Tributária Portuguesa (AT Nº 2549)",
+      "Geração automática de faturas para cada reserva e comissão",
+      "Faturação dividida por co-proprietário ou fonte de receita",
+      "Suporte multi-conta completo (múltiplos NIFs, séries ou tipos de serviço)",
+      "Preparação de submissão SAF-T: exportação mensal pronta",
+      "Processamento livre de erros baseado em dados reais de reserva",
+      "Não necessita do seu próprio software de faturação"
+    ],
+    "tagline": "Você mantém-se conforme. Nós mantemo-nos precisos."
+  },
+  "aimaReporting": {
+    "title": "Relatórios de Hóspedes AIMA/SIBA",
+    "description": "Geramos e enviamos automaticamente boletins de informação de hóspedes às autoridades (AIMA/SIBA)—para estar sempre a tempo, sempre conforme.",
+    "features": [
+      "Submissões ilimitadas de boletins de hóspedes",
+      "Modo manual ou totalmente automatizado",
+      "Horário personalizado para transmissão",
+      "Transparência total: estado e histórico de confirmação",
+      "Reduz risco legal, evita multas e garante tranquilidade"
+    ],
+    "tagline": "Integrado perfeitamente no fluxo de reservas."
+  },
+  "modelo30": {
+    "title": "Relatório Modelo 30",
+    "description": "Tratamos da geração, divisão e exportação do Modelo 30—para não ter de procurar o NIF do Airbnb.",
+    "features": [
+      "Cálculo automático de comissões pagas a portais não residentes",
+      "Exportação XML totalmente compatível para submissão à Autoridade Tributária",
+      "Preenchimento completo do Quadro 8",
+      "Rendimento classificado como rendimentos Tipo 8",
+      "Histórico de relatórios sempre disponível"
+    ],
+    "tagline": "Airbnb, Booking, Vrbo—temos tudo coberto."
+  },
+  "touristTax": {
+    "title": "Taxa Turística Municipal (TMT)",
+    "description": "Calculamos, cobramos, faturamos e submetemos automaticamente a taxa turística (TMT)—sem Excel, sem confusão.",
+    "features": [
+      "Cálculo em tempo real baseado em idade, datas, número de noites e hóspedes",
+      "Regras específicas da plataforma suportadas",
+      "Cobrança automática via Stripe com opções de markup",
+      "Faturação legalmente conforme",
+      "Integrado com 360City para regiões elegíveis"
+    ],
+    "tagline": "Nunca toca numa calculadora."
+  },
+  "ineReporting": {
+    "title": "Relatórios INE (IPHH & IPCAMP)",
+    "description": "Não perca um segundo—relatórios INE são submetidos automaticamente.",
+    "features": [
+      "Submissão automática mensal ao Instituto Nacional de Estatística",
+      "Relatórios separados por unidade ou agrupados por projeto",
+      "Códigos de país compatíveis com ICAO",
+      "Tabelas intuitivas e histórico pesquisável",
+      "Arquivos históricos sempre acessíveis"
+    ],
+    "tagline": "O relatório mais confuso de Portugal—simplificado."
+  },
+  "copeReporting": {
+    "title": "Relatórios COPE – Banco de Portugal",
+    "description": "Se ganha mais de €250.000/ano via plataformas online, deve submeter relatórios COPE. Automatizamos tudo.",
+    "features": [
+      "Relatórios XML mensais gerados automaticamente",
+      "Rastreia pagamentos de entrada/saída da plataforma",
+      "Dados recolhidos automaticamente das suas reservas",
+      "Cobre todas as contas de faturação ativas",
+      "Acesso transparente ao arquivo a qualquer momento"
+    ],
+    "tagline": "Menos um prazo para se preocupar."
+  },
+  "airbnbInvoicing": {
+    "title": "Faturação de Comissões Airbnb",
+    "description": "Ainda descarrega faturas do Airbnb manualmente? Automatizámos isso também.",
+    "features": [
+      "Use VATinvoicer.com para buscar faturas de comissão do Airbnb",
+      "Extensão Chrome + chave de licença (com 10% de desconto para clientes SmartHoster)",
+      "Apenas cole códigos de reserva—pronto."
+    ],
+    "tagline": "Airbnb. Automatizado. Finalmente."
+  },
+  "propertyTypes": {
+    "title": "Projetado para Todos os Tipos de Propriedade",
+    "description": "O motor de faturação da SmartHoster escala através de:",
+    "types": [
+      "Gestores de alojamento local",
+      "Operadores de hotéis e resorts",
+      "Glamping, campismo, barcos, hostels, vilas",
+      "Projetos de uso misto e propriedade fracionada"
+    ],
+    "tagline": "Qualquer que seja a sua configuração, tratamos disso."
+  },
+  "dailyOps": {
+    "title": "Operações Diárias Sincronizadas com Conformidade",
+    "description": "O nosso sistema de reservas faz mais do que sincronizar calendários—alimenta a sua faturação, impostos, relatórios e clareza financeira.",
+    "features": [
+      "Dashboard limpo com calendário multi-propriedade",
+      "Indicadores em tempo real para estado de faturação e legal",
+      "Guias, fluxos de check-in e complementos de pagamento—tudo sincronizado com faturação",
+      "Conta corrente, despesas e comissões ligadas a cada transação"
+    ],
+    "tagline": "Operações diárias = conformidade legal. Por design."
+  },
+  "cta": {
+    "title": "Pronto para Otimizar as Suas Operações?",
+    "description": "Agende uma consulta com a nossa equipa para discutir como podemos ajudar a automatizar a gestão da sua propriedade e necessidades de conformidade.",
+    "button": "Marque a Sua Consulta"
+  }
+}

@@ -1,0 +1,161 @@
+
+{
+  "terms": {
+    "title": "Conditions de Service",
+    "lastUpdated": "Date d'Entrée en Vigueur : 1er Juin 2025",
+    "companyInfo": {
+      "title": "Informations sur l'Entreprise",
+      "effectiveDate": "Date d'Entrée en Vigueur :",
+      "effectiveDateValue": "1er Juin 2025",
+      "legalEntity": "Entité Légale :",
+      "legalEntityValue": "BBAR Unipessoal LDA (TVA : PT514142057)",
+      "businessName": "Nom Commercial :",
+      "businessNameValue": "SmartHoster.io",
+      "registeredOffice": "Siège Social :",
+      "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+      "contactEmail": "Email de Contact :",
+      "contactEmailValue": "admin@smarthoster.io"
+    },
+    "introduction": "SmartHoster.io (\"nous\", \"notre\", \"nos\" ou \"SmartHoster\") est un fournisseur de services numériques et physiques exploité par BBAR Unipessoal LDA, offrant la gestion de propriétés de location à court terme, des outils d'automatisation et une infrastructure aux propriétaires immobiliers (\"vous\", \"votre\", \"vos\" ou \"Client\"). En utilisant nos services ou en accédant à notre plateforme, vous acceptez ces Conditions de Service.",
+    "sections": [
+      {
+        "number": "1",
+        "title": "Éligibilité et Acceptation",
+        "content": [
+          "Pour utiliser les services SmartHoster, vous devez :"
+        ],
+        "list": [
+          "Avoir au moins 18 ans et être légalement capable de conclure des contrats ;",
+          "Être le propriétaire légal ou l'agent autorisé de la propriété listée ;",
+          "Être en conformité avec toutes les lois locales, nationales et internationales applicables."
+        ]
+      },
+      {
+        "number": "2",
+        "title": "Portée du Service",
+        "content": [
+          "SmartHoster fournit :"
+        ],
+        "list": [
+          "Configuration d'annonces de propriétés et intégration de canaux (ex. Airbnb, Booking.com)",
+          "Communication avec les invités et coordination des arrivées (y compris les systèmes de serrures intelligentes)",
+          "Planification du nettoyage et de la maintenance",
+          "Support de conformité d'hébergement local (SEF/AIMA/AT/eFatura)",
+          "Rapports de revenus, résumés comptables et documentation fiscale",
+          "Programmes optionnels de fournitures, serviettes et literie via des fournisseurs internes"
+        ]
+      },
+      {
+        "number": "3",
+        "title": "Responsabilités du Client",
+        "content": [
+          "Vous acceptez de :"
+        ],
+        "list": [
+          "Fournir des informations précises et à jour sur la propriété et la possession ;",
+          "Maintenir votre propriété dans un état sûr et habitable ;",
+          "Payer les frais rapidement et respecter les conditions de paiement décrites dans tout accord signé ;",
+          "Respecter toutes les lois applicables sur le logement, les taxes et la location à court terme ;",
+          "Nous notifier par écrit de tout dommage à la propriété, disputes avec les invités ou procédures légales liées à votre/vos unité(s)."
+        ]
+      },
+      {
+        "number": "4",
+        "title": "Conditions de Paiement",
+        "content": [
+          "SmartHoster facture généralement une structure de frais basée sur commission (ex. 30% de la valeur brute de réservation) sauf accord contraire par écrit.",
+          "Les frais de nettoyage sont transmis aux équipes de nettoyage tierces ou internes. Tous services supplémentaires (ex. fourniture de literie, intégration ou photographie) seront facturés séparément. SmartHoster peut déduire ses frais automatiquement via les canaux de réservation ou la facturation directe.",
+          "Les paiements en retard peuvent entraîner des frais administratifs ou la suspension des services."
+        ]
+      },
+      {
+        "number": "5",
+        "title": "Limitations de Responsabilité",
+        "content": [
+          "Dans toute la mesure permise par la loi :"
+        ],
+        "list": [
+          "SmartHoster ne sera pas responsable des dommages indirects, accidentels, punitifs ou consécutifs, y compris la perte de revenus, de données, de réputation ou de goodwill.",
+          "Nous ne sommes pas responsables des problèmes découlant de plateformes tierces (ex. Airbnb, VRBO, Booking.com), y compris les annulations d'invités, les pannes de système ou les fluctuations de prix.",
+          "Nous ne sommes pas responsables des événements de force majeure, tels que les grèves, catastrophes naturelles, pandémies, changements réglementaires ou pannes internet.",
+          "Toute responsabilité est strictement limitée au total des frais payés par vous à SmartHoster dans les 12 mois précédant toute réclamation."
+        ]
+      },
+      {
+        "number": "6",
+        "title": "Aucune Garantie d'Occupation ou de Revenus",
+        "content": [
+          "Bien que nous utilisions des outils et stratégies de pointe pour maximiser les réservations et les retours, SmartHoster ne garantit aucun taux d'occupation, revenus ou retour sur investissement spécifiques. Les performances passées ne sont pas un prédicteur des résultats futurs."
+        ]
+      },
+      {
+        "number": "7",
+        "title": "Accès au Compte et Communications",
+        "content": [
+          "Vous pouvez avoir accès aux tableaux de bord, portails ou outils SmartHoster. Vous acceptez :"
+        ],
+        "list": [
+          "De ne pas partager les identifiants de connexion ou accorder un accès non autorisé ;",
+          "Que nous puissions communiquer via email, SMS, WhatsApp ou notifications de plateforme ;",
+          "Que certaines communications (ex. mises à jour système, avis de facture) sont obligatoires."
+        ]
+      },
+      {
+        "number": "8",
+        "title": "Propriété Intellectuelle",
+        "content": [
+          "Tout le contenu, la marque, les outils et la documentation fournis via SmartHoster.io sont la propriété intellectuelle de BBAR Unipessoal LDA.",
+          "Vous recevez une licence limitée, révocable et non transférable pour utiliser ces outils uniquement pour votre usage personnel ou commercial dans le cadre de SmartHoster.",
+          "Vous ne pouvez pas copier, faire de l'ingénierie inverse, sous-licencier ou exploiter toute partie de notre technologie ou contenu."
+        ]
+      },
+      {
+        "number": "9",
+        "title": "Résiliation",
+        "content": [
+          "SmartHoster peut suspendre ou résilier les services à tout moment, avec ou sans motif, en fournissant un avis écrit. La résiliation immédiate peut survenir pour :"
+        ],
+        "list": [
+          "Défaut de paiement des frais ;",
+          "Violation d'obligations légales ;",
+          "Mauvaise utilisation de la plateforme ou de la technologie ;",
+          "Comportement nuisant aux invités, partenaires ou à la réputation."
+        ]
+      },
+      {
+        "number": "10",
+        "title": "Données et Confidentialité",
+        "content": [
+          "SmartHoster traite les données personnelles conformément à sa Politique de Confidentialité. En utilisant nos services, vous consentez à ce traitement et confirmez que toutes les données fournies sont légales et autorisées.",
+          "Nous pouvons traiter les données des invités en votre nom aux fins de conformité réglementaire (ex. SEF, AIMA) sous un accord de processeur de données."
+        ]
+      },
+      {
+        "number": "11",
+        "title": "Résolution des Litiges",
+        "content": [
+          "Ces Conditions sont régies par le droit portugais. Tout litige découlant de ou en relation avec ces Conditions sera résolu devant les tribunaux de Porto, Portugal.",
+          "BBAR Unipessoal LDA se réserve le droit de chercher une réparation injonctive ou équitable dans toute juridiction pour protéger ses droits ou informations confidentielles."
+        ]
+      },
+      {
+        "number": "12",
+        "title": "Modifications",
+        "content": [
+          "Nous pouvons modifier ces Conditions de Service de temps à autre. Les versions mises à jour seront publiées sur https://www.smarthoster.io/terms. L'utilisation continue de nos services après les mises à jour constitue l'acceptation des Conditions révisées."
+        ]
+      },
+      {
+        "number": "13",
+        "title": "Accord Intégral",
+        "content": [
+          "Ces Conditions, ainsi que tout accord de service signé ou politique supplémentaire, représentent l'entente complète entre les parties et remplacent toutes les négociations, représentations ou accords antérieurs, qu'ils soient oraux ou écrits."
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Questions ?",
+      "description": "Contactez-nous à"
+    }
+  }
+}

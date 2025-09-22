@@ -1,0 +1,67 @@
+# Invoices
+Invoice ID,Date,Guest Name,Gross,VAT,Total,Invoice URL
+15,2025-07-01T01:32:20.000Z,Natalie David,751.00,45.06,796.06,https://hostk.it/i/561/BiNhsQ8TzLBPwK1S8BC
+23,2025-07-02T01:32:48.000Z,Patrice St-Pierre,361.00,21.66,382.66,https://hostk.it/i/561/KKVW74AzD9BCYF642HN
+25,2025-07-02T01:33:07.000Z,Ngo Pham,548.00,32.88,580.88,https://hostk.it/i/561/16EiL4M2JsvPDsmI1ID
+15,2025-07-02T01:39:29.000Z,Xia Xia,784.00,47.04,831.04,https://hostk.it/i/561/2MJT2III59BTaFMBTI3
+22,2025-07-03T01:37:32.000Z,Tünde Szarka,684.00,41.04,725.04,https://hostk.it/i/561/61AC73Vsjylyxn9l7Vq
+16,2025-07-04T01:32:26.000Z,Olivia Francis,979.00,58.74,1037.74,https://hostk.it/i/561/5MFWs3GBffyGfz5UPvR
+22,2025-07-04T01:32:26.000Z,Paulo Ferreira,884.00,53.04,937.04,https://hostk.it/i/561/3L4M5biyXVsjubXbzxd
+26,2025-07-04T01:32:46.000Z,Adhesh Shenoy,379.00,22.74,401.74,https://hostk.it/i/561/5bIJanMKyPUiPvDlTtu
+24,2025-07-05T01:32:09.000Z,Fernanda,299.00,17.94,316.94,https://hostk.it/i/561/FDkHTCGhtMfxJCkBPfr
+16,2025-07-05T01:38:12.000Z,Jessy Curnelle,259.00,15.54,274.54,https://hostk.it/i/561/5TLfqjf16eGgI8GCNHi
+17,2025-07-06T01:32:51.000Z,Pierre-Philippe Guérette,690.00,41.40,731.40,https://hostk.it/i/561/1YEZdpps1SL4WG1CTnT
+18,2025-07-06T01:32:51.000Z,Pierre-Philippe Guérette,690.00,41.40,731.40,https://hostk.it/i/561/FkaCJvtjiDsmBCcSNFf
+23,2025-07-06T01:41:09.000Z,Elisa Betemps,279.00,16.74,295.74,https://hostk.it/i/561/VEUJyKyKNiPCUCXDdMN
+23,2025-07-07T01:32:32.000Z,Cristina Saavedra Martín,409.00,24.54,433.54,https://hostk.it/i/561/aLGtWCM28B4BEUq2G2W
+27,2025-07-07T01:33:02.000Z,Luis Barreiro,504.00,30.24,534.24,https://hostk.it/i/561/NChpeqVd9TJ9N5MTAb8
+17,2025-07-07T01:39:33.000Z,Vasco Torres,359.00,21.54,380.54,https://hostk.it/i/561/67EU1CELDMWHYqWvI21
+28,2025-07-09T01:42:17.000Z,Thomas Gwiazdowski,229.50,13.77,243.27,https://hostk.it/i/561/baLi6HEZL86DbAMDbqX
+24,2025-07-10T01:32:47.000Z,Alex Pereira,489.00,29.34,518.34,https://hostk.it/i/561/6Gv8CWNJJWtXxIZDRhP
+25,2025-07-11T01:32:43.000Z,Julia Rose,1224.00,73.44,1297.44,https://hostk.it/i/561/Iu567Awx9ANdMXVfr8c
+29,2025-07-11T01:33:06.000Z,Sergio Lopes,339.00,20.34,359.34,https://hostk.it/i/561/26SyN48MC119bIRf8UR
+19,2025-07-13T01:33:01.000Z,Stefanie Oelfke,2072.00,124.32,2196.32,https://hostk.it/i/561/1YCDWea5RaM63SxYKBC
+24,2025-07-13T01:41:15.000Z,Daniel Mendes Leal,1644.00,98.64,1742.64,https://hostk.it/i/561/9MU4X45XMJivZbe9EXl
+26,2025-07-14T01:32:24.000Z,Robert Oakes,839.00,50.34,889.34,https://hostk.it/i/561/1DJFLcl3P4a9CnI2Egg
+25,2025-07-14T01:32:28.000Z,Marie-Josée Cyr,1009.00,60.54,1069.54,https://hostk.it/i/561/XbdL53DV8a7elmnkLdl
+30,2025-07-15T01:33:26.000Z,Suzanne Svendsen,1029.00,61.74,1090.74,https://hostk.it/i/561/1NzeXX153IC1HVRSIL3
+25,2025-07-15T01:39:53.000Z,Misael Vitor,439.00,26.34,465.34,https://hostk.it/i/561/LbplmFlLeLvLPXxitHz
+26,2025-07-16T01:32:30.000Z,Louis Jamil Marie Ahuguet,469.00,28.14,497.14,https://hostk.it/i/561/1J2YiMqhCQVPFXvYgpy
+20,2025-07-17T01:32:53.000Z,Laurie Sommer,690.00,41.40,731.40,https://hostk.it/i/561/3YU91bMdSAfXCDUcUQ8
+26,2025-07-18T01:40:11.000Z,Isabel Falconi,559.00,33.54,592.54,https://hostk.it/i/561/CDN3a2GNpgJ2Tgk6LHE
+21,2025-07-19T01:32:31.000Z,Jenel Alves,690.00,41.40,731.40,https://hostk.it/i/561/7Ib8ehgnLIeW9ygq8AS
+31,2025-07-19T01:32:58.000Z,琛 徐,759.00,45.54,804.54,https://hostk.it/i/561/1VbtadMTrcMv1WmRaAR
+18,2025-07-21T08:48:00.000Z,Nathalie Charpentier,3185.00,191.10,3376.10,https://hostk.it/i/561/HW4W8L1IhlTPQ8S1lL1
+27,2025-07-21T08:48:01.000Z,Patti Chlapowski,1109.00,66.54,1175.54,https://hostk.it/i/561/1UvF9KSLmfHGMhJGRbj
+32,2025-07-22T01:33:19.000Z,Gerardo Bonilla,759.00,45.54,804.54,https://hostk.it/i/561/WTpzZKcDCT4La8QPa7I
+27,2025-07-24T01:32:57.000Z,Venugopal Chembrakalathil,1509.00,90.54,1599.54,https://hostk.it/i/561/HP5ZpyKTwHgwm1AMtIe
+22,2025-07-25T01:32:48.000Z,Daniel Comtois,1268.00,76.08,1344.08,https://hostk.it/i/561/6eR8QWFrhAX6HP7IYq4
+33,2025-07-26T01:33:17.000Z,Jose Antonio Sanchez Luque,1499.00,89.94,1588.94,https://hostk.it/i/561/FA9JgISdLM74C1Ryxu9
+19,2025-07-26T01:41:02.000Z,Raphael Arbib,999.00,59.94,1058.94,https://hostk.it/i/561/EWaIsSDaQUaNi2Tr3eG
+28,2025-07-26T01:41:03.000Z,Nanou Ndondi,1159.00,69.54,1228.54,https://hostk.it/i/561/AXDaV6Rnx1ZCP2G1hLY
+27,2025-07-27T01:32:57.000Z,Graham Chalmers,3429.00,205.74,3634.74,https://hostk.it/i/561/CFZXPYy8SHHPavUUtxX
+28,2025-07-28T01:32:54.000Z,Paulo Ferreira,1359.00,81.54,1440.54,https://hostk.it/i/561/7Zdnby9ekPQ8U58fiuX
+34,2025-07-28T01:33:25.000Z,M Angeles Sánchez García,829.00,49.74,878.74,https://hostk.it/i/561/BSmNAcrGPp8AGYPxZ3b
+20,2025-07-28T01:41:19.000Z,Lucicleia Bezerra Soares,509.00,30.54,539.54,https://hostk.it/i/561/FhifnmxUF5YWPpbzWuT
+23,2025-07-29T01:32:54.000Z,Thomas Ustrup,1390.00,83.40,1473.40,https://hostk.it/i/561/K91J4D7wa9fzg4bwCm4
+24,2025-07-29T01:32:54.000Z,Thomas Ustrup,1390.00,83.40,1473.40,https://hostk.it/i/561/c5MIrNfhf4ClaFtYdRw
+28,2025-07-29T01:32:55.000Z,Jennifer Ho,719.00,43.14,762.14,https://hostk.it/i/561/LfD6BmEPb9bTMhFhbup
+29,2025-07-29T01:39:50.000Z,Tabacu Radu,709.00,42.54,751.54,https://hostk.it/i/561/Wfup3NPEWwN2BdqBTVr
+
+
+# Expenses
+Expense ID,Date,Vendor,Amount
+
+
+# Commissions
+Commission ID,Date,Amount
+
+
+# Summary
+Key,Value
+Gross Revenue,43160.50
+VAT,2589.63
+Total Invoiced,45750.13
+Total Commissions,0.00
+Total Expenses,0.00
+Net Payout,45750.13

@@ -1,0 +1,28 @@
+{
+  "title": "SmartHoster",
+  "subtitle": "Portal do Cliente",
+  "backToHome": "Voltar ao Início",
+  "welcomeBack": "Bem-vindo de Volta",
+  "createAccount": "Criar Conta",
+  "resetPassword": "Redefinir Palavra-passe",
+  "firstName": "Nome",
+  "lastName": "Apelido",
+  "email": "Email",
+  "password": "Palavra-passe",
+  "signIn": "Entrar",
+  "signUp": "Criar Conta",
+  "pleaseWait": "Por favor aguarde...",
+  "sendResetEmail": "Enviar Email de Redefinição",
+  "forgotPassword": "Esqueceu-se da palavra-passe?",
+  "dontHaveAccount": "Não tem conta? ",
+  "alreadyHaveAccount": "Já tem conta? ",
+  "signUpLink": "Criar conta",
+  "signInLink": "Entrar",
+  "backToSignIn": "Voltar ao login",
+  "messages": {
+    "resetEmailSent": "Email de redefinição enviado! Verifique a sua caixa de entrada.",
+    "welcomeBack": "Bem-vindo de volta!",
+    "accountCreated": "Conta criada! Por favor verifique o seu email para confirmar a conta.",
+    "somethingWrong": "Algo correu mal"
+  }
+}

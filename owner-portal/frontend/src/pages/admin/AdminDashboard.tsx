@@ -1,0 +1,2251 @@
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { 
+  getAdminDashboardStats, 
+  getAllOwners, 
+  getAllAccountants,
+  getAllProperties,
+  createOwner,
+  updateAccountant,
+  updateAccountantProperties,
+  deleteAccountant,
+  deleteProperty,
+  Owner,
+  Accountant,
+  AdminDashboardStats,
+  CreateOwnerData
+} from '../../services/admin.api'
+import { 
+  Users, 
+  Building2, 
+  TrendingUp,
+  Plus,
+  Settings,
+  Eye,
+  EyeOff,
+  Edit,
+  Trash2,
+  ChevronDown,
+  X
+} from 'lucide-react'
+import PropertyManagement from '../../components/property/PropertyManagement'
+import OwnerStatementComponent from '../../components/admin/OwnerStatement'
+
+interface AddOwnerFormProps {
+  onSuccess: () => void
+  onCancel: () => void
+}
+
+const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
+  const getRoleText = (role: 'owner' | 'accountant' | undefined) => {
+    if (role === 'accountant') return 'accountant'
+    return 'owner'
+  }
+  const [formData, setFormData] = useState<CreateOwnerData>({
+    name: '',
+    email: '',
+    phone: '',
+    hostkitApiId: '',
+    hostkitApiKey: '',
+    hostkitApiSecret: '',
+    password: '',
+    role: 'owner' as 'owner' | 'accountant'
+  })
+  const [propertyData, setPropertyData] = useState({
+    id: '',
+    name: '',
+    address: '',
+    type: 'Apartment',
+    bedrooms: 1,
+    bathrooms: 1,
+    maxGuests: 2,
+    hostkitId: '',
+    amenities: 'WiFi, Kitchen, Pool, Parking'
+  })
+  const [includeProperty, setIncludeProperty] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [selectedImages, setSelectedImages] = useState<File[]>([])
+  const [isUploadingImages, setIsUploadingImages] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showApiKey, setShowApiKey] = useState(false)
+  const [selectedProperties, setSelectedProperties] = useState<string[]>([])
+  const [availableProperties, setAvailableProperties] = useState<any[]>([])
+
+  // Fetch available properties when role changes to accountant
+  useEffect(() => {
+    if (formData.role === 'accountant') {
+      const fetchProperties = async () => {
+        try {
+          const properties = await getAllProperties()
+          setAvailableProperties(properties)
+        } catch (error) {
+          console.error('Error fetching properties:', error)
+        }
+      }
+      fetchProperties()
+    }
+  }, [formData.role])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    try {
+      console.log('Creating user with data:', formData)
+      const requestData = {
+        ...formData,
+        ...(includeProperty && propertyData.name && propertyData.id && { propertyData }),
+        ...(formData.role === 'accountant' && selectedProperties.length > 0 && { assignedProperties: selectedProperties })
+      }
+      const ownerResult = await createOwner(requestData)
+      console.log('User created successfully:', ownerResult)
+      
+      if (!ownerResult || !ownerResult._id) {
+        throw new Error('Invalid response from createOwner API')
+      }
+      
+      // If property data is included, create property and assign to owner
+      if (includeProperty && propertyData.name && propertyData.id) {
+        console.log('Creating property with data:', propertyData)
+        // The backend will handle property creation automatically
+        console.log('Property created and assigned to owner:', ownerResult._id)
+        
+        // Upload images after property creation
+        if (selectedImages.length > 0) {
+          try {
+            setIsUploadingImages(true)
+            const { uploadPropertyImages } = await import('../../services/imageUpload.api')
+            await uploadPropertyImages(propertyData.id, selectedImages)
+            console.log('Images uploaded successfully for property:', propertyData.id)
+            setSelectedImages([]) // Clear selected images after upload
+          } catch (imageError) {
+            console.error('Error uploading images:', imageError)
+            // Don't fail the entire operation if image upload fails
+          } finally {
+            setIsUploadingImages(false)
+          }
+        }
+      }
+      
+      onSuccess()
+    } catch (err: any) {
+      console.error('Error creating owner:', err)
+      setError(err.response?.data?.message || err.message || 'Failed to create owner')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    setSelectedImages(prev => [...prev, ...files])
+    console.log('Images selected for upload:', files.map(f => f.name))
+  }
+
+  const removeImage = (index: number) => {
+    setSelectedImages(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const handleSelectAllProperties = (checked: boolean) => {
+    if (checked) {
+      setSelectedProperties(availableProperties.map(p => p._id))
+    } else {
+      setSelectedProperties([])
+    }
+  }
+
+  const handlePropertySelection = (propertyId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedProperties(prev => [...prev, propertyId])
+    } else {
+      setSelectedProperties(prev => prev.filter(id => id !== propertyId))
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Name *
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder={`Enter ${formData.role === 'accountant' ? 'accountant' : 'owner'} name`}
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Email *
+        </label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter email address"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Phone
+        </label>
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter phone number"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Role *
+        </label>
+        <select
+          name="role"
+          value={formData.role}
+          onChange={(e) => setFormData(prev => ({ ...prev, role: e.target.value as 'owner' | 'accountant' }))}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="owner">Owner</option>
+          <option value="accountant">Accountant</option>
+        </select>
+      </div>
+
+      {formData.role === 'owner' && (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Hostkit API ID
+            </label>
+            <input
+              type="text"
+              name="hostkitApiId"
+              value={formData.hostkitApiId || ''}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Hostkit API ID (e.g., 10028)"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Hostkit API Key
+            </label>
+            <div className="relative">
+              <input
+                type={showApiKey ? 'text' : 'password'}
+                name="hostkitApiKey"
+                value={formData.hostkitApiKey}
+                onChange={handleChange}
+                className="w-full px-3 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter Hostkit API Key"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onClick={() => setShowApiKey(!showApiKey)}
+              >
+                {showApiKey ? (
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                ) : (
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                )}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Password *
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-3 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={`Enter password for this ${formData.role === 'accountant' ? 'accountant' : 'owner'}`}
+          />
+          <button
+            type="button"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+            ) : (
+              <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Property Section */}
+      <div className="border-t pt-4 mt-6">
+        {formData.role === 'owner' && (
+          <div className="flex items-center mb-4">
+            <input
+              type="checkbox"
+              id="includeProperty"
+              checked={includeProperty}
+              onChange={(e) => setIncludeProperty(e.target.checked)}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label htmlFor="includeProperty" className="ml-2 text-sm font-medium text-gray-700">
+              Also create a property for this {getRoleText(formData.role)}
+            </label>
+          </div>
+        )}
+
+        {formData.role === 'accountant' && (
+          <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+            <h4 className="text-lg font-medium text-gray-900">Assign Properties to Accountant</h4>
+            
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="selectAllProperties"
+                checked={selectedProperties.length === availableProperties.length && availableProperties.length > 0}
+                onChange={(e) => handleSelectAllProperties(e.target.checked)}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="selectAllProperties" className="ml-2 text-sm font-medium text-gray-700">
+                Select All Properties ({availableProperties.length} available)
+              </label>
+            </div>
+
+            <div className="max-h-48 overflow-y-auto space-y-2">
+              {availableProperties.map((property) => (
+                <div key={property._id} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`property-${property._id}`}
+                    checked={selectedProperties.includes(property._id)}
+                    onChange={(e) => handlePropertySelection(property._id, e.target.checked)}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor={`property-${property._id}`} className="ml-2 text-sm text-gray-700">
+                    {property.name} (ID: {property.id})
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            {selectedProperties.length > 0 && (
+              <div className="text-sm text-green-600 font-medium">
+                ✓ {selectedProperties.length} property(ies) selected
+              </div>
+            )}
+          </div>
+        )}
+
+        {includeProperty && (
+          <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+            <h4 className="text-lg font-medium text-gray-900">Property Details</h4>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Hostaway Property ID *
+                </label>
+                <input
+                  type="number"
+                  value={propertyData.id}
+                  onChange={(e) => setPropertyData(prev => ({ ...prev, id: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="e.g., 392777"
+                  required={includeProperty}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Property Type *
+                </label>
+                <select
+                  value={propertyData.type}
+                  onChange={(e) => setPropertyData(prev => ({ ...prev, type: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="Apartment">Apartment</option>
+                  <option value="House">House</option>
+                  <option value="Villa">Villa</option>
+                  <option value="Condominium">Condominium</option>
+                  <option value="Penthouse">Penthouse</option>
+                  <option value="Studio">Studio</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Property Name *
+              </label>
+              <input
+                type="text"
+                value={propertyData.name}
+                onChange={(e) => setPropertyData(prev => ({ ...prev, name: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter property name"
+                required={includeProperty}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Address *
+              </label>
+              <input
+                type="text"
+                value={propertyData.address}
+                onChange={(e) => setPropertyData(prev => ({ ...prev, address: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter property address"
+                required={includeProperty}
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bedrooms *
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={propertyData.bedrooms}
+                  onChange={(e) => setPropertyData(prev => ({ ...prev, bedrooms: parseInt(e.target.value) || 0 }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required={includeProperty}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bathrooms *
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={propertyData.bathrooms}
+                  onChange={(e) => setPropertyData(prev => ({ ...prev, bathrooms: parseInt(e.target.value) || 0 }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required={includeProperty}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Max Guests *
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  value={propertyData.maxGuests}
+                  onChange={(e) => setPropertyData(prev => ({ ...prev, maxGuests: parseInt(e.target.value) || 1 }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required={includeProperty}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Hostkit ID *
+              </label>
+              <input
+                type="text"
+                value={propertyData.hostkitId}
+                onChange={(e) => setPropertyData(prev => ({ ...prev, hostkitId: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., 10030"
+                required={includeProperty}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Amenities (comma-separated)
+              </label>
+              <input
+                type="text"
+                value={propertyData.amenities}
+                onChange={(e) => setPropertyData(prev => ({ ...prev, amenities: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="WiFi, Kitchen, Pool, Parking"
+              />
+            </div>
+
+            {/* Property Images */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Property Images
+              </label>
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+              />
+              
+              {selectedImages.length > 0 && (
+                <div className="mt-3">
+                  <p className="text-sm text-gray-600 mb-2">Selected Images:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedImages.map((file, index) => (
+                      <div key={index} className="flex items-center bg-gray-100 px-2 py-1 rounded text-sm">
+                        <span className="mr-2">{file.name}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="flex justify-end space-x-3 pt-4">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={loading || isUploadingImages}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        >
+          {loading ? 'Creating...' : isUploadingImages ? 'Uploading Images...' : includeProperty ? `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'} & Property` : `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'}`}
+        </button>
+      </div>
+    </form>
+  )
+}
+
+interface AddPropertyFormProps {
+  owners: Owner[]
+  onSuccess: () => void
+  onCancel: () => void
+}
+
+const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, onCancel }) => {
+  const [formData, setFormData] = useState({
+    id: '',
+    name: '',
+    address: '',
+    type: 'Apartment',
+    bedrooms: 1,
+    bathrooms: 1,
+    maxGuests: 2,
+    hostkitId: '',
+    hostkitApiKey: '',
+    status: 'active' as 'active' | 'inactive' | 'maintenance',
+    amenities: ['WiFi', 'Kitchen', 'Pool', 'Parking'] as string[],
+    owner: ''
+  })
+  const [amenitiesInput, setAmenitiesInput] = useState('WiFi, Kitchen, Pool, Parking')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [selectedImages, setSelectedImages] = useState<File[]>([])
+  const [isUploadingImages, setIsUploadingImages] = useState(false)
+  const [showHostkitApiKey, setShowHostkitApiKey] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    try {
+      // Create property with all required fields
+      const propertyData = {
+        ...formData,
+        id: parseInt(formData.id) || 0,
+        amenities: Array.isArray(formData.amenities) ? formData.amenities : (formData.amenities as string).split(',').map((a: string) => a.trim()).filter((a: string) => a)
+      }
+      
+      console.log('Creating property with data:', propertyData)
+      
+      // Use the same logic as PropertyManagement component
+      const { createProperty } = await import('../../services/properties.api')
+      const result = await createProperty(propertyData)
+      console.log('Property created successfully:', result)
+
+      // Upload images if any were selected (same as PropertyManagement)
+      if (selectedImages.length > 0) {
+        try {
+          setIsUploadingImages(true)
+          const { uploadPropertyImages } = await import('../../services/imageUpload.api')
+          await uploadPropertyImages(propertyData.id.toString(), selectedImages)
+          console.log('✅ Images uploaded successfully for new property:', propertyData.id)
+          setSelectedImages([]) // Clear selected images
+        } catch (imageError) {
+          console.error('❌ Error uploading images:', imageError)
+          // Don't fail the entire operation if image upload fails
+        } finally {
+          setIsUploadingImages(false)
+        }
+      }
+
+      onSuccess()
+    } catch (err: any) {
+      setError(err.message || 'Failed to create property')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'bedrooms' || name === 'bathrooms' || name === 'maxGuests' 
+        ? parseInt(value) || 0 
+        : value
+    }))
+  }
+
+  const handleAmenitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    console.log('🔍 Amenities input changed:', value)
+    setAmenitiesInput(value)
+    // Split by comma first, then trim each amenity to preserve spaces within words
+    const amenities = value.split(',').map((a: string) => a.trim()).filter((a: string) => a)
+    setFormData(prev => ({ ...prev, amenities }))
+  }
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedImages(Array.from(e.target.files))
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Hostaway Property ID *
+          </label>
+          <input
+            type="number"
+            name="id"
+            value={formData.id}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="e.g., 392777"
+            required
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Property Type *
+          </label>
+          <select
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="Apartment">Apartment</option>
+            <option value="House">House</option>
+            <option value="Villa">Villa</option>
+            <option value="Condominium">Condominium</option>
+            <option value="Penthouse">Penthouse</option>
+            <option value="Studio">Studio</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Property Name *
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter property name"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Owner *
+        </label>
+        <select
+          name="owner"
+          value={formData.owner}
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Select Owner</option>
+          <option value="admin">Admin</option>
+          {owners.map((owner) => (
+            <option key={owner._id} value={owner._id}>
+              {owner.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Address *
+        </label>
+        <input
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter property address"
+          required
+        />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Bedrooms *
+          </label>
+          <input
+            type="number"
+            name="bedrooms"
+            value={formData.bedrooms}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            min="0"
+            required
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Bathrooms *
+          </label>
+          <input
+            type="number"
+            name="bathrooms"
+            value={formData.bathrooms}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            min="0"
+            required
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Max Guests *
+          </label>
+          <input
+            type="number"
+            name="maxGuests"
+            value={formData.maxGuests}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            min="1"
+            required
+          />
+        </div>
+      </div>
+
+      <div className="border-t pt-4">
+        <h4 className="font-medium text-gray-900 mb-3">Hostkit Integration</h4>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Hostkit ID *
+            </label>
+            <input
+              type="text"
+              name="hostkitId"
+              value={formData.hostkitId}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+              placeholder="e.g., 10030"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Hostkit API Key *
+            </label>
+            <div className="relative">
+              <input
+                type={showHostkitApiKey ? "text" : "password"}
+                name="hostkitApiKey"
+                value={formData.hostkitApiKey}
+                onChange={handleChange}
+                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowHostkitApiKey(!showHostkitApiKey)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showHostkitApiKey ? (
+                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Amenities (comma separated)
+        </label>
+        <input
+          type="text"
+          value={amenitiesInput}
+          onChange={handleAmenitiesChange}
+          onKeyDown={(e) => {
+            console.log('🔍 Key pressed:', e.key, 'Code:', e.code)
+            if (e.key === ' ') {
+              console.log('🔍 Space key detected!')
+            }
+          }}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="WiFi, Kitchen, Pool, Parking"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Property Images
+        </label>
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageSelect}
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+        />
+        
+        {selectedImages.length > 0 && (
+          <p className="mt-2 text-sm text-gray-600">
+            {selectedImages.length} image(s) selected
+          </p>
+        )}
+      </div>
+
+      <div className="flex justify-end space-x-3 pt-4">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={loading || isUploadingImages}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        >
+          {loading ? 'Creating...' : isUploadingImages ? 'Uploading Images...' : 'Create Property'}
+        </button>
+      </div>
+    </form>
+  )
+}
+
+interface AccountantEditModalProps {
+  accountant: Accountant
+  availableProperties: any[]
+  onUpdate: (data: { name: string; email: string; phone: string; password?: string; assignedProperties?: string[] }) => void
+  onCancel: () => void
+}
+
+const AccountantEditModal: React.FC<AccountantEditModalProps> = ({ accountant, availableProperties, onUpdate, onCancel }) => {
+  const [formData, setFormData] = useState({
+    name: accountant.name,
+    email: accountant.email,
+    phone: accountant.phone || '',
+    password: ''
+  })
+  const [selectedProperties, setSelectedProperties] = useState<string[]>(
+    accountant.assignedProperties.map(prop => prop._id)
+  )
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    
+    try {
+      const updateData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        ...(formData.password && { password: formData.password }),
+        assignedProperties: selectedProperties
+      }
+      await onUpdate(updateData)
+    } catch (error) {
+      console.error('Error updating accountant:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSelectAllProperties = (checked: boolean) => {
+    if (checked) {
+      setSelectedProperties(availableProperties.map(p => p._id))
+    } else {
+      setSelectedProperties([])
+    }
+  }
+
+  const handlePropertySelection = (propertyId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedProperties(prev => [...prev, propertyId])
+    } else {
+      setSelectedProperties(prev => prev.filter(id => id !== propertyId))
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-2xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Edit Accountant</h3>
+              <p className="text-sm text-gray-600 mt-1">Update accountant details and property assignments</p>
+            </div>
+            <button
+              onClick={onCancel}
+              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+        
+        <div className="p-6">
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Accountant Details Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <Users className="h-5 w-5 mr-2 text-blue-600" />
+                Accountant Details
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="Enter accountant name"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="Enter email address"
+                  />
+                </div>
+              </div>
+              
+              <div className="mt-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                  placeholder="Enter phone number"
+                />
+              </div>
+            
+            {/* Password Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <Settings className="h-5 w-5 mr-2 text-green-600" />
+                Security Settings
+              </h4>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Password (Leave blank to keep current)</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="Enter new password (optional)"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Property Assignment Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <Building2 className="h-5 w-5 mr-2 text-purple-600" />
+                Property Assignment
+              </h4>
+              
+              <div className="flex items-center justify-between mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="selectAllProperties"
+                    checked={selectedProperties.length === availableProperties.length && availableProperties.length > 0}
+                    onChange={(e) => handleSelectAllProperties(e.target.checked)}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="selectAllProperties" className="ml-2 text-sm font-semibold text-gray-700">
+                    Select All Properties
+                  </label>
+                </div>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                  {availableProperties.length} available
+                </span>
+              </div>
+
+              <div className="max-h-48 overflow-y-auto space-y-2 border border-gray-200 rounded-lg p-4 bg-white">
+                {availableProperties.map((property) => (
+                  <div key={property._id} className="flex items-center p-2 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                    <input
+                      type="checkbox"
+                      id={`property-${property._id}`}
+                      checked={selectedProperties.includes(property._id)}
+                      onChange={(e) => handlePropertySelection(property._id, e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor={`property-${property._id}`} className="ml-3 text-sm text-gray-700 flex-1">
+                      <div className="font-medium">{property.name || property.title || 'Unnamed Property'}</div>
+                      <div className="text-xs text-gray-500">
+                        ID: {property.id || property._id}
+                        {property.owner && (
+                          <span className="ml-2">• Owner: {property.owner.name}</span>
+                        )}
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              {selectedProperties.length > 0 && (
+                <div className="mt-4 flex items-center justify-center p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center text-sm text-green-700 font-medium">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    {selectedProperties.length} property(ies) selected
+                  </div>
+                </div>
+              )}
+            </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={onCancel}
+                className="px-6 py-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                {loading ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Updating...
+                  </div>
+                ) : (
+                  'Update Accountant'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+interface PropertyEditModalProps {
+  property: any
+  owners: Owner[]
+  onUpdate: (updatedProperty: any) => void
+  onCancel: () => void
+}
+
+const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners, onUpdate, onCancel }) => {
+  const [formData, setFormData] = useState({
+    name: property.name || property.title || '',
+    address: property.address || '',
+    type: property.type || 'Apartment',
+    bedrooms: property.bedrooms || 0,
+    bathrooms: property.bathrooms || 0,
+    maxGuests: property.maxGuests || 0,
+    status: property.status || 'active',
+    ownerId: property.isAdminOwned ? 'admin' : (property.owner?._id || '')
+  })
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    
+    try {
+      // For now, we'll just call the onUpdate callback
+      // In a real implementation, you'd call an API to update the property
+      const updatedProperty = {
+        ...property,
+        ...formData,
+        owner: owners.find(o => o._id === formData.ownerId)
+      }
+      onUpdate(updatedProperty)
+    } catch (error) {
+      console.error('Error updating property:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-2xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Edit Property</h3>
+              <p className="text-sm text-gray-600 mt-1">Update property details and settings</p>
+            </div>
+            <button
+              onClick={onCancel}
+              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+        
+        <div className="p-6">
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Property Details Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <Building2 className="h-5 w-5 mr-2 text-blue-600" />
+                Property Details
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Property Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="Enter property name"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Property Type *</label>
+                  <select
+                    name="type"
+                    value={formData.type}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                  >
+                    <option value="Apartment">Apartment</option>
+                    <option value="House">House</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Condominium">Condominium</option>
+                    <option value="Penthouse">Penthouse</option>
+                    <option value="Studio">Studio</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="mt-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                  placeholder="Enter property address"
+                />
+              </div>
+            
+            {/* Property Specifications Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <Settings className="h-5 w-5 mr-2 text-green-600" />
+                Property Specifications
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Bedrooms</label>
+                  <input
+                    type="number"
+                    name="bedrooms"
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                    min="0"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="0"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Bathrooms</label>
+                  <input
+                    type="number"
+                    name="bathrooms"
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                    min="0"
+                    step="0.5"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="0"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Max Guests</label>
+                  <input
+                    type="number"
+                    name="maxGuests"
+                    value={formData.maxGuests}
+                    onChange={handleChange}
+                    min="1"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    placeholder="1"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            {/* Property Management Section */}
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <Users className="h-5 w-5 mr-2 text-purple-600" />
+                Property Management
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                  <select
+                    name="status"
+                    value={formData.status}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="maintenance">Maintenance</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Owner Assignment</label>
+                  <select
+                    name="ownerId"
+                    value={formData.ownerId}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                  >
+                    <option value="">Select Owner</option>
+                    <option value="admin">Admin</option>
+                    {owners.map((owner) => (
+                      <option key={owner._id} value={owner._id}>
+                        {owner.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={onCancel}
+                className="px-6 py-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                {loading ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Updating...
+                  </div>
+                ) : (
+                  'Update Property'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const AdminDashboard: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state.auth)
+  const [stats, setStats] = useState<AdminDashboardStats | null>(null)
+  const [owners, setOwners] = useState<Owner[]>([])
+  const [accountants, setAccountants] = useState<Accountant[]>([])
+  const [properties, setProperties] = useState<any[]>([])
+  const [selectedOwnerId, setSelectedOwnerId] = useState<string>('all')
+  const [selectedAccountantId, setSelectedAccountantId] = useState<string>('all')
+  const [loading, setLoading] = useState(true)
+  const [showOwnerModal, setShowOwnerModal] = useState(false)
+  const [showPropertyModal, setShowPropertyModal] = useState(false)
+  const [showAccountantViewModal, setShowAccountantViewModal] = useState(false)
+  const [showAccountantEditModal, setShowAccountantEditModal] = useState(false)
+  const [viewingAccountant, setViewingAccountant] = useState<Accountant | null>(null)
+  const [editingAccountant, setEditingAccountant] = useState<Accountant | null>(null)
+  const [showPropertyViewModal, setShowPropertyViewModal] = useState(false)
+  const [viewingProperty, setViewingProperty] = useState<any>(null)
+  const [showOwnerStatement, setShowOwnerStatement] = useState(false)
+
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  useEffect(() => {
+    fetchProperties()
+  }, [selectedOwnerId])
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true)
+      console.log('Fetching dashboard data...')
+      const [statsData, ownersData, accountantsData] = await Promise.all([
+        getAdminDashboardStats(),
+        getAllOwners(),
+        getAllAccountants()
+      ])
+      console.log('Dashboard stats:', statsData)
+      console.log('Owners data:', ownersData)
+      console.log('Accountants data:', accountantsData)
+      setStats(statsData)
+      setOwners(ownersData)
+      setAccountants(accountantsData)
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchProperties = async () => {
+    try {
+      const ownerId = selectedOwnerId === 'all' ? undefined : selectedOwnerId
+      console.log('🔍 fetchProperties called with selectedOwnerId:', selectedOwnerId, 'ownerId param:', ownerId)
+      const propertiesData = await getAllProperties(ownerId)
+      console.log('🔍 fetchProperties received:', propertiesData)
+      
+      if (Array.isArray(propertiesData)) {
+        console.log('🔍 fetchProperties received:', propertiesData.length, 'properties')
+        console.log('🔍 fetchProperties property owners:', propertiesData.map(p => ({ id: p.id, name: p.name, owner: p.owner })))
+        setProperties(propertiesData)
+      } else {
+        console.error('🔍 fetchProperties received non-array data:', propertiesData)
+        setProperties([])
+      }
+    } catch (error) {
+      console.error('Error fetching properties:', error)
+      setProperties([])
+    }
+  }
+
+  const handleOwnerChange = (ownerId: string) => {
+    console.log('🔍 handleOwnerChange called. New ownerId:', ownerId)
+    console.log('🔍 Current selectedOwnerId:', selectedOwnerId)
+    setSelectedOwnerId(ownerId)
+    // fetchProperties will be called automatically by useEffect when selectedOwnerId changes
+  }
+
+  const getSelectedOwnerName = () => {
+    if (selectedOwnerId === 'all') return 'All Owners'
+    if (selectedOwnerId === 'admin') return 'Admin'
+    const owner = owners.find(o => o._id === selectedOwnerId)
+    return owner ? owner.name : 'Unknown Owner'
+  }
+
+  const getSelectedAccountantName = () => {
+    if (selectedAccountantId === 'all') return 'All Accountants'
+    const accountant = accountants.find(a => a._id === selectedAccountantId)
+    return accountant ? accountant.name : 'Unknown Accountant'
+  }
+
+  const getFilteredAccountants = () => {
+    if (selectedAccountantId === 'all') return accountants
+    return accountants.filter(a => a._id === selectedAccountantId)
+  }
+
+
+  const handleViewProperty = (property: any) => {
+    setViewingProperty(property)
+    setShowPropertyViewModal(true)
+  }
+
+  const handleEditProperty = (property: any) => {
+    // Scroll to the PropertyManagement component and trigger edit
+    const propertyManagementSection = document.querySelector('[data-property-management]')
+    if (propertyManagementSection) {
+      propertyManagementSection.scrollIntoView({ behavior: 'smooth' })
+      // Dispatch event to trigger edit in PropertyManagement component
+      window.dispatchEvent(new CustomEvent('editProperty', { 
+        detail: { property } 
+      }))
+    } else {
+      alert('Please use the Property Management section below to edit properties.')
+    }
+  }
+
+  const handleDeleteProperty = async (propertyId: number, propertyName: string) => {
+    if (window.confirm(`Are you sure you want to delete "${propertyName}"? This action cannot be undone.`)) {
+      try {
+        await deleteProperty(propertyId.toString())
+        console.log(`Property ${propertyId} deleted successfully`)
+        // Refresh properties to show updated list
+        fetchProperties()
+        // Refresh dashboard stats
+        fetchDashboardData()
+        // Force refresh of all property-related components
+        window.dispatchEvent(new CustomEvent('propertyDeleted', { 
+          detail: { propertyId, propertyName } 
+        }))
+      } catch (error) {
+        console.error('Error deleting property:', error)
+        alert('Failed to delete property. Please try again.')
+      }
+    }
+  }
+
+  const handleViewAccountant = (accountant: Accountant) => {
+    setViewingAccountant(accountant)
+    setShowAccountantViewModal(true)
+  }
+
+  const handleEditAccountant = (accountant: Accountant) => {
+    setEditingAccountant(accountant)
+    setShowAccountantEditModal(true)
+  }
+
+  const handleUpdateAccountant = async (accountantData: { name: string; email: string; phone: string; password?: string; assignedProperties?: string[] }) => {
+    if (!editingAccountant) return
+    
+    try {
+      // First update basic accountant info
+      await updateAccountant(editingAccountant._id, {
+        name: accountantData.name,
+        email: accountantData.email,
+        phone: accountantData.phone,
+        password: accountantData.password
+      })
+      console.log(`Accountant ${editingAccountant.name} basic info updated successfully`)
+
+      // Then update property assignments if provided
+      if (accountantData.assignedProperties !== undefined) {
+        await updateAccountantProperties(editingAccountant._id, accountantData.assignedProperties)
+        console.log(`Accountant ${editingAccountant.name} property assignments updated successfully`)
+      }
+      
+      // Refresh accountants to show updated list
+      fetchDashboardData()
+      setShowAccountantEditModal(false)
+      setEditingAccountant(null)
+    } catch (error) {
+      console.error('Error updating accountant:', error)
+      alert('Failed to update accountant. Please try again.')
+    }
+  }
+
+  const handleDeleteAccountant = async (accountant: Accountant) => {
+    if (window.confirm(`Are you sure you want to delete "${accountant.name}"? This action cannot be undone and will remove them from all assigned properties.`)) {
+      try {
+        await deleteAccountant(accountant._id)
+        console.log(`Accountant ${accountant.name} deleted successfully`)
+        // Refresh accountants to show updated list
+        fetchDashboardData()
+      } catch (error) {
+        console.error('Error deleting accountant:', error)
+        alert('Failed to delete accountant. Please try again.')
+      }
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-500"></div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header */}
+      <div className="bg-white shadow-lg border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-8">
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">
+                Admin Dashboard
+              </h1>
+              <p className="mt-2 text-lg text-gray-600">
+                Welcome back, <span className="font-semibold text-black">{user?.name}</span>
+              </p>
+            </div>
+            
+            {/* Owner and Accountant Selection Dropdowns */}
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <select
+                  value={selectedOwnerId}
+                  onChange={(e) => handleOwnerChange(e.target.value)}
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                >
+                  <option value="all">All Owners</option>
+                  <option value="admin">Admin</option>
+                  {owners.map((owner) => (
+                    <option key={owner._id} value={owner._id}>
+                      {owner.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+              </div>
+
+              <div className="relative">
+                <select
+                  value={selectedAccountantId}
+                  onChange={(e) => setSelectedAccountantId(e.target.value)}
+                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                >
+                  <option value="all">All Accountants</option>
+                  {accountants.map((accountant) => (
+                    <option key={accountant._id} value={accountant._id}>
+                      {accountant.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+              </div>
+              
+              <button
+                onClick={() => setShowOwnerModal(true)}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add User
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                    <Users className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                      Total Owners
+                    </dt>
+                    <dd className="text-3xl font-bold text-gray-900 mt-1">
+                      {stats?.totalOwners || 0}
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                    <Users className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                      Total Accountants
+                    </dt>
+                    <dd className="text-3xl font-bold text-gray-900 mt-1">
+                      {stats?.totalAccountants || 0}
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <Building2 className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                      Total Properties
+                    </dt>
+                    <dd className="text-3xl font-bold text-gray-900 mt-1">
+                      {stats?.totalProperties || 0}
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                      Current View
+                    </dt>
+                    <dd className="text-lg font-bold text-gray-900 mt-1">
+                      {getSelectedOwnerName()} | {getSelectedAccountantName()}
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Properties Section */}
+        <div className="bg-white shadow-xl rounded-xl border border-gray-100 mb-8">
+          <div className="px-6 py-6">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                  Properties ({getSelectedOwnerName()})
+                </h3>
+                <p className="text-gray-600">Manage and monitor your property portfolio</p>
+              </div>
+              <button
+                onClick={() => setShowPropertyModal(true)}
+                className="inline-flex items-center px-4 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                Add Property
+              </button>
+            </div>
+
+            {properties.length === 0 ? (
+              <div className="text-center py-12">
+                <Building2 className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No properties</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  Get started by adding a new property.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {properties.map((property) => (
+                  <div key={property._id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden">
+                    {/* Status Badge */}
+                    <div className="absolute top-4 right-4">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        property.isAdminOwned 
+                          ? 'bg-purple-100 text-purple-800' 
+                          : 'bg-green-100 text-green-800'
+                      }`}>
+                        {property.isAdminOwned ? 'Admin Owned' : 'Owner Owned'}
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start mb-4 pr-20">
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-1">
+                          {property.name || property.title || 'Unnamed Property'}
+                        </h4>
+                        <div className="flex items-center space-x-4 text-sm text-gray-600">
+                          <span className="flex items-center">
+                            <Building2 className="h-4 w-4 mr-1" />
+                            ID: {property.id || property._id}
+                          </span>
+                          <span className="flex items-center">
+                            <Users className="h-4 w-4 mr-1" />
+                            {property.isAdminOwned ? 'Admin' : (property.owner?.name || 'Unassigned')}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex justify-end space-x-2 mb-4">
+                      <button 
+                        onClick={() => handleViewProperty(property)}
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                        title="View Property Details"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleEditProperty(property)}
+                        className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200"
+                        title="Edit Property"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteProperty(property.id || property._id, property.name || property.title || 'Unnamed Property')}
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
+                        title="Delete Property"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                    
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Accountants Section */}
+        <div className="bg-white shadow-xl rounded-xl border border-gray-100 mb-8">
+          <div className="px-6 py-6">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                  Accountants ({getSelectedAccountantName()})
+                </h3>
+                <p className="text-gray-600">Manage accountant access and property assignments</p>
+              </div>
+            </div>
+
+            {getFilteredAccountants().length === 0 ? (
+              <div className="text-center py-12">
+                <Users className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No accountants</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  Get started by adding a new accountant.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {getFilteredAccountants().map((accountant) => (
+                  <div key={accountant._id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden">
+                    {/* Accountant Badge */}
+                    <div className="absolute top-4 right-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Accountant
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start mb-4 pr-20">
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-2">
+                          {accountant.name}
+                        </h4>
+                        <div className="space-y-2">
+                          <div className="flex items-center text-sm text-gray-600">
+                            <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+                            {accountant.email}
+                          </div>
+                          <div className="flex items-center text-sm text-gray-600">
+                            <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                            {accountant.phone || 'Phone not provided'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex justify-end space-x-2 mb-4">
+                      <button 
+                        onClick={() => handleViewAccountant(accountant)}
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                        title="View Accountant Details"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleEditAccountant(accountant)}
+                        className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200"
+                        title="Edit Accountant"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteAccountant(accountant)}
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
+                        title="Delete Accountant"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                    
+                    {/* Properties Summary */}
+                    <div className="border-t border-gray-100 pt-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                          Assigned Properties
+                        </span>
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          {accountant.assignedPropertiesCount}
+                        </span>
+                      </div>
+                    
+                      {/* Assigned Properties List */}
+                      {accountant.assignedProperties.length > 0 && (
+                        <div className="space-y-2">
+                          {accountant.assignedProperties.slice(0, 3).map((property) => (
+                            <div key={property._id} className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-lg">
+                              <div className="flex items-center">
+                                <Building2 className="h-3 w-3 text-gray-400 mr-2" />
+                                <span className="text-xs font-medium text-gray-700">{property.name}</span>
+                              </div>
+                              <span className="text-xs text-gray-500">ID: {property.id}</span>
+                            </div>
+                          ))}
+                          {accountant.assignedProperties.length > 3 && (
+                            <div className="text-xs text-gray-500 italic text-center py-1">
+                              +{accountant.assignedProperties.length - 3} more properties
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Add Property Modal */}
+        {showPropertyModal && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Add New Property</h3>
+                  <button
+                    onClick={() => setShowPropertyModal(false)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                
+                <AddPropertyForm 
+                  owners={owners}
+                  onSuccess={() => {
+                    setShowPropertyModal(false)
+                    fetchProperties()
+                  }}
+                  onCancel={() => setShowPropertyModal(false)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Add User Modal */}
+        {showOwnerModal && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Add New User</h3>
+                  <button
+                    onClick={() => setShowOwnerModal(false)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                
+                <AddOwnerForm 
+                  onSuccess={() => {
+                    setShowOwnerModal(false)
+                    fetchDashboardData()
+                  }}
+                  onCancel={() => setShowOwnerModal(false)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Accountant View Modal */}
+        {showAccountantViewModal && viewingAccountant && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Accountant Details</h3>
+                  <button
+                    onClick={() => {
+                      setShowAccountantViewModal(false)
+                      setViewingAccountant(null)
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingAccountant.name}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingAccountant.email}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingAccountant.phone || 'Not provided'}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Assigned Properties</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingAccountant.assignedPropertiesCount} properties
+                    </div>
+                  </div>
+                  
+                  {viewingAccountant.assignedProperties.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Property List</label>
+                      <div className="max-h-32 overflow-y-auto space-y-1">
+                        {viewingAccountant.assignedProperties.map((property) => (
+                          <div key={property._id} className="px-3 py-1 bg-blue-50 border border-blue-200 rounded text-sm">
+                            {property.name} (ID: {property.id})
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="flex justify-end space-x-3 pt-4">
+                    <button
+                      onClick={() => {
+                        setShowAccountantViewModal(false)
+                        setViewingAccountant(null)
+                      }}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Accountant Edit Modal */}
+        {showAccountantEditModal && editingAccountant && (
+          <AccountantEditModal
+            accountant={editingAccountant}
+            availableProperties={properties}
+            onUpdate={handleUpdateAccountant}
+            onCancel={() => {
+              setShowAccountantEditModal(false)
+              setEditingAccountant(null)
+            }}
+          />
+        )}
+
+        {/* Property View Modal */}
+        {showPropertyViewModal && viewingProperty && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Property Details</h3>
+                  <button
+                    onClick={() => {
+                      setShowPropertyViewModal(false)
+                      setViewingProperty(null)
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Name</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.name || viewingProperty.title || 'Unnamed Property'}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property ID</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.id || viewingProperty._id}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Owner</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.isAdminOwned ? 'Admin' : (viewingProperty.owner?.name || 'Unassigned')}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.address || 'Not provided'}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.type || 'Not specified'}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
+                      <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                        {viewingProperty.bedrooms || '0'}
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Bathrooms</label>
+                      <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                        {viewingProperty.bathrooms || '0'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Max Guests</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.maxGuests || '0'}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                      {viewingProperty.status || 'Active'}
+                    </div>
+                  </div>
+                  
+                  {viewingProperty.images && viewingProperty.images.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Images</label>
+                      <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                        {viewingProperty.images.length} image(s)
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="flex justify-end space-x-3 pt-4">
+                    <button
+                      onClick={() => {
+                        setShowPropertyViewModal(false)
+                        setViewingProperty(null)
+                      }}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+
+        {/* Full Properties Management Section */}
+        <div className="bg-white shadow rounded-lg mt-6" data-property-management>
+          <div className="px-4 py-5 sm:p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                Full Properties Management ({getSelectedOwnerName()})
+              </h3>
+            </div>
+            
+            <PropertyManagement 
+              filteredProperties={properties}
+              onPropertyUpdate={fetchProperties}
+              owners={owners}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Owner Statement Modal */}
+      {showOwnerStatement && (
+        <OwnerStatementComponent 
+          onClose={() => setShowOwnerStatement(false)}
+        />
+      )}
+    </div>
+  )
+}
+
+export default AdminDashboard

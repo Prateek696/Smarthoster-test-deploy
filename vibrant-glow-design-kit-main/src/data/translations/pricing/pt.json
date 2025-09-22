@@ -1,0 +1,126 @@
+{
+  "title": "Os Nossos Serviços, Claramente Definidos",
+  "subtitle": "Acreditamos na transparência, responsabilidade e em fazer o trabalho. Aqui está exatamente o que tratamos — e o que pode esperar de nós em cada nível.",
+  "plans": {
+    "basic": {
+      "name": "BÁSICO",
+      "fee": "10% Taxa de Gestão",
+      "description": "Para proprietários que querem reservas e conformidade legal — e gerem o resto por si mesmos.",
+      "buttonText": "Vamos Começar Simples"
+    },
+    "premium": {
+      "name": "PREMIUM",
+      "fee": "25% Taxa de Gestão",
+      "description": "Operações completas, limpeza, apoio aos hóspedes e conformidade — tudo feito por nós.",
+      "popular": "MAIS POPULAR",
+      "buttonText": "Quero Gestão Completa"
+    },
+    "superPremium": {
+      "name": "SUPER PREMIUM ADD-ON",
+      "fee": "+5% Add-On (30% Total)",
+      "description": "Para propriedades de alta qualidade e proprietários que querem zero interrupções e máximo prazer para os hóspedes.",
+      "buttonText": "Quero a Experiência VIP"
+    }
+  },
+  "features": {
+    "basic": [
+      "Configuração de anúncios Airbnb + Booking.com",
+      "Sincronização de calendário",
+      "Mensagens automáticas aos hóspedes (apenas horário comercial)",
+      "Resumo mensal de desempenho",
+      "Registo SEF + submissão de fichas de hóspedes",
+      "Coordenação de limpeza (equipa externa)"
+    ],
+    "premium": [
+      "Preços dinâmicos e otimização de anúncios",
+      "Comunicação com hóspedes 24/7",
+      "Lençóis e toalhas SmartHoster",
+      "Limpeza e lavandaria internas",
+      "Reposição e coordenação de amenities",
+      "Coordenação de manutenção (com aprovação do proprietário)",
+      "Conformidade SEF + AL",
+      "Registo e relatório de taxa turística (pago pelo proprietário)",
+      "Faturação mensal SAF-T",
+      "Faturação automatizada",
+      "Dashboard do proprietário (calendário + receitas)",
+      "Presente de boas-vindas para hóspedes (ex: vinho local)",
+      "Revisão trimestral da estratégia de preços"
+    ],
+    "superPremium": [
+      "Reposição ilimitada de amenities",
+      "Papel higiénico, sabão, sacos do lixo, detergente, etc. ilimitados",
+      "Ramo de flores fresco para cada hóspede",
+      "Vinho ou presente por estadia",
+      "Limpezas semanais para hóspedes de longa duração (7+ noites)",
+      "Reparações até €100 tratadas automaticamente (3/mês)",
+      "Pagamentos a fornecedores geridos diretamente",
+      "Resolução de problemas de hóspedes sem envolvimento do proprietário",
+      "Gestor de conta WhatsApp dedicado",
+      "Gestão proativa de avaliações e alertas de desempenho"
+    ]
+  },
+  "sections": {
+    "setup": {
+      "title": "De Apartamento Vazio a Aluguer Pronto para Hóspedes",
+      "subtitle": "Mobilamos, desenhamos e preparamos a sua propriedade — profissionalmente.",
+      "features": [
+        "Planeamento de layout interior e sourcing de mobiliário",
+        "Mobiliário duradouro e de alta performance (camas, sofás, jantar, etc.)",
+        "Seleção e instalação de equipamentos (TV, WiFi, cozinha, AC)",
+        "Equipamento completo de cozinha + casa de banho",
+        "Design e styling",
+        "Ativação de serviços (eletricidade, gás, água, internet)",
+        "Limpeza profunda + walkthrough para entrega"
+      ],
+      "button": "Agendar Chamada de Configuração"
+    },
+    "upgrade": {
+      "title": "De Apartamento Existente a Aluguer Pronto 5 Estrelas",
+      "subtitle": "Já mobilado? Nós atualizamos, otimizamos e elevamos — com uma auditoria completa e melhorias direcionadas.",
+      "note": "📌 Ideal para unidades anteriormente alugadas ou casas mobiladas que precisam de um impulso 5 estrelas.",
+      "features": [
+        "Walkthrough no local e auditoria da configuração atual",
+        "Recomendações de upgrade (roupa de cama, lençóis, iluminação, decoração)",
+        "Otimização da experiência do hóspede",
+        "Integração de tecnologia inteligente",
+        "Validação de Wi-Fi e streaming",
+        "Onboarding da equipa de limpeza",
+        "Styling final e estadia de teste opcional"
+      ],
+      "button": "Agendar Chamada de Upgrade"
+    },
+    "compliance": {
+      "title": "De Apartamento Totalmente Mobilado a Aluguer de Curta Duração Totalmente Licenciado",
+      "subtitle": "Tratamos de todos os passos legais, de segurança e conformidade para tornar a sua propriedade totalmente licenciada e pronta para hóspedes.",
+      "note": "📌 Perfeito se o seu apartamento está mobilado mas ainda não está legalmente pronto para alugar.",
+      "setupFee": "Taxa de configuração: €300 + IVA",
+      "features": [
+        "Registo \"Alojamento Local\" (AL) de aluguer de curta duração e submissão municipal",
+        "Configuração de Taxa Municipal Turística",
+        "Ativação, coordenação e relatório de hóspedes do boletim de alojamento SEF / AIMA",
+        "Coordenação de seguro de aluguer de curta duração (responsabilidade civil e cobertura de incêndio)",
+        "Equipamento de conformidade legal: extintor, manta de fogo, detetores de fumo e CO, kit de primeiros socorros",
+        "Sinalética de contacto de emergência e plano de evacuação",
+        "Configuração do Livro de Reclamações — físico e online",
+        "Manual de informações para hóspedes em múltiplas línguas (Português, Inglês e pelo menos duas outras)",
+        "Sinalética para hóspedes incluindo regras de lixo, guias de equipamentos e regulamentos do edifício",
+        "Walkthrough final de conformidade e entrega"
+      ],
+      "button": "Reservar Configuração de Conformidade"
+    }
+  },
+  "trust": {
+    "title": "Porque é que os proprietários escolhem a SmartHoster",
+    "points": [
+      "Equipa de operações locais comprovada",
+      "Experiência real, não apenas software",
+      "Faturação transparente e gestão de fornecedores",
+      "Excelentes classificações de hóspedes",
+      "Legalmente conforme e pronto para SAF-T"
+    ]
+  },
+  "footer": {
+    "title": "Não tem a certeza por onde começar? Contacte-nos e nós orientamos.",
+    "button": "Falar com uma Pessoa Real"
+  }
+}

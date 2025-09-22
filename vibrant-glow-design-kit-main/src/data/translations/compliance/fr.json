@@ -1,0 +1,96 @@
+
+{
+  "hero": {
+    "title": "Restez Conforme. Restez Confiant.",
+    "subtitle": "Conformité légale automatisée, rapports fiscaux et intégration transparente avec les autorités portugaises—garantissant que votre location fonctionne dans le cadre de la loi.",
+    "cta": "En Savoir Plus Sur Nos Services de Conformité"
+  },
+  "sefAima": {
+    "title": "Comprendre les Obligations de Déclaration SEF/AIMA",
+    "subtitle": "Exigences Légales pour les Locations de Courte Durée au Portugal",
+    "description": "Exploiter une location de courte durée au Portugal implique des obligations légales spécifiques, notamment l'obligation de déclarer les informations des clients au Service des Étrangers et des Frontières portugais. À partir du 29 octobre 2023, les responsabilités précédemment détenues par le SEF ont été transférées à l'AIMA (Agence pour l'Immigration et la Mobilité), la nouvelle agence supervisant les questions d'immigration et de mobilité. Cette déclaration est effectuée via la plateforme SIBA (Système d'Information des Bulletins d'Hébergement)."
+  },
+  "whyImportant": {
+    "title": "Pourquoi la Déclaration SEF/AIMA est Importante",
+    "legalCompliance": {
+      "title": "Conformité Légale",
+      "mandatory": "Exigence Obligatoire : Tous les fournisseurs d'hébergement doivent collecter et déclarer des informations spécifiques sur les clients étrangers à l'AIMA dans les trois jours ouvrables suivant leur arrivée.",
+      "security": "Sécurité Nationale : Aide à surveiller les ressortissants étrangers, contribuant à la sécurité nationale et au contrôle de l'immigration.",
+      "transparency": "Transparence : Aide à prévenir les activités illégales telles que la traite des êtres humains et les dépassements de visa."
+    },
+    "professionalism": {
+      "title": "Professionnalisme",
+      "credibility": "Crédibilité : Démontre votre engagement envers les obligations légales.",
+      "trust": "Établissement de Confiance : Augmente la confiance des clients à réserver avec des hôtes conformes."
+    }
+  },
+  "challenges": {
+    "title": "Défis et Notre Solution",
+    "complexity": {
+      "title": "Complexité de la Conformité",
+      "understanding": "Compréhension des Exigences : Le processus implique des nuances légales et des soumissions opportunes.",
+      "hesitation": "Hésitation des Clients : Les clients peuvent être réticents à partager des informations personnelles."
+    },
+    "solution": {
+      "title": "Comment SmartHoster Assiste",
+      "streamlined": "Processus Simplifié : Nous gérons tous les aspects des rapports SEF/AIMA en votre nom.",
+      "communication": "Communication Claire : Nous éduquons les clients sur les exigences légales de manière respectueuse.",
+      "security": "Traitement Sécurisé des Données : Nous collectons les informations nécessaires efficacement et en conformité avec les lois de protection des données."
+    }
+  },
+  "refusal": {
+    "title": "Obligation Légale de Refuser l'Hébergement",
+    "description": "Selon la loi portugaise (Articles 15 et 16 de la Loi n° 23/2007 du 4 juillet), vous devez refuser l'hébergement si un client refuse de fournir les informations requises.",
+    "support": {
+      "title": "Notre Support",
+      "compliance": "Assurer la Conformité : Nous gérons la collecte de données pour minimiser de telles situations.",
+      "education": "Éducation des Clients : Nous expliquons la nécessité de fournir des informations.",
+      "protection": "Protection Légale : Nous vous protégeons des problèmes légaux potentiels dus à la non-conformité."
+    }
+  },
+  "penalties": {
+    "title": "Pénalités pour Non-Conformité",
+    "financial": {
+      "title": "Pénalités Financières",
+      "individuals": "Particuliers : Amendes allant de 100 € à 5 000 € par infraction.",
+      "corporations": "Entreprises : Amendes de 2 000 € à 10 000 € par infraction."
+    },
+    "legal": {
+      "title": "Conséquences Légales",
+      "criminal": "Accusations Criminelles : Possibles pour les violations délibérées ou répétées.",
+      "imprisonment": "Emprisonnement : Peines allant de un à cinq ans dans les cas graves.",
+      "restrictions": "Restrictions Opérationnelles : Suspension ou révocation potentielle de votre licence de location."
+    },
+    "condominium": {
+      "title": "Impact sur les Propriétés en Copropriété",
+      "intervention": "Intervention de la Copropriété : La non-conformité peut conduire à des efforts de l'association de copropriété pour fermer votre opération de location.",
+      "grounds": "Motifs Légaux : D'autres propriétaires peuvent contester vos activités de location basées sur des violations légales."
+    }
+  },
+  "management": {
+    "title": "Comment SmartHoster Gère les Rapports SEF/AIMA",
+    "inclusive": "Service Inclusif : Les rapports SEF/AIMA font partie de tous nos packages de gestion.",
+    "expert": "Équipe d'Experts : Gère la collecte de données et la soumission opportune avec précision.",
+    "systems": "Systèmes Avancés : Utilise des logiciels pour réduire les erreurs et rationaliser les rapports.",
+    "security": "Sécurité des Données : Assure que toutes les informations des clients sont sécurisées et conformes au RGPD."
+  },
+  "touristTax": {
+    "title": "Collecte de la Taxe Touristique",
+    "description": "En plus des rapports SEF/AIMA, les opérateurs de location de courte durée au Portugal sont tenus de collecter les Taxes Touristiques Municipales (Taxa Municipal Turística) auprès des clients, le cas échéant.",
+    "support": {
+      "title": "Notre Support",
+      "calculation": "Calcul Automatisé : Nous calculons la taxe appropriée basée sur l'emplacement de votre propriété et les taux applicables.",
+      "collection": "Collecte Transparente : Nous communiquons la taxe clairement aux clients pendant le processus de réservation.",
+      "remittance": "Remise Opportune : Nous nous assurons que les taxes collectées sont remises aux autorités municipales appropriées dans les délais."
+    }
+  },
+  "conclusion": {
+    "title": "Conclusion",
+    "description": "La conformité avec les obligations de rapport SEF/AIMA et de taxe touristique est essentielle pour le succès et la position légale de votre entreprise de location au Portugal. SmartHoster retire la complexité de ce processus, vous permettant de vous concentrer sur fournir une excellente hospitalité pendant que nous gérons les obligations légales."
+  },
+  "cta": {
+    "title": "Commencez avec SmartHoster",
+    "description": "Contactez-nous pour en savoir plus sur nos services et comment nous pouvons les personnaliser pour répondre à vos besoins.",
+    "button": "Planifiez une Consultation Gratuite de Conformité"
+  }
+}

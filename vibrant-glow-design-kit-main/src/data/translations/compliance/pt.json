@@ -1,0 +1,96 @@
+
+{
+  "hero": {
+    "title": "Mantenha-se Conforme. Mantenha-se Confiante.",
+    "subtitle": "Conformidade legal automatizada, relatórios fiscais e integração perfeita com as autoridades portuguesas—garantindo que o seu alojamento opera dentro da lei.",
+    "cta": "Saiba Mais Sobre os Nossos Serviços de Conformidade"
+  },
+  "sefAima": {
+    "title": "Compreender as Obrigações de Relatório SEF/AIMA",
+    "subtitle": "Requisitos Legais para Alojamentos de Curta Duração em Portugal",
+    "description": "Operar um alojamento de curta duração em Portugal implica obrigações legais específicas, nomeadamente a obrigação de reportar informações de hóspedes ao Serviço de Estrangeiros e Fronteiras português. A partir de 29 de outubro de 2023, as responsabilidades anteriormente detidas pelo SEF foram transferidas para a AIMA (Agência para a Imigração e Mobilidade), a nova agência que supervisiona os assuntos de imigração e mobilidade. Este relatório é realizado através da plataforma SIBA (Sistema de Informação de Boletins de Alojamento)."
+  },
+  "whyImportant": {
+    "title": "Por que o Relatório SEF/AIMA é Importante",
+    "legalCompliance": {
+      "title": "Conformidade Legal",
+      "mandatory": "Requisito Obrigatório: Todos os fornecedores de alojamento devem recolher e reportar informações específicas sobre hóspedes estrangeiros à AIMA no prazo de três dias úteis após a sua chegada.",
+      "security": "Segurança Nacional: Auxilia no monitoramento de cidadãos estrangeiros, contribuindo para a segurança nacional e controlo de imigração.",
+      "transparency": "Transparência: Ajuda a prevenir atividades ilegais como tráfico humano e permanências ilegais de visto."
+    },
+    "professionalism": {
+      "title": "Profissionalismo",
+      "credibility": "Credibilidade: Demonstra o seu compromisso com as obrigações legais.",
+      "trust": "Construção de Confiança: Aumenta a confiança dos hóspedes em reservar com anfitriões conformes."
+    }
+  },
+  "challenges": {
+    "title": "Desafios e a Nossa Solução",
+    "complexity": {
+      "title": "Complexidade da Conformidade",
+      "understanding": "Compreensão dos Requisitos: O processo envolve nuances legais e submissões oportunas.",
+      "hesitation": "Hesitação dos Hóspedes: Os hóspedes podem relutar em partilhar informações pessoais."
+    },
+    "solution": {
+      "title": "Como a SmartHoster Ajuda",
+      "streamlined": "Processo Simplificado: Tratamos de todos os aspetos dos relatórios SEF/AIMA em seu nome.",
+      "communication": "Comunicação Clara: Educamos os hóspedes sobre os requisitos legais de forma respeitosa.",
+      "security": "Tratamento Seguro de Dados: Recolhemos as informações necessárias de forma eficiente e em conformidade com as leis de proteção de dados."
+    }
+  },
+  "refusal": {
+    "title": "Obrigação Legal de Recusar Alojamento",
+    "description": "Sob a lei portuguesa (Artigos 15 e 16 da Lei n.º 23/2007 de 4 de julho), deve recusar alojamento se um hóspede se recusar a fornecer as informações exigidas.",
+    "support": {
+      "title": "O Nosso Apoio",
+      "compliance": "Garantir Conformidade: Gerimos a recolha de dados para minimizar tais situações.",
+      "education": "Educação dos Hóspedes: Explicamos a necessidade de fornecimento de informações.",
+      "protection": "Proteção Legal: Protegemo-lo de potenciais problemas legais devido ao não cumprimento."
+    }
+  },
+  "penalties": {
+    "title": "Penalidades por Não Conformidade",
+    "financial": {
+      "title": "Penalidades Financeiras",
+      "individuals": "Indivíduos: Multas variando de €100 a €5.000 por infração.",
+      "corporations": "Empresas: Multas de €2.000 a €10.000 por infração."
+    },
+    "legal": {
+      "title": "Consequências Legais",
+      "criminal": "Acusações Criminais: Possíveis para violações deliberadas ou repetidas.",
+      "imprisonment": "Prisão: Sentenças variando de um a cinco anos em casos graves.",
+      "restrictions": "Restrições Operacionais: Potencial suspensão ou revogação da sua licença de alojamento."
+    },
+    "condominium": {
+      "title": "Impacto em Propriedades de Condomínio",
+      "intervention": "Intervenção do Condomínio: O não cumprimento pode levar a esforços da associação de condomínio para encerrar a sua operação de alojamento.",
+      "grounds": "Fundamentos Legais: Outros proprietários podem contestar as suas atividades de alojamento com base em violações legais."
+    }
+  },
+  "management": {
+    "title": "Como a SmartHoster Gere os Relatórios SEF/AIMA",
+    "inclusive": "Serviço Inclusivo: Os relatórios SEF/AIMA fazem parte de todos os nossos pacotes de gestão.",
+    "expert": "Equipa Especializada: Trata da recolha de dados e submissão oportuna com precisão.",
+    "systems": "Sistemas Avançados: Utiliza software para reduzir erros e simplificar relatórios.",
+    "security": "Segurança de Dados: Garante que todas as informações dos hóspedes são seguras e conformes com o RGPD."
+  },
+  "touristTax": {
+    "title": "Cobrança de Taxa Turística",
+    "description": "Além dos relatórios SEF/AIMA, os operadores de alojamento de curta duração em Portugal são obrigados a cobrar Taxas Turísticas Municipais (Taxa Municipal Turística) dos hóspedes, quando aplicável.",
+    "support": {
+      "title": "O Nosso Apoio",
+      "calculation": "Cálculo Automatizado: Calculamos a taxa apropriada com base na localização da sua propriedade e taxas aplicáveis.",
+      "collection": "Cobrança Transparente: Comunicamos a taxa claramente aos hóspedes durante o processo de reserva.",
+      "remittance": "Remessa Oportuna: Garantimos que as taxas cobradas são remetidas às autoridades municipais apropriadas no prazo."
+    }
+  },
+  "conclusion": {
+    "title": "Conclusão",
+    "description": "A conformidade com as obrigações de relatório SEF/AIMA e taxa turística é essencial para o sucesso e posição legal do seu negócio de alojamento em Portugal. A SmartHoster retira a complexidade deste processo, permitindo-lhe focar-se em fornecer excelente hospitalidade enquanto tratamos das obrigações legais."
+  },
+  "cta": {
+    "title": "Comece com a SmartHoster",
+    "description": "Contacte-nos para saber mais sobre os nossos serviços e como podemos personalizá-los para se adequarem às suas necessidades.",
+    "button": "Agende uma Consulta Gratuita de Conformidade"
+  }
+}

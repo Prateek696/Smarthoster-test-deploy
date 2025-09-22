@@ -1,0 +1,29 @@
+OWNER STATEMENT
+Property,Piece of Heaven
+Period,2025-02-01 to 2025-02-28
+Generated,2025-09-05
+
+REVENUE BREAKDOWN
+Description,Amount
+Gross Revenue,$3,000.00
+Net Revenue,$2,730.25
+Total Revenue,$2,730.25
+
+EXPENSES BREAKDOWN
+Description,Amount
+Commission,$300.00
+Fees,$200.00
+Other Expenses,$61.99
+Total Expenses,$561.99
+
+SUMMARY
+Item,Amount
+Total Revenue,$2,730.25
+Total Expenses,$561.99
+NET PAYOUT,$2,168.26
+
+Statement Details
+Statement ID,test-123
+Status,paid
+Created,2025-09-05T14:42:35.780Z
+Updated,2025-09-05T14:42:35.781Z

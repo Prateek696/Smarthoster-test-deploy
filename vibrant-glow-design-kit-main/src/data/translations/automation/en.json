@@ -1,0 +1,107 @@
+
+{
+  "hero": {
+    "headline": "Smart Tech. Smarter Hosting.",
+    "subheadline": "Reliable access, 24/7 coverage, and intelligent systems that scale with your property—powered by SmartHoster's SmartTag platform and partners like Nuki and HOMINT.",
+    "cta": "Request a Free Automation Evaluation"
+  },
+  "multiLayeredAccess": {
+    "title": "Failproof Entry, Every Time.",
+    "description": "At SmartHoster, we don't rely on a single method of check-in. Our three-layered access system ensures reliability no matter what:",
+    "features": [
+      "Digital Smart Locks — via Nuki and HOMINT, integrated with guest reservations",
+      "Manual Lockboxes — as secure, offline backups",
+      "On-Call Staff — available 24/7 to assist with access, resolve issues, or open doors in person"
+    ],
+    "conclusion": "Whether a guest arrives at midnight, loses internet, or mistypes their code—access is guaranteed."
+  },
+  "smartLocks": {
+    "title": "Contactless, Reliable, Automated",
+    "description": "We partner with Europe's leading smart lock providers—Nuki and HOMINT—to bring fully digital access to your property. Each booking automatically generates a unique access code or digital key, sent to the guest just before arrival.",
+    "features": [
+      "No physical keys",
+      "No coordination hassle",
+      "No guest left waiting at the door"
+    ]
+  },
+  "buildingAccess": {
+    "title": "From the Street to the Suite",
+    "description": "For apartments and condominiums, our systems integrate with main entrance intercoms. That means your guests can enter the building and unit using the same phone-based key—no separate remotes, no buzzers, no confusion.",
+    "conclusion": "This is especially valuable in Lisbon, Porto, and other cities with layered access buildings."
+  },
+  "lockboxes": {
+    "title": "Low-Tech. Still Smart.",
+    "description": "Digital systems aren't infallible—and we plan accordingly. Every property includes a manual lockbox, discreetly installed and preconfigured as a secondary access point. Guests with issues can retrieve a traditional key as needed.",
+    "conclusion": "We proactively rotate and maintain these as part of our system."
+  },
+  "humanOversight": {
+    "title": "Real People. Real Time.",
+    "description": "Our local team is always on-call, ready to:",
+    "features": [
+      "Help guests who can't access a unit",
+      "Manually unlock units via secure app",
+      "Visit properties when needed, fast"
+    ],
+    "conclusion": "We combine automation with real presence—because peace of mind needs both."
+  },
+  "smartTag": {
+    "title": "Beyond Access—Built for Reliability",
+    "description": "Our SmartTag platform is more than just locks. It includes smart scheduling and alert systems that automate your property's backend processes:",
+    "features": [
+      "Automatically notifies cleaning staff after check-out",
+      "Triggers maintenance reminders for recurring services",
+      "Verifies check-in/check-out timing and access status",
+      "Syncs with booking calendars and property dashboards"
+    ],
+    "conclusion": "The result? Fewer calls. Fewer surprises. Smoother operations."
+  },
+  "portfolioManagement": {
+    "title": "One App. Any Door.",
+    "description": "If you manage more than one property, SmartHoster makes it easy to control them all from one dashboard.",
+    "features": [
+      "Grant or revoke access instantly",
+      "View activity logs",
+      "Coordinate service providers",
+      "Monitor guest arrival times across units"
+    ],
+    "conclusion": "All without stepping foot onsite."
+  },
+  "whyItWorks": {
+    "title": "Automation isn't about tech—it's about trust.",
+    "description": "Guests expect smooth, modern check-ins. Owners expect reliability. SmartHoster delivers both.",
+    "subtitle": "Our layered system ensures:",
+    "features": [
+      "No lockouts",
+      "No missed check-ins",
+      "No service delays",
+      "And no guesswork for owners or guests"
+    ],
+    "conclusion": "This leads to better reviews, more repeat bookings, and a stress-free hosting experience."
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "questions": {
+      "apartments": {
+        "question": "Can this system work in apartment buildings?",
+        "answer": "Yes. Nuki and HOMINT both integrate with intercoms, giving guests access from the front door to the apartment."
+      },
+      "malfunction": {
+        "question": "What if the lock stops working?",
+        "answer": "Each property includes a backup lockbox and 24/7 support staff to assist in real-time."
+      },
+      "installation": {
+        "question": "Is installation included?",
+        "answer": "Yes—for clients on our full-service package, we provide installation at no added cost. For others, we offer a detailed quote after a free evaluation."
+      },
+      "portfolio": {
+        "question": "How many properties can I manage at once?",
+        "answer": "As many as you like. Our dashboard scales to portfolios large and small."
+      }
+    }
+  },
+  "finalCta": {
+    "headline": "Request Your Free Access Evaluation",
+    "description": "Want to automate access, avoid check-in issues, and modernize your rentals? Schedule your free on-site review today.",
+    "cta": "Schedule My Evaluation"
+  }
+}

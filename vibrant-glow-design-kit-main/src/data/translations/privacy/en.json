@@ -1,0 +1,145 @@
+
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "effectiveDate": "Effective Date: Sunday, 1 June 2025",
+    "entityName": "BBAR Unipessoal LDA",
+    "operatingAs": "Operating As: SmartHoster.io",
+    "vat": "VAT/NIPC: PT514142057",
+    "address": "Registered Address: Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+    "email": "Contact Email: admin@smarthoster.io",
+    "sections": {
+      "purpose": {
+        "title": "1. Purpose and Scope",
+        "content": "This Privacy Policy describes how BBAR Unipessoal LDA (\"SmartHoster,\" \"we,\" \"our,\" or \"us\") collects, processes, stores, protects, and, where necessary, discloses personal data. We are committed to protecting your privacy and handling your data in full compliance with the General Data Protection Regulation (GDPR – Regulation EU 2016/679) and all applicable Portuguese and European data protection laws.\n\nThis policy applies to all users, clients, property owners, guests, subcontractors, vendors, and website visitors who interact with SmartHoster.io through any means, including web portals, communication channels, and integrated platforms."
+      },
+      "controller": {
+        "title": "2. Data Controller",
+        "content": "The data controller for all personal data processed under this policy is:\n\nBBAR Unipessoal LDA\nRua do Molhe 575 1°, 4150-503 Porto, Portugal\nVAT/NIPC: PT514142057\nEmail: admin@smarthoster.io"
+      },
+      "dataCollection": {
+        "title": "3. Personal Data We Collect",
+        "content": "We may collect and process the following categories of personal data:",
+        "categories": [
+          "Identity Data: Full name, date of birth, national identification number, passport number, NIF (Portuguese Tax ID)",
+          "Contact Data: Phone number, email address, physical address",
+          "Financial Data: IBAN, bank account information, billing address, payment method",
+          "Property Data: Ownership documentation, access credentials (e.g. smart locks), maintenance history",
+          "Usage Data: IP addresses, device identifiers, browser details, geolocation, session metadata",
+          "Service Interaction Data: Booking records, guest history, cleaning schedules, communication logs",
+          "Legal and Compliance Data: Data required for reporting to SEF, AIMA, AT, and other authorities",
+          "Media and Visual Data: Images and recordings from intercom, smart lock systems, or CCTV (where applicable)"
+        ]
+      },
+      "lawfulBases": {
+        "title": "4. Lawful Bases for Processing",
+        "content": "We process your personal data on the following legal grounds:",
+        "bases": [
+          "Performance of a contract: When we enter into or carry out an agreement with you",
+          "Legal obligation: For compliance with tax, immigration, and housing regulations",
+          "Legitimate interest: To maintain service quality, security, fraud prevention, or internal administration",
+          "Consent: For optional communications or non-essential data collection (withdrawable at any time)",
+          "Public interest: When required to cooperate with public entities under law"
+        ]
+      },
+      "dataUse": {
+        "title": "5. How We Use Your Data",
+        "content": "We use your personal data to:",
+        "purposes": [
+          "Operate and deliver SmartHoster.io's property management and guest hosting services",
+          "Register guest data with national systems (e.g. SEF, AIMA, eFatura)",
+          "Coordinate and track cleanings, maintenance, and access operations",
+          "Communicate with you regarding bookings, services, payments, and legal matters",
+          "Issue legal documents such as invoices and reports",
+          "Fulfill local lodging compliance, including tourist tax collection",
+          "Maintain operational security, including video surveillance and access logs",
+          "Conduct statistical analysis and performance tracking",
+          "Respond to inquiries, disputes, and customer support requests"
+        ]
+      },
+      "dataSharing": {
+        "title": "6. Data Sharing",
+        "content": "We may share personal data with:",
+        "parties": [
+          "Governmental authorities: SEF (Immigration Services), AIMA, Autoridade Tributária (Tax Office), Bank of Portugal",
+          "Technology partners: e.g. Nuki, Stripe, Hostaway, HostKit, Notion, Tawk, other service integrations",
+          "Subcontracted professionals: Cleaning teams, maintenance providers, licensed technicians",
+          "Auditors, accountants, legal advisors: Under NDA or equivalent confidentiality agreement",
+          "Insurers: For claims related to damage, liability, or coverage"
+        ],
+        "noSale": "We do not sell, rent, or trade your data to any third party.",
+        "transfers": "Where data is transferred outside the EU/EEA, we ensure lawful safeguards are in place, such as Standard Contractual Clauses (SCCs) or equivalent protections."
+      },
+      "retention": {
+        "title": "7. Data Retention",
+        "content": "We retain personal data only for the duration necessary to fulfill its purpose and comply with legal obligations:",
+        "periods": [
+          "Billing, tax, and contract records: 10 years",
+          "Client and service data: For the duration of the relationship, and up to 3 years after termination",
+          "Marketing and communication records: Until consent is withdrawn",
+          "Access and surveillance footage: Maximum of 30 days, unless legally required to retain longer"
+        ],
+        "erasure": "All data is securely erased or anonymized after expiration of the retention period."
+      },
+      "rights": {
+        "title": "8. Your Rights",
+        "content": "Under GDPR and Portuguese law, you have the following rights regarding your personal data:",
+        "list": [
+          "Right to access: Obtain a copy of your personal data",
+          "Right to rectification: Correct inaccurate or incomplete data",
+          "Right to erasure: Request deletion of data, subject to legal limits",
+          "Right to restriction: Limit how we use your data",
+          "Right to object: Oppose certain uses of your data, including direct marketing",
+          "Right to data portability: Receive your data in a structured, machine-readable format",
+          "Right to withdraw consent: At any time, for processing based on consent",
+          "Right to lodge a complaint: With the Comissão Nacional de Proteção de Dados (CNPD)"
+        ],
+        "contact": "To exercise your rights, contact us at admin@smarthoster.io"
+      },
+      "security": {
+        "title": "9. Data Security",
+        "content": "We take data protection seriously and use the following safeguards:",
+        "measures": [
+          "Encryption: All sensitive data is encrypted during transmission and storage",
+          "Access Control: Role-based access, multi-factor authentication, audit logs",
+          "Data Minimization: We only collect what is strictly necessary",
+          "Secure Infrastructure: Firewalls, monitoring, backup protocols, and physical security",
+          "Employee Training: All staff and contractors are bound by confidentiality obligations"
+        ],
+        "breach": "In the event of a data breach, we will notify the CNPD and affected individuals where required by law."
+      },
+      "minors": {
+        "title": "10. Minors",
+        "content": "We do not knowingly collect personal data from children under 16, except in cases where guest identification is legally required for SEF registration, and consent is provided by a parent or legal guardian."
+      },
+      "cookies": {
+        "title": "11. Cookies & Tracking Technologies",
+        "content": "SmartHoster.io uses cookies and similar technologies to enhance user experience, analyze traffic, and manage sessions.\n\nWe use:",
+        "types": [
+          "Essential cookies: For login, navigation, and basic site functionality",
+          "Analytics cookies: e.g. Google Analytics, to improve performance",
+          "Functional cookies: To remember preferences and settings"
+        ],
+        "disclosure": "Cookie usage is disclosed in our separate Cookie Policy, and consent is obtained where required."
+      },
+      "automated": {
+        "title": "12. Automated Processing and Profiling",
+        "content": "We may use limited forms of automated processing to:",
+        "uses": [
+          "Detect fraudulent behavior or abnormal access",
+          "Optimize rental pricing using dynamic calendar tools",
+          "Trigger maintenance reminders or overdue alerts"
+        ],
+        "impact": "These processes do not result in automated decisions with legal or significant impact without human intervention."
+      },
+      "changes": {
+        "title": "13. Changes to this Policy",
+        "content": "We may update this Privacy Policy to reflect changes in law or services. The latest version will always be available on our website. Significant changes will be communicated via email or in-app notification."
+      },
+      "contact": {
+        "title": "14. Contact",
+        "content": "If you have any questions, concerns, or data requests, you may contact us at:\n\nBBAR Unipessoal LDA\nRua do Molhe 575 1°, 4150-503 Porto, Portugal\nEmail: admin@smarthoster.io"
+      }
+    }
+  }
+}

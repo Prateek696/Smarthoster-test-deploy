@@ -1,0 +1,118 @@
+
+{
+  "hero": {
+    "headline": "Mais Reservas. Melhores Avaliações. Maior Receita.",
+    "subheadline": "Não é só sobre preços—é sobre consistência, reputação e experiência do hóspede do início ao fim.",
+    "cta": "Solicite a Sua Análise Gratuita de Estratégia de Receita"
+  },
+  "dynamicPricing": {
+    "title": "Cada Noite Conta—Definimos o Preço Certo",
+    "description": "Usamos ferramentas de preços dinâmicos de ponta que se adaptam a:",
+    "features": [
+      "Sazonalidade e fluxos turísticos",
+      "Eventos locais, feriados e picos regionais",
+      "Janelas de reserva, tendências de cancelamento e sinais de procura",
+      "Anúncios concorrentes na sua área imediata"
+    ],
+    "strategy": "A nossa estratégia ajusta-se automaticamente—e antecipadamente—com base em previsões baseadas em IA e comportamento de pesquisa. Consideramos Google Trends, motores de busca IA e calendários de eventos específicos do mercado para garantir que não perde um euro sequer."
+  },
+  "directBookings": {
+    "title": "Evite as Taxas de 15–20% das Plataformas de Reserva",
+    "description": "Cada reserva direta significa mais lucro para si—e tornamos isso fácil:",
+    "features": [
+      "Página de reserva personalizada para a sua propriedade",
+      "Integração de pagamento segura",
+      "Listagem no Google My Business com reserva direta ativada",
+      "Otimização para Motores de Resposta IA (AEO) para visibilidade no ChatGPT, Perplexity e Google AI",
+      "Automação para hóspedes repetidos e retargeting CRM",
+      "Marketing por email construído para os trazer de volta"
+    ],
+    "conclusion": "Com a SmartHoster, constrói uma marca, não apenas um anúncio."
+  },
+  "localStrategy": {
+    "title": "Cada Área Tem a Sua Fórmula. Nós Sabemo-la.",
+    "description": "De Olhão ao Porto, estudámos o que os hóspedes procuram, o que esperam e o que ganha as melhores avaliações.",
+    "features": [
+      "Configuração personalizada: amiga da família vs. pronta para nómadas digitais",
+      "Decisões de comodidades que realmente impactam a conversão",
+      "Linguagem local e sinais culturais para confiança dos hóspedes",
+      "Posicionamento específico para época e eventos"
+    ],
+    "conclusion": "A sua propriedade recebe uma auditoria local completa—e a configuração certa para atrair e reter hóspedes."
+  },
+  "reviews": {
+    "title": "A Forma Mais Fácil de Aumentar a Receita? Avaliações de 5 Estrelas.",
+    "description": "Tudo começa com uma primeira impressão impecável:",
+    "features": [
+      "Experiência de check-in sem falhas (fechaduras inteligentes, instruções claras)",
+      "Kits de boas-vindas, iguarias locais e acompanhamentos amigáveis",
+      "Expectativas definidas claramente em todos os anúncios e mensagens",
+      "Suporte instantâneo ao hóspede para qualquer problema",
+      "Unidades impecáveis e inspeções pré-chegada"
+    ],
+    "conclusion": "Todo o nosso processo é desenhado em torno da gestão de avaliações e moldagem de expectativas. Porque quanto melhor a avaliação, mais fácil a próxima reserva—e maior o preço que pode cobrar."
+  },
+  "visibility": {
+    "title": "Se Não O Conseguem Encontrar, Não Podem Reservar",
+    "description": "Não apenas listamos a sua propriedade—colocamo-la no topo. Eis como:",
+    "features": [
+      "AEO (Otimização para Motores de Resposta) para que o seu anúncio apareça em respostas de viagem geradas por IA",
+      "Copywriting SEO para cada anúncio OTA",
+      "Configuração do perfil Google My Business com palavras-chave locais",
+      "Marcação de dados estruturados para motores de busca",
+      "Pedidos automáticos de avaliações e modelos de resposta"
+    ],
+    "conclusion": "Estará onde os viajantes de hoje realmente procuram—não apenas onde costumavam procurar."
+  },
+  "repeatGuests": {
+    "title": "Hóspedes Repetidos = Lucro Composto",
+    "description": "Os seus hóspedes passados são a sua melhor ferramenta de marketing. Ajudamos a mantê-lo em mente:",
+    "features": [
+      "Notas de agradecimento automáticas e pedidos de feedback",
+      "Ofertas de aniversário e feriados",
+      "Descontos \"volte em breve\" com reserva de um clique",
+      "Campanhas de email drip e retargeting segmentado",
+      "Códigos QR personalizados na propriedade para levar hóspedes ao seu site direto"
+    ],
+    "conclusion": "Cada estadia feliz torna-se uma semente para a próxima."
+  },
+  "fullService": {
+    "title": "Sem contratos de longo prazo, sem surpresas, apenas resultados.",
+    "description": "Tratamos de tudo:",
+    "features": [
+      "Otimização e sindicalização de anúncios",
+      "Coordenação de limpeza (opcional)",
+      "Agendamento de manutenção (opcional)",
+      "Comissão auto-calculada",
+      "Dashboards de desempenho mensais",
+      "Total transparência, sem sobretaxas"
+    ],
+    "conclusion": "Pode cancelar a qualquer momento—mas ninguém nunca o faz."
+  },
+  "faqs": {
+    "title": "Perguntas Frequentes",
+    "questions": {
+      "platforms": {
+        "question": "Posso ainda listar no Airbnb e Booking.com?",
+        "answer": "Sim! Conectamo-nos a todas as plataformas principais—o nosso objetivo é adicionar lucro, não limitar exposição."
+      },
+      "directBookings": {
+        "question": "Como funcionam as reservas diretas?",
+        "answer": "Criamos uma página de destino personalizada para a sua unidade com pagamentos integrados e listagem automática no Google My Business."
+      },
+      "aeo": {
+        "question": "O que é AEO e porque importa?",
+        "answer": "AEO (Otimização para Motores de Resposta) significa que o seu anúncio aparece quando as pessoas perguntam a ferramentas IA sobre estadias locais. É o futuro da pesquisa."
+      },
+      "reviews": {
+        "question": "Ajudam com avaliações e comunicação com hóspedes?",
+        "answer": "Absolutamente. Gerimos mensagens de hóspedes, acompanhamentos e resolução de problemas para proteger a sua média de 5 estrelas."
+      }
+    }
+  },
+  "finalCta": {
+    "headline": "Vamos Transformar a Sua Propriedade Numa Máquina de Lucro de 5 Estrelas",
+    "description": "Combinamos tecnologia, hospitalidade e conhecimento local para desbloquear o potencial total da sua propriedade. Sem adivinhações. Apenas crescimento baseado em dados e testado por hóspedes.",
+    "cta": "Inicie a Minha Análise Gratuita de Estratégia de Receita"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "title": "Nos Services, Clairement Définis",
+  "subtitle": "Nous croyons en la transparence, la responsabilité et en faisant le travail. Voici exactement ce que nous gérons — et ce que vous pouvez attendre de nous à chaque niveau.",
+  "plans": {
+    "basic": {
+      "name": "BASIQUE",
+      "fee": "10% Frais de Gestion",
+      "description": "Pour les propriétaires qui veulent des réservations et la conformité légale — et gèrent le reste eux-mêmes.",
+      "buttonText": "Commençons Simplement"
+    },
+    "premium": {
+      "name": "PREMIUM",
+      "fee": "25% Frais de Gestion",
+      "description": "Opérations complètes, nettoyage, support client et conformité — tout fait pour vous.",
+      "popular": "PLUS POPULAIRE",
+      "buttonText": "Je Veux la Gestion Complète"
+    },
+    "superPremium": {
+      "name": "SUPER PREMIUM ADD-ON",
+      "fee": "+5% Add-On (30% Total)",
+      "description": "Pour les propriétés haut de gamme et les propriétaires qui veulent zéro interruption et un maximum de plaisir pour les clients.",
+      "buttonText": "Je Veux l'Expérience VIP"
+    }
+  },
+  "features": {
+    "basic": [
+      "Configuration d'annonces Airbnb + Booking.com",
+      "Synchronisation du calendrier",
+      "Messages automatiques aux clients (heures ouvrables seulement)",
+      "Résumé mensuel de performance",
+      "Inscription SEF + soumission de fichiers clients",
+      "Coordination du nettoyage (équipe externe)"
+    ],
+    "premium": [
+      "Tarification dynamique et optimisation d'annonces",
+      "Communication clients 24h/24 7j/7",
+      "Draps et serviettes SmartHoster",
+      "Nettoyage et blanchisserie internes",
+      "Réapprovisionnement et coordination des équipements",
+      "Coordination de maintenance (avec approbation du propriétaire)",
+      "Conformité SEF + AL",
+      "Inscription et rapport de taxe touristique (payé par le propriétaire)",
+      "Facturation mensuelle SAF-T",
+      "Facturation automatisée",
+      "Tableau de bord propriétaire (calendrier + revenus)",
+      "Cadeau de bienvenue pour les clients (ex: vin local)",
+      "Révision trimestrielle de la stratégie tarifaire"
+    ],
+    "superPremium": [
+      "Réapprovisionnement illimité d'équipements",
+      "Papier toilette, savon, sacs poubelle, détergent, etc. illimités",
+      "Bouquet de fleurs fraîches pour chaque client",
+      "Vin ou cadeau par séjour",
+      "Nettoyages hebdomadaires pour clients long séjour (7+ nuits)",
+      "Réparations jusqu'à €100 traitées automatiquement (3/mois)",
+      "Paiements fournisseurs gérés directement",
+      "Résolution de problèmes clients sans implication du propriétaire",
+      "Gestionnaire de compte WhatsApp dédié",
+      "Gestion proactive des avis et alertes de performance"
+    ]
+  },
+  "sections": {
+    "setup": {
+      "title": "D'Appartement Vide à Location Prête pour Clients",
+      "subtitle": "Nous meublons, concevons et préparons votre propriété — professionnellement.",
+      "features": [
+        "Planification d'aménagement intérieur et sourcing de mobilier",
+        "Ameublement durable et haute performance (lits, canapés, salle à manger, etc.)",
+        "Sélection et installation d'appareils (TV, WiFi, cuisine, climatisation)",
+        "Équipement complet cuisine + salle de bain",
+        "Design et styling",
+        "Activation des services (électricité, gaz, eau, internet)",
+        "Nettoyage en profondeur + visite pour remise"
+      ],
+      "button": "Planifier Appel de Configuration"
+    },
+    "upgrade": {
+      "title": "D'Appartement Existant à Location Prête 5 Étoiles",
+      "subtitle": "Déjà meublé ? Nous améliorons, optimisons et élevons — avec un audit complet et des améliorations ciblées.",
+      "note": "📌 Idéal pour les unités précédemment louées ou les maisons meublées qui ont besoin d'un boost 5 étoiles.",
+      "features": [
+        "Visite sur site et audit de la configuration actuelle",
+        "Recommandations d'amélioration (literie, draps, éclairage, décoration)",
+        "Optimisation de l'expérience client",
+        "Intégration de technologie intelligente",
+        "Validation Wi-Fi et streaming",
+        "Intégration de l'équipe de nettoyage",
+        "Styling final et séjour test optionnel"
+      ],
+      "button": "Planifier Appel d'Amélioration"
+    },
+    "compliance": {
+      "title": "D'Appartement Entièrement Meublé à Location Court Terme Entièrement Licenciée",
+      "subtitle": "Nous gérons toutes les étapes légales, de sécurité et de conformité pour rendre votre propriété entièrement licenciée et prête pour les clients.",
+      "note": "📌 Parfait si votre appartement est meublé mais pas encore légalement prêt à louer.",
+      "setupFee": "Frais de configuration : €300 + TVA",
+      "features": [
+        "Inscription \"Alojamento Local\" (AL) location court terme et soumission municipale",
+        "Configuration Taxe Municipale Touristique",
+        "Activation, coordination et rapport clients bulletin d'hébergement SEF / AIMA",
+        "Coordination assurance location court terme (responsabilité civile et couverture incendie)",
+        "Équipement de conformité légale : extincteur, couverture anti-feu, détecteurs fumée et CO, trousse premiers secours",
+        "Signalétique contact d'urgence et plan d'évacuation",
+        "Configuration Livre de Réclamations — physique et en ligne",
+        "Manuel d'informations clients en plusieurs langues (Portugais, Anglais et au moins deux autres)",
+        "Signalétique pour clients incluant règles poubelles, guides appareils et règlements immeuble",
+        "Visite finale de conformité et remise"
+      ],
+      "button": "Réserver Configuration Conformité"
+    }
+  },
+  "trust": {
+    "title": "Pourquoi les propriétaires choisissent SmartHoster",
+    "points": [
+      "Équipe d'opérations locales éprouvée",
+      "Expérience réelle, pas seulement du logiciel",
+      "Facturation transparente et gestion fournisseurs",
+      "Excellentes notes clients",
+      "Légalement conforme et prêt SAF-T"
+    ]
+  },
+  "footer": {
+    "title": "Pas sûr par où commencer ? Contactez-nous et nous vous guiderons.",
+    "button": "Parler à une Vraie Personne"
+  }
+}

@@ -1,0 +1,113 @@
+
+{
+  "directBookings": {
+    "hero": {
+      "title": "Réservations Directes Améliorées",
+      "description": "SmartHoster ne se contente pas de lister votre propriété — nous vous aidons à posséder la relation avec vos invités et à être découvert par la prochaine génération de voyageurs.",
+      "subtitle": "Cela signifie plus de profit, plus de visibilité et moins de dépendance aux plateformes tierces."
+    },
+    "whyMatter": {
+      "title": "Pourquoi les Réservations Directes Comptent",
+      "description": "La plupart des plateformes de réservation (Airbnb, Booking.com, Vrbo) facturent 15%+ en commissions. C'est votre argent — perdu.",
+      "solution": "Avec SmartHoster, vous le récupérez en permettant aux invités de réserver directement via votre propre page, entièrement personnalisée et optimisée pour la conversion.",
+      "commission": {
+        "title": "Commissions de Plateforme",
+        "description": "Les plateformes tierces prennent 15%+ de vos revenus"
+      },
+      "profit": {
+        "title": "Votre Profit",
+        "description": "Gardez 100% des revenus de réservations directes"
+      }
+    },
+    "howItWorks": {
+      "title": "Comment Fonctionnent les Réservations Directes Améliorées",
+      "subtitle": "Vous possédez aussi la relation avec l'invité — nous collectons les emails, préférences et comportements pour les faire revenir encore et encore.",
+      "brandedUrl": {
+        "title": "URL Personnalisée",
+        "description": "Page de destination personnalisée avec l'image de marque unique de votre propriété"
+      },
+      "mobileFirst": {
+        "title": "Design Mobile-First",
+        "description": "Design ultra-rapide et réactif optimisé pour tous les appareils"
+      },
+      "builtIn": {
+        "title": "Systèmes Intégrés",
+        "description": "Calendrier, tarification et système de paiement tous intégrés parfaitement"
+      },
+      "directBooking": {
+        "title": "Réservation Directe",
+        "description": "Les invités réservent directement — pas de commission de plateforme, pas d'intermédiaires, tout se synchronise avec les calendriers Airbnb et Booking"
+      }
+    },
+    "lifetimeValue": {
+      "title": "De la Première Réservation à l'Invité à Vie",
+      "subtitle": "C'est du marketing de valeur à vie — pas seulement des ventes ponctuelles.",
+      "captures": {
+        "title": "Capturer les Données d'Invités",
+        "description": "Collecte automatiquement les emails des invités et leur comportement de réservation"
+      },
+      "followUp": {
+        "title": "Suivis Automatisés",
+        "description": "Envoie des emails de suivi automatisés avec des tarifs privés et des rappels"
+      },
+      "newsletters": {
+        "title": "Marketing par Newsletter",
+        "description": "Construit des newsletters pour les clients récurrents et génère des séjours répétés sans coût marketing supplémentaire"
+      }
+    },
+    "google": {
+      "title": "Soyez Trouvé Là Où Ça Compte — Y Compris Google",
+      "description": "Nous listons votre propriété sur Google My Business et intégrons votre moteur de réservation avec Google Maps et les résultats de recherche basés sur la localisation.",
+      "subtitle": "Vous ne faites pas que concurrencer — vous apparaissez avant les OTA.",
+      "features": {
+        "findInSearch": "Trouvez votre location directement dans la recherche Google",
+        "bookWithoutAirbnb": "Réservez sans passer par Airbnb",
+        "discoverProperty": "Découvrez votre propriété via des recherches basées sur la localisation"
+      }
+    },
+    "aiOptimization": {
+      "title": "Votre Propriété, Optimisée pour la Découverte par IA",
+      "description": "Les voyageurs d'aujourd'hui se tournent de plus en plus vers des outils comme ChatGPT, Google AI Overviews et Perplexity pour décider où séjourner. Nous nous assurons que votre propriété apparaît dans ces résultats de voyage générés par IA grâce à des stratégies avancées d'Optimisation pour Moteurs de Réponse (AEO).",
+      "subtitle": "Nous allons au-delà du SEO traditionnel—en nous assurant que votre propriété n'est pas seulement trouvée par les gens, mais par les outils IA sur lesquels ils comptent.",
+      "strategies": {
+        "structured": "Structuration du contenu et du schéma pour une lisibilité machine maximale",
+        "fastAnswers": "Création de réponses claires et concises aux questions populaires des voyageurs",
+        "semantic": "Utilisation d'un langage sémantiquement riche pour améliorer la compréhension de l'IA",
+        "aiDirectories": "Soumission d'annonces aux répertoires axés sur l'IA et aux index llms-txt",
+        "llmReadable": "Construction de pages de destination spécifiquement conçues pour les grands modèles de langage (LLM)"
+      }
+    },
+    "included": {
+      "title": "Ce Qui Est Inclus dans les Réservations Directes Améliorées",
+      "seoOptimized": "Page de réservation optimisée SEO + AEO",
+      "googleBusiness": "Listing et synchronisation Google My Business",
+      "integratedPayments": "Paiements intégrés (Stripe ou direct)",
+      "liveCalendar": "Calendrier en direct et affichage de disponibilité",
+      "guestData": "Propriété complète des données d'invités (emails, historique de réservation, préférences)",
+      "automatedFollowUp": "Séquences d'emails de suivi automatisées",
+      "repeatGuest": "Remises et incitations pour invités récurrents",
+      "otaSync": "Synchronisation OTA (Airbnb, Booking.com)",
+      "brandFirst": "Design axé sur la marque qui construit la fidélité à long terme",
+      "totalControl": "Contrôle total sur les commissions et la tarification"
+    },
+    "whyItWorks": {
+      "title": "Pourquoi Ça Marche",
+      "higherEarnings": "Revenus plus élevés par nuit",
+      "noCommission": "Plus de saignée de commission de 15%",
+      "calendarControl": "Contrôle total du calendrier",
+      "googleAI": "Visibilité Google et IA",
+      "repeatBookings": "Réservations répétées de votre propre liste d'invités",
+      "longTerm": "Création de valeur de marque et d'actif à long terme"
+    },
+    "finalStatement": {
+      "main": "SmartHoster ne se contente pas de lister votre maison — nous la transformons en un moteur de réservation directe, visible sur Google, IA et plateformes sociales.",
+      "subtitle": "La plupart des gestionnaires ne peuvent pas faire cela. Nous avons déjà construit le système."
+    },
+    "cta": {
+      "title": "Réservez Votre Consultation Gratuite de 30 Minutes",
+      "description": "Nous vous montrerons à quoi pourrait ressembler le moteur de réservation directe de votre propriété — et combien vous gagnerez de plus avec chaque invité qui évite l'intermédiaire.",
+      "subtitle": "Possédez votre audience. Possédez votre marge. Soyez trouvé par les humains et l'IA.",
+      "button": "Réserver Consultation Gratuite"
+    }
+  }
+}

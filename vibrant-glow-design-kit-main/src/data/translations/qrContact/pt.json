@@ -1,0 +1,70 @@
+{
+  "title": "Contacte SmartHoster.io & SmartCondo.io",
+  "subtitle": "Entre em contacto com ambas as empresas para todas as suas necessidades de gestão de propriedades",
+  "smartHoster": {
+    "title": "SmartHoster.io",
+    "description": "Gestão de Airbnb e Alojamento Local",
+    "tagline": "Capacitando Anfitriões, Simplificando Estadias™"
+  },
+  "smartCondo": {
+    "title": "SmartCondo.io",
+    "description": "Gestão de Condomínios e Propriedades",
+    "tagline": "Gestão Mais Inteligente, Vida Mais Inteligente"
+  },
+  "contact": {
+    "phone": "+351 933 683 981",
+    "smartHosterEmail": "info@smarthoster.io",
+    "smartCondoEmail": "info@smartcondo.io"
+  },
+  "actions": {
+    "emailSmartHoster": "Email SmartHoster",
+    "emailSmartCondo": "Email SmartCondo",
+    "callUs": "Ligar",
+    "visitSmartHoster": "Visitar SmartHoster.io",
+    "visitSmartCondo": "Visitar SmartCondo.io",
+    "downloadSmartHosterCard": "Guardar Contacto SmartHoster",
+    "downloadSmartCondoCard": "Guardar Contacto SmartCondo"
+  },
+  "qrCode": {
+    "title": "Digitalizou o nosso código QR!",
+    "description": "Obrigado pelo seu interesse. Aqui está como nos contactar:"
+  },
+  "downloadSuccess": "Contacto guardado com sucesso!",
+  "downloadError": "Erro ao guardar contacto. Tente novamente.",
+  "features": {
+    "keyFeatures": "Características Principais:",
+    "smartHosterFeatures": {
+      "pricing": "Maior receita com pricing dinâmico",
+      "support": "Comunicação e apoio ao hóspede 24/7",
+      "photography": "Limpeza profissional e trocas de turno",
+      "compliance": "Conformidade com o SEF e regulamentos locais"
+    },
+    "smartCondoFeatures": {
+      "management": "Relatórios financeiros transparentes",
+      "screening": "Manutenção preventiva e reparações",
+      "maintenance": "Comunicação clara com os proprietários",
+      "reporting": "Conformidade legal e administrativa"
+    }
+  },
+  "whyChoose": {
+    "title": "Porquê Escolher Os Nossos Serviços?",
+    "rating": {
+      "title": "5★ Classificação",
+      "description": "Confiado por mais de 500 proprietários em Portugal"
+    },
+    "compliant": {
+      "title": "100% Conforme",
+      "description": "Total conformidade legal com regulamentações portuguesas"
+    },
+    "support": {
+      "title": "Suporte 24/7",
+      "description": "Suporte contínuo para si e os seus hóspedes"
+    }
+  },
+  "cta": {
+    "title": "Pronto para Começar?",
+    "description": "Contacte-nos hoje para uma consulta gratuita",
+    "emailUs": "Enviar Email",
+    "bookCall": "Marcar Chamada"
+  }
+}

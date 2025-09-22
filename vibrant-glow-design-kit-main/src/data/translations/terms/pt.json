@@ -1,0 +1,161 @@
+
+{
+  "terms": {
+    "title": "Termos de Serviço",
+    "lastUpdated": "Data de Vigência: 1 de Junho de 2025",
+    "companyInfo": {
+      "title": "Informações da Empresa",
+      "effectiveDate": "Data de Vigência:",
+      "effectiveDateValue": "1 de Junho de 2025",
+      "legalEntity": "Entidade Legal:",
+      "legalEntityValue": "BBAR Unipessoal LDA (NIF: PT514142057)",
+      "businessName": "Nome Comercial:",
+      "businessNameValue": "SmartHoster.io",
+      "registeredOffice": "Sede Social:",
+      "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+      "contactEmail": "Email de Contacto:",
+      "contactEmailValue": "admin@smarthoster.io"
+    },
+    "introduction": "A SmartHoster.io (\"nós\", \"nosso\", \"nossa\" ou \"SmartHoster\") é um fornecedor de serviços digitais e físicos operado pela BBAR Unipessoal LDA, oferecendo gestão de propriedades de arrendamento de curta duração, ferramentas de automação e infraestrutura a proprietários de imóveis (\"você\", \"seu\", \"sua\" ou \"Cliente\"). Ao utilizar os nossos serviços ou aceder à nossa plataforma, concorda com estes Termos de Serviço.",
+    "sections": [
+      {
+        "number": "1",
+        "title": "Elegibilidade e Aceitação",
+        "content": [
+          "Para utilizar os serviços da SmartHoster, deve:"
+        ],
+        "list": [
+          "Ter pelo menos 18 anos e capacidade legal para celebrar contratos;",
+          "Ser o proprietário legal ou agente autorizado da propriedade listada;",
+          "Estar em conformidade com todas as leis locais, nacionais e internacionais aplicáveis."
+        ]
+      },
+      {
+        "number": "2",
+        "title": "Âmbito do Serviço",
+        "content": [
+          "A SmartHoster fornece:"
+        ],
+        "list": [
+          "Configuração de anúncios de propriedades e integração de canais (ex. Airbnb, Booking.com)",
+          "Comunicação com hóspedes e coordenação de check-in (incluindo sistemas de fechaduras inteligentes)",
+          "Agendamento de limpeza e manutenção",
+          "Suporte de conformidade de alojamento local (SEF/AIMA/AT/eFatura)",
+          "Relatórios de receita, resumos contabilísticos e documentação fiscal",
+          "Programas opcionais de fornecimento, toalhas e roupa de cama através de fornecedores internos"
+        ]
+      },
+      {
+        "number": "3",
+        "title": "Responsabilidades do Cliente",
+        "content": [
+          "Concorda em:"
+        ],
+        "list": [
+          "Fornecer informações precisas e atualizadas sobre a propriedade e propriedade;",
+          "Manter a sua propriedade em condições seguras e habitáveis;",
+          "Pagar taxas prontamente e cumprir os termos de pagamento descritos em qualquer acordo assinado;",
+          "Cumprir todas as leis aplicáveis de habitação, impostos e arrendamento de curta duração;",
+          "Notificar-nos por escrito sobre qualquer dano à propriedade, disputas com hóspedes ou procedimentos legais relacionados com a(s) sua(s) unidade(s)."
+        ]
+      },
+      {
+        "number": "4",
+        "title": "Termos de Pagamento",
+        "content": [
+          "A SmartHoster geralmente cobra uma estrutura de taxas baseada em comissão (ex. 30% do valor bruto da reserva) salvo acordo em contrário por escrito.",
+          "As taxas de limpeza são repassadas a equipas de limpeza terceirizadas ou internas. Quaisquer serviços adicionais (ex. fornecimento de roupa de cama, integração ou fotografia) serão faturados separadamente. A SmartHoster pode deduzir as suas taxas automaticamente através de canais de reserva ou faturação direta.",
+          "Pagamentos em atraso podem incorrer em taxas administrativas ou suspensão de serviços."
+        ]
+      },
+      {
+        "number": "5",
+        "title": "Limitações de Responsabilidade",
+        "content": [
+          "Na máxima extensão permitida por lei:"
+        ],
+        "list": [
+          "A SmartHoster não será responsável por danos indiretos, incidentais, punitivos ou consequenciais, incluindo perda de receita, dados, reputação ou goodwill.",
+          "Não somos responsáveis por quaisquer problemas decorrentes de plataformas terceiras (ex. Airbnb, VRBO, Booking.com), incluindo cancelamentos de hóspedes, falhas do sistema ou flutuações de preços.",
+          "Não somos responsáveis por eventos de força maior, como greves, desastres naturais, pandemias, mudanças regulamentares ou falhas de internet.",
+          "Toda a responsabilidade está estritamente limitada ao total de taxas pagas por si à SmartHoster nos 12 meses anteriores a qualquer reclamação."
+        ]
+      },
+      {
+        "number": "6",
+        "title": "Nenhuma Garantia de Ocupação ou Receita",
+        "content": [
+          "Embora utilizemos ferramentas e estratégias líderes da indústria para maximizar reservas e retornos, a SmartHoster não garante qualquer taxa de ocupação, receita ou retorno sobre investimento específicos. O desempenho passado não é um preditor de resultados futuros."
+        ]
+      },
+      {
+        "number": "7",
+        "title": "Acesso à Conta e Comunicações",
+        "content": [
+          "Pode ser-lhe fornecido acesso a dashboards, portais ou ferramentas da SmartHoster. Concorda:"
+        ],
+        "list": [
+          "Não partilhar credenciais de login ou conceder acesso não autorizado;",
+          "Que podemos comunicar via email, SMS, WhatsApp ou notificações da plataforma;",
+          "Que algumas comunicações (ex. atualizações do sistema, avisos de fatura) são obrigatórias."
+        ]
+      },
+      {
+        "number": "8",
+        "title": "Propriedade Intelectual",
+        "content": [
+          "Todo o conteúdo, marca, ferramentas e documentação fornecidos através da SmartHoster.io são propriedade intelectual da BBAR Unipessoal LDA.",
+          "É-lhe concedida uma licença limitada, revogável e intransferível para usar essas ferramentas exclusivamente para o seu uso pessoal ou comercial dentro do âmbito da SmartHoster.",
+          "Não pode copiar, fazer engenharia reversa, sublicenciar ou explorar qualquer parte da nossa tecnologia ou conteúdo."
+        ]
+      },
+      {
+        "number": "9",
+        "title": "Rescisão",
+        "content": [
+          "A SmartHoster pode suspender ou rescindir serviços a qualquer momento, com ou sem causa, fornecendo aviso por escrito. A rescisão imediata pode ocorrer por:"
+        ],
+        "list": [
+          "Falha no pagamento de taxas;",
+          "Violação de obrigações legais;",
+          "Uso indevido da plataforma ou tecnologia;",
+          "Comportamento prejudicial a hóspedes, parceiros ou reputação."
+        ]
+      },
+      {
+        "number": "10",
+        "title": "Dados e Privacidade",
+        "content": [
+          "A SmartHoster processa dados pessoais de acordo com a sua Política de Privacidade. Ao usar os nossos serviços, consente com tal processamento e confirma que todos os dados fornecidos são legais e autorizados.",
+          "Podemos processar dados de hóspedes em seu nome para fins de conformidade regulatória (ex. SEF, AIMA) sob um acordo de processador de dados."
+        ]
+      },
+      {
+        "number": "11",
+        "title": "Resolução de Disputas",
+        "content": [
+          "Estes Termos são regidos pela lei portuguesa. Qualquer disputa decorrente ou em conexão com estes Termos será resolvida nos tribunais do Porto, Portugal.",
+          "A BBAR Unipessoal LDA reserva-se o direito de buscar reparação injuntiva ou equitativa em qualquer jurisdição para proteger os seus direitos ou informações confidenciais."
+        ]
+      },
+      {
+        "number": "12",
+        "title": "Alterações",
+        "content": [
+          "Podemos modificar estes Termos de Serviço de tempos em tempos. Versões atualizadas serão publicadas em https://www.smarthoster.io/terms. O uso continuado dos nossos serviços após atualizações constitui aceitação dos Termos revistos."
+        ]
+      },
+      {
+        "number": "13",
+        "title": "Acordo Integral",
+        "content": [
+          "Estes Termos, juntamente com qualquer acordo de serviço assinado ou política suplementar, representam o entendimento total entre as partes e superam todas as negociações, representações ou acordos anteriores, sejam orais ou escritos."
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Dúvidas?",
+      "description": "Contacte-nos em"
+    }
+  }
+}

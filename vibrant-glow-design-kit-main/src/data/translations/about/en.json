@@ -1,0 +1,101 @@
+
+{
+  "about": {
+    "hero": {
+      "title": "About SmartHoster",
+      "description": "SmartHoster is a full-service property management company helping owners across Portugal unlock the full potential of their short-term rentals. Through automation, expert local support, and a commitment to transparency, we deliver peace of mind and better performance — with zero hassle."
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Mission",
+        "content": "At SmartHoster, we empower property owners to achieve financial success through seamless, stress-free property management."
+      },
+      "vision": {
+        "title": "Vision", 
+        "content": "By simplifying property management and leveraging cutting-edge technology, we aim to set a new standard for exceptional guest experiences and optimized property performance."
+      }
+    },
+    "origin": {
+      "title": "Why We Started SmartHoster",
+      "content": "SmartHoster began with a simple idea: property management shouldn't be frustrating. After seeing firsthand how disjointed and opaque it could be, we set out to create a system that prioritizes owners, automates complexity, and brings real transparency to the table."
+    },
+    "values": {
+      "title": "Our Core Values",
+      "ownerFirst": {
+        "title": "Owner-first service, always",
+        "description": "Every decision we make puts property owners first"
+      },
+      "transparency": {
+        "title": "Radical transparency across the board",
+        "description": "Complete openness in all our operations and communications"
+      },
+      "humanSupport": {
+        "title": "Human support, not just bots",
+        "description": "Real people providing genuine assistance when you need it"
+      },
+      "automation": {
+        "title": "Automation that actually works",
+        "description": "Smart technology that simplifies without complicating"
+      },
+      "sustainability": {
+        "title": "Sustainability without the greenwashing",
+        "description": "Genuine environmental commitment in everything we do"
+      }
+    },
+    "team": {
+      "title": "Meet the Team Behind SmartHoster",
+      "description": "Our dedicated team combines local expertise with cutting-edge technology to deliver exceptional property management services.",
+      "members": {
+        "miguel": {
+          "role": "Founder & CEO",
+          "description": "Visionary leader driving SmartHoster's mission to revolutionize property management in Portugal."
+        },
+        "patricia": {
+          "role": "Operations Manager", 
+          "description": "Expert coordinator ensuring seamless daily operations and exceptional service delivery."
+        },
+        "shubanshu": {
+          "role": "Head of IT",
+          "description": "Technology innovator developing cutting-edge solutions for property management automation."
+        },
+        "raimundo": {
+          "role": "Head of Maintenance and Repair",
+          "description": "Expert leader overseeing all maintenance operations and ensuring properties exceed guest expectations."
+        },
+        "carlos": {
+          "role": "Accounting & Legal Advisor",
+          "description": "Expert financial and legal professional ensuring compliance and optimal business operations."
+        },
+        "adolfo": {
+          "role": "Lead Programmer",
+          "description": "Software architect building robust systems that power our platform's capabilities."
+        },
+        "sofia": {
+          "role": "Client Relations Manager",
+          "description": "Dedicated advocate ensuring every client receives personalized attention and support."
+        },
+        "zara": {
+          "role": "Marketing and Brand Strategist",
+          "description": "Creative strategist building SmartHoster's brand and connecting with property owners."
+        }
+      }
+    },
+    "green": {
+      "title": "Sustainability Commitment",
+      "content": "We're committed to sustainable practices that benefit both the environment and your bottom line.",
+      "features": {
+        "led": "LED lighting installations",
+        "appliances": "Energy-efficient appliances", 
+        "water": "Water-saving fixtures",
+        "linens": "Reusable linens and dispensers",
+        "upgrades": "Eco-conscious upgrades"
+      },
+      "cta": "Learn More About Our Green Pledge"
+    },
+    "cta": {
+      "title": "Book a Free Consultation",
+      "description": "Ready to transform your property management experience? Let's discuss how SmartHoster can help you achieve your goals.",
+      "button": "Schedule Your Consultation"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+
+{
+  "title": "GDPR Compliance Statement",
+  "lastUpdated": "Last updated: Sunday, 1 June 2025",
+  "companyInfo": {
+    "title": "Company Information",
+    "effectiveDate": "Effective Date:",
+    "effectiveDateValue": "June 1, 2025",
+    "entityName": "Entity Name:",
+    "entityNameValue": "BBAR Unipessoal LDA",
+    "operatingAs": "Operating as:",
+    "operatingAsValue": "SmartHoster.io",
+    "vatNipc": "NIPC/VAT:",
+    "vatNipcValue": "PT514142057",
+    "registeredOffice": "Address:",
+    "registeredOfficeValue": "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+    "contactEmail": "Contact Email:",
+    "contactEmailValue": "admin@smarthoster.io"
+  },
+  "sections": [
+    {
+      "number": "1",
+      "title": "Commitment to Data Protection",
+      "content": [
+        "SmartHoster.io is fully committed to protecting the privacy, integrity, and security of personal data under its control in accordance with the General Data Protection Regulation (GDPR – EU Regulation 2016/679) and applicable Portuguese law (Lei n.º 58/2019)."
+      ]
+    },
+    {
+      "number": "2",
+      "title": "Lawful Basis for Processing",
+      "content": [
+        "All personal data collected, processed, or stored by SmartHoster.io is handled lawfully, fairly, and transparently. Our lawful bases for processing include:"
+      ],
+      "list": [
+        "Contractual necessity (e.g. service agreements with property owners)",
+        "Legal obligations (e.g. guest registration via SEF/AIMA)",
+        "Legitimate interest (e.g. fraud prevention, analytics)",
+        "Consent (where applicable, especially for marketing or cookies)"
+      ]
+    },
+    {
+      "number": "3",
+      "title": "Data Collection Practices",
+      "content": [
+        "We collect and process personal data only as required to operate our services. Data categories may include:"
+      ],
+      "list": [
+        "Identification and contact information",
+        "Financial and payment-related data",
+        "Guest registration details (as required by law)",
+        "Booking and occupancy history",
+        "Platform usage metadata"
+      ],
+      "additional": "We limit data collection to what is strictly necessary and relevant to the purpose."
+    },
+    {
+      "number": "4",
+      "title": "Data Encryption & Security",
+      "content": [
+        "All personal data transmitted or stored by SmartHoster.io is protected by industry-standard encryption protocols."
+      ],
+      "list": [
+        "Data is encrypted in transit (via SSL/TLS) and at rest (where applicable)",
+        "Backups and servers are securely managed",
+        "Access to data is limited to authorized personnel under strict confidentiality obligations",
+        "Systems are regularly updated and monitored for vulnerabilities"
+      ]
+    },
+    {
+      "number": "5",
+      "title": "Third-Party Processors",
+      "content": [
+        "SmartHoster.io engages vetted third-party service providers for technical infrastructure, booking management, automation, and communications. These providers act as data processors under GDPR and operate under formal agreements that meet regulatory standards.",
+        "Key subprocessors include (but are not limited to):"
+      ],
+      "list": [
+        "HostKit – calendar, reservation, and guest management platform (encrypted)",
+        "Nuki – smart lock provider (device access, PIN codes)",
+        "Stripe – payment processing (PCI DSS compliant)",
+        "Email and messaging tools – for operational communications"
+      ],
+      "additional": [
+        "Each subprocessor is contractually required to:",
+        "• Process data only on our documented instructions",
+        "• Implement adequate security measures",
+        "• Comply with GDPR data protection obligations",
+        "• Notify us promptly in the event of a data breach",
+        "",
+        "We retain full control over your data and monitor all third-party access closely."
+      ]
+    },
+    {
+      "number": "6",
+      "title": "Data Subject Rights",
+      "content": [
+        "Under GDPR, you have the right to:"
+      ],
+      "list": [
+        "Access your personal data",
+        "Request correction or deletion of inaccurate data",
+        "Object to processing or restrict certain types of use",
+        "Receive your data in a portable format",
+        "Withdraw consent at any time",
+        "Lodge a complaint with the Comissão Nacional de Proteção de Dados (CNPD)"
+      ],
+      "additional": "To exercise these rights, contact us at: admin@smarthoster.io"
+    },
+    {
+      "number": "7",
+      "title": "Data Retention & Minimization",
+      "content": [
+        "We only retain personal data for as long as necessary to fulfill our obligations, including:"
+      ],
+      "list": [
+        "Legal/tax compliance (typically 10 years for invoicing)",
+        "Operational records (for active contracts)",
+        "User support and account history",
+        "Consent records for cookies and marketing (until withdrawn)"
+      ],
+      "additional": "Where data is no longer needed, it is securely deleted or anonymized."
+    },
+    {
+      "number": "8",
+      "title": "Data Transfers",
+      "content": [
+        "SmartHoster.io does not transfer personal data outside the European Economic Area (EEA) unless:"
+      ],
+      "list": [
+        "The transfer is subject to an adequacy decision (e.g. EU–US Data Privacy Framework);",
+        "Standard Contractual Clauses (SCCs) are in place;",
+        "The recipient has implemented appropriate safeguards."
+      ]
+    },
+    {
+      "number": "9",
+      "title": "Breach Notification",
+      "content": [
+        "In the event of a data breach affecting your personal data, we will:"
+      ],
+      "list": [
+        "Notify the CNPD within 72 hours (if required by law)",
+        "Inform affected individuals without undue delay",
+        "Provide full transparency, documentation, and remedial action"
+      ]
+    },
+    {
+      "number": "10",
+      "title": "Contact",
+      "content": [
+        "If you have questions about this GDPR policy, or wish to submit a data rights request, please contact:",
+        "",
+        "BBAR Unipessoal LDA",
+        "Rua do Molhe 575 1°, 4150-503 Porto, Portugal",
+        "Email: admin@smarthoster.io"
+      ]
+    }
+  ]
+}

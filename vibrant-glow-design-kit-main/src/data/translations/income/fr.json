@@ -1,0 +1,118 @@
+
+{
+  "hero": {
+    "headline": "Plus de Réservations. Meilleures Critiques. Revenus Plus Élevés.",
+    "subheadline": "Il ne s'agit pas seulement de tarification—il s'agit de cohérence, de réputation et d'expérience client du début à la fin.",
+    "cta": "Demandez Votre Analyse Gratuite de Stratégie de Revenus"
+  },
+  "dynamicPricing": {
+    "title": "Chaque Nuit Compte—Nous Fixons le Bon Prix",
+    "description": "Nous utilisons des outils de tarification dynamique de pointe qui s'adaptent à:",
+    "features": [
+      "Saisonnalité et flux touristiques",
+      "Événements locaux, vacances et pics régionaux",
+      "Fenêtres de réservation, tendances d'annulation et signaux de demande",
+      "Annonces concurrentes dans votre zone immédiate"
+    ],
+    "strategy": "Notre stratégie s'ajuste automatiquement—et à l'avance—basée sur des prévisions pilotées par IA et le comportement de recherche. Nous prenons en compte Google Trends, les moteurs de recherche IA et les calendriers d'événements spécifiques au marché pour nous assurer que vous ne laissiez pas un euro sur la table."
+  },
+  "directBookings": {
+    "title": "Contournez les Frais de 15–20% des Plateformes de Réservation",
+    "description": "Chaque réservation directe signifie plus de profit pour vous—et nous rendons cela facile:",
+    "features": [
+      "Page de réservation personnalisée pour votre propriété",
+      "Intégration de paiement sécurisée",
+      "Référencement Google My Business avec réservation directe activée",
+      "Optimisation pour Moteurs de Réponse IA (AEO) pour la visibilité dans ChatGPT, Perplexity et Google AI",
+      "Automatisation des clients récurrents et reciblage CRM",
+      "Marketing par email conçu pour les faire revenir"
+    ],
+    "conclusion": "Avec SmartHoster, vous construisez une marque, pas seulement une annonce."
+  },
+  "localStrategy": {
+    "title": "Chaque Zone a sa Formule. Nous la Connaissons.",
+    "description": "D'Olhão à Porto, nous avons étudié ce que les clients recherchent, ce qu'ils attendent et ce qui obtient les meilleures critiques.",
+    "features": [
+      "Configuration sur mesure: familiale vs. prête pour nomades numériques",
+      "Décisions d'équipements qui impactent réellement la conversion",
+      "Langue locale et signaux culturels pour la confiance des clients",
+      "Positionnement spécifique à la saison et aux événements"
+    ],
+    "conclusion": "Votre propriété reçoit un audit local complet—et la bonne configuration pour attirer et retenir les clients."
+  },
+  "reviews": {
+    "title": "Le Moyen le Plus Facile d'Augmenter les Revenus? Des Critiques 5 Étoiles.",
+    "description": "Tout commence par une première impression impeccable:",
+    "features": [
+      "Expérience d'enregistrement sans faille (serrures intelligentes, instructions claires)",
+      "Kits de bienvenue, spécialités locales et suivis amicaux",
+      "Attentes définies clairement dans toutes les annonces et messages",
+      "Support client instantané pour tout problème",
+      "Unités impeccables et inspections pré-arrivée"
+    ],
+    "conclusion": "Tout notre processus est conçu autour de la gestion des critiques et du façonnage des attentes. Parce que meilleure est la critique, plus facile est la prochaine réservation—et plus élevé le prix que vous pouvez facturer."
+  },
+  "visibility": {
+    "title": "S'ils Ne Peuvent Pas Vous Trouver, Ils Ne Peuvent Pas Réserver",
+    "description": "Nous ne nous contentons pas de référencer votre propriété—nous la plaçons au sommet. Voici comment:",
+    "features": [
+      "AEO (Optimisation pour Moteurs de Réponse) pour que votre annonce apparaisse dans les réponses de voyage générées par IA",
+      "Rédaction SEO pour chaque annonce OTA",
+      "Configuration du profil Google My Business avec mots-clés locaux",
+      "Balisage de données structurées pour les moteurs de recherche",
+      "Demandes automatiques de critiques et modèles de réponse"
+    ],
+    "conclusion": "Vous serez là où les voyageurs d'aujourd'hui recherchent réellement—pas seulement où ils avaient l'habitude de chercher."
+  },
+  "repeatGuests": {
+    "title": "Clients Récurrents = Profit Composé",
+    "description": "Vos anciens clients sont votre meilleur outil marketing. Nous vous aidons à rester présent à l'esprit:",
+    "features": [
+      "Notes de remerciement automatiques et demandes de feedback",
+      "Offres d'anniversaire et de vacances",
+      "Réductions \"revenez bientôt\" avec réservation en un clic",
+      "Campagnes email goutte-à-goutte et reciblage segmenté",
+      "Codes QR personnalisés dans la propriété pour diriger les clients vers votre site direct"
+    ],
+    "conclusion": "Chaque séjour heureux devient une graine pour le suivant."
+  },
+  "fullService": {
+    "title": "Pas de contrats à long terme, pas de surprises, juste des résultats.",
+    "description": "Nous gérons tout:",
+    "features": [
+      "Optimisation et syndication des annonces",
+      "Coordination du nettoyage (optionnel)",
+      "Planification de la maintenance (optionnel)",
+      "Commission auto-calculée",
+      "Tableaux de bord de performance mensuels",
+      "Transparence totale, pas de majorations"
+    ],
+    "conclusion": "Vous pouvez annuler à tout moment—mais personne ne le fait jamais."
+  },
+  "faqs": {
+    "title": "Questions Fréquemment Posées",
+    "questions": {
+      "platforms": {
+        "question": "Puis-je encore référencer sur Airbnb et Booking.com?",
+        "answer": "Oui! Nous nous connectons à toutes les plateformes principales—notre objectif est d'ajouter du profit, pas de limiter l'exposition."
+      },
+      "directBookings": {
+        "question": "Comment fonctionnent les réservations directes?",
+        "answer": "Nous créons une page de destination personnalisée pour votre unité avec paiements intégrés et référencement automatique sur Google My Business."
+      },
+      "aeo": {
+        "question": "Qu'est-ce que l'AEO et pourquoi est-ce important?",
+        "answer": "AEO (Optimisation pour Moteurs de Réponse) signifie que votre annonce apparaît quand les gens demandent aux outils IA des séjours locaux. C'est l'avenir de la recherche."
+      },
+      "reviews": {
+        "question": "Aidez-vous avec les critiques et la communication client?",
+        "answer": "Absolument. Nous gérons les messages clients, les suivis et la résolution de problèmes pour protéger votre moyenne 5 étoiles."
+      }
+    }
+  },
+  "finalCta": {
+    "headline": "Transformons Votre Propriété en Machine à Profit 5 Étoiles",
+    "description": "Nous combinons technologie, hospitalité et savoir-faire local pour débloquer le plein potentiel de votre propriété. Pas de devinettes. Juste une croissance basée sur les données et testée par les clients.",
+    "cta": "Commencez Mon Analyse Gratuite de Stratégie de Revenus"
+  }
+}

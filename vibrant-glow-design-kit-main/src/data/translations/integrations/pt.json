@@ -1,0 +1,119 @@
+
+{
+  "integrations": {
+    "title": "Integrações Poderosas",
+    "description": "Conecte-se com plataformas líderes para melhorar a sua experiência de gestão imobiliária",
+    "stats": {
+      "platforms": {
+        "label": "Plataformas Conectadas",
+        "description": "Plataformas líderes de gestão imobiliária"
+      },
+      "compliance": {
+        "label": "Cobertura de Conformidade",
+        "description": "Conformidade regulamentar completa"
+      },
+      "uptime": {
+        "label": "Uptime do Sistema",
+        "description": "Desempenho confiável"
+      }
+    },
+    "benefits": {
+      "operations": {
+        "title": "Operações Simplificadas",
+        "description": "Fluxos de trabalho automatizados de gestão imobiliária"
+      },
+      "legal": {
+        "title": "Conformidade Legal",
+        "description": "Tratamento automatizado de requisitos legais"
+      },
+      "visibility": {
+        "title": "Visibilidade Melhorada",
+        "description": "Supervisão completa das suas propriedades"
+      }
+    },
+    "cta": {
+      "title": "Pronto para Experimentar Integração Perfeita?",
+      "description": "Descubra como as nossas integrações podem transformar o seu fluxo de trabalho de gestão imobiliária",
+      "button": "Ver Todas as Integrações",
+      "gdpr": "Conforme RGPD"
+    },
+    "hero": {
+      "title": "Descubra Mais: Como as Integrações Beneficiam Você",
+      "description": "SmartHoster conecta-se com mais de 70 das principais plataformas da indústria — não porque precisamos delas, mas porque elas dão mais flexibilidade, visibilidade e controle.",
+      "subtitle": "As nossas operações centrais são totalmente internas: gerimos faturação, conformidade, manutenção e comunicação nós mesmos — com automação poderosa e as nossas próprias ferramentas personalizadas. Mas quando quer mais — ou quer conectar-se às suas plataformas favoritas — o nosso sistema está pronto."
+    },
+    "whyMatter": {
+      "title": "Por que as Integrações Ainda Importam",
+      "description": "Na SmartHoster, já automatizámos 90% do que importa: O nosso software de faturação trata de toda a lógica de comissão e pagamento, relatórios SEF e eFatura são tratados internamente ou semi-automatizados, preços inteligentes, sincronização de calendário e comunicação com hóspedes são integrados. Mas não somos um jardim murado. Se quer conectar-se a ferramentas externas — para limpeza, fechaduras inteligentes, preços ou análise — estamos integrados e prontos. Isto é sobre poder opcional. E é tudo plug-and-play."
+    },
+    "ecosystem": {
+      "title": "O Nosso Ecossistema de Integrações"
+    },
+    "categories": {
+      "smartLocks": {
+        "title": "Fechaduras Inteligentes e Controlo de Acesso",
+        "description": "Os hóspedes fazem check-in de forma segura. A nossa equipa também pode abrir portas remotamente — ninguém fica de fora."
+      },
+      "payments": {
+        "title": "Faturação e Pagamentos Opcionais",
+        "description": "Embora usemos o nosso próprio sistema, pode sincronizar ferramentas externas para espelhar ou rastrear a sua faturação se necessário."
+      },
+      "compliance": {
+        "title": "Portais Governamentais e de Conformidade",
+        "description": "Seja através do nosso próprio sistema ou canais integrados, todos os relatórios são cobertos — de forma confiável e pontual."
+      },
+      "cleaning": {
+        "title": "Serviços de Limpeza e Operacionais",
+        "description": "Disponível para planos de gestão parcial ou coordenação externa — e se preferir, ficamos felizes em ajudar a coordenar limpezas usando as nossas próprias equipas internas de confiança."
+      },
+      "pricing": {
+        "title": "Ferramentas de Preços e Calendário",
+        "description": "Já otimizamos preços internamente, mas motores de preços externos podem ser sincronizados para clientes que preferem mais controlo granular."
+      },
+      "guestExperience": {
+        "title": "Melhoradores de Experiência do Hóspede",
+        "description": "Melhore check-ins e guias de hóspedes com experiências digitais de marca — totalmente opcional, facilmente integrado."
+      },
+      "travel": {
+        "title": "Add-ons de Viagem e Logística",
+        "description": "Adicione serviços extra para aumentar a satisfação do hóspede — eles conectam-se diretamente, sem esforço extra."
+      },
+      "insurance": {
+        "title": "Seguro e Gestão de Danos",
+        "description": "Ofereça aos proprietários paz de espírito e automatize fluxos de proteção."
+      }
+    },
+    "whyWorks": {
+      "title": "Por que Funciona para Si"
+    },
+    "additionalBenefits": {
+      "optional": "Todas as integrações são opcionais e não disruptivas",
+      "coreHandled": "Tratamos dos sistemas centrais — sem trabalho duplicado",
+      "extendable": "Pode estender a funcionalidade se necessário — e ajudaremos a configurar",
+      "autoCommissions": "As suas comissões são sempre calculadas automaticamente",
+      "noContracts": "Sem contratos de longo prazo — operamos mês a mês",
+      "cleaningSupport": "Se quiser usar as nossas equipas de limpeza na gestão parcial, ficamos felizes em ajudar a coordenar isso também"
+    },
+    "flexibility": {
+      "title": "Verdadeira Flexibilidade, Apoiada por Serviço Completo",
+      "description": "Quer usar os seus próprios limpadores? Pode. Quer conectar Stripe, PriceLabs ou um sistema de fechaduras que já usa? Temos coberto. Prefere tudo totalmente gerido pela nossa equipa? É a nossa especialidade.",
+      "subtitle": "SmartHoster foi construído para se adaptar — não para forçá-lo numa caixa."
+    },
+    "bottomLine": {
+      "title": "Aqui está o Essencial",
+      "sync": "Tudo sincroniza",
+      "noBreaks": "Nada quebra",
+      "performance": "A sua propriedade funciona",
+      "control": "Mantém o controlo",
+      "accountability": "Mantemo-nos responsáveis",
+      "seamlessExperience": "Os hóspedes têm uma experiência perfeita",
+      "scaling": "E se alguma vez quiser escalar, ajustar ou simplificar — o sistema adapta-se consigo."
+    },
+    "cta": {
+      "title": "Reserve a Sua Consulta Gratuita de 30 Minutos",
+      "description": "Vamos guiá-lo através do que está integrado, o que é opcional e como nos conectamos à sua propriedade com zero atrito.",
+      "subtitle": "Mês a mês. Sem armadilhas de configuração. Apenas clareza, automação e crescimento.",
+      "button": "Reservar Consulta Gratuita"
+    }
+  }
+}
