@@ -12,9 +12,7 @@ const serverlessMongoOptions = {
   maxPoolSize: 1, // Single connection for serverless
   minPoolSize: 0, // No minimum pool
   maxIdleTimeMS: 30000, // Close idle connections after 30s
-  bufferCommands: false, // Disable buffering for serverless
-  keepAlive: true, // Keep connection alive
-  keepAliveInitialDelay: 300000 // 5 minutes
+  bufferCommands: false // Disable buffering for serverless
 };
 
 // Smart connection function with retry logic
