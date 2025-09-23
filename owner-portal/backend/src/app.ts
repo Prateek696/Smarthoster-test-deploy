@@ -47,9 +47,13 @@ app.use(cors({
     'https://dashboard.smarthoster.io',
     // Vercel domains for testing
     /^https:\/\/.*\.vercel\.app$/,
-    /^https:\/\/.*\.vercel\.dev$/
+    /^https:\/\/.*\.vercel\.dev$/,
+    // Specific frontend domain
+    'https://smarthoster-test-deploy-owner-porta.vercel.app'
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(express.json());
 app.use(saftRoutes);
