@@ -124,7 +124,7 @@ const SAFT: React.FC = () => {
       });
 
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${baseUrl}/properties/saft/get?${params}`, {
+      const response = await fetch(`${baseUrl}/saft/get?${params}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

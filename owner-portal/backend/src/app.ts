@@ -68,7 +68,7 @@ app.use("/performance", performanceRoutes);
 app.use("/properties", touristTaxRoutes);
 app.use("/properties", sibaStatusRoutes);
 app.use("/siba-manager", sibaManagerRoutes);
-app.use("/properties", saftRoutes);
+app.use("/saft", saftRoutes);
 app.use("/api", hostkitPropertyRoutes);
 app.use("/expenses", expensesRoutes);
 app.use("/automations", automationRoutes);
