@@ -12,10 +12,13 @@ export const connectDB = async () => {
     }
     
     await mongoose.connect(env.mongoUri, {
-      serverSelectionTimeoutMS: 10000, // 10 seconds
-      connectTimeoutMS: 10000, // 10 seconds
-      socketTimeoutMS: 10000, // 10 seconds
-      maxPoolSize: 1 // Reduce pool size for serverless
+      serverSelectionTimeoutMS: 5000, // 5 seconds - faster timeout
+      connectTimeoutMS: 5000, // 5 seconds - faster timeout
+      socketTimeoutMS: 45000, // 45 seconds - longer socket timeout
+      maxPoolSize: 1, // Reduce pool size for serverless
+      minPoolSize: 0, // No minimum pool for serverless
+      maxIdleTimeMS: 30000, // Close idle connections after 30s
+      bufferCommands: false // Disable buffering for serverless
     });
     
     console.log("✅ MongoDB connected successfully");
