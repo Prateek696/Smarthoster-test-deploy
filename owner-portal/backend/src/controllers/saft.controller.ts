@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
 import { getSaftService } from "../services/saft.service";
 import Property from "../models/property.model";
+import { ensureDBConnection } from "../config/db";
 
 export const getSaft = async (req: Request, res: Response) => {
   try {
+    // Ensure database connection before proceeding
+    await ensureDBConnection();
+    
     const { year, month, invoicing_nif } = req.query;
 
     // Validate input

@@ -4,19 +4,22 @@ import { env } from "./env";
 // Cache the connection globally for serverless functions
 let cachedConnection: typeof mongoose | null = null;
 
-// Serverless-optimized MongoDB connection settings
+// Ultra-aggressive serverless MongoDB connection settings for Vercel
 const serverlessMongoOptions = {
-  serverSelectionTimeoutMS: 3000, // 3 seconds - faster timeout
-  connectTimeoutMS: 3000, // 3 seconds - faster timeout
-  socketTimeoutMS: 45000, // 45 seconds - longer socket timeout
+  serverSelectionTimeoutMS: 5000, // 5 seconds - more time for Atlas wake-up
+  connectTimeoutMS: 10000, // 10 seconds - longer connection timeout
+  socketTimeoutMS: 0, // No socket timeout - let it hang if needed
   maxPoolSize: 1, // Single connection for serverless
   minPoolSize: 0, // No minimum pool
-  maxIdleTimeMS: 30000, // Close idle connections after 30s
-  bufferCommands: false // Disable buffering for serverless
+  maxIdleTimeMS: 0, // Never close idle connections
+  bufferCommands: false, // Disable buffering for serverless
+  bufferMaxEntries: 0, // No buffering
+  retryWrites: true, // Retry failed writes
+  retryReads: true // Retry failed reads
 };
 
-// Smart connection function with retry logic
-const connectWithRetry = async (retries = 3): Promise<typeof mongoose> => {
+// Smart connection function with aggressive retry logic for Vercel
+const connectWithRetry = async (retries = 5): Promise<typeof mongoose> => {
   for (let i = 0; i < retries; i++) {
     try {
       // Check if we already have a working connection
@@ -27,7 +30,7 @@ const connectWithRetry = async (retries = 3): Promise<typeof mongoose> => {
 
       console.log(`🔗 Attempting MongoDB connection (attempt ${i + 1}/${retries})...`);
       
-      // Connect with serverless-optimized settings
+      // Connect with ultra-aggressive serverless settings
       await mongoose.connect(env.mongoUri!, serverlessMongoOptions);
       
       // Cache the connection
@@ -46,8 +49,8 @@ const connectWithRetry = async (retries = 3): Promise<typeof mongoose> => {
         throw err;
       }
       
-      // Wait before retrying (exponential backoff)
-      const delay = 1000 * Math.pow(2, i); // 1s, 2s, 4s
+      // Wait before retrying (longer delays for Atlas wake-up)
+      const delay = 2000 * (i + 1); // 2s, 4s, 6s, 8s, 10s
       console.log(`⏳ Waiting ${delay}ms before retry...`);
       await new Promise(resolve => setTimeout(resolve, delay));
     }
