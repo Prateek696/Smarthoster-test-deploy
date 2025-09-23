@@ -4,12 +4,16 @@ import { UserModel } from "../models/User.model";
 import { signupSchema, loginSchema, otpSchema, forgotPasswordSchema, resetPasswordSchema } from "../validations/auth.schema";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt";
 import { sendOTP, verifyOTP } from "../services/otp.service";
+import { ensureDBConnection } from "../config/db";
 
 /**
  * @desc Send OTP for login (after password verification)
  */
 export const sendLoginOTP = async (req: Request, res: Response) => {
   try {
+    // Ensure database connection before proceeding
+    await ensureDBConnection();
+    
     const parsed = loginSchema.parse(req.body);
 
     // Check if user exists
