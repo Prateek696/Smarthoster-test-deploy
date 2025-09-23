@@ -5,6 +5,7 @@ import { RootState } from '../store';
 import { Receipt, Download, Calendar, AlertCircle, CheckCircle, ChevronDown } from 'lucide-react';
 import { getAllOwners, Owner } from '../services/admin.api';
 import { settingsAPI } from '../services/settings.api';
+import apiClient from '../services/apiClient';
 
 interface SAFTResponse {
   generated: string;
@@ -123,35 +124,8 @@ const SAFT: React.FC = () => {
         invoicing_nif: invoicingNif
       });
 
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${baseUrl}/saft/get?${params}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setSaftData(data);
-      } else {
-        // Check if response is JSON or HTML
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          const errorData = await response.json();
-          setError(errorData.message || 'Failed to retrieve SAFT-T');
-        } else {
-          // Handle HTML error responses (like 401 Unauthorized)
-          if (response.status === 401) {
-            setError('Please log in to access SAFT-T data');
-          } else if (response.status === 403) {
-            setError('You do not have permission to access SAFT-T data');
-          } else {
-            setError(`Server error: ${response.status} ${response.statusText}`);
-          }
-        }
-      }
+      const data = await apiClient.get(`/saft/get?${params}`);
+      setSaftData(data);
     } catch (error) {
       setError('Network error occurred');
       console.error('SAFT retrieval error:', error);

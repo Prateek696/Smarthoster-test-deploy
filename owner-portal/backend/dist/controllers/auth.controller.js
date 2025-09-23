@@ -9,11 +9,14 @@ const User_model_1 = require("../models/User.model");
 const auth_schema_1 = require("../validations/auth.schema");
 const jwt_1 = require("../utils/jwt");
 const otp_service_1 = require("../services/otp.service");
+const db_1 = require("../config/db");
 /**
  * @desc Send OTP for login (after password verification)
  */
 const sendLoginOTP = async (req, res) => {
     try {
+        // Ensure database connection before proceeding
+        await (0, db_1.ensureDBConnection)();
         const parsed = auth_schema_1.loginSchema.parse(req.body);
         // Check if user exists
         const user = await User_model_1.UserModel.findOne({ email: parsed.email });

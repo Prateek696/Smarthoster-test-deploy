@@ -51,12 +51,16 @@ app.use((0, cors_1.default)({
         'https://dashboard.smarthoster.io',
         // Vercel domains for testing
         /^https:\/\/.*\.vercel\.app$/,
-        /^https:\/\/.*\.vercel\.dev$/
+        /^https:\/\/.*\.vercel\.dev$/,
+        // Specific frontend domain
+        'https://smarthoster-test-deploy-owner-porta.vercel.app'
     ],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    optionsSuccessStatus: 200
 }));
 app.use(express_1.default.json());
-app.use(saft_routes_1.default);
 app.use("/health", health_routes_1.default);
 app.use("/auth", auth_routes_1.default);
 app.use("/otp", otp_routes_1.default);
@@ -68,7 +72,7 @@ app.use("/performance", performance_routes_1.default);
 app.use("/properties", touristTax_routes_1.default);
 app.use("/properties", siba_routes_1.default);
 app.use("/siba-manager", sibaManager_routes_1.default);
-app.use("/properties", saft_routes_1.default);
+app.use("/saft", saft_routes_1.default);
 app.use("/api", hostkitProperty_routes_1.default);
 app.use("/expenses", expense_routes_1.default);
 app.use("/automations", automation_routes_1.default);

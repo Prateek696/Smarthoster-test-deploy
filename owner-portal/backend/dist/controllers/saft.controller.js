@@ -6,8 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSaft = void 0;
 const saft_service_1 = require("../services/saft.service");
 const property_model_1 = __importDefault(require("../models/property.model"));
+const db_1 = require("../config/db");
 const getSaft = async (req, res) => {
     try {
+        // Ensure database connection before proceeding
+        await (0, db_1.ensureDBConnection)();
         const { year, month, invoicing_nif } = req.query;
         // Validate input
         if (!year || !month || !invoicing_nif) {
