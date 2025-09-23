@@ -27,7 +27,8 @@ import {
   Edit,
   Trash2,
   ChevronDown,
-  X
+  X,
+  Minus
 } from 'lucide-react'
 import PropertyManagement from '../../components/property/PropertyManagement'
 import OwnerStatementComponent from '../../components/admin/OwnerStatement'
@@ -50,7 +51,8 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
     hostkitApiKey: '',
     hostkitApiSecret: '',
     password: '',
-    role: 'owner' as 'owner' | 'accountant'
+    role: 'owner' as 'owner' | 'accountant',
+    companies: [{ name: '', nif: '' }]
   })
   const [propertyData, setPropertyData] = useState({
     id: '',
@@ -72,6 +74,30 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
   const [showApiKey, setShowApiKey] = useState(false)
   const [selectedProperties, setSelectedProperties] = useState<string[]>([])
   const [availableProperties, setAvailableProperties] = useState<any[]>([])
+
+  // Company management functions
+  const addCompany = () => {
+    setFormData(prev => ({
+      ...prev,
+      companies: [...(prev.companies || []), { name: '', nif: '' }]
+    }))
+  }
+
+  const removeCompany = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      companies: prev.companies?.filter((_, i) => i !== index) || []
+    }))
+  }
+
+  const updateCompany = (index: number, field: 'name' | 'nif', value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      companies: prev.companies?.map((company, i) => 
+        i === index ? { ...company, [field]: value } : company
+      ) || []
+    }))
+  }
 
   // Fetch available properties when role changes to accountant
   useEffect(() => {
@@ -95,8 +121,15 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
 
     try {
       console.log('Creating user with data:', formData)
+      
+      // Filter out empty companies
+      const filteredCompanies = formData.companies?.filter(company => 
+        company.name.trim() !== '' && company.nif.trim() !== ''
+      ) || []
+      
       const requestData = {
         ...formData,
+        companies: filteredCompanies,
         ...(includeProperty && propertyData.name && propertyData.id && { propertyData }),
         ...(formData.role === 'accountant' && selectedProperties.length > 0 && { assignedProperties: selectedProperties })
       }
@@ -220,8 +253,72 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
           value={formData.phone}
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter phone number"
         />
+      </div>
+
+      {/* Company Information Section */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <label className="block text-sm font-medium text-gray-700">
+            Company Information (for SAFT)
+          </label>
+          <button
+            type="button"
+            onClick={addCompany}
+            className="flex items-center gap-1 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            Add Company
+          </button>
+        </div>
+        
+        {formData.companies?.map((company, index) => (
+          <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-gray-700">Company {index + 1}</h4>
+              {formData.companies && formData.companies.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeCompany(index)}
+                  className="flex items-center gap-1 px-2 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                >
+                  <Minus className="h-4 w-4" />
+                  Remove
+                </button>
+              )}
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Company Name *
+                </label>
+                <input
+                  type="text"
+                  value={company.name}
+                  onChange={(e) => updateCompany(index, 'name', e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter company name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  NIF *
+                </label>
+                <input
+                  type="text"
+                  value={company.nif}
+                  onChange={(e) => updateCompany(index, 'nif', e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter NIF number"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div>
@@ -558,6 +655,219 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
           className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
         >
           {loading ? 'Creating...' : isUploadingImages ? 'Uploading Images...' : includeProperty ? `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'} & Property` : `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'}`}
+        </button>
+      </div>
+    </form>
+  )
+}
+
+interface EditOwnerFormProps {
+  owner: Owner
+  onSuccess: () => void
+  onCancel: () => void
+}
+
+const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCancel }) => {
+  const [formData, setFormData] = useState<CreateOwnerData>({
+    name: owner.name,
+    email: owner.email,
+    phone: owner.phone || '',
+    role: owner.role as 'owner' | 'accountant',
+    companies: owner.companies || [{ name: '', nif: '' }]
+  })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  // Company management functions
+  const addCompany = () => {
+    setFormData(prev => ({
+      ...prev,
+      companies: [...(prev.companies || []), { name: '', nif: '' }]
+    }))
+  }
+
+  const removeCompany = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      companies: prev.companies?.filter((_, i) => i !== index) || []
+    }))
+  }
+
+  const updateCompany = (index: number, field: 'name' | 'nif', value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      companies: prev.companies?.map((company, i) => 
+        i === index ? { ...company, [field]: value } : company
+      ) || []
+    }))
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    try {
+      // Filter out empty companies
+      const filteredCompanies = formData.companies?.filter(company => 
+        company.name.trim() !== '' && company.nif.trim() !== ''
+      ) || []
+
+      const updateData = {
+        ...formData,
+        companies: filteredCompanies
+      }
+
+      // Import updateOwner function
+      const { updateOwner } = await import('../../services/admin.api')
+      await updateOwner(owner._id, updateData)
+      
+      console.log('Owner updated successfully')
+      onSuccess()
+    } catch (error: any) {
+      console.error('Error updating owner:', error)
+      setError(error.message || 'Failed to update owner')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Name *
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter owner name"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Email *
+        </label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter email address"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Phone
+        </label>
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter phone number"
+        />
+      </div>
+
+      {/* Company Information Section */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <label className="block text-sm font-medium text-gray-700">
+            Company Information (for SAFT)
+          </label>
+          <button
+            type="button"
+            onClick={addCompany}
+            className="flex items-center gap-1 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            Add Company
+          </button>
+        </div>
+        
+        {formData.companies?.map((company, index) => (
+          <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-gray-700">Company {index + 1}</h4>
+              {formData.companies && formData.companies.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeCompany(index)}
+                  className="flex items-center gap-1 px-2 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                >
+                  <Minus className="h-4 w-4" />
+                  Remove
+                </button>
+              )}
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Company Name *
+                </label>
+                <input
+                  type="text"
+                  value={company.name}
+                  onChange={(e) => updateCompany(index, 'name', e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter company name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  NIF *
+                </label>
+                <input
+                  type="text"
+                  value={company.nif}
+                  onChange={(e) => updateCompany(index, 'nif', e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter NIF number"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-end space-x-3">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        >
+          {loading ? 'Updating...' : 'Update Owner'}
         </button>
       </div>
     </form>
@@ -1420,6 +1730,8 @@ const AdminDashboard: React.FC = () => {
   const [selectedAccountantId, setSelectedAccountantId] = useState<string>('all')
   const [loading, setLoading] = useState(true)
   const [showOwnerModal, setShowOwnerModal] = useState(false)
+  const [showEditOwnerModal, setShowEditOwnerModal] = useState(false)
+  const [editingOwner, setEditingOwner] = useState<Owner | null>(null)
   const [showPropertyModal, setShowPropertyModal] = useState(false)
   const [showAccountantViewModal, setShowAccountantViewModal] = useState(false)
   const [showAccountantEditModal, setShowAccountantEditModal] = useState(false)
@@ -1543,6 +1855,11 @@ const AdminDashboard: React.FC = () => {
         alert('Failed to delete property. Please try again.')
       }
     }
+  }
+
+  const handleEditOwner = (owner: Owner) => {
+    setEditingOwner(owner)
+    setShowEditOwnerModal(true)
   }
 
   const handleViewAccountant = (accountant: Accountant) => {
@@ -1757,6 +2074,116 @@ const AdminDashboard: React.FC = () => {
                   </dl>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Owners Section */}
+        <div className="bg-white shadow-xl rounded-xl border border-gray-100 mb-8">
+          <div className="px-6 py-6">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                  Owners Management
+                </h3>
+                <p className="text-gray-600">Manage property owners and their company information</p>
+              </div>
+              <button
+                onClick={() => setShowOwnerModal(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                <Plus className="h-4 w-4" />
+                Add Owner
+              </button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Phone
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Role
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Companies
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {owners.map((owner) => (
+                    <tr key={owner._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {owner.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {owner.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {owner.phone || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          owner.role === 'owner' 
+                            ? 'bg-blue-100 text-blue-800' 
+                            : 'bg-green-100 text-green-800'
+                        }`}>
+                          {owner.role === 'owner' ? 'Owner' : 'Accountant'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {owner.companies?.length || 0} company{(owner.companies?.length || 0) !== 1 ? 'ies' : 'y'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          owner.isVerified 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {owner.isVerified ? 'Verified' : 'Pending'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => handleEditOwner(owner)}
+                          className="text-blue-600 hover:text-blue-900 mr-3"
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              
+              {owners.length === 0 && (
+                <div className="text-center py-8">
+                  <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No owners found</h3>
+                  <p className="text-gray-500 mb-4">Get started by adding your first property owner.</p>
+                  <button
+                    onClick={() => setShowOwnerModal(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors mx-auto"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Owner
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -2108,6 +2535,38 @@ const AdminDashboard: React.FC = () => {
               setEditingAccountant(null)
             }}
           />
+        )}
+
+        {/* Edit Owner Modal */}
+        {showEditOwnerModal && editingOwner && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Edit Owner</h3>
+                  <button
+                    onClick={() => setShowEditOwnerModal(false)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                
+                <EditOwnerForm 
+                  owner={editingOwner}
+                  onSuccess={() => {
+                    setShowEditOwnerModal(false)
+                    setEditingOwner(null)
+                    fetchDashboardData()
+                  }}
+                  onCancel={() => {
+                    setShowEditOwnerModal(false)
+                    setEditingOwner(null)
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Property View Modal */}

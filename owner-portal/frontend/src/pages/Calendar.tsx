@@ -52,21 +52,27 @@ const Calendar: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-white">Property Calendar</h1>
-        <p className="text-slate-400 mt-2">
-          Manage your property availability and view bookings
-          {calendarProps.propertyId && ` for Property ${calendarProps.propertyId}`}
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+      {/* Header - Fixed */}
+      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
+        <div className="container mx-auto px-4 py-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Property Calendar</h1>
+            <p className="text-lg text-gray-600">
+              Manage your property availability and view bookings
+              {calendarProps.propertyId && ` for Property ${calendarProps.propertyId}`}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Calendar Section */}
-      <div>
-        <BookingCalendar 
-          propertyId={calendarProps.propertyId}
-        />
+      <div className="container mx-auto px-4 py-8 pt-48">
+        {/* Calendar Section */}
+        <div>
+          <BookingCalendar 
+            propertyId={calendarProps.propertyId}
+          />
+        </div>
       </div>
     </div>
   );

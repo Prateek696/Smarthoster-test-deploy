@@ -20,10 +20,12 @@ import {
   Shield,
   Receipt,
   Users,
-  Crown
+  Crown,
+  Settings
 } from 'lucide-react'
 import { RootState, AppDispatch } from '../../store'
 import { logoutAsync } from '../../store/auth.slice'
+import Logo from '../common/Logo'
 
 interface SidebarProps {
   isOpen: boolean
@@ -100,6 +102,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       icon: FileText 
     },
     { 
+      name: 'Settings', 
+      href: '/settings', 
+      icon: Settings 
+    },
+    { 
       name: t('nav.reviews'), 
       href: '/reviews', 
       icon: Star,
@@ -138,9 +145,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
       {/* Sidebar */}
       <nav className={`w-64 bg-white shadow-sm min-h-screen ${
-        isOpen ? 'fixed inset-y-0 left-0 z-50 translate-x-0' : 'hidden lg:block'
+        isOpen ? 'fixed inset-y-0 left-0 z-50 translate-x-0' : 'hidden lg:block lg:fixed lg:inset-y-0 lg:left-0 lg:z-40'
       }`}>
         <div className="p-4 space-y-2">
+          {/* Logo and Title */}
+          <div className="flex items-center mb-6">
+            <div className="flex items-center justify-center w-10 h-10 bg-white rounded-lg mr-3 border border-gray-200 shadow-sm">
+              <Logo size="md" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-gray-900">
+                <span className="text-gray-900">Owner</span>
+                <span className="text-[#5FFF56]">Portal</span>
+              </h1>
+              <span className="text-xs text-gray-500">Property Management</span>
+            </div>
+          </div>
+
           {/* Navigation */}
           <div className="space-y-2">
             {filteredNavigation.map((item) => {

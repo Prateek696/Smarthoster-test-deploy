@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../store';
-import { Receipt, Download, Calendar, AlertCircle, CheckCircle } from 'lucide-react';
+import { Receipt, Download, Calendar, AlertCircle, CheckCircle, ChevronDown } from 'lucide-react';
+import { getAllOwners, Owner } from '../services/admin.api';
+import { settingsAPI } from '../services/settings.api';
 
 interface SAFTResponse {
   generated: string;
@@ -22,6 +24,8 @@ const SAFT: React.FC = () => {
     return now.getMonth() === 0 ? 12 : now.getMonth();
   });
   const [invoicingNif, setInvoicingNif] = useState<string>('');
+  const [selectedCompany, setSelectedCompany] = useState<{ownerId: string, companyIndex: number} | null>(null);
+  const [owners, setOwners] = useState<Owner[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [saftData, setSaftData] = useState<SAFTResponse | null>(null);
   const [error, setError] = useState<string>('');
@@ -45,9 +49,66 @@ const SAFT: React.FC = () => {
     { value: 12, name: 'December' }
   ];
 
+  // Fetch owners on component mount
+  useEffect(() => {
+    const fetchOwners = async () => {
+      try {
+        const ownersData = await getAllOwners();
+        
+        // Try to get current user's profile data if companies not in Redux store
+        let currentUserCompanies = user?.companies;
+        if (!currentUserCompanies || currentUserCompanies.length === 0) {
+          try {
+            const userProfile = await settingsAPI.getUserProfile();
+            currentUserCompanies = userProfile.companies;
+          } catch (profileError) {
+            // Silent fail - user profile fetch failed
+          }
+        }
+        
+        // Add current user's companies if they have any
+        if (currentUserCompanies && currentUserCompanies.length > 0) {
+          const currentUserAsOwner: Owner = {
+            _id: user?.id || 'current-user',
+            name: user?.name || 'Current User',
+            email: user?.email || '',
+            phone: user?.phone,
+            role: user?.role || 'user',
+            isVerified: user?.isVerified || false,
+            hasApiKeys: false,
+            apiKeysActive: false,
+            companies: currentUserCompanies,
+            createdAt: user?.createdAt || new Date().toISOString(),
+            updatedAt: user?.updatedAt || new Date().toISOString()
+          };
+          ownersData.unshift(currentUserAsOwner); // Add to beginning
+        }
+        
+        setOwners(ownersData);
+        console.log('✅ Final owners list:', ownersData);
+        console.log('📋 Total companies available:', ownersData.reduce((total, owner) => total + (owner.companies?.length || 0), 0));
+      } catch (error) {
+        console.error('❌ Error fetching owners:', error);
+      }
+    };
+    fetchOwners();
+  }, [user]);
+
+  // Update invoicingNif when company selection changes
+  useEffect(() => {
+    if (selectedCompany) {
+      const owner = owners.find(o => o._id === selectedCompany.ownerId);
+      
+      if (owner && owner.companies && owner.companies[selectedCompany.companyIndex]) {
+        const company = owner.companies[selectedCompany.companyIndex];
+        setInvoicingNif(company.nif);
+      }
+    }
+  }, [selectedCompany, owners]);
+
   const getSAFT = async () => {
     if (!invoicingNif) {
-      setError('Please enter invoicing VAT ID');
+      setError('Please select a company or enter invoicing VAT ID');
       return;
     }
 
@@ -135,18 +196,62 @@ const SAFT: React.FC = () => {
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Invoicing VAT ID */}
+          {/* Company Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Invoicing VAT ID (NIF)
+              Company Selection
             </label>
-            <input
-              type="text"
-              value={invoicingNif}
-              onChange={(e) => setInvoicingNif(e.target.value)}
-              placeholder="e.g., 234567890"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="space-y-3">
+              {/* Company Dropdown */}
+              <select
+                value={selectedCompany ? `${selectedCompany.ownerId}-${selectedCompany.companyIndex}` : ''}
+                onChange={(e) => {
+                  console.log('🔄 Dropdown changed, value:', e.target.value);
+                  if (e.target.value) {
+                    // Split by the last hyphen to handle ownerId with hyphens
+                    const lastHyphenIndex = e.target.value.lastIndexOf('-');
+                    const ownerId = e.target.value.substring(0, lastHyphenIndex);
+                    const companyIndex = parseInt(e.target.value.substring(lastHyphenIndex + 1));
+                    console.log('📝 Setting selected company:', { ownerId, companyIndex });
+                    setSelectedCompany({ ownerId, companyIndex });
+                  } else {
+                    console.log('❌ Clearing selected company');
+                    setSelectedCompany(null);
+                    setInvoicingNif('');
+                  }
+                }}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select a company...</option>
+                {owners.map((owner) => {
+                  return owner.companies?.map((company, index) => {
+                    const optionValue = `${owner._id}-${index}`;
+                    return (
+                      <option key={optionValue} value={optionValue}>
+                        {company.name} ({company.nif}) - {owner.name}
+                      </option>
+                    );
+                  });
+                })}
+              </select>
+              
+              {/* Manual NIF Input (fallback) */}
+              <div className="text-sm text-gray-500">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Or enter NIF manually:
+                </label>
+                <input
+                  type="text"
+                  value={invoicingNif}
+                  onChange={(e) => {
+                    setInvoicingNif(e.target.value);
+                    setSelectedCompany(null); // Clear selection when typing manually
+                  }}
+                  placeholder="e.g., 234567890"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Year Selection */}

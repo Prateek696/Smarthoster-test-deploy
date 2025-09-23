@@ -165,6 +165,7 @@ const getAllOwners = async (req, res) => {
                 isVerified: owner.isVerified,
                 hasApiKeys: !!apiKeys,
                 apiKeysActive: apiKeys?.isActive || false,
+                companies: owner.companies,
                 createdAt: owner.createdAt,
                 updatedAt: owner.updatedAt
             };
@@ -348,9 +349,13 @@ exports.createOwner = createOwner;
 const updateOwner = async (req, res) => {
     try {
         const { ownerId } = req.params;
-        const { name, email, phone, password, role } = req.body;
+        const { name, email, phone, password, role, companies } = req.body;
         // Prepare update data
         const updateData = { name, email, phone, role };
+        // Add companies if provided
+        if (companies) {
+            updateData.companies = companies;
+        }
         // Only update password if provided
         if (password && password.trim() !== '') {
             const hashedPassword = await bcryptjs_1.default.hash(password, 12);
@@ -369,13 +374,14 @@ const updateOwner = async (req, res) => {
                 phone: owner.phone,
                 role: owner.role,
                 isVerified: owner.isVerified,
+                companies: owner.companies,
                 createdAt: owner.createdAt,
                 updatedAt: owner.updatedAt
             }
         });
     }
     catch (error) {
-        console.error('Error in createOwner:', error);
+        console.error('Error in updateOwner:', error);
         res.status(500).json({ message: error.message });
     }
 };

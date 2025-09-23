@@ -73,7 +73,7 @@ src/
 3. **Environment Setup**
    Create a `.env` file in the frontend root:
    ```env
-   VITE_API_BASE_URL=http://localhost:5000
+   VITE_API_URL=http://localhost:5000
    VITE_APP_NAME=Owner Portal
    ```
 

@@ -65,7 +65,7 @@ export const updateCalendarMinimumStay = async (
   return response;
 };
 
-// Block/Unblock dates via Hostaway API
+// Block/Unblock dates via Hostaway API (using isAvailable parameter)
 export const updateCalendarAvailability = async (
   listingId: number,
   startDate: string,
@@ -77,6 +77,21 @@ export const updateCalendarAvailability = async (
     startDate,
     endDate,
     isAvailable
+  });
+  return response;
+};
+
+// Block/Unblock dates via Hostaway API (using status parameter - more reliable)
+export const updateCalendarStatus = async (
+  listingId: number,
+  startDate: string,
+  endDate: string,
+  status: 'blocked' | 'available'
+): Promise<any> => {
+  const response = await apiClient.put(`/calendar/${listingId}`, {
+    startDate,
+    endDate,
+    status
   });
   return response;
 };

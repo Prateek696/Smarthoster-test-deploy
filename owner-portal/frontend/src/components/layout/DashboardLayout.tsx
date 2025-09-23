@@ -15,10 +15,10 @@ const DashboardLayout: React.FC = () => {
         {/* Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        {/* Main Content */}
-        <main className="flex-1 p-8 bg-white">
-          <Outlet />
-        </main>
+               {/* Main Content */}
+               <main className="flex-1 p-8 bg-white lg:ml-64 pt-24">
+                 <Outlet />
+               </main>
       </div>
     </div>
   )

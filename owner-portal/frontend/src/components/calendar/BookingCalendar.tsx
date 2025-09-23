@@ -5,7 +5,7 @@ import PropertySelector from '../common/PropertySelector';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/index';
 import { fetchPropertiesAsync } from '../../store/propertyManagement.slice';
-import { getCalendarDateData, updateCalendarPricing, updateCalendarMinimumStay, getCalendarMonthPricing, updateCalendarAvailability } from '../../services/calendar.api';
+import { getCalendarDateData, updateCalendarPricing, updateCalendarMinimumStay, getCalendarMonthPricing, updateCalendarAvailability, updateCalendarStatus } from '../../services/calendar.api';
 import { canUpdateCalendar } from '../../utils/roleUtils';
 
 interface BookingCalendarProps {
@@ -19,12 +19,28 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.auth);
+  
+  // Helper function to format date in local timezone (fixes timezone offset bug)
+  const formatDateLocal = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
   const [selectedPropertyId, setSelectedPropertyId] = useState<number | null>(initialPropertyId || null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<{ start: string; end: string } | null>(null);
   const [isBlocking, setIsBlocking] = useState(false);
   const [showDateModal, setShowDateModal] = useState(false);
   const [clickedDate, setClickedDate] = useState<Date | null>(null);
+  const [doubleClickMode, setDoubleClickMode] = useState(false);
+  const [selectedDateList, setSelectedDateList] = useState<string[]>([]);
+  const [showBulkActions, setShowBulkActions] = useState(false);
+  const [hoverMode, setHoverMode] = useState(false);
+  const [clickTimeout, setClickTimeout] = useState<number | null>(null);
+  const [selectionStart, setSelectionStart] = useState<Date | null>(null);
+  const [selectionEnd, setSelectionEnd] = useState<Date | null>(null);
+  const [isSelecting, setIsSelecting] = useState(false);
   const [calendarDateData, setCalendarDateData] = useState<any>(null);
   const [isLoadingDateData, setIsLoadingDateData] = useState(false);
   const [monthlyPricingData, setMonthlyPricingData] = useState<{[key: string]: {price: number, minimumStay: number, status: string}}>({});
@@ -36,8 +52,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   const [showEditForm, setShowEditForm] = useState(false);
 
   // Calculate date range for current month view with buffer for cross-month bookings
-  const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1).toISOString().split('T')[0];
-  const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 2, 0).toISOString().split('T')[0];
+  const startDate = formatDateLocal(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+  const endDate = formatDateLocal(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 2, 0));
 
   const { token } = useSelector((state: RootState) => state.auth);
   const properties = useSelector((state: RootState) => state.propertyManagement.properties);
@@ -50,7 +66,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   }, [dispatch, properties.length]);
 
   
-  const { calendarData, isLoading, error, updateCalendar } = useCalendar({
+  const { calendarData, isLoading, error, updateCalendar, fetchCalendarData } = useCalendar({
     propertyId: selectedPropertyId as number,
     startDate,
     endDate
@@ -124,7 +140,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       const fallbackData: {[key: string]: {price: number, minimumStay: number, status: string}} = {};
       for (let day = 1; day <= lastDay.getDate(); day++) {
         const date = new Date(year, month, day);
-        const dateStr = date.toISOString().split('T')[0];
+        const dateStr = formatDateLocal(date);
         fallbackData[dateStr] = {
           price: 289,
           minimumStay: 2,
@@ -143,6 +159,15 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     fetchMonthlyPricingData();
   }, [currentMonth, selectedPropertyId]);
 
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (clickTimeout) {
+        clearTimeout(clickTimeout);
+      }
+    };
+  }, [clickTimeout]);
+
   const handleDateClick = async (date: Date) => {
     // Check if user can update calendar
     if (!canUpdateCalendar(user?.role || null)) {
@@ -150,13 +175,35 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       return;
     }
 
+    const dateStr = formatDateLocal(date);
+
+    // If we have any selected dates, handle selection
+    if (selectedDateList.length > 0 || doubleClickMode) {
+      if (selectedDateList.includes(dateStr)) {
+        // Clicked on selected date - just stop hover mode (keep date selected)
+        setHoverMode(false);
+        setIsSelecting(false); // Stop active selection
+        console.log('Stopped hover mode, date remains selected:', dateStr);
+      } else {
+        // Add to selection and enable hover mode
+        setSelectedDateList(prev => [...prev, dateStr]);
+        setDoubleClickMode(true);
+        setShowBulkActions(true);
+        setHoverMode(true); // Enable hover mode
+        setIsSelecting(true); // Start active selection
+        console.log('Added date to selection and enabled hover mode:', dateStr);
+      }
+      return; // Don't open modal in selection mode
+    }
+
+    // Normal click mode: open date modal
     setClickedDate(date);
     setShowDateModal(true);
     setIsLoadingDateData(true);
     
     try {
       // Fetch real calendar data from Hostaway
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = formatDateLocal(date);
       const data = await getCalendarDateData(selectedPropertyId || 392776, dateStr);
       setCalendarDateData(data);
       
@@ -167,7 +214,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       console.error('Failed to fetch calendar date data:', error);
       // Set default values if API fails
       setCalendarDateData({
-        date: date.toISOString().split('T')[0],
+        date: formatDateLocal(date),
         status: 'available',
         price: null,
         minimumStay: null,
@@ -180,19 +227,122 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     
     // Also update selected dates for range selection
     if (!selectedDates) {
-      setSelectedDates({ start: date.toISOString().split('T')[0], end: date.toISOString().split('T')[0] });
+      setSelectedDates({ start: formatDateLocal(date), end: formatDateLocal(date) });
     } else {
       const start = new Date(selectedDates.start);
       const end = new Date(selectedDates.end);
       const clicked = date;
 
       if (clicked < start) {
-        setSelectedDates({ start: clicked.toISOString().split('T')[0], end: selectedDates.end });
+        setSelectedDates({ start: formatDateLocal(clicked), end: selectedDates.end });
       } else if (clicked > end) {
-        setSelectedDates({ start: selectedDates.start, end: clicked.toISOString().split('T')[0] });
+        setSelectedDates({ start: selectedDates.start, end: formatDateLocal(clicked) });
       } else {
         setSelectedDates(null);
       }
+    }
+  };
+
+  const handleDateDoubleClick = (date: Date) => {
+    console.log('Double-click detected!', date);
+    
+    if (!canUpdateCalendar(user?.role || null)) {
+      alert('Only owners can manage calendar dates. You can view the calendar but cannot make changes.');
+      return;
+    }
+
+    const dateStr = formatDateLocal(date);
+    
+    if (selectedDateList.includes(dateStr)) {
+      // Double-clicked on selected date - remove it from selection
+      const newList = selectedDateList.filter(d => d !== dateStr);
+      setSelectedDateList(newList);
+      setHoverMode(false); // Stop hover mode
+      
+      if (newList.length === 0) {
+        // No more selected dates - exit selection mode completely
+        setDoubleClickMode(false);
+        setShowBulkActions(false);
+      }
+      console.log('Removed date from selection via double-click:', dateStr);
+    } else {
+      // Double-clicked on unselected date - start new selection
+      console.log('Entering double-click mode for date:', dateStr);
+      setDoubleClickMode(true);
+      setSelectedDateList([dateStr]);
+      setShowBulkActions(true);
+      setHoverMode(true); // Enable hover mode
+      setIsSelecting(true); // Start active selection
+    }
+  };
+
+  const handleDateHover = (date: Date) => {
+    // Only add dates via hover if we're actively selecting (not just in hover mode)
+    if (hoverMode && selectedDateList.length > 0 && isSelecting) {
+      const dateStr = formatDateLocal(date);
+      if (!selectedDateList.includes(dateStr)) {
+        setSelectedDateList(prev => [...prev, dateStr]);
+        console.log('Added date via hover:', dateStr);
+      }
+    }
+  };
+
+  const exitDoubleClickMode = () => {
+    setDoubleClickMode(false);
+    setSelectedDateList([]);
+    setShowBulkActions(false);
+    setHoverMode(false); // Disable hover mode
+    setSelectionStart(null);
+    setSelectionEnd(null);
+    setIsSelecting(false);
+  };
+
+  const handleBulkBlock = async () => {
+    if (!selectedPropertyId || selectedDateList.length === 0) return;
+    
+    setIsBlocking(true);
+    try {
+      // Block each date individually
+      for (const dateStr of selectedDateList) {
+        await updateCalendarAvailability(selectedPropertyId, dateStr, dateStr, 0); // 0 = Block
+        console.log(`Blocked date: ${dateStr}`);
+      }
+      console.log('All dates blocked successfully');
+      exitDoubleClickMode();
+      // Refresh calendar data without losing current month
+      fetchCalendarData();
+    } catch (error) {
+      console.error('Failed to block dates:', error);
+    } finally {
+      setIsBlocking(false);
+    }
+  };
+
+  const handleBulkUnblock = async () => {
+    console.log('🚀 handleBulkUnblock called with:', { selectedPropertyId, selectedDateList });
+    if (!selectedPropertyId || selectedDateList.length === 0) {
+      console.log('❌ Missing propertyId or no dates selected');
+      return;
+    }
+    
+    setIsBlocking(true);
+    try {
+      // Unblock each date individually
+      for (const dateStr of selectedDateList) {
+        console.log(`🔄 Unblocking date: ${dateStr}`);
+        const result = await updateCalendarAvailability(selectedPropertyId, dateStr, dateStr, 1); // 1 = Unblock
+        console.log(`✅ Unblocked date: ${dateStr}`, result);
+      }
+      console.log('🎉 All dates unblocked successfully');
+      exitDoubleClickMode();
+      // Wait a moment for backend to process, then refresh calendar data
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await fetchCalendarData();
+      console.log('📊 Calendar data refreshed after unblock');
+    } catch (error) {
+      console.error('❌ Failed to unblock dates:', error);
+    } finally {
+      setIsBlocking(false);
     }
   };
 
@@ -201,8 +351,17 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     
     setIsBlocking(true);
     try {
-      await updateCalendar(selectedDates.start, selectedDates.end, 'blocked');
+      // Use the same API as single date blocking but for date range
+      const result = await updateCalendarAvailability(selectedPropertyId, selectedDates.start, selectedDates.end, 0); // 0 = Block
+      console.log('Dates blocked successfully:', result);
       setSelectedDates(null);
+      
+      // Refresh calendar data
+      if (onDateSelect) {
+        onDateSelect(selectedDates.start);
+      }
+      // Refresh calendar data without losing current month
+      fetchCalendarData();
     } catch (error) {
       console.error('Failed to block dates:', error);
     } finally {
@@ -215,8 +374,17 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     
     setIsBlocking(true);
     try {
-      await updateCalendar(selectedDates.start, selectedDates.end, 'available');
+      // Use the same API as single date unblocking but for date range
+      const result = await updateCalendarAvailability(selectedPropertyId, selectedDates.start, selectedDates.end, 1); // 1 = Unblock
+      console.log('Dates unblocked successfully:', result);
       setSelectedDates(null);
+      
+      // Refresh calendar data
+      if (onDateSelect) {
+        onDateSelect(selectedDates.start);
+      }
+      // Refresh calendar data without losing current month
+      fetchCalendarData();
     } catch (error) {
       console.error('Failed to unblock dates:', error);
     } finally {
@@ -243,8 +411,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       if (onDateSelect) {
         onDateSelect(dateStr);
       }
-      // Force refresh of calendar data
-      window.location.reload();
+      // Refresh calendar data without losing current month
+      fetchCalendarData();
     } catch (error) {
       console.error('Failed to block date:', error);
       alert('Failed to block date. Please try again.');
@@ -254,7 +422,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   };
 
   const handleUnblockSingleDate = async () => {
-    if (!clickedDate || !selectedPropertyId) return;
+    console.log('🚀 handleUnblockSingleDate called with:', { clickedDate, selectedPropertyId });
+    if (!clickedDate || !selectedPropertyId) {
+      console.log('❌ Missing clickedDate or selectedPropertyId');
+      return;
+    }
     
     setIsBlocking(true);
     try {
@@ -264,18 +436,20 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       const day = String(clickedDate.getDate()).padStart(2, '0');
       const dateStr = `${year}-${month}-${day}`;
       
-      console.log('Unblocking date:', { clickedDate, dateStr });
+      console.log('🔄 Unblocking single date:', { clickedDate, dateStr });
       const result = await updateCalendarAvailability(selectedPropertyId, dateStr, dateStr, 1); // 1 = Unblock
-      console.log('Date unblocked successfully:', result);
+      console.log('✅ Date unblocked successfully:', result);
       setShowDateModal(false);
       // Refresh calendar data
       if (onDateSelect) {
         onDateSelect(dateStr);
       }
-      // Force refresh of calendar data
-      window.location.reload();
+      // Wait a moment for backend to process, then refresh calendar data
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await fetchCalendarData();
+      console.log('📊 Calendar data refreshed after single unblock');
     } catch (error) {
-      console.error('Failed to unblock date:', error);
+      console.error('❌ Failed to unblock date:', error);
       alert('Failed to unblock date. Please try again.');
     } finally {
       setIsBlocking(false);
@@ -287,7 +461,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     
     setIsBlocking(true);
     try {
-      const dateStr = clickedDate.toISOString().split('T')[0];
+      const dateStr = formatDateLocal(clickedDate);
       await updateCalendarPricing(selectedPropertyId, {
         startDate: dateStr,
         endDate: dateStr,
@@ -317,7 +491,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     
     setIsBlocking(true);
     try {
-      const dateStr = clickedDate.toISOString().split('T')[0];
+      const dateStr = formatDateLocal(clickedDate);
       await updateCalendarMinimumStay(selectedPropertyId, {
         startDate: dateStr,
         endDate: dateStr,
@@ -344,8 +518,30 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
 
   const isDateSelected = (date: Date) => {
     if (!selectedDates) return false;
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = formatDateLocal(date);
     return dateStr >= selectedDates.start && dateStr <= selectedDates.end;
+  };
+
+  const isDateInSelection = (date: Date) => {
+    if (!doubleClickMode) return false;
+    
+    const dateStr = formatDateLocal(date);
+    
+    // Check if date is in the final selected list
+    if (selectedDateList.includes(dateStr)) return true;
+    
+    // Check if date is in the current selection range (while selecting or hovering)
+    if (isSelecting && selectionStart) {
+      const start = formatDateLocal(selectionStart);
+      const end = selectionEnd ? formatDateLocal(selectionEnd) : dateStr;
+      
+      const actualStart = start <= end ? start : end;
+      const actualEnd = start <= end ? end : start;
+      
+      return dateStr >= actualStart && dateStr <= actualEnd;
+    }
+    
+    return false;
   };
 
   const isDateBlocked = (date: Date) => {
@@ -539,7 +735,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   // Removed unused functions getBookingSpanInfo and getBookingLineInfo
 
   const getCleaningWindow = (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = formatDateLocal(date);
     
     // Check if this date is in a cleaning window between bookings
     if (Array.isArray(safeCalendarData.bookings)) {
@@ -611,7 +807,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               ${isToday ? 'bg-blue-50' : ''}
               ${isBooked ? 'bg-teal-50' : ''}
               ${isBlocked ? 'bg-red-50' : ''}
-              ${isSelected ? 'bg-green-100 border-2 border-green-400' : ''}
+              ${isSelected ? 'bg-green-100 border-2 border-green-500' : ''}
+              ${isDateInSelection(date) ? 'bg-green-100 border-2 border-green-500' : ''}
               ${(() => {
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -633,8 +830,9 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                text-sm font-medium px-2 py-1 rounded
                ${isCurrentMonth ? 'text-gray-900 bg-gray-200' : 'text-gray-400 bg-gray-100'}
                ${isToday ? 'text-blue-600 bg-blue-100' : ''}
-               ${isSelected ? 'text-green-800 bg-green-200 font-bold' : ''}
+               ${isSelected ? 'text-green-700 bg-green-200 font-bold' : ''}
                ${isBlocked ? 'text-red-800 bg-red-200 font-bold' : ''}
+               ${isDateInSelection(date) ? 'text-green-700 bg-green-200 font-bold' : ''}
              `}>
           {date.getDate()}
             </span>
@@ -644,6 +842,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 BLOCKED
               </span>
             )}
+            {/* Selection indicator - removed to match single selection style */}
           </div>
 
           {/* Pricing and Minimum Stay Info - Bottom Right */}
@@ -657,14 +856,14 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             
             if (isLoadingPricing) {
               return (
-                <div className="absolute bottom-1 right-1 px-3 py-2 bg-gray-100 rounded-md text-xs text-gray-400 z-20 shadow-md">
+                <div className="absolute bottom-1 right-1 px-3 py-2 bg-gray-100 rounded-md text-xs text-gray-400 z-10 shadow-md">
                   Loading...
                 </div>
               );
             }
             
             return (
-              <div className={`absolute bottom-1 right-1 px-3 py-2 bg-gray-100 rounded-md space-y-1 z-20 shadow-md transition-opacity duration-200 ${
+              <div className={`absolute bottom-1 right-1 px-3 py-2 bg-gray-100 rounded-md space-y-1 z-10 shadow-md transition-opacity duration-200 ${
                 pricingInfo?.status === 'reserved' ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
               }`}>
                 <div className={`text-xs font-semibold ${
@@ -730,7 +929,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                             top: '0px',
                             height: '40px',
                             width: '30%',
-                            zIndex: 10,
+                            zIndex: 5,
                             borderRadius: '0 6px 6px 0'
                           }}
                         >
@@ -746,7 +945,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                             top: '0px',
                             height: '40px',
                             width: '70%',
-                            zIndex: 10,
+                            zIndex: 5,
                             borderRadius: '0'
                           }}
                         >
@@ -823,13 +1022,17 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           {/* Click Handler */}
           <button
             onClick={() => handleDateClick(date)}
+            onDoubleClick={() => handleDateDoubleClick(date)}
+            onMouseEnter={() => handleDateHover(date)}
             disabled={!isCurrentMonth || isBooked || !canUpdateCalendar(user?.role || null)}
             className={`absolute inset-0 w-full h-full opacity-0 ${
               canUpdateCalendar(user?.role || null) 
                 ? 'cursor-pointer disabled:cursor-not-allowed' 
                 : 'cursor-not-allowed'
-            }`}
-            title={!canUpdateCalendar(user?.role || null) ? 'Only owners can manage calendar dates' : ''}
+            } ${doubleClickMode && !isSelecting ? 'bg-green-100 bg-opacity-50' : ''}`}
+            title={!canUpdateCalendar(user?.role || null) ? 'Only owners can manage calendar dates' : 
+                   doubleClickMode && isSelecting ? 'Click to complete selection or stop selecting' : 
+                   doubleClickMode ? 'Click to start selection' : 'Click to manage date, double-click to select multiple'}
           />
         </div>
       );
@@ -1007,6 +1210,112 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         </div>
       )}
 
+      {/* Start Selection Mode Button */}
+      {!doubleClickMode && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-yellow-900">
+                Multi-Date Selection
+              </p>
+              <p className="text-xs text-yellow-700">
+                Click "Start Selection" → Click start date → Hover to end date → Click end date
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setDoubleClickMode(true);
+                setSelectedDateList([]);
+                setShowBulkActions(false);
+                setHoverMode(false); // Start without hover mode
+                setSelectionStart(null);
+                setSelectionEnd(null);
+                setIsSelecting(false);
+                console.log('Started selection mode manually');
+              }}
+              className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
+            >
+              Start Selection
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Selection Status */}
+      {doubleClickMode && isSelecting && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-blue-900">
+                Selecting Date Range
+              </p>
+              <p className="text-xs text-blue-700">
+                Hover to preview range, then click to complete selection
+              </p>
+            </div>
+            <button
+              onClick={exitDoubleClickMode}
+              className="text-blue-600 hover:text-blue-800 px-3 py-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Actions for Double-Click Selection */}
+      {showBulkActions && selectedDateList.length > 0 && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-green-900">
+                Double-Click Mode: {selectedDateList.length} date{selectedDateList.length > 1 ? 's' : ''} selected
+              </p>
+              <p className="text-xs text-green-700">
+                {selectedDateList.join(', ')}
+              </p>
+              <p className="text-xs text-green-600 mt-1">
+                Hover over dates to add them to selection
+              </p>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleBulkBlock}
+                disabled={isBlocking}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {isBlocking ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <X className="h-4 w-4" />
+                )}
+                Block All ({selectedDateList.length})
+              </button>
+              
+              <button
+                onClick={handleBulkUnblock}
+                disabled={isBlocking}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {isBlocking ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <Check className="h-4 w-4" />
+                )}
+                Unblock All ({selectedDateList.length})
+              </button>
+              
+              <button
+                onClick={exitDoubleClickMode}
+                className="text-green-600 hover:text-green-800 px-3 py-2"
+              >
+                Exit Mode
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Date Management Modal */}
       {showDateModal && clickedDate && (
@@ -1108,12 +1417,6 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                   </>
                 )}
                 
-                <button
-                  onClick={() => setShowDateModal(false)}
-                  className="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
-                >
-                  Close
-                </button>
               </div>
 
               {isDateBooked(clickedDate) && (

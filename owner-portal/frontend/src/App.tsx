@@ -24,6 +24,7 @@ import TouristTax from './pages/TouristTax'
 // import CityTaxDashboard from './pages/CityTaxDashboard'
 import SIBA from './pages/SIBA'
 import SibaManagerDashboard from './pages/SibaManagerDashboard'
+import PropertyManagementPage from './pages/PropertyManagement'
 import PropertyManagement from './components/property/PropertyManagement'
 import Calendar from './pages/Calendar'
 import Performance from './pages/Performance'
@@ -112,7 +113,7 @@ function App() {
         <Route path="siba-manager" element={<SibaManagerDashboard />} />
         <Route path="saft" element={<SAFT />} />
         <Route path="property/:propertyId" element={<PropertyDetails />} />
-        <Route path="property-management" element={<PropertyManagement />} />
+        <Route path="property-management" element={<PropertyManagementPage />} />
         
         {/* Feature Pages */}
         <Route path="calendar" element={<Calendar />} />

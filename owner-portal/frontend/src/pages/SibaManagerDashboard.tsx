@@ -228,7 +228,7 @@ const SibaManagerDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 p-6 pt-48">
       <div className="max-w-7xl mx-auto">
         {/* Notification Toast */}
         {notification && (
@@ -245,40 +245,42 @@ const SibaManagerDashboard: React.FC = () => {
             </div>
           </div>
         )}
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">SIBA Manager Dashboard</h1>
-              <p className="text-gray-600">Real-time SIBA compliance monitoring with Hostkit data</p>
-              <div className="flex items-center space-x-4 mt-2">
-                <span className="text-xs text-gray-500">
-                  Data source: Hostkit API • Last updated: {new Date().toLocaleTimeString()}
-                </span>
-                {realSibaData.length > 0 && (
-                  <span className="text-xs text-green-600">✓ Real booking data</span>
-                )}
+        {/* Header - Fixed */}
+        <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64 mb-8">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">SIBA Manager Dashboard</h1>
+                <p className="text-gray-600">Real-time SIBA compliance monitoring with Hostkit data</p>
+                <div className="flex items-center space-x-4 mt-2">
+                  <span className="text-xs text-gray-500">
+                    Data source: Hostkit API • Last updated: {new Date().toLocaleTimeString()}
+                  </span>
+                  {realSibaData.length > 0 && (
+                    <span className="text-xs text-green-600">✓ Real booking data</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              {/* <PropertySelector
-                selectedId={selectedPropertyId}
-                onChange={setSelectedPropertyId}
-                properties={properties}
-                placeholder="All Properties"
-              /> */}
-              <button
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                  isRefreshing 
-                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
-                }`}
-              >
-                <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-                <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
-              </button>
+              <div className="flex items-center space-x-4">
+                {/* <PropertySelector
+                  selectedId={selectedPropertyId}
+                  onChange={setSelectedPropertyId}
+                  properties={properties}
+                  placeholder="All Properties"
+                /> */}
+                <button
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                    isRefreshing 
+                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
+                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                  }`}
+                >
+                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                  <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

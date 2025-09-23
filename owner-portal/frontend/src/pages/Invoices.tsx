@@ -250,8 +250,8 @@ const Invoices: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
-      {/* Header Section */}
-      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm">
+      {/* Header Section - Fixed */}
+      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -264,8 +264,7 @@ const Invoices: React.FC = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
-
+      <div className="container mx-auto px-4 py-8 space-y-8 pt-48">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500">
@@ -475,12 +474,6 @@ const Invoices: React.FC = () => {
                 <FileText className="h-16 w-16 mx-auto text-gray-400 mb-6" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">No invoices found</h3>
                 <p className="text-lg text-gray-600 mb-6">No invoices are currently available for this property.</p>
-                <div className="bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-2xl p-6 max-w-md mx-auto">
-                  <p className="text-sm text-gray-600">
-                    <strong>Note:</strong> Invoices are fetched from the Hostkit API. 
-                    If you need to create invoices, please use the Hostkit system directly.
-                  </p>
-                </div>
               </div>
             ) : (
               <table className="w-full table-auto">
@@ -562,7 +555,6 @@ const Invoices: React.FC = () => {
           </div>
         </div>
       </div>
-
     </div>
   )
 }

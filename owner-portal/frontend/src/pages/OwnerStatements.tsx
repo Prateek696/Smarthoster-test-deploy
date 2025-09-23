@@ -235,17 +235,24 @@ const OwnerStatements: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center">
-              <Calculator className="w-6 h-6 mr-2" />
-              Owner Statements
-            </h1>
-            <p className="text-gray-600 mt-1">Generate financial statements for property owners</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+      {/* Header - Fixed */}
+      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center">
+            <Calculator className="w-8 h-8 mr-3 text-gray-700" />
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">Owner Statements</h1>
+              <p className="text-lg text-gray-600">
+                Generate financial statements for property owners
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
+      <div className="container mx-auto px-4 py-8 pt-48">
+        <div className="bg-white shadow rounded-lg">
           <div className="p-6">
             {/* Form */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -445,7 +452,7 @@ const OwnerStatements: React.FC = () => {
                 </div>
               </div>
             )}
-                  </div>
+          </div>
         </div>
       </div>
     </div>

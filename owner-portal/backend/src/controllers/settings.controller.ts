@@ -30,6 +30,7 @@ export const getUserProfile = async (req: AuthenticatedRequest, res: Response) =
       phone: user.phone,
       role: user.role,
       isVerified: user.isVerified,
+      companies: user.companies,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt
     });
@@ -48,20 +49,28 @@ export const updateUserProfile = async (req: AuthenticatedRequest, res: Response
       return res.status(401).json({ message: 'Authentication required' });
     }
 
-    const { name, phone } = req.body;
+    const { name, phone, companies } = req.body;
 
     // Validate input
     if (!name || name.trim().length < 2) {
       return res.status(400).json({ message: 'Name must be at least 2 characters long' });
     }
 
+    // Prepare update data
+    const updateData: any = {
+      name: name.trim(),
+      phone: phone?.trim() || undefined
+    };
+
+    // Add companies if provided
+    if (companies) {
+      updateData.companies = companies;
+    }
+
     // Update user profile
     const updatedUser = await UserModel.findByIdAndUpdate(
       req.user.id,
-      { 
-        name: name.trim(),
-        phone: phone?.trim() || undefined
-      },
+      updateData,
       { new: true, runValidators: true }
     ).select('-password');
 
@@ -78,6 +87,7 @@ export const updateUserProfile = async (req: AuthenticatedRequest, res: Response
         phone: updatedUser.phone,
         role: updatedUser.role,
         isVerified: updatedUser.isVerified,
+        companies: updatedUser.companies,
         createdAt: updatedUser.createdAt,
         updatedAt: updatedUser.updatedAt
       }

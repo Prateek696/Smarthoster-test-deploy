@@ -150,6 +150,15 @@ const Bookings: React.FC = () => {
         startDate: currentMonthRange.startDate,
         endDate: currentMonthRange.endDate
       }))
+      
+      // Also set the filters in Redux store
+      dispatch(setFilters({
+        dateRange: {
+          start: currentMonthRange.startDate,
+          end: currentMonthRange.endDate
+        }
+      }))
+      
       console.log('Auto-selected current month:', currentMonthRange)
     }
   }, [searchParams, dispatch])
@@ -215,12 +224,7 @@ const Bookings: React.FC = () => {
     })
   }
 
-  useEffect(() => {
-    // Fetch bookings for all properties or use a default property ID
-    // For now, let's use the first property ID from the mapping
-    const defaultPropertyId = 392776 // Piece of Heaven
-    dispatch(fetchBookingsAsync({ propertyId: defaultPropertyId }))
-  }, [dispatch])
+  // Removed conflicting useEffect - current month logic is handled above
 
   const handleFilterChange = (key: string, value: any) => {
     setTempFilters(prev => ({ ...prev, [key]: value }))
@@ -370,8 +374,8 @@ const Bookings: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
-      {/* Header Section */}
-      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm">
+      {/* Header Section - Fixed */}
+      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -443,7 +447,7 @@ const Bookings: React.FC = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-4 py-8 space-y-8 pt-48">
 
         {/* Search and Filters */}
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl">

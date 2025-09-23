@@ -1,255 +1,157 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { 
-  Settings as SettingsIcon, 
-  User, 
-  Bell, 
-  Shield, 
-  Key,
-  Save,
-  Eye,
-  EyeOff,
-  Check,
-  X,
-  AlertCircle,
-  Info
-} from 'lucide-react'
-import { RootState, AppDispatch } from '../store'
-import { getCurrentUserAsync } from '../store/auth.slice'
-import { settingsAPI } from '../services/settings.api'
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { Settings as SettingsIcon, User, Shield, Bell, Building } from 'lucide-react';
+import { settingsAPI } from '../services/settings.api';
+
+interface Company {
+  name: string;
+  nif: string;
+}
 
 interface UserProfile {
-  firstName: string
-  lastName: string
-  email: string
-  phone?: string
-  role: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  role: string;
+  companies?: Company[];
 }
 
-interface NotificationSettings {
-  emailNotifications: boolean
-  bookingAlerts: boolean
-  paymentAlerts: boolean
-  maintenanceAlerts: boolean
-  weeklyReports: boolean
-  monthlyReports: boolean
-}
-
-interface SecuritySettings {
-  twoFactorEnabled: boolean
-  sessionTimeout: number
-  loginAlerts: boolean
+interface UserProfileData {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role: string;
+  isVerified: boolean;
+  companies?: Company[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 const Settings: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'notifications' | 'security' | 'api'>('profile')
-  const [loading, setLoading] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const [message, setMessage] = useState<{ type: 'success' | 'error' | 'info', text: string } | null>(null)
-  
-  // Profile state
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<'profile' | 'companies'>('profile');
   const [profile, setProfile] = useState<UserProfile>({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    role: ''
-  })
-  
-  // Notification settings
-  const [notifications, setNotifications] = useState<NotificationSettings>({
-    emailNotifications: true,
-    bookingAlerts: true,
-    paymentAlerts: true,
-    maintenanceAlerts: false,
-    weeklyReports: true,
-    monthlyReports: true
-  })
-  
-  // Security settings
-  const [security, setSecurity] = useState<SecuritySettings>({
-    twoFactorEnabled: false,
-    sessionTimeout: 30,
-    loginAlerts: true
-  })
-  
-  // Password change
-  const [passwordForm, setPasswordForm] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
-  })
-  
-  // API Keys
-  const [apiKeys, setApiKeys] = useState<Array<{
-    id: string
-    name: string
-    key: string
-    lastUsed?: string
-    createdAt?: string
-  }>>([])
-  
-  const { user, token } = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch<AppDispatch>()
+    role: '',
+    companies: [{ name: '', nif: '' }]
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    if (user) {
-      setProfile({
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        email: user.email || '',
-        phone: '',
-        role: user.role || ''
-      })
-    }
-  }, [user])
+    const fetchProfile = async () => {
+      try {
+        const profileData = await settingsAPI.getUserProfile();
+        
+        // Handle both name formats (name vs firstName/lastName)
+        const fullName = profileData.name || '';
+        
+        // Better name splitting logic
+        let firstName = '';
+        let lastName = '';
+        
+        // If we only have a full name, split it intelligently
+        if (!firstName && !lastName && fullName) {
+          const nameParts = fullName.trim().split(' ');
+          if (nameParts.length === 1) {
+            firstName = nameParts[0];
+            lastName = '';
+          } else if (nameParts.length === 2) {
+            firstName = nameParts[0];
+            lastName = nameParts[1];
+          } else {
+            // For names with more than 2 parts, first part is first name, rest is last name
+            firstName = nameParts[0];
+            lastName = nameParts.slice(1).join(' ');
+          }
+        }
+        
+        setProfile({
+          firstName: firstName,
+          lastName: lastName,
+          email: profileData.email || '',
+          phone: profileData.phone || '',
+          role: profileData.role || '',
+          companies: profileData.companies || [{ name: '', nif: '' }]
+        });
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+        setError('Failed to load profile data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    fetchSettings()
-  }, [])
+    fetchProfile();
+  }, []);
 
-  const fetchSettings = async () => {
-    if (!token) return
-    
-    setLoading(true)
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProfile(prev => ({ ...prev, [name]: value }));
+  };
+
+  const addCompany = () => {
+    setProfile(prev => ({
+      ...prev,
+      companies: [...(prev.companies || []), { name: '', nif: '' }]
+    }));
+  };
+
+  const removeCompany = (index: number) => {
+    setProfile(prev => ({
+      ...prev,
+      companies: prev.companies?.filter((_, i) => i !== index) || []
+    }));
+  };
+
+  const updateCompany = (index: number, field: 'name' | 'nif', value: string) => {
+    setProfile(prev => ({
+      ...prev,
+      companies: prev.companies?.map((company, i) => 
+        i === index ? { ...company, [field]: value } : company
+      ) || []
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    setError('');
+    setSuccess('');
+
     try {
-      // Fetch notification settings
-      const notificationSettings = await settingsAPI.getNotificationSettings()
-      setNotifications(notificationSettings)
+      const fullName = `${profile.firstName} ${profile.lastName}`.trim();
+      const filteredCompanies = profile.companies?.filter(company =>
+        company.name.trim() !== '' && company.nif.trim() !== ''
+      ) || [];
 
-      // Fetch security settings
-      const securitySettings = await settingsAPI.getSecuritySettings()
-      setSecurity(securitySettings)
+      await settingsAPI.updateUserProfile({
+        name: fullName,
+        phone: profile.phone,
+        companies: filteredCompanies
+      });
 
-      // Mock API keys for now
-      setApiKeys([
-        { id: '1', name: 'Hostaway API', key: 'ha_***', lastUsed: '2024-01-15', createdAt: '2024-01-15' },
-        { id: '2', name: 'Hostkit API', key: 'hk_***', lastUsed: '2024-01-14', createdAt: '2024-01-14' }
-      ])
-    } catch (error) {
-      console.error('Error fetching settings:', error)
-      setMessage({ type: 'error', text: 'Failed to load settings' })
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSaveProfile = async () => {
-    if (!token) return
-    
-    setSaving(true)
-    try {
-      const response = await settingsAPI.updateUserProfile({
-        name: `${profile.firstName} ${profile.lastName}`.trim(),
-        phone: profile.phone
-      })
-      
-      setMessage({ type: 'success', text: response.message })
-      dispatch(getCurrentUserAsync())
+      setSuccess('Profile updated successfully!');
     } catch (error: any) {
-      setMessage({ type: 'error', text: error.response?.data?.message || 'Error updating profile' })
+      console.error('Error updating profile:', error);
+      setError(error.message || 'Failed to update profile');
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
-  }
+  };
 
-  const handleSaveNotifications = async () => {
-    if (!token) return
-    
-    setSaving(true)
-    try {
-      const response = await settingsAPI.updateNotificationSettings(notifications)
-      setMessage({ type: 'success', text: response.message })
-    } catch (error: any) {
-      setMessage({ type: 'error', text: error.response?.data?.message || 'Error updating notification settings' })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleSaveSecurity = async () => {
-    if (!token) return
-    
-    setSaving(true)
-    try {
-      const response = await settingsAPI.updateSecuritySettings(security)
-      setMessage({ type: 'success', text: response.message })
-    } catch (error: any) {
-      setMessage({ type: 'error', text: error.response?.data?.message || 'Error updating security settings' })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleChangePassword = async () => {
-    if (!token) return
-    
-    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      setMessage({ type: 'error', text: 'New passwords do not match' })
-      return
-    }
-
-    setSaving(true)
-    try {
-      // Mock API call - TODO: Implement backend endpoint
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
-      setMessage({ type: 'success', text: 'Password changed successfully' })
-      setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Error changing password' })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleCreateApiKey = async () => {
-    if (!token) return
-    
-    const name = prompt('Enter a name for the API key:')
-    if (!name) return
-
-    setSaving(true)
-    try {
-      // Mock API call - TODO: Implement backend endpoint
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
-      const newKey = { id: Date.now().toString(), name, key: 'new_key_***', lastUsed: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString().split('T')[0] }
-      setApiKeys([...apiKeys, newKey])
-      setMessage({ type: 'success', text: 'API key created successfully' })
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Error creating API key' })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleDeleteApiKey = async (keyId: string) => {
-    if (!token) return
-    
-    if (!confirm('Are you sure you want to delete this API key?')) return
-
-    setSaving(true)
-    try {
-      // Mock API call - TODO: Implement backend endpoint
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
-      setApiKeys(apiKeys.filter(key => key.id !== keyId))
-      setMessage({ type: 'success', text: 'API key deleted successfully' })
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Error deleting API key' })
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  }
+  const tabs = [
+    { id: 'profile', name: 'Profile', icon: User },
+    { id: 'companies', name: 'Companies', icon: Building }
+  ];
 
   if (loading) {
     return (
@@ -259,398 +161,243 @@ const Settings: React.FC = () => {
           <p className="text-gray-600">Loading settings...</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white">Settings</h1>
-        <p className="text-slate-400 mt-1">Manage your account settings and preferences</p>
-      </div>
-
-      {/* Message */}
-      {message && (
-        <div className={`p-4 rounded-lg flex items-center ${
-          message.type === 'success' ? 'bg-green-50 text-green-800' :
-          message.type === 'error' ? 'bg-red-50 text-red-800' :
-          'bg-blue-50 text-blue-800'
-        }`}>
-          {message.type === 'success' ? (
-            <Check className="h-5 w-5 mr-2" />
-          ) : message.type === 'error' ? (
-            <X className="h-5 w-5 mr-2" />
-          ) : (
-            <Info className="h-5 w-5 mr-2" />
-          )}
-          {message.text}
-          <button
-            onClick={() => setMessage(null)}
-            className="ml-auto text-gray-400 hover:text-gray-600"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      )}
-
-      {/* Tabs */}
-      <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
-          {[
-            { id: 'profile', name: 'Profile', icon: User },
-            { id: 'notifications', name: 'Notifications', icon: Bell },
-            { id: 'security', name: 'Security', icon: Shield },
-            { id: 'api', name: 'API Keys', icon: Key }
-          ].map((tab) => {
-            const Icon = tab.icon
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-primary-500 text-primary-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                <Icon className="h-4 w-4 mr-2" />
-                {tab.name}
-              </button>
-            )
-          })}
-        </nav>
-      </div>
-
-      {/* Profile Tab */}
-      {activeTab === 'profile' && (
-        <div className="space-y-6">
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-semibold text-gray-900">Profile Information</h3>
-            </div>
-            <div className="card-content">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    value={profile.firstName}
-                    onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
-                    className="input"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    value={profile.lastName}
-                    onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
-                    className="input"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={profile.email}
-                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                    className="input"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    value={profile.phone}
-                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                    className="input"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Role
-                  </label>
-                  <input
-                    type="text"
-                    value={profile.role}
-                    disabled
-                    className="input bg-gray-50"
-                  />
-                </div>
-              </div>
-              
-              <div className="mt-6">
-                <button
-                  onClick={handleSaveProfile}
-                  disabled={saving}
-                  className="btn-primary"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {saving ? 'Saving...' : 'Save Changes'}
-                </button>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+      {/* Header - Fixed */}
+      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
+        <div className="container mx-auto px-4 py-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Settings</h1>
+            <p className="text-lg text-gray-600">
+              Manage your account settings and preferences
+            </p>
           </div>
+        </div>
+      </div>
 
-          {/* Change Password */}
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-semibold text-gray-900">Change Password</h3>
+      <div className="container mx-auto px-4 py-8 pt-48">
+        <div className="max-w-4xl mx-auto">
+          {/* Success/Error Messages */}
+          {success && (
+            <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+              {success}
             </div>
-            <div className="card-content">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Current Password
-                  </label>
-                  <div className="relative">
+          )}
+          {error && (
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          {/* Tabs */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+            <div className="border-b border-gray-200">
+              <nav className="flex space-x-8 px-6">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id as 'profile' | 'companies')}
+                      className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+                        activeTab === tab.id
+                          ? 'border-blue-500 text-blue-600'
+                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {tab.name}
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+
+            <div className="p-6">
+              {/* Profile Tab */}
+              {activeTab === 'profile' && (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={profile.firstName}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={profile.lastName}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email
+                    </label>
                     <input
-                      type={showPassword ? 'text' : 'password'}
-                      value={passwordForm.currentPassword}
-                      onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                      className="input pr-10"
+                      type="email"
+                      name="email"
+                      value={profile.email}
+                      disabled
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500"
                     />
+                    <p className="text-sm text-gray-500 mt-1">Email cannot be changed</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={profile.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Role
+                    </label>
+                    <input
+                      type="text"
+                      name="role"
+                      value={profile.role}
+                      disabled
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500"
+                    />
+                  </div>
+
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {saving ? 'Saving...' : 'Save Changes'}
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Companies Tab */}
+              {activeTab === 'companies' && (
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900">Company Information</h3>
+                      <p className="text-sm text-gray-500">Manage your company details and NIF numbers</p>
+                    </div>
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      onClick={addCompany}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
                     >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      <Building className="h-4 w-4" />
+                      Add Company
                     </button>
                   </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    value={passwordForm.newPassword}
-                    onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                    className="input"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    value={passwordForm.confirmPassword}
-                    onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                    className="input"
-                  />
-                </div>
-              </div>
-              
-              <div className="mt-6">
-                <button
-                  onClick={handleChangePassword}
-                  disabled={saving}
-                  className="btn-primary"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {saving ? 'Changing...' : 'Change Password'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* Notifications Tab */}
-      {activeTab === 'notifications' && (
-        <div className="space-y-6">
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-semibold text-gray-900">Email Notifications</h3>
-            </div>
-            <div className="card-content">
-              <div className="space-y-4">
-                {[
-                  { key: 'emailNotifications', label: 'Email Notifications', description: 'Receive email notifications' },
-                  { key: 'bookingAlerts', label: 'Booking Alerts', description: 'Get notified about new bookings' },
-                  { key: 'paymentAlerts', label: 'Payment Alerts', description: 'Get notified about payments' },
-                  { key: 'maintenanceAlerts', label: 'Maintenance Alerts', description: 'Get notified about maintenance issues' },
-                  { key: 'weeklyReports', label: 'Weekly Reports', description: 'Receive weekly performance reports' },
-                  { key: 'monthlyReports', label: 'Monthly Reports', description: 'Receive monthly performance reports' }
-                ].map((setting) => (
-                  <div key={setting.key} className="flex items-center justify-between">
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-900">{setting.label}</h4>
-                      <p className="text-sm text-gray-500">{setting.description}</p>
+                  {profile.companies && profile.companies.length > 0 ? (
+                    <div className="space-y-4">
+                      {profile.companies.map((company, index) => (
+                        <div key={index} className="border border-gray-200 rounded-lg p-4">
+                          <div className="flex justify-between items-start mb-4">
+                            <h4 className="font-medium text-gray-900">Company {index + 1}</h4>
+                            {profile.companies && profile.companies.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeCompany(index)}
+                                className="text-red-600 hover:text-red-800 text-sm"
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Company Name
+                              </label>
+                              <input
+                                type="text"
+                                value={company.name}
+                                onChange={(e) => updateCompany(index, 'name', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter company name"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                                NIF
+                              </label>
+                              <input
+                                type="text"
+                                value={company.nif}
+                                onChange={(e) => updateCompany(index, 'nif', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter NIF number"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={notifications[setting.key as keyof NotificationSettings]}
-                        onChange={(e) => setNotifications({ ...notifications, [setting.key]: e.target.checked })}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-                    </label>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-6">
-                <button
-                  onClick={handleSaveNotifications}
-                  disabled={saving}
-                  className="btn-primary"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {saving ? 'Saving...' : 'Save Settings'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Security Tab */}
-      {activeTab === 'security' && (
-        <div className="space-y-6">
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-semibold text-gray-900">Security Settings</h3>
-            </div>
-            <div className="card-content">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-900">Two-Factor Authentication</h4>
-                    <p className="text-sm text-gray-500">Add an extra layer of security to your account</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={security.twoFactorEnabled}
-                      onChange={(e) => setSecurity({ ...security, twoFactorEnabled: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-                  </label>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Session Timeout (minutes)
-                  </label>
-                  <select
-                    value={security.sessionTimeout}
-                    onChange={(e) => setSecurity({ ...security, sessionTimeout: parseInt(e.target.value) })}
-                    className="input"
-                  >
-                    <option value={15}>15 minutes</option>
-                    <option value={30}>30 minutes</option>
-                    <option value={60}>1 hour</option>
-                    <option value={120}>2 hours</option>
-                    <option value={480}>8 hours</option>
-                  </select>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-900">Login Alerts</h4>
-                    <p className="text-sm text-gray-500">Get notified when someone logs into your account</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={security.loginAlerts}
-                      onChange={(e) => setSecurity({ ...security, loginAlerts: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-                  </label>
-                </div>
-              </div>
-              
-              <div className="mt-6">
-                <button
-                  onClick={handleSaveSecurity}
-                  disabled={saving}
-                  className="btn-primary"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {saving ? 'Saving...' : 'Save Settings'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* API Keys Tab */}
-      {activeTab === 'api' && (
-        <div className="space-y-6">
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">API Keys</h3>
-                <button
-                  onClick={handleCreateApiKey}
-                  disabled={saving}
-                  className="btn-primary btn-sm"
-                >
-                  <Key className="h-4 w-4 mr-2" />
-                  Create API Key
-                </button>
-              </div>
-            </div>
-            <div className="card-content">
-              <div className="space-y-4">
-                {apiKeys.map((apiKey) => (
-                  <div key={apiKey.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-900">{apiKey.name}</h4>
-                      <p className="text-sm text-gray-500">
-                        Created: {apiKey.createdAt ? formatDate(apiKey.createdAt) : 'Unknown'}
-                        {apiKey.lastUsed && ` • Last used: ${formatDate(apiKey.lastUsed)}`}
-                      </p>
-                      <p className="text-xs text-gray-400 font-mono mt-1">
-                        {apiKey.key.substring(0, 8)}...{apiKey.key.substring(apiKey.key.length - 8)}
-                      </p>
+                  ) : (
+                    <div className="text-center py-8">
+                      <Building className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">No companies added</h3>
+                      <p className="text-gray-500 mb-4">Add your first company to get started.</p>
+                      <button
+                        type="button"
+                        onClick={addCompany}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 mx-auto"
+                      >
+                        <Building className="h-4 w-4" />
+                        Add Company
+                      </button>
                     </div>
+                  )}
+
+                  <div className="flex justify-end">
                     <button
-                      onClick={() => handleDeleteApiKey(apiKey.id)}
-                      className="btn-danger btn-sm"
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={saving}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Delete
+                      {saving ? 'Saving...' : 'Save Companies'}
                     </button>
                   </div>
-                ))}
-                
-                {apiKeys.length === 0 && (
-                  <div className="text-center py-8">
-                    <Key className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No API Keys</h3>
-                    <p className="text-gray-500">Create your first API key to get started.</p>
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

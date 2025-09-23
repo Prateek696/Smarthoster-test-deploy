@@ -2,6 +2,11 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export type UserRole = "admin" | "owner" | "accountant" | "user";
 
+export interface ICompany {
+  name: string;
+  nif: string;
+}
+
 export interface IUser extends Document {
   name: string;
   email: string;
@@ -9,9 +14,15 @@ export interface IUser extends Document {
   password: string;
   role: UserRole;
   isVerified: boolean;
+  companies?: ICompany[];
   createdAt: Date;
   updatedAt: Date;
 }
+
+const companySchema = new Schema<ICompany>({
+  name: { type: String, required: true },
+  nif: { type: String, required: true }
+}, { _id: false });
 
 const userSchema = new Schema<IUser>(
   {
@@ -21,6 +32,7 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "owner", "accountant", "user"], default: "user" },
     isVerified: { type: Boolean, default: false },
+    companies: [companySchema],
   },
   { timestamps: true }
 );

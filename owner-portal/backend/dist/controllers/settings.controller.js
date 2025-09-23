@@ -21,6 +21,7 @@ const getUserProfile = async (req, res) => {
             phone: user.phone,
             role: user.role,
             isVerified: user.isVerified,
+            companies: user.companies,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         });
@@ -39,16 +40,22 @@ const updateUserProfile = async (req, res) => {
         if (!req.user) {
             return res.status(401).json({ message: 'Authentication required' });
         }
-        const { name, phone } = req.body;
+        const { name, phone, companies } = req.body;
         // Validate input
         if (!name || name.trim().length < 2) {
             return res.status(400).json({ message: 'Name must be at least 2 characters long' });
         }
-        // Update user profile
-        const updatedUser = await User_model_1.UserModel.findByIdAndUpdate(req.user.id, {
+        // Prepare update data
+        const updateData = {
             name: name.trim(),
             phone: phone?.trim() || undefined
-        }, { new: true, runValidators: true }).select('-password');
+        };
+        // Add companies if provided
+        if (companies) {
+            updateData.companies = companies;
+        }
+        // Update user profile
+        const updatedUser = await User_model_1.UserModel.findByIdAndUpdate(req.user.id, updateData, { new: true, runValidators: true }).select('-password');
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -61,6 +68,7 @@ const updateUserProfile = async (req, res) => {
                 phone: updatedUser.phone,
                 role: updatedUser.role,
                 isVerified: updatedUser.isVerified,
+                companies: updatedUser.companies,
                 createdAt: updatedUser.createdAt,
                 updatedAt: updatedUser.updatedAt
             }

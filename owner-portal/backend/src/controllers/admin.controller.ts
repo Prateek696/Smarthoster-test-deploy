@@ -176,6 +176,7 @@ export const getAllOwners = async (req: Request, res: Response) => {
           isVerified: owner.isVerified,
           hasApiKeys: !!apiKeys,
           apiKeysActive: apiKeys?.isActive || false,
+          companies: owner.companies,
           createdAt: (owner as any).createdAt,
           updatedAt: (owner as any).updatedAt
         };
@@ -380,10 +381,15 @@ export const createOwner = async (req: Request, res: Response) => {
 export const updateOwner = async (req: Request, res: Response) => {
   try {
     const { ownerId } = req.params;
-    const { name, email, phone, password, role } = req.body;
+    const { name, email, phone, password, role, companies } = req.body;
 
     // Prepare update data
     const updateData: any = { name, email, phone, role };
+    
+    // Add companies if provided
+    if (companies) {
+      updateData.companies = companies;
+    }
     
     // Only update password if provided
     if (password && password.trim() !== '') {
@@ -410,12 +416,13 @@ export const updateOwner = async (req: Request, res: Response) => {
         phone: owner.phone,
         role: owner.role,
         isVerified: owner.isVerified,
+        companies: owner.companies,
         createdAt: (owner as any).createdAt,
         updatedAt: (owner as any).updatedAt
       }
     });
   } catch (error: any) {
-    console.error('Error in createOwner:', error);
+    console.error('Error in updateOwner:', error);
     res.status(500).json({ message: error.message });
   }
 };

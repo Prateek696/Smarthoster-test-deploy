@@ -9,8 +9,10 @@ export interface User {
   firstName?: string
   lastName?: string
   username?: string
+  phone?: string
   role: UserRole
   isVerified?: boolean
+  companies?: Array<{ name: string; nif: string }>
   createdAt: string
   updatedAt: string
 }

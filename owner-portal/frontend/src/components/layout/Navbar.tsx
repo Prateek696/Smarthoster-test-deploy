@@ -37,10 +37,10 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
 
   return (
-    <header className="bg-white shadow-sm border-b">
+    <header className="bg-white shadow-sm border-b fixed top-0 left-0 right-0 z-30 lg:left-64">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Left extreme - Logo and Title */}
+          {/* Left extreme - Mobile Menu Button */}
           <div className="flex items-center">
             <button
               onClick={onMenuClick}
@@ -48,20 +48,6 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             >
               <Menu className="h-6 w-6" />
             </button>
-            
-            {/* OwnerPortal Logo and Title */}
-            <div className="flex items-center">
-              <div className="flex items-center justify-center w-10 h-10 bg-white rounded-lg mr-3 border border-gray-200 shadow-sm">
-                <Logo size="md" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-gray-900">
-                  <span className="text-gray-900">Owner</span>
-                  <span className="text-[#5FFF56]">Portal</span>
-                </h1>
-                <span className="text-xs text-gray-500">Property Management</span>
-              </div>
-            </div>
           </div>
 
           {/* Right extreme - Language, Notifications and Profile */}

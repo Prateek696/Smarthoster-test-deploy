@@ -6,6 +6,11 @@ export const checkAdminExists = async (): Promise<boolean> => {
   return response.data.exists
 }
 
+export interface Company {
+  name: string;
+  nif: string;
+}
+
 export interface Owner {
   _id: string
   name: string
@@ -15,6 +20,7 @@ export interface Owner {
   isVerified: boolean
   hasApiKeys: boolean
   apiKeysActive: boolean
+  companies?: Company[]
   createdAt: string
   updatedAt: string
 }
@@ -29,6 +35,7 @@ export interface CreateOwnerData {
   hostkitApiKey?: string
   hostkitApiSecret?: string
   assignedProperties?: string[]
+  companies?: Company[]
 }
 
 export interface UpdateOwnerData {
@@ -38,6 +45,7 @@ export interface UpdateOwnerData {
   role?: string
   hostkitApiKey?: string
   hostkitApiSecret?: string
+  companies?: Company[]
 }
 
 export interface AdminDashboardStats {

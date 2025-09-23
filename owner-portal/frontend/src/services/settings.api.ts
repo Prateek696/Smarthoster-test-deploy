@@ -1,5 +1,10 @@
 import { apiClient } from './apiClient'
 
+interface Company {
+  name: string;
+  nif: string;
+}
+
 interface UserProfile {
   id: string
   name: string
@@ -7,6 +12,7 @@ interface UserProfile {
   phone?: string
   role: string
   isVerified: boolean
+  companies?: Company[]
   createdAt: string
   updatedAt: string
 }
@@ -29,6 +35,7 @@ interface SecuritySettings {
 interface UpdateProfileData {
   name: string
   phone?: string
+  companies?: Company[]
 }
 
 interface UpdateNotificationData {
