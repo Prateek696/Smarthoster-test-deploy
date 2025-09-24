@@ -39,6 +39,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated && user) {
+      // Always redirect to owner dashboard
       navigate('/dashboard/owner')
     }
   }, [isAuthenticated, user, navigate])
@@ -68,12 +69,8 @@ const Login: React.FC = () => {
       const result = await dispatch(verifyLoginOTPAsync({ email, otp })).unwrap()
       toast.success('Welcome back!')
       
-      // Redirect based on user role
-      if (result.user?.role === 'admin') {
-        navigate('/admin/dashboard')
-      } else {
-        navigate('/dashboard/owner')
-      }
+      // Always redirect to owner dashboard
+      navigate('/dashboard/owner')
     } catch (error) {
       // Error handled by Redux slice and displayed via useEffect
     }
