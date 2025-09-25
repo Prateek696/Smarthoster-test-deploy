@@ -12,8 +12,7 @@ const serverlessMongoOptions = {
   maxPoolSize: 1, // Single connection for serverless
   minPoolSize: 0, // No minimum pool
   maxIdleTimeMS: 0, // Never close idle connections
-  bufferCommands: true, // Enable buffering for serverless - queue commands until connected
-  bufferMaxEntries: 0, // Unlimited buffer size
+  bufferCommands: false, // Disable buffering for serverless
   retryWrites: true, // Retry failed writes
   retryReads: true // Retry failed reads
 };
