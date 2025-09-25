@@ -38,6 +38,7 @@ const imageUpload_routes_1 = __importDefault(require("./routes/imageUpload.route
 const settings_routes_1 = __importDefault(require("./routes/settings.routes"));
 const admin_routes_1 = __importDefault(require("./routes/admin.routes"));
 const test_routes_1 = __importDefault(require("./routes/test.routes"));
+const keepAlive_1 = require("./utils/keepAlive");
 const app = (0, express_1.default)();
 app.use('/saft/files', express_1.default.static(path_1.default.join(__dirname, 'saft_files')));
 app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
@@ -88,6 +89,51 @@ app.use("/portfolio", portfolio_routes_1.default);
 app.use("/settings", settings_routes_1.default);
 app.use("/admin", admin_routes_1.default);
 app.use("/test", test_routes_1.default);
+// Vercel Cron Job endpoint for MongoDB keep-alive
+app.post("/api/cron/keep-alive", async (req, res) => {
+    const startTime = Date.now();
+    console.log('🔄 Vercel cron job started:', new Date().toISOString());
+    try {
+        // Ensure temp collection exists
+        await (0, keepAlive_1.ensureTempCollection)();
+        // Execute MongoDB keep-alive directly
+        const pingSuccess = await (0, keepAlive_1.pingMongoDB)();
+        const responseTime = Date.now() - startTime;
+        if (pingSuccess) {
+            console.log('✅ MongoDB keep-alive successful:', {
+                timestamp: new Date().toISOString(),
+                responseTime: `${responseTime}ms`
+            });
+            // Return success response
+            res.status(200).json({
+                success: true,
+                message: 'MongoDB keep-alive completed successfully',
+                timestamp: new Date().toISOString(),
+                responseTime: `${responseTime}ms`,
+                environment: process.env.NODE_ENV
+            });
+        }
+        else {
+            throw new Error('MongoDB keep-alive ping failed');
+        }
+    }
+    catch (error) {
+        const responseTime = Date.now() - startTime;
+        console.error('❌ MongoDB keep-alive failed:', {
+            error: error.message,
+            timestamp: new Date().toISOString(),
+            responseTime: `${responseTime}ms`
+        });
+        // Return error response (but don't fail the cron job)
+        res.status(500).json({
+            success: false,
+            message: 'MongoDB keep-alive failed',
+            error: error.message,
+            timestamp: new Date().toISOString(),
+            responseTime: `${responseTime}ms`
+        });
+    }
+});
 app.use(statements_routes_1.default);
 // Serve saved statement files
 app.use("/statements", express_1.default.static(path_1.default.join(process.cwd(), "statements")));

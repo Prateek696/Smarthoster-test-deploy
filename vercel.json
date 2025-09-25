@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "owner-portal/backend/src/server.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "owner-portal/backend/src/server.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "owner-portal/backend/src/server.ts"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/keep-alive",
+      "schedule": "*/15 * * * *"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "owner-portal/backend/src/server.ts": {
+      "maxDuration": 30
+    }
+  }
+}

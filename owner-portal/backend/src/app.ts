@@ -33,6 +33,7 @@ import imageUploadRoutes from './routes/imageUpload.routes';
 import settingsRoutes from './routes/settings.routes';
 import adminRoutes from './routes/admin.routes';
 import testRoutes from './routes/test.routes';
+import { pingMongoDB, ensureTempCollection } from './utils/keepAlive';
 
 const app = express();
 app.use('/saft/files', express.static(path.join(__dirname, 'saft_files')));
@@ -84,6 +85,58 @@ app.use("/portfolio", portfolioRoutes);
 app.use("/settings", settingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/test", testRoutes);
+
+// Vercel Cron Job endpoint for MongoDB keep-alive
+app.post("/api/cron/keep-alive", async (req, res) => {
+  const startTime = Date.now();
+  console.log('🔄 Vercel cron job started:', new Date().toISOString());
+
+  try {
+    // Ensure temp collection exists
+    await ensureTempCollection();
+    
+    // Execute MongoDB keep-alive directly
+    const pingSuccess = await pingMongoDB();
+    
+    const responseTime = Date.now() - startTime;
+    
+    if (pingSuccess) {
+      console.log('✅ MongoDB keep-alive successful:', {
+        timestamp: new Date().toISOString(),
+        responseTime: `${responseTime}ms`
+      });
+
+      // Return success response
+      res.status(200).json({ 
+        success: true,
+        message: 'MongoDB keep-alive completed successfully',
+        timestamp: new Date().toISOString(),
+        responseTime: `${responseTime}ms`,
+        environment: process.env.NODE_ENV
+      });
+    } else {
+      throw new Error('MongoDB keep-alive ping failed');
+    }
+
+  } catch (error: any) {
+    const responseTime = Date.now() - startTime;
+    
+    console.error('❌ MongoDB keep-alive failed:', {
+      error: error.message,
+      timestamp: new Date().toISOString(),
+      responseTime: `${responseTime}ms`
+    });
+
+    // Return error response (but don't fail the cron job)
+    res.status(500).json({ 
+      success: false,
+      message: 'MongoDB keep-alive failed',
+      error: error.message,
+      timestamp: new Date().toISOString(),
+      responseTime: `${responseTime}ms`
+    });
+  }
+});
 
 app.use(statementsRoutes);
 
