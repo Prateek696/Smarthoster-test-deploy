@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import path from 'path';
+import mongoose from 'mongoose';
+import { ensureDBConnection } from './config/db';
 import healthRoutes from "./routes/health.routes";
 import authRoutes from "./routes/auth.routes";
 import otpRoutes from "./routes/otp.routes";
@@ -58,6 +60,32 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 app.use(express.json());
+
+// Database connection middleware for serverless functions
+app.use(async (req, res, next) => {
+  try {
+    // Skip database check for health routes
+    if (req.path.startsWith('/health') || req.path.startsWith('/test')) {
+      return next();
+    }
+    
+    // Ensure database connection is established
+    if (mongoose.connection.readyState !== 1) {
+      console.log('🔄 Database not connected, establishing connection...');
+      await ensureDBConnection();
+      console.log('✅ Database connection established');
+    }
+    
+    next();
+  } catch (error: any) {
+    console.error('❌ Database connection middleware error:', error.message);
+    res.status(503).json({ 
+      error: 'Database connection failed', 
+      message: 'Service temporarily unavailable' 
+    });
+  }
+});
+
 app.use("/health", healthRoutes);
 app.use("/auth", authRoutes);
 app.use("/otp", otpRoutes);
