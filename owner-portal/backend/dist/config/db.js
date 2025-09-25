@@ -16,8 +16,7 @@ const serverlessMongoOptions = {
     maxPoolSize: 1, // Single connection for serverless
     minPoolSize: 0, // No minimum pool
     maxIdleTimeMS: 0, // Never close idle connections
-    bufferCommands: true, // Enable buffering for serverless - queue commands until connected
-    bufferMaxEntries: 0, // Unlimited buffer size
+    bufferCommands: false, // Disable buffering for serverless
     retryWrites: true, // Retry failed writes
     retryReads: true // Retry failed reads
 };
@@ -57,15 +56,20 @@ const connectWithRetry = async (retries = 5) => {
 const connectDB = async () => {
     try {
         console.log("🔗 Initializing MongoDB connection...");
-        console.log("🔗 MongoDB URI:", env_1.env.mongoUri ? "Set" : "Not set");
+        console.log("🔗 Environment:", process.env.NODE_ENV);
+        console.log("🔗 MongoDB URI exists:", !!env_1.env.mongoUri);
+        console.log("🔗 MongoDB URI length:", env_1.env.mongoUri?.length || 0);
+        console.log("🔗 MongoDB URI starts with:", env_1.env.mongoUri?.substring(0, 20) || "N/A");
         if (!env_1.env.mongoUri) {
             console.log("⚠️ No MongoDB URI provided, skipping connection");
+            console.log("⚠️ Available env vars:", Object.keys(process.env).filter(key => key.includes('MONGO')));
             return;
         }
         await connectWithRetry();
     }
     catch (err) {
         console.error("❌ MongoDB connection failed:", err.message);
+        console.error("❌ Error details:", err);
         console.log("⚠️ App will continue without database connection");
         // Don't throw error, just log it
     }

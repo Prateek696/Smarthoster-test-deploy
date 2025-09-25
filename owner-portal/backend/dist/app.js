@@ -7,8 +7,6 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const path_1 = __importDefault(require("path"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const db_1 = require("./config/db");
 const health_routes_1 = __importDefault(require("./routes/health.routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const otp_routes_1 = __importDefault(require("./routes/otp.routes"));
@@ -64,29 +62,6 @@ app.use((0, cors_1.default)({
     optionsSuccessStatus: 200
 }));
 app.use(express_1.default.json());
-// Database connection middleware for serverless functions
-app.use(async (req, res, next) => {
-    try {
-        // Skip database check for health routes
-        if (req.path.startsWith('/health') || req.path.startsWith('/test')) {
-            return next();
-        }
-        // Ensure database connection is established
-        if (mongoose_1.default.connection.readyState !== 1) {
-            console.log('🔄 Database not connected, establishing connection...');
-            await (0, db_1.ensureDBConnection)();
-            console.log('✅ Database connection established');
-        }
-        next();
-    }
-    catch (error) {
-        console.error('❌ Database connection middleware error:', error.message);
-        res.status(503).json({
-            error: 'Database connection failed',
-            message: 'Service temporarily unavailable'
-        });
-    }
-});
 app.use("/health", health_routes_1.default);
 app.use("/auth", auth_routes_1.default);
 app.use("/otp", otp_routes_1.default);

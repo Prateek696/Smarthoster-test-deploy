@@ -61,16 +61,21 @@ const connectWithRetry = async (retries = 5): Promise<typeof mongoose> => {
 export const connectDB = async () => {
   try {
     console.log("🔗 Initializing MongoDB connection...");
-    console.log("🔗 MongoDB URI:", env.mongoUri ? "Set" : "Not set");
+    console.log("🔗 Environment:", process.env.NODE_ENV);
+    console.log("🔗 MongoDB URI exists:", !!env.mongoUri);
+    console.log("🔗 MongoDB URI length:", env.mongoUri?.length || 0);
+    console.log("🔗 MongoDB URI starts with:", env.mongoUri?.substring(0, 20) || "N/A");
     
     if (!env.mongoUri) {
       console.log("⚠️ No MongoDB URI provided, skipping connection");
+      console.log("⚠️ Available env vars:", Object.keys(process.env).filter(key => key.includes('MONGO')));
       return;
     }
     
     await connectWithRetry();
   } catch (err: any) {
     console.error("❌ MongoDB connection failed:", err.message);
+    console.error("❌ Error details:", err);
     console.log("⚠️ App will continue without database connection");
     // Don't throw error, just log it
   }
