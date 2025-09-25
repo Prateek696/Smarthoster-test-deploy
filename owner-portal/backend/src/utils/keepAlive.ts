@@ -13,36 +13,51 @@ const TEMP_COLLECTION_NAME = 'keep_alive_temp';
  * Execute a simple MongoDB query to keep the cluster awake
  * @returns Promise<boolean> - true if successful, false if failed
  */
-export const pingMongoDB = async (): Promise<boolean> => {
-  try {
-    // Ensure MongoDB is connected
-    if ((mongoose.connection.readyState as number) !== 1) {
-      console.log('🔄 MongoDB not connected, attempting to connect...');
-      await connectDB();
+export const pingMongoDB = async (retries: number = 3): Promise<boolean> => {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      console.log(`🔄 MongoDB keep-alive attempt ${attempt}/${retries}`);
       
-      // Wait a moment for connection to establish
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Ensure MongoDB is connected
       if ((mongoose.connection.readyState as number) !== 1) {
-        console.log('⚠️ MongoDB connection failed');
-        return false;
+        console.log('🔄 MongoDB not connected, attempting to connect...');
+        await connectDB();
+        
+        // Wait longer for connection to establish
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        if ((mongoose.connection.readyState as number) !== 1) {
+          console.log('⚠️ MongoDB connection failed');
+          if (attempt < retries) {
+            console.log(`⏳ Retrying in 3 seconds... (attempt ${attempt + 1}/${retries})`);
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            continue;
+          }
+          return false;
+        }
+      }
+
+      // Execute a simple query to keep the cluster awake
+      // Using findOne with empty filter is lightweight and effective
+      if (mongoose.connection.db) {
+        await mongoose.connection.db.collection(TEMP_COLLECTION_NAME).findOne({});
+      } else {
+        throw new Error('MongoDB database connection not available');
+      }
+      
+      console.log(`✅ MongoDB keep-alive successful: ${new Date().toISOString()}`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ MongoDB keep-alive attempt ${attempt} failed:`, error.message);
+      if (attempt < retries) {
+        console.log(`⏳ Retrying in 3 seconds... (attempt ${attempt + 1}/${retries})`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
     }
-
-    // Execute a simple query to keep the cluster awake
-    // Using findOne with empty filter is lightweight and effective
-    if (mongoose.connection.db) {
-      await mongoose.connection.db.collection(TEMP_COLLECTION_NAME).findOne({});
-    } else {
-      throw new Error('MongoDB database connection not available');
-    }
-    
-    console.log(`✅ MongoDB keep-alive successful: ${new Date().toISOString()}`);
-    return true;
-  } catch (error: any) {
-    console.error('❌ MongoDB keep-alive failed:', error.message);
-    return false;
   }
+  
+  console.error('❌ All MongoDB keep-alive attempts failed');
+  return false;
 };
 
 /**

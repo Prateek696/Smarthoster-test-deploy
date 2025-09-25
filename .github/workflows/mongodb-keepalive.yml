@@ -4,8 +4,12 @@ on:
   schedule:
     # Run every 15 minutes (GitHub's minimum interval)
     - cron: '*/15 * * * *'
-    # Run every hour as backup
+    # Run every 30 minutes as backup
+    - cron: '*/30 * * * *'
+    # Run every hour as additional backup
     - cron: '0 * * * *'
+    # Run every 2 hours as final backup
+    - cron: '0 */2 * * *'
   workflow_dispatch: # Allow manual trigger
   push: # Also run on push to ensure it's active
   pull_request: # Trigger on PRs to keep repo active
