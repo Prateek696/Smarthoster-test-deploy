@@ -1,20 +1,11 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 
-if (!process.env.MONGO_URI) {
+if (!process.env.MONGODB_URI) {
   throw new Error('Please add your Mongo URI to .env.local');
 }
 
-const uri = process.env.MONGO_URI;
-const options: MongoClientOptions = {
-  serverSelectionTimeoutMS: 5000,
-  connectTimeoutMS: 10000,
-  socketTimeoutMS: 0,
-  maxPoolSize: 1,
-  minPoolSize: 0,
-  maxIdleTimeMS: 0,
-  retryWrites: true,
-  retryReads: true
-};
+const uri = process.env.MONGODB_URI;
+const options: MongoClientOptions = {};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
