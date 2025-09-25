@@ -6,6 +6,9 @@ node_modules/
 .env
 .env.local
 .env.production
+**/.env
+**/.env.local
+**/.env.production
 
 # Build outputs
 build/
@@ -46,6 +49,22 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+
+# Additional sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+config.json
+secrets.json
+credentials.json
+
+# Specific .env files
+vibrant-glow-design-kit-main/.env
+vibrant-glow-design-kit-main\.env
+
+# Ignore entire vibrant directory (contains .env)
+vibrant-glow-design-kit-main/
 
 # IDE files
 .vscode/
