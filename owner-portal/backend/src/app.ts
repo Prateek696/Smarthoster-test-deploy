@@ -34,6 +34,9 @@ import settingsRoutes from './routes/settings.routes';
 import adminRoutes from './routes/admin.routes';
 import testRoutes from './routes/test.routes';
 import mongodbTestRoutes from './routes/mongodb-test.routes';
+import authTestRoutes from './routes/auth-test.routes';
+import propertyTestRoutes from './routes/property-test.routes';
+import userProfileTestRoutes from './routes/user-profile-test.routes';
 import { pingMongoDB, ensureTempCollection } from './utils/keepAlive';
 
 const app = express();
@@ -87,6 +90,9 @@ app.use("/settings", settingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/test", testRoutes);
 app.use("/mongodb-test", mongodbTestRoutes);
+app.use("/auth-test", authTestRoutes);
+app.use("/property-test", propertyTestRoutes);
+app.use("/user-profile-test", userProfileTestRoutes);
 
 // Vercel Cron Job endpoint for MongoDB keep-alive
 app.post("/api/cron/keep-alive", async (req, res) => {
