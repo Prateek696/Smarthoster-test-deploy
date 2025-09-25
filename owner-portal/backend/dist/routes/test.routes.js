@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const mongoose_1 = __importDefault(require("mongoose"));
+const keepAlive_1 = require("../utils/keepAlive");
 const router = (0, express_1.Router)();
 // Root route
 router.get("/", (req, res) => {
@@ -16,7 +17,8 @@ router.get("/", (req, res) => {
         endpoints: {
             test: "/test/test",
             admin: "/admin/check-admin-exists",
-            health: "/test/health"
+            health: "/test/health",
+            ping: "/test/ping"
         }
     });
 });
@@ -39,5 +41,45 @@ router.get("/test", (req, res) => {
         environment: process.env.NODE_ENV,
         mongoUri: process.env.MONGODB_URI ? "Set" : "Not set"
     });
+});
+// MongoDB Keep-Alive Ping Endpoint
+// This endpoint actually queries MongoDB to keep the cluster awake
+// Use this with UptimeRobot or external cron services
+router.get("/ping", async (req, res) => {
+    try {
+        // Ensure the temp collection exists
+        await (0, keepAlive_1.ensureTempCollection)();
+        // Execute MongoDB query to keep cluster awake
+        const pingSuccess = await (0, keepAlive_1.pingMongoDB)();
+        if (pingSuccess) {
+            res.json({
+                status: "success",
+                message: "MongoDB cluster is awake",
+                timestamp: new Date().toISOString(),
+                mongoStatus: (0, keepAlive_1.getMongoDBStatus)(),
+                environment: process.env.NODE_ENV
+            });
+        }
+        else {
+            res.status(503).json({
+                status: "error",
+                message: "MongoDB keep-alive failed",
+                timestamp: new Date().toISOString(),
+                mongoStatus: (0, keepAlive_1.getMongoDBStatus)(),
+                environment: process.env.NODE_ENV
+            });
+        }
+    }
+    catch (error) {
+        console.error("❌ Ping endpoint error:", error.message);
+        res.status(500).json({
+            status: "error",
+            message: "Internal server error",
+            error: error.message,
+            timestamp: new Date().toISOString(),
+            mongoStatus: (0, keepAlive_1.getMongoDBStatus)(),
+            environment: process.env.NODE_ENV
+        });
+    }
 });
 exports.default = router;

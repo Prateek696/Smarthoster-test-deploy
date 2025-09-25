@@ -1,9 +1,14 @@
 import app from "./app";
 import { env } from "./config/env";
 import { connectDB } from "./config/db";
+import { initializeKeepAlive } from "./cron/keepAlive";
 
 const startServer = async () => {
   await connectDB();
+  
+  // Initialize keep-alive cron job for local development
+  initializeKeepAlive();
+  
   app.listen(env.port, () => {
     console.log(`🚀 Server running at http://localhost:${env.port}`);
   });

@@ -6,8 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const env_1 = require("./config/env");
 const db_1 = require("./config/db");
+const keepAlive_1 = require("./cron/keepAlive");
 const startServer = async () => {
     await (0, db_1.connectDB)();
+    // Initialize keep-alive cron job for local development
+    (0, keepAlive_1.initializeKeepAlive)();
     app_1.default.listen(env_1.env.port, () => {
         console.log(`🚀 Server running at http://localhost:${env_1.env.port}`);
     });
