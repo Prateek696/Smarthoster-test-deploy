@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { ConnectionStates } from 'mongoose';
+import { connectDB } from '../config/db';
 
 /**
  * MongoDB Keep-Alive Utility
@@ -14,10 +15,18 @@ const TEMP_COLLECTION_NAME = 'keep_alive_temp';
  */
 export const pingMongoDB = async (): Promise<boolean> => {
   try {
-    // Check if MongoDB is connected
-    if (mongoose.connection.readyState !== 1) {
-      console.log('⚠️ MongoDB not connected, skipping keep-alive');
-      return false;
+    // Ensure MongoDB is connected
+    if ((mongoose.connection.readyState as number) !== 1) {
+      console.log('🔄 MongoDB not connected, attempting to connect...');
+      await connectDB();
+      
+      // Wait a moment for connection to establish
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      if ((mongoose.connection.readyState as number) !== 1) {
+        console.log('⚠️ MongoDB connection failed');
+        return false;
+      }
     }
 
     // Execute a simple query to keep the cluster awake
@@ -42,7 +51,7 @@ export const pingMongoDB = async (): Promise<boolean> => {
  */
 export const ensureTempCollection = async (): Promise<void> => {
   try {
-    if (mongoose.connection.readyState !== 1) {
+    if ((mongoose.connection.readyState as number) !== 1) {
       return;
     }
 

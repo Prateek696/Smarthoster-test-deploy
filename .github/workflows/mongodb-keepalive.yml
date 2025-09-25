@@ -1,0 +1,19 @@
+name: MongoDB Keep-Alive
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping MongoDB
+        run: |
+          echo "🔄 Running MongoDB keep-alive at $(date)"
+          curl -X POST "https://smarthoster-test-deploy.vercel.app/api/cron/keep-alive" \
+            -H "Content-Type: application/json" \
+            -w "\nStatus: %{http_code}\n"
+          echo "✅ Keep-alive completed at $(date)"

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMongoDBStatus = exports.ensureTempCollection = exports.pingMongoDB = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const db_1 = require("../config/db");
 /**
  * MongoDB Keep-Alive Utility
  * Prevents MongoDB Atlas free tier from going to sleep
@@ -17,10 +18,16 @@ const TEMP_COLLECTION_NAME = 'keep_alive_temp';
  */
 const pingMongoDB = async () => {
     try {
-        // Check if MongoDB is connected
+        // Ensure MongoDB is connected
         if (mongoose_1.default.connection.readyState !== 1) {
-            console.log('⚠️ MongoDB not connected, skipping keep-alive');
-            return false;
+            console.log('🔄 MongoDB not connected, attempting to connect...');
+            await (0, db_1.connectDB)();
+            // Wait a moment for connection to establish
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            if (mongoose_1.default.connection.readyState !== 1) {
+                console.log('⚠️ MongoDB connection failed');
+                return false;
+            }
         }
         // Execute a simple query to keep the cluster awake
         // Using findOne with empty filter is lightweight and effective
