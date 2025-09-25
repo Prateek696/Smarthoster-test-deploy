@@ -33,6 +33,7 @@ import imageUploadRoutes from './routes/imageUpload.routes';
 import settingsRoutes from './routes/settings.routes';
 import adminRoutes from './routes/admin.routes';
 import testRoutes from './routes/test.routes';
+import mongodbTestRoutes from './routes/mongodb-test.routes';
 import { pingMongoDB, ensureTempCollection } from './utils/keepAlive';
 
 const app = express();
@@ -85,6 +86,7 @@ app.use("/portfolio", portfolioRoutes);
 app.use("/settings", settingsRoutes);
 app.use("/admin", adminRoutes);
 app.use("/test", testRoutes);
+app.use("/mongodb-test", mongodbTestRoutes);
 
 // Vercel Cron Job endpoint for MongoDB keep-alive
 app.post("/api/cron/keep-alive", async (req, res) => {

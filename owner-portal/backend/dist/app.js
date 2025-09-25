@@ -38,6 +38,7 @@ const imageUpload_routes_1 = __importDefault(require("./routes/imageUpload.route
 const settings_routes_1 = __importDefault(require("./routes/settings.routes"));
 const admin_routes_1 = __importDefault(require("./routes/admin.routes"));
 const test_routes_1 = __importDefault(require("./routes/test.routes"));
+const mongodb_test_routes_1 = __importDefault(require("./routes/mongodb-test.routes"));
 const keepAlive_1 = require("./utils/keepAlive");
 const app = (0, express_1.default)();
 app.use('/saft/files', express_1.default.static(path_1.default.join(__dirname, 'saft_files')));
@@ -89,6 +90,7 @@ app.use("/portfolio", portfolio_routes_1.default);
 app.use("/settings", settings_routes_1.default);
 app.use("/admin", admin_routes_1.default);
 app.use("/test", test_routes_1.default);
+app.use("/mongodb-test", mongodb_test_routes_1.default);
 // Vercel Cron Job endpoint for MongoDB keep-alive
 app.post("/api/cron/keep-alive", async (req, res) => {
     const startTime = Date.now();
