@@ -47,6 +47,7 @@
     "jspdf": "^3.0.2",
     "jspdf-autotable": "^5.0.2",
     "mongoose": "^8.17.1",
+    "mongodb": "^6.3.0",
     "multer": "^2.0.2",
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.6",
