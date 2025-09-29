@@ -170,7 +170,7 @@ const Settings: React.FC = () => {
       <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
         <div className="container mx-auto px-4 py-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Settings</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Settings</h1>
             <p className="text-lg text-gray-600">
               Manage your account settings and preferences
             </p>

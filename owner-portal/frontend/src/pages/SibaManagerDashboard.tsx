@@ -17,6 +17,7 @@ import { fetchBookingsAsync } from '../store/bookings.slice';
 import { fetchPropertiesAsync } from '../store/propertyManagement.slice';
 import { fetchSibaStatusAsync } from '../store/siba.slice';
 import { SibaPropertyData } from '../services/sibaManager.api';
+import usePropertyRefresh from '../hooks/usePropertyRefresh';
 // import PropertySelector from '../components/common/PropertySelector';
 
 const SibaManagerDashboard: React.FC = () => {
@@ -25,6 +26,7 @@ const SibaManagerDashboard: React.FC = () => {
   const { properties } = useSelector((state: RootState) => state.propertyManagement);
   const { bookings } = useSelector((state: RootState) => state.bookings);
   const { statuses: sibaStatuses } = useSelector((state: RootState) => state.siba);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   
   // const [selectedPropertyId, setSelectedPropertyId] = useState<number | null>(null);
   const [dateRange, setDateRange] = useState({
@@ -34,10 +36,22 @@ const SibaManagerDashboard: React.FC = () => {
   const [notification, setNotification] = useState<{type: 'success' | 'error' | 'info', message: string} | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Fetch all properties data on mount
+  // Listen for property deletion events to refresh property lists
+  usePropertyRefresh();
+
+  // Auto-refresh data when component mounts and user is authenticated
   useEffect(() => {
-    dispatch(fetchPropertiesAsync());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      handleRefresh();
+    }
+  }, [isAuthenticated]);
+
+  // Fetch all properties data on mount when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchPropertiesAsync());
+    }
+  }, [dispatch, isAuthenticated]);
 
   // Fetch SIBA status for properties once they're loaded
   useEffect(() => {
@@ -213,15 +227,10 @@ const SibaManagerDashboard: React.FC = () => {
 
   if (bulkDashboard.isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <RefreshCw className="h-12 w-12 text-blue-600 animate-spin mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Loading SIBA Dashboard</h3>
-              <p className="text-gray-500">Fetching compliance data for all properties...</p>
-            </div>
-          </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-semibold text-gray-700">Loading SIBA Dashboard...</p>
         </div>
       </div>
     );
@@ -250,11 +259,11 @@ const SibaManagerDashboard: React.FC = () => {
           <div className="container mx-auto px-4 py-8">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">SIBA Manager Dashboard</h1>
-                <p className="text-gray-600">Real-time SIBA compliance monitoring with Hostkit data</p>
+                <h1 className="text-sm lg:text-base font-bold text-gray-900 mb-1">SIBA Manager Dashboard</h1>
+                <p className="text-[10px] text-gray-600">Real-time SIBA compliance monitoring with data</p>
                 <div className="flex items-center space-x-4 mt-2">
                   <span className="text-xs text-gray-500">
-                    Data source: Hostkit API • Last updated: {new Date().toLocaleTimeString()}
+                    Data source: API • Last updated: {new Date().toLocaleTimeString()}
                   </span>
                   {realSibaData.length > 0 && (
                     <span className="text-xs text-green-600">✓ Real booking data</span>
@@ -286,45 +295,45 @@ const SibaManagerDashboard: React.FC = () => {
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 text-center">
-            <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl w-fit mx-auto mb-4">
-              <Shield className="h-6 w-6 text-white" />
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-4">
+          <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center">
+            <div className="p-0.5 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] rounded-md w-fit mx-auto mb-1">
+              <Shield className="h-3 w-3 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{realSummary.totalProperties}</p>
-            <p className="text-sm text-gray-600">Total Properties</p>
+            <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.totalProperties}</p>
+            <p className="text-[10px] text-gray-600">Total Properties</p>
           </div>
 
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-red-200 p-6 text-center">
-            <div className="p-3 bg-gradient-to-br from-red-500 to-red-600 rounded-xl w-fit mx-auto mb-4">
-              <AlertCircle className="h-6 w-6 text-white" />
+          <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-red-200 p-2 text-center">
+            <div className="p-0.5 bg-gradient-to-br from-[#f97316] to-[#ea580c] rounded-md w-fit mx-auto mb-1">
+              <AlertCircle className="h-3 w-3 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{realSummary.overdue}</p>
-            <p className="text-sm text-gray-600">Overdue</p>
+            <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.overdue}</p>
+            <p className="text-[10px] text-gray-600">Overdue</p>
           </div>
 
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-yellow-200 p-6 text-center">
-            <div className="p-3 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl w-fit mx-auto mb-4">
-              <Clock className="h-6 w-6 text-white" />
+          <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-yellow-200 p-2 text-center">
+            <div className="p-0.5 bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-md w-fit mx-auto mb-1">
+              <Clock className="h-3 w-3 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{realSummary.dueSoon}</p>
-            <p className="text-sm text-gray-600">Due Soon</p>
+            <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.dueSoon}</p>
+            <p className="text-[10px] text-gray-600">Due Soon</p>
           </div>
 
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-green-200 p-6 text-center">
-            <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl w-fit mx-auto mb-4">
-              <CheckCircle className="h-6 w-6 text-white" />
+          <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-green-200 p-2 text-center">
+            <div className="p-0.5 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-md w-fit mx-auto mb-1">
+              <CheckCircle className="h-3 w-3 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{realSummary.compliant}</p>
-            <p className="text-sm text-gray-600">Compliant</p>
+            <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.compliant}</p>
+            <p className="text-[10px] text-gray-600">Compliant</p>
           </div>
 
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 text-center">
-            <div className="p-3 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl w-fit mx-auto mb-4">
-              <AlertTriangle className="h-6 w-6 text-white" />
+          <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center">
+            <div className="p-0.5 bg-gradient-to-br from-[#ef4444] to-[#dc2626] rounded-md w-fit mx-auto mb-1">
+              <AlertTriangle className="h-3 w-3 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{realSummary.errors}</p>
-            <p className="text-sm text-gray-600">Errors</p>
+            <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.errors}</p>
+            <p className="text-[10px] text-gray-600">Errors</p>
           </div>
         </div>
 
@@ -335,32 +344,32 @@ const SibaManagerDashboard: React.FC = () => {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-8 py-6 text-left text-lg font-semibold text-gray-900">Property</th>
-                  <th className="px-8 py-6 text-left text-lg font-semibold text-gray-900">Status</th>
-                  <th className="px-8 py-6 text-left text-lg font-semibold text-gray-900">Flags</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Property</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Flags</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {displayData && displayData.length > 0 ? displayData.map((property) => (
                   <tr key={property.propertyId} className="hover:bg-gray-50">
-                    <td className="px-8 py-6">
+                    <td className="px-4 py-3">
                       <div>
-                        <div className="text-lg font-semibold text-gray-900">{property.propertyName}</div>
-                        <div className="text-base text-gray-500">ID: {property.propertyId}</div>
+                        <div className="text-sm font-semibold text-gray-900">{property.propertyName}</div>
+                        <div className="text-xs text-gray-500">ID: {property.propertyId}</div>
                       </div>
                     </td>
-                    <td className="px-8 py-6">
+                    <td className="px-4 py-3">
                       <div className="flex items-center space-x-3">
                         {getStatusIcon(property.sibaStatus)}
-                        <span className="text-lg font-semibold capitalize">{property.sibaStatus}</span>
+                        <span className="text-sm font-semibold capitalize">{property.sibaStatus}</span>
                       </div>
                     </td>
-                    <td className="px-8 py-6">
+                    <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-2">
                         {property.flags.map((flag, index) => (
                           <span
                             key={index}
-                            className={`px-3 py-2 text-sm font-medium rounded-full ${getFlagColor(flag)}`}
+                            className={`px-2 py-1 text-xs font-medium rounded-full ${getFlagColor(flag)}`}
                           >
                             {flag.replace('_', ' ')}
                           </span>

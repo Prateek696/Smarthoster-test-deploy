@@ -242,7 +242,7 @@ const OwnerStatements: React.FC = () => {
           <div className="flex items-center">
             <Calculator className="w-8 h-8 mr-3 text-gray-700" />
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Owner Statements</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Owner Statements</h1>
               <p className="text-lg text-gray-600">
                 Generate financial statements for property owners
               </p>

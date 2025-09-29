@@ -104,7 +104,7 @@ const Login: React.FC = () => {
                 <Logo size="lg" className="text-green-600" />
               </div>
             </div>
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
+            <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
               Welcome back
             </h2>
             <p className="text-base text-gray-600 leading-relaxed">
@@ -185,7 +185,7 @@ const Login: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex justify-center items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl group"
+                  className="w-full flex justify-center items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl group"
                 >
                   {isLoading ? (
                     <LoadingSpinner size="sm" className="mr-2" />
@@ -243,7 +243,7 @@ const Login: React.FC = () => {
                       }
                     }}
                     disabled={isLoading}
-                    className="w-full flex justify-center items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl group"
+                    className="w-full flex justify-center items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl group"
                   >
                     {isLoading ? (
                       <LoadingSpinner size="sm" className="mr-2" />
@@ -305,7 +305,7 @@ const Login: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full translate-y-40 -translate-x-40"></div>
         <div className="relative h-full flex flex-col justify-center px-12 xl:px-16">
           <div className="max-w-md">
-            <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
+            <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 leading-tight">
               Manage your properties with confidence
             </h3>
             <p className="text-lg text-white/90 mb-8 leading-relaxed">

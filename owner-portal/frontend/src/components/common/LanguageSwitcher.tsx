@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Globe, Check } from 'lucide-react'
+import { Languages, Check } from 'lucide-react'
 import { useLanguage, Language } from '../../contexts/LanguageContext'
 
 interface LanguageSwitcherProps {
@@ -33,7 +33,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
         title={t('language.switch')}
       >
-        <Globe className="h-5 w-5" />
+        <Languages className="h-5 w-5" />
         {showLabel && (
           <span className="text-sm font-medium">
             {currentLanguage?.flag} {currentLanguage?.name}

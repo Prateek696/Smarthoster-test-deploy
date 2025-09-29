@@ -9,9 +9,9 @@ const PropertyManagementPage: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Property Management</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Property Management</h1>
               <p className="text-lg text-gray-600">
-                Manage your properties and Hostkit integrations
+                Manage your properties
               </p>
             </div>
           </div>

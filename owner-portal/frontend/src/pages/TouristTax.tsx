@@ -255,7 +255,7 @@ const TouristTax: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
-        return 'text-green-800 bg-green-100'
+        return 'text-blue-800 bg-blue-100'
       case 'not_implemented':
         return 'text-yellow-800 bg-yellow-100'
       case 'exempt':
@@ -315,7 +315,7 @@ const TouristTax: React.FC = () => {
               
               <button 
                 onClick={handleRefresh}
-                className="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg font-semibold"
+                className="px-4 py-2 bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:ring-2 focus:ring-[#2563eb] focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg font-semibold"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -427,7 +427,7 @@ const TouristTax: React.FC = () => {
                     <p className="text-sm font-medium text-gray-600 mb-1">Current Tax Collected</p>
                     <p className="text-2xl font-bold text-gray-900">{data?.totalTaxFormatted || "€0,00"}</p>
                   </div>
-                  <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
+                  <div className="p-3 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-xl">
                     <Euro className="h-6 w-6 text-white" />
                   </div>
                 </div>
@@ -484,7 +484,7 @@ const TouristTax: React.FC = () => {
               </div>
 
               <div className="text-center">
-                <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl w-fit mx-auto mb-3">
+                <div className="p-3 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-xl w-fit mx-auto mb-3">
                   <Calendar className="h-6 w-6 text-white" />
                 </div>
                 <p className="text-2xl font-bold text-gray-900 mb-1">{displayData.cityTaxNights}</p>
@@ -547,7 +547,7 @@ const TouristTax: React.FC = () => {
             </div>
 
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 text-center hover:shadow-2xl transition-all duration-300">
-              <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl w-fit mx-auto mb-4">
+              <div className="p-3 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-xl w-fit mx-auto mb-4">
                 <BarChart3 className="h-6 w-6 text-white" />
               </div>
               <p className="text-2xl font-bold text-gray-900 mb-1">{displayData.averageTaxPerNightFormatted}</p>
@@ -614,7 +614,7 @@ const TouristTax: React.FC = () => {
                 
                 <div className="flex justify-between items-center py-2">
                   <span className="text-gray-600">Implementation Status</span>
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${data?.taxStatus === 'active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${data?.taxStatus === 'active' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'}`}>
                     {data?.taxStatus === 'active' ? 'Active' : 'Not Implemented'}
                   </span>
                 </div>
@@ -631,7 +631,7 @@ const TouristTax: React.FC = () => {
                 <h4 className="font-medium text-blue-900">Total City Tax Nights</h4>
                 <p className="text-2xl font-bold text-blue-600">{displayData.cityTaxNights}</p>
               </div>
-              <div className="bg-green-50 rounded-lg p-4">
+              <div className="bg-blue-50 rounded-lg p-4">
                 <h4 className="font-medium text-green-900">Children Nights</h4>
                 <p className="text-2xl font-bold text-green-600">{displayData.childrenNights}</p>
               </div>

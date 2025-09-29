@@ -420,125 +420,105 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
     });
     
     return (
-      <div className="card hover:shadow-md transition-shadow">
-        <div className="card-content">
-          {/* Property Image */}
-          <div className="mb-4">
-            {currentProperty.images && currentProperty.images.length > 0 ? (
-              <img
-                src={getImageUrl(currentProperty.images[0])}
-                alt={currentProperty.name}
-                className="w-full h-48 object-cover rounded-md"
-                onError={(e) => {
-                  console.error('❌ Image failed to load:', e.currentTarget.src);
-                }}
-                onLoad={(e) => {
-                  console.log('✅ Image loaded successfully:', e.currentTarget.src);
-                }}
-              />
-            ) : (
-              <div className="w-full h-48 bg-gray-200 rounded-md flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <Building className="h-12 w-12 mx-auto mb-2" />
-                  <p className="text-sm">Property Image</p>
-                </div>
-              </div>
-            )}
+      <div className="group bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+        <div className="relative h-40 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+          {currentProperty.images && currentProperty.images.length > 0 ? (
+            <img
+              src={getImageUrl(currentProperty.images[0])}
+              alt={currentProperty.name}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                console.error('❌ Image failed to load:', e.currentTarget.src);
+              }}
+              onLoad={(e) => {
+                console.log('✅ Image loaded successfully:', e.currentTarget.src);
+              }}
+            />
+          ) : (
+            <div className="text-center">
+              <Building className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-500 text-sm">Property Image</p>
+            </div>
+          )}
+          <div className="absolute top-3 right-3">
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold text-white shadow-lg ${
+              currentProperty.status === 'active' ? 'bg-green-500' : 
+              currentProperty.status === 'inactive' ? 'bg-gray-500' : 'bg-yellow-500'
+            }`}>
+              {currentProperty.status || 'Active'}
+            </span>
           </div>
-        
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <h3 className="font-semibold text-gray-900 text-lg">{currentProperty.name}</h3>
-            <p className="text-sm text-gray-600 flex items-center mt-1">
-              <MapPin className="h-4 w-4 mr-1" />
-              {currentProperty.address}
-            </p>
-          </div>
-          <span className={`badge ${
-            currentProperty.status === 'active' ? 'badge-success' : 
-            currentProperty.status === 'inactive' ? 'badge-warning' : 
-            'badge-error'
-          }`}>
-            {currentProperty.status}
-          </span>
-        </div>
-        
-        <div className="mb-4">
-          <div className="flex items-center text-sm text-gray-600">
-            <Building className="h-4 w-4 mr-1" />
-            {property.type}
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <div className="text-sm text-gray-600 mb-1">Hostkit ID:</div>
-          <div className="text-sm font-mono bg-gray-100 p-2 rounded">
-            {property.hostkitId}
-          </div>
-        </div>
-
-        {property.amenities && property.amenities.length > 0 && (
-          <div className="mb-4">
-            <div className="text-sm text-gray-600 mb-2">Amenities:</div>
-            <div className="flex flex-wrap gap-1">
-              {property.amenities.slice(0, 3).map((amenity: string, index: number) => (
-                <span key={index} className="badge badge-secondary text-xs">
-                  {amenity}
-                </span>
-              ))}
-              {property.amenities.length > 3 && (
-                <span className="text-xs text-gray-500">
-                  +{property.amenities.length - 3} more
-                </span>
-              )}
+          <div className="absolute bottom-2 left-2">
+            <div className="bg-black/70 backdrop-blur-sm rounded px-1 py-0.5">
+              <h3 className="font-bold mb-0 text-white" style={{fontSize: '7px'}}>{currentProperty.name}</h3>
+              <p className="text-white/90" style={{fontSize: '9px'}}>{currentProperty.address}</p>
             </div>
           </div>
-        )}
+        </div>
         
-        <div className="flex gap-2 pt-3 border-t border-gray-100">
-          <button
-            onClick={() => handleEdit(property)}
-            className="btn-outline btn-sm flex-1"
-            disabled={isUpdating || !canUpdate}
-            title={!canUpdate ? "Only owners can edit properties" : ""}
-          >
-            <Edit className="h-4 w-4 mr-1" />
-            Edit
-          </button>
-          <button
-            onClick={() => {
-              dispatch(setSelectedProperty(property));
-              setShowDeleteConfirm(true);
-            }}
-            className="btn-outline btn-sm text-red-600 border-red-300 hover:bg-red-50"
-            disabled={isDeleting || !canUpdate}
-            title={!canUpdate ? "Only owners can delete properties" : ""}
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
+        <div className="p-4">
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            <div className="text-center">
+              <p className="text-xs text-gray-500 mb-1 font-semibold">Type</p>
+              <p className="text-sm font-bold text-gray-900">{property.type}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-xs text-gray-500 mb-1 font-semibold">ID</p>
+              <p className="text-sm font-bold text-gray-900">{property.hostkitId}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-xs text-gray-500 mb-1 font-semibold">Status</p>
+              <p className="text-sm font-bold text-gray-900">{property.status}</p>
+            </div>
+          </div>
+
+          {property.amenities && property.amenities.length > 0 && (
+            <div className="mb-3">
+              <div className="text-xs text-gray-600 mb-1">Amenities:</div>
+              <div className="flex flex-wrap gap-1">
+                {property.amenities.slice(0, 3).map((amenity: string, index: number) => (
+                  <span key={index} className="badge badge-secondary text-xs">
+                    {amenity}
+                  </span>
+                ))}
+                {property.amenities.length > 3 && (
+                  <span className="text-xs text-gray-500">
+                    +{property.amenities.length - 3} more
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+          
+          <div className="flex gap-2 pt-3 border-t border-gray-100">
+            <button
+              onClick={() => handleEdit(property)}
+              className="btn-outline btn-sm flex-1"
+              disabled={isUpdating || !canUpdate}
+              title={!canUpdate ? "Only owners can edit properties" : ""}
+            >
+              <Edit className="h-4 w-4 mr-1" />
+              Edit
+            </button>
+            <button
+              onClick={() => {
+                dispatch(setSelectedProperty(property));
+                setShowDeleteConfirm(true);
+              }}
+              className="btn-outline btn-sm text-red-600 border-red-300 hover:bg-red-50"
+              disabled={isDeleting || !canUpdate}
+              title={!canUpdate ? "Only owners can delete properties" : ""}
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
 };
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">Property Management</h2>
-          <p className="text-gray-600">
-            {canUpdate ? 'Manage your properties and Hostkit integrations' : 'View properties (Read-only mode)'}
-          </p>
-          {!canUpdate && (
-            <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm bg-amber-100 text-amber-800">
-              <AlertCircle className="h-4 w-4 mr-1" />
-              Read only access
-            </div>
-          )}
-        </div>
-      </div>
 
       {/* Error Display */}
       {error && (
@@ -556,9 +536,11 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
 
       {/* Properties Grid */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader className="h-8 w-8 animate-spin text-primary-600" />
-          <span className="ml-2 text-gray-600">Loading properties...</span>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-lg font-semibold text-gray-700">Loading Properties...</p>
+          </div>
         </div>
       ) : properties.length === 0 ? (
         <div className="text-center py-12">
@@ -580,7 +562,7 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {properties.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}

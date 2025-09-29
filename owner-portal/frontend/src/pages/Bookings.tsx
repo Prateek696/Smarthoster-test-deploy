@@ -190,17 +190,17 @@ const Bookings: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     const colors: { [key: string]: string } = {
-      'Confirmed': 'bg-green-100 text-green-800 border-green-200',
+      'Confirmed': 'bg-blue-100 text-blue-800 border-blue-200',
       'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
       'In Enquiry': 'bg-blue-100 text-blue-800 border-blue-200',
       'Expired': 'bg-orange-100 text-orange-800 border-orange-200',
       'Cancelled': 'bg-red-100 text-red-800 border-red-200',
       'Modified': 'bg-purple-100 text-purple-800 border-purple-200',
       'No Show': 'bg-gray-100 text-gray-800 border-gray-200',
-      'Completed': 'bg-green-100 text-green-800 border-green-200',
+      'Completed': 'bg-blue-100 text-blue-800 border-blue-200',
       'Unknown': 'bg-gray-100 text-gray-800 border-gray-200',
       // Legacy support
-      'confirmed': 'bg-green-100 text-green-800 border-green-200',
+      'confirmed': 'bg-blue-100 text-blue-800 border-blue-200',
       'pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
       'cancelled': 'bg-red-100 text-red-800 border-red-200',
       'completed': 'bg-blue-100 text-blue-800 border-blue-200',
@@ -379,7 +379,7 @@ const Bookings: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Bookings</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Bookings</h1>
               <p className="text-lg text-gray-600">
                 Manage reservations and guest communications
               </p>
@@ -435,33 +435,26 @@ const Bookings: React.FC = () => {
                   properties={properties}
                 />
               </div>
-              <button
-                onClick={() => dispatch(fetchBookingsAsync({ propertyId: tempFilters.propertyId || 392776 }))}
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl flex items-center gap-2"
-              >
-                <RefreshCw className="w-5 h-5" />
-                Refresh
-              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 space-y-8 pt-48">
+      <div className="container mx-auto px-4 py-4 space-y-4 pt-20">
 
         {/* Search and Filters */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
             {/* Search Bar */}
             <div className="flex-1 max-w-md">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search bookings, guests, properties..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 placeholder-gray-500 shadow-lg"
+                  className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 placeholder-gray-500 shadow-md"
                 />
               </div>
             </div>
@@ -469,21 +462,21 @@ const Bookings: React.FC = () => {
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`px-6 py-4 rounded-2xl font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-all duration-300 flex items-center gap-1 ${
                 showFilters 
-                  ? 'bg-gradient-to-r from-[#5FFF56] to-[#4FEF46] text-white hover:from-[#4FEF46] hover:to-[#5FFF56]' 
+                  ? 'bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white hover:from-[#0284c7] hover:to-[#0ea5e9]' 
                   : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
               }`}
             >
-              <Filter className="w-5 h-5" />
+              <Filter className="w-4 h-4" />
               Filters
             </button>
           </div>
 
           {/* Advanced Filters */}
           {showFilters && (
-            <div className="mt-8 p-8 bg-gradient-to-r from-gray-50/80 to-white/80 rounded-2xl border border-gray-100/50 shadow-lg">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="mt-4 p-4 bg-gradient-to-r from-gray-50/80 to-white/80 rounded-lg border border-gray-100/50 shadow-md">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Property</label>
                   <PropertySelector
@@ -498,7 +491,7 @@ const Bookings: React.FC = () => {
                       <select
                         value={tempFilters.status}
                         onChange={(e) => handleFilterChange('status', e.target.value)}
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg"
+                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                       >
                         <option value="">All Statuses</option>
                         <option value="paid">Paid</option>
@@ -518,7 +511,7 @@ const Bookings: React.FC = () => {
                     type="date"
                     value={tempFilters.startDate}
                     onChange={(e) => handleFilterChange('startDate', e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                   />
                 </div>
                 
@@ -528,7 +521,7 @@ const Bookings: React.FC = () => {
                     type="date"
                     value={tempFilters.endDate}
                     onChange={(e) => handleFilterChange('endDate', e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                   />
                 </div>
               </div>
@@ -536,13 +529,13 @@ const Bookings: React.FC = () => {
               <div className="flex items-center justify-end space-x-4 mt-8">
                 <button
                   onClick={clearFilters}
-                  className="px-6 py-3 bg-white text-gray-700 border border-gray-200 rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold shadow-lg"
+                  className="px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-300 font-semibold shadow-md"
                 >
                   Clear All
                 </button>
                 <button
                   onClick={applyFilters}
-                  className="px-6 py-3 bg-gradient-to-r from-[#5FFF56] to-[#4FEF46] text-white rounded-2xl hover:from-[#4FEF46] hover:to-[#5FFF56] transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
+                  className="px-4 py-2 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white rounded-lg hover:from-[#0284c7] hover:to-[#0ea5e9] transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
                 >
                   Apply Filters
                 </button>
@@ -552,52 +545,52 @@ const Bookings: React.FC = () => {
         </div>
 
         {/* Bookings Table */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 shadow-2xl overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full table-auto">
               <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                 <tr>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Guest</th>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Property</th>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check-in</th>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check-out</th>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                  <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Guest</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Property</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check-in</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check-out</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-100">
                 {filteredBookings.map((booking, index) => (
                   <tr key={booking.id} className="hover:bg-gradient-to-r hover:from-gray-50 hover:to-white transition-all duration-300 group">
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                          <span className="text-lg font-bold text-white">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+                          <span className="text-sm font-bold text-white">
                             {booking.guestName?.charAt(0) || 'G'}
                           </span>
                         </div>
                         <div>
-                          <p className="font-bold text-gray-900 text-lg group-hover:text-[#5FFF56] transition-colors">{booking.guestName || 'Guest'}</p>
-                          <p className="text-sm text-gray-500 font-medium">ID: {booking.bookingId}</p>
+                          <p className="font-bold text-gray-900 text-sm group-hover:text-[#5FFF56] transition-colors">{booking.guestName || 'Guest'}</p>
+                          <p className="text-xs text-gray-500 font-medium">ID: {booking.bookingId}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <p className="font-bold text-gray-900 text-lg">{getPropertyNameById(booking.propertyId || 0)}</p>
-                      <p className="text-sm text-gray-500 font-medium">Algarve, Portugal</p>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <p className="font-bold text-gray-900 text-sm">{getPropertyNameById(booking.propertyId || 0)}</p>
+                      <p className="text-xs text-gray-500 font-medium">Algarve, Portugal</p>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <p className="font-semibold text-gray-900">{formatDate(booking.checkInDate || '')}</p>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <p className="font-semibold text-gray-900">{formatDate(booking.checkOutDate || '')}</p>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <span className="font-bold text-gray-900 text-lg">{formatCurrency(booking.totalAmount || 0)}</span>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <span className="font-bold text-gray-900 text-sm">{formatCurrency(booking.totalAmount || 0)}</span>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-4 py-2 rounded-2xl text-sm font-bold shadow-lg ${
-                        booking.paymentStatus === 'Paid' ? 'bg-green-100 text-green-800' :
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-lg text-xs font-bold shadow-md ${
+                        booking.paymentStatus === 'Paid' ? 'bg-blue-100 text-blue-800' :
                         booking.paymentStatus === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
                         booking.paymentStatus === 'Failed' ? 'bg-red-100 text-red-800' :
                         booking.paymentStatus === 'Refunded' ? 'bg-purple-100 text-purple-800' :
@@ -610,19 +603,19 @@ const Bookings: React.FC = () => {
                         {booking.status || booking.paymentStatus || 'Pending'}
                       </span>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <div className="flex items-center space-x-3">
                         <button
                           onClick={() => handleViewBooking(booking.id, booking.propertyId || 392776)}
-                          className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                          className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
                           title="View Details"
                         >
-                          <Eye className="w-5 h-5" />
+                          <Eye className="w-4 h-4" />
                         </button>
                         {/* SIBA Manager Button - Commented out as requested */}
                         {/* <button
                           onClick={() => handleViewBookingDetails(booking)}
-                          className="p-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                          className="p-3 bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white rounded-2xl hover:from-[#1d4ed8] hover:to-[#1e40af] transition-all duration-300 shadow-lg hover:shadow-xl"
                           title="SIBA Manager"
                         >
                           <Shield className="w-5 h-5" />
@@ -965,7 +958,7 @@ const Bookings: React.FC = () => {
                               }, 500)
                             }
                           }}
-                          className="p-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                          className="p-3 bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white rounded-2xl hover:from-[#1d4ed8] hover:to-[#1e40af] transition-all duration-300 shadow-lg hover:shadow-xl"
                           title="Download PDF"
                         >
                           <Download className="w-5 h-5" />

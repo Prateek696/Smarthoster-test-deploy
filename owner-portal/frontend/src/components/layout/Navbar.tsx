@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Menu, Bell, ChevronDown, LogOut } from 'lucide-react'
+import { Menu, ChevronDown, LogOut } from 'lucide-react'
 import { RootState, AppDispatch } from '../../store'
 import { logoutAsync } from '../../store/auth.slice'
-import { markAsRead, markAllAsRead } from '../../store/notifications.slice'
 import Logo from '../common/Logo'
 import LanguageSwitcher from '../common/LanguageSwitcher'
 import { useLanguage } from '../../contexts/LanguageContext'
@@ -14,25 +13,15 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
-  const [showNotifications, setShowNotifications] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const { t } = useLanguage()
   
   const { user } = useSelector((state: RootState) => state.auth)
-  const { notifications, unreadCount } = useSelector((state: RootState) => state.notifications)
 
   const handleLogout = () => {
     dispatch(logoutAsync())
-  }
-
-  const handleNotificationClick = (id: string) => {
-    dispatch(markAsRead(id))
-  }
-
-  const handleMarkAllRead = () => {
-    dispatch(markAllAsRead())
   }
 
 
@@ -50,90 +39,27 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             </button>
           </div>
 
-          {/* Right extreme - Language, Notifications and Profile */}
+          {/* Right extreme - Language and Profile */}
           <div className="flex items-center space-x-4">
             {/* Language Switcher */}
             <LanguageSwitcher showLabel={false} />
-            
-            {/* Notifications */}
-            <div className="relative">
-              <button
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <Bell className="h-6 w-6" />
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                    {unreadCount > 9 ? '9+' : unreadCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Notifications dropdown */}
-              {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
-                  <div className="p-4 border-b border-gray-100">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-gray-900">{t('notification.title')}</h3>
-                      {unreadCount > 0 && (
-                        <button
-                          onClick={handleMarkAllRead}
-                          className="text-sm text-[#5FFF56] hover:text-[#4FEF46]"
-                        >
-                          {t('notification.markAllRead')}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <div className="max-h-80 overflow-y-auto">
-                    {notifications.length === 0 ? (
-                      <div className="p-4 text-center text-gray-500">
-                        {t('notification.noNotifications')}
-                      </div>
-                    ) : (
-                      notifications.slice(0, 5).map((notification) => (
-                        <div
-                          key={notification.id}
-                          onClick={() => handleNotificationClick(notification.id)}
-                          className={`p-4 border-b border-gray-50 cursor-pointer hover:bg-gray-50 ${
-                            !notification.read ? 'bg-green-50' : ''
-                          }`}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium text-gray-900">{notification.title}</p>
-                              <p className="text-xs text-gray-600 mt-1">{notification.message}</p>
-                              <p className="text-xs text-gray-400 mt-1">{notification.timestamp}</p>
-                            </div>
-                            {!notification.read && (
-                              <div className="w-2 h-2 bg-[#5FFF56] rounded-full ml-2 mt-1"></div>
-                            )}
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
 
             {/* Profile dropdown */}
             <div className="relative">
               <button
                 onClick={() => setShowProfile(!showProfile)}
-                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                <div className="flex items-center justify-center w-10 h-10 bg-[#5FFF56] rounded-full">
-                  <span className="text-sm font-bold text-white">
+                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] rounded-full">
+                  <span className="text-xs font-bold text-white">
                     {(user?.firstName || user?.name || user?.username || user?.email || 'U').charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div className="text-left">
-                  <p className="text-base font-bold text-gray-900">{user?.firstName || user?.name || user?.username || 'John'}</p>
-                  <p className="text-sm text-[#5FFF56] font-semibold capitalize">{user?.role?.toLowerCase() || 'Owner'}</p>
+                  <p className="text-sm font-bold text-gray-900">{user?.firstName || user?.name || user?.username || 'John'}</p>
+                  <p className="text-xs text-[#0ea5e9] font-semibold capitalize">{user?.role?.toLowerCase() || 'Owner'}</p>
                 </div>
-                <ChevronDown className="h-4 w-4 text-gray-500" />
+                <ChevronDown className="h-3 w-3 text-gray-500" />
               </button>
 
               {/* Profile dropdown */}

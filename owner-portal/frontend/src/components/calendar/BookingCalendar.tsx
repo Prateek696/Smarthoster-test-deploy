@@ -802,20 +802,23 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         <div
           key={dayIndex}
           className={`
-              relative min-h-[120px] p-0 group
-              ${isCurrentMonth ? 'bg-gray-50' : 'bg-gray-100'}
-              ${isToday ? 'bg-blue-50' : ''}
-              ${isBooked ? 'bg-teal-50' : ''}
-              ${isBlocked ? 'bg-red-50' : ''}
-              ${isSelected ? 'bg-green-100 border-2 border-green-500' : ''}
-              ${isDateInSelection(date) ? 'bg-green-100 border-2 border-green-500' : ''}
+              relative min-h-[20px] p-0 group
+              ${isCurrentMonth && !isDateInSelection(date) && !isSelected ? 'bg-gray-50' : ''}
+              ${!isCurrentMonth && !isDateInSelection(date) && !isSelected ? 'bg-gray-100' : ''}
+              ${isToday && !isDateInSelection(date) && !isSelected ? 'bg-blue-50' : ''}
+              ${isBooked && !isDateInSelection(date) && !isSelected ? 'bg-blue-50' : ''}
+              ${isBlocked && !isDateInSelection(date) && !isSelected ? 'bg-red-50' : ''}
+              ${isDateInSelection(date) ? 'bg-blue-100' : ''}
+              ${isSelected ? 'bg-blue-100' : ''}
               ${(() => {
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const day = String(date.getDate()).padStart(2, '0');
                 const dateStr = `${year}-${month}-${day}`;
                 const pricingInfo = monthlyPricingData[dateStr];
-                if (pricingInfo?.status === 'reserved') return 'bg-teal-50';
+                // Don't override selection colors
+                if (isDateInSelection(date) || isSelected) return '';
+                if (pricingInfo?.status === 'reserved') return 'bg-blue-50';
                 if (pricingInfo?.status === 'blocked') return 'bg-red-50';
                 return '';
               })()}
@@ -827,23 +830,26 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           {/* Date Number */}
            <div className="flex justify-between items-center mb-2 p-2">
              <span className={`
-               text-sm font-medium px-2 py-1 rounded
+               text-[11px] font-medium px-2 py-1 rounded
                ${isCurrentMonth ? 'text-gray-900 bg-gray-200' : 'text-gray-400 bg-gray-100'}
                ${isToday ? 'text-blue-600 bg-blue-100' : ''}
-               ${isSelected ? 'text-green-700 bg-green-200 font-bold' : ''}
+               ${isSelected ? 'text-blue-700 bg-blue-200 font-bold' : ''}
                ${isBlocked ? 'text-red-800 bg-red-200 font-bold' : ''}
-               ${isDateInSelection(date) ? 'text-green-700 bg-green-200 font-bold' : ''}
+               ${isDateInSelection(date) ? 'text-blue-700 bg-blue-200 font-bold' : ''}
              `}>
           {date.getDate()}
             </span>
-            {/* Blocked indicator */}
-            {isBlocked && (
-              <span className="text-xs bg-red-500 text-white px-2 py-1 rounded font-bold">
-                BLOCKED
-              </span>
-            )}
             {/* Selection indicator - removed to match single selection style */}
           </div>
+
+          {/* Blocked indicator - positioned between date and price */}
+          {isBlocked && (
+            <div className="flex justify-center mb-1">
+              <span className="text-[7px] bg-red-500 text-white px-1 py-0.5 rounded font-bold">
+                BLOCKED
+              </span>
+            </div>
+          )}
 
           {/* Pricing and Minimum Stay Info - Bottom Right */}
           {isCurrentMonth && (() => {
@@ -856,33 +862,33 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             
             if (isLoadingPricing) {
               return (
-                <div className="absolute bottom-1 right-1 px-3 py-2 bg-gray-100 rounded-md text-xs text-gray-400 z-10 shadow-md">
+                <div className="absolute bottom-1 right-1 px-2 py-1 bg-gray-100 rounded-md text-[10px] text-gray-400 z-10 shadow-md">
                   Loading...
                 </div>
               );
             }
             
             return (
-              <div className={`absolute bottom-1 right-1 px-3 py-2 bg-gray-100 rounded-md space-y-1 z-10 shadow-md transition-opacity duration-200 ${
+              <div className={`absolute bottom-1 right-1 px-1 py-0.5 bg-gray-100 rounded-md space-y-0 z-10 shadow-md transition-opacity duration-200 ${
                 pricingInfo?.status === 'reserved' ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
               }`}>
-                <div className={`text-xs font-semibold ${
-                  pricingInfo?.status === 'reserved' ? 'text-teal-700' : 
+                <div className={`text-[8px] font-semibold ${
+                  pricingInfo?.status === 'reserved' ? 'text-blue-700' : 
                   pricingInfo?.status === 'blocked' ? 'text-red-700' : 
                   'text-gray-700'
                 }`}>
                   €{pricingInfo?.price || 'N/A'}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-[8px] text-gray-500">
                   {pricingInfo?.minimumStay || 'N/A'} nights min
                 </div>
                 {pricingInfo?.status === 'reserved' && (
-                  <div className="text-xs text-teal-600 font-bold">
+                  <div className="text-[8px] text-blue-600 font-bold">
                     RESERVED
                   </div>
                 )}
                 {pricingInfo?.status === 'blocked' && (
-                  <div className="text-xs text-red-600 font-bold">
+                  <div className="text-[8px] text-red-600 font-bold">
                     BLOCKED
                   </div>
                 )}
@@ -895,7 +901,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             const bookings = getBookingsForDate(date);
             
             return (
-              <div className="mt-2 relative" style={{ height: '40px' }}>
+              <div className="mt-2 relative" style={{ height: '25px' }}>
                 {bookings.map((booking, bookingIndex) => {
                   const isCheckIn = booking.isCheckInDay;
                   const isCheckOut = booking.isCheckOutDay;
@@ -906,13 +912,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                   
                   if (isCheckOut && !isCheckIn) {
                     // Check-out only: 30% width from left (morning departure)
-                    height = '40px';
+                    height = '25px';
                     top = '0px';
                     width = '30%';
                     left = '0px';
                   } else if (isCheckIn && !isCheckOut) {
                     // Check-in only: 70% width from right (afternoon arrival)
-                    height = '40px';
+                    height = '25px';
                     top = '0px';
                     width = '70%';
                     left = '30%';
@@ -923,13 +929,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                         {/* Check-out bar */}
                         <div 
                           key={`${bookingIndex}-checkout`}
-                          className="absolute bg-teal-500 flex items-center px-2"
+                          className="absolute bg-blue-500 flex items-center px-2"
                           style={{
                             left: '-6px',
                             top: '0px',
-                            height: '40px',
+                            height: '25px',
                             width: '30%',
-                            zIndex: 5,
+                            zIndex: 10,
                             borderRadius: '0 6px 6px 0'
                           }}
                         >
@@ -939,28 +945,28 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                         {/* Check-in bar */}
                         <div 
                           key={`${bookingIndex}-checkin`}
-                          className="absolute bg-teal-500 flex items-center px-2"
+                          className="absolute bg-blue-500 flex items-center px-2"
                           style={{
                             left: '30%',
                             top: '0px',
-                            height: '40px',
+                            height: '25px',
                             width: '70%',
-                            zIndex: 5,
+                            zIndex: 10,
                             borderRadius: '0'
                           }}
                         >
                           <div className="flex items-center space-x-2 flex-1">
                             {/* Guest avatar */}
-                            <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                            <div className="w-3 h-3 bg-red-500 rounded-full flex items-center justify-center text-white text-[8px] font-bold">
                               {booking.guestName ? booking.guestName.charAt(0).toUpperCase() : 'G'}
                             </div>
                             
                             {/* Guest details */}
                             <div className="flex-1 min-w-0">
-                              <div className="text-xs font-medium text-white truncate">
+                              <div className="text-[8.5px] font-medium text-white whitespace-nowrap overflow-hidden relative z-10">
                                 {booking.guestName}
                               </div>
-                              <div className="text-xs text-teal-100">
+                              <div className="text-[8.5px] text-blue-100 whitespace-nowrap relative z-0">
                                 {booking.guestCount} guests
                               </div>
                             </div>
@@ -970,7 +976,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                     );
                   } else {
                     // Staying: full day seamless line
-                    height = '40px';
+                    height = '25px';
                     top = '0px';
                     width = '100%';
                     left = '0px';
@@ -979,14 +985,14 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                   return (
                     <div 
                       key={bookingIndex}
-                      className="absolute bg-teal-500 flex items-center px-2"
+                      className="absolute bg-blue-500 flex items-center px-2"
                       style={{
                         left: left === '0px' ? '-9px' : left,
                         right: left === '0px' ? '-9px' : '0px',
                         top: top,
                         height: height,
                         width: width,
-                        zIndex: 10,
+                        zIndex: 9,
                         borderRadius: isCheckIn ? '6px 0 0 6px' : isCheckOut ? '0 6px 6px 0' : '0'
                       }}
                     >
@@ -994,16 +1000,16 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                       {isCheckIn && (
                         <div className="flex items-center space-x-2 flex-1">
                           {/* Guest avatar */}
-                          <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                          <div className="w-3 h-3 bg-red-500 rounded-full flex items-center justify-center text-white text-[8px] font-bold">
                             {booking.guestName ? booking.guestName.charAt(0).toUpperCase() : 'G'}
                           </div>
                           
                           {/* Guest details */}
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs font-medium text-white truncate">
+                            <div className="text-[8.5px] font-medium text-white whitespace-nowrap overflow-hidden relative z-10">
                               {booking.guestName}
                             </div>
-                            <div className="text-xs text-teal-100">
+                            <div className="text-[8.5px] text-teal-100 whitespace-nowrap relative z-0">
                               {booking.guestCount} guests
                             </div>
                           </div>
@@ -1041,8 +1047,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-semibold text-gray-700">Loading Calendar...</p>
+        </div>
       </div>
     );
   }
@@ -1070,12 +1079,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-0.5">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center space-x-2">
-          <h2 className="text-xl font-semibold text-gray-900">Property Calendar</h2>
+          <div className="flex items-center space-x-1">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Property Calendar</h2>
             {!canUpdateCalendar(user?.role || null) && (
               <div className="flex items-center space-x-1 px-2 py-1 bg-amber-100 text-amber-800 rounded-md text-xs">
                 <Lock className="h-3 w-3" />
@@ -1083,9 +1092,9 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               </div>
             )}
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-lg text-gray-600">
             {canUpdateCalendar(user?.role || null) 
-              ? 'Manage availability and view bookings' 
+              ? 'Manage your property availability and view bookings' 
               : 'View availability and bookings (read-only)'
             }
           </p>
@@ -1104,29 +1113,29 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm border border-gray-200">
         <button
           onClick={() => handleMonthChange('prev')}
-          className="p-3 hover:bg-gray-100 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md"
+          className="p-0.5 hover:bg-gray-100 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md"
         >
-          <ChevronLeft className="h-5 w-5 text-gray-600" />
+          <ChevronLeft className="h-4 w-4 text-gray-600" />
         </button>
         
-        <h3 className="text-2xl font-bold text-gray-900">
+        <h3 className="text-xs font-bold text-gray-900">
           {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
         </h3>
         
         <button
           onClick={() => handleMonthChange('next')}
-          className="p-3 hover:bg-gray-100 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md"
+          className="p-0.5 hover:bg-gray-100 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md"
         >
-          <ChevronRight className="h-5 w-5 text-gray-600" />
+          <ChevronRight className="h-4 w-4 text-gray-600" />
         </button>
       </div>
 
       {/* Calendar Grid */}
       <div className="bg-white rounded-lg border">
         {/* Day Headers */}
-        <div className="grid grid-cols-7 gap-1 bg-gray-100 p-2">
+        <div className="grid grid-cols-7 gap-0 bg-gray-100 p-0">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="p-3 text-center text-sm font-semibold text-gray-600 bg-white rounded-lg border border-gray-200">
+            <div key={day} className="p-0.5 text-center text-[10px] font-semibold text-gray-600 bg-white">
               {day}
             </div>
           ))}
@@ -1138,33 +1147,35 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         </div>
       </div>
 
-             {/* Legend */}
-      <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-gray-600 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-        <div className="flex items-center">
-          <div className="w-4 h-4 bg-green-50 border border-green-300 rounded mr-2"></div>
-          <span className="font-medium text-gray-700">Booked</span>
+      {/* Enhanced Legend */}
+      <div className="bg-gradient-to-r from-gray-50 to-white rounded-lg border border-gray-200 p-3 shadow-sm">
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-blue-100 border-2 border-blue-400 rounded-full"></div>
+            <span className="text-xs font-medium text-gray-700">Booked</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-red-100 border-2 border-red-400 rounded-full"></div>
+            <span className="text-xs font-medium text-gray-700">Blocked</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-white border-2 border-gray-400 rounded-full"></div>
+            <span className="text-xs font-medium text-gray-700">Available</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-green-100 border-2 border-green-400 rounded-full"></div>
+            <span className="text-xs font-medium text-gray-700">Guest Details</span>
+          </div>
         </div>
-         <div className="flex items-center">
-          <div className="w-4 h-4 bg-red-50 border border-red-300 rounded mr-2"></div>
-          <span className="font-medium text-gray-700">Blocked</span>
-         </div>
-         <div className="flex items-center">
-          <div className="w-4 h-4 bg-white border border-gray-300 rounded mr-2"></div>
-          <span className="font-medium text-gray-700">Available</span>
-         </div>
-         <div className="flex items-center">
-          <div className="w-4 h-4 bg-teal-100 border border-teal-300 rounded mr-2"></div>
-          <span className="font-medium text-gray-700">Guest Details</span>
-         </div>
-       </div>
+      </div>
 
 
       {/* Date Selection Actions */}
       {selectedDates && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-blue-900">
+              <p className="text-xs font-medium text-blue-900">
                 Selected: {selectedDates.start} to {selectedDates.end}
               </p>
               <p className="text-xs text-blue-700">
@@ -1176,12 +1187,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleBlockDates}
                 disabled={isBlocking}
-                className="btn-primary btn-sm"
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 font-medium"
               >
                 {isBlocking ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 ) : (
-                  <X className="h-4 w-4 mr-1" />
+                  <X className="h-4 w-4" />
                 )}
                 Block Dates
               </button>
@@ -1189,19 +1200,19 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleUnblockDates}
                 disabled={isBlocking}
-                className="btn-outline btn-sm"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 font-medium"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 ) : (
-                  <Check className="h-4 w-4 mr-1" />
+                  <Check className="h-4 w-4" />
                 )}
                 Unblock Dates
               </button>
               
               <button
                 onClick={() => setSelectedDates(null)}
-                className="text-blue-600 hover:text-blue-800"
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 font-medium"
               >
                 Cancel
               </button>
@@ -1212,13 +1223,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
 
       {/* Start Selection Mode Button */}
       {!doubleClickMode && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-yellow-900">
+              <p className="text-sm font-medium text-blue-900">
                 Multi-Date Selection
               </p>
-              <p className="text-xs text-yellow-700">
+              <p className="text-xs text-blue-700">
                 Click "Start Selection" → Click start date → Hover to end date → Click end date
               </p>
             </div>
@@ -1233,7 +1244,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 setIsSelecting(false);
                 console.log('Started selection mode manually');
               }}
-              className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium"
             >
               Start Selection
             </button>
@@ -1243,10 +1254,10 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
 
       {/* Selection Status */}
       {doubleClickMode && isSelecting && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-blue-900">
+              <p className="text-xs font-medium text-blue-900">
                 Selecting Date Range
               </p>
               <p className="text-xs text-blue-700">
@@ -1255,7 +1266,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             </div>
             <button
               onClick={exitDoubleClickMode}
-              className="text-blue-600 hover:text-blue-800 px-3 py-2"
+              className="text-blue-600 hover:text-blue-800 px-2 py-1"
             >
               Cancel
             </button>
@@ -1265,7 +1276,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
 
       {/* Bulk Actions for Double-Click Selection */}
       {showBulkActions && selectedDateList.length > 0 && (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-green-900">
@@ -1279,16 +1290,16 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               </p>
             </div>
             
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
               <button
                 onClick={handleBulkBlock}
                 disabled={isBlocking}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                 ) : (
-                  <X className="h-4 w-4" />
+                  <X className="h-3 w-3" />
                 )}
                 Block All ({selectedDateList.length})
               </button>
@@ -1296,19 +1307,19 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleBulkUnblock}
                 disabled={isBlocking}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                 ) : (
-                  <Check className="h-4 w-4" />
+                  <Check className="h-3 w-3" />
                 )}
                 Unblock All ({selectedDateList.length})
               </button>
               
               <button
                 onClick={exitDoubleClickMode}
-                className="text-green-600 hover:text-green-800 px-3 py-2"
+                className="text-green-600 hover:text-green-800 px-2 py-1"
               >
                 Exit Mode
               </button>
@@ -1322,21 +1333,21 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b">
-              <h3 className="text-lg font-semibold text-gray-900">Manage Date</h3>
+            <div className="flex items-center justify-between p-4 border-b">
+              <h3 className="text-base font-semibold text-gray-900">Manage Date</h3>
               <button
                 onClick={() => setShowDateModal(false)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Modal Content */}
-            <div className="p-6">
+            <div className="p-4">
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">Selected Date:</p>
-                <p className="text-lg font-medium text-gray-900">
+                <p className="text-xs text-gray-600 mb-1">Selected Date:</p>
+                <p className="text-sm font-medium text-gray-900">
                   {clickedDate.toLocaleDateString('en-US', { 
                     weekday: 'long', 
                     year: 'numeric', 
@@ -1347,28 +1358,28 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               </div>
 
               {isLoadingDateData ? (
-                <div className="flex items-center justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                  <span className="ml-3 text-gray-600">Loading date data...</span>
+                <div className="flex items-center justify-center py-6">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                  <span className="ml-2 text-sm text-gray-600">Loading date data...</span>
                 </div>
               ) : (
                 <>
-                  <div className="mb-6">
-                    <p className="text-sm text-gray-600 mb-3">Date Status:</p>
-                    <div className="flex items-center space-x-2">
+                  <div className="mb-4">
+                    <p className="text-xs text-gray-600 mb-2">Date Status:</p>
+                    <div className="flex items-center space-x-1">
                       {calendarDateData?.status === 'unavailable' || isDateBlocked(clickedDate) ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                          <X className="h-3 w-3 mr-1" />
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                          <X className="h-2 w-2 mr-1" />
                           Blocked
                         </span>
                       ) : isDateBooked(clickedDate) ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
-                          <Check className="h-3 w-3 mr-1" />
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <Check className="h-2 w-2 mr-1" />
                           Booked
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          <Check className="h-3 w-3 mr-1" />
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          <Check className="h-2 w-2 mr-1" />
                           Available
                         </span>
                       )}
@@ -1380,20 +1391,20 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               )}
 
               {/* Action Buttons */}
-              <div className="flex space-x-3">
+              <div className="flex space-x-2">
                 {!isDateBooked(clickedDate) && (
                   <>
                     {isDateBlocked(clickedDate) ? (
                       <button
                         onClick={handleUnblockSingleDate}
                         disabled={isBlocking}
-                        className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="flex-1 bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                       >
                         {isBlocking ? (
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                         ) : (
                           <>
-                            <Check className="h-4 w-4 mr-2" />
+                            <Check className="h-3 w-3 mr-1" />
                             Unblock Date
                           </>
                         )}
@@ -1402,13 +1413,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                       <button
                         onClick={handleBlockSingleDate}
                         disabled={isBlocking}
-                        className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="flex-1 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                       >
                         {isBlocking ? (
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                         ) : (
                           <>
-                            <X className="h-4 w-4 mr-2" />
+                            <X className="h-3 w-3 mr-1" />
                             Block Date
                           </>
                         )}
@@ -1420,8 +1431,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               </div>
 
               {isDateBooked(clickedDate) && (
-                <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                  <p className="text-sm text-blue-800">
+                <div className="mt-3 p-2 bg-blue-50 rounded-lg">
+                  <p className="text-xs text-blue-800">
                     This date is booked and cannot be blocked or unblocked.
                   </p>
                 </div>

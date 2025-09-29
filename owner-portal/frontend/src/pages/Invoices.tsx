@@ -248,6 +248,17 @@ const Invoices: React.FC = () => {
     overdueAmount: filteredInvoices.filter(inv => inv.status === 'overdue').reduce((sum, inv) => sum + inv.total, 0)
   }
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-semibold text-gray-700">Loading Invoices...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
       {/* Header Section - Fixed */}
@@ -255,7 +266,7 @@ const Invoices: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Invoices</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Invoices</h1>
               <p className="text-lg text-gray-600">
                 Manage guest invoices and billing
               </p>
@@ -264,79 +275,79 @@ const Invoices: React.FC = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 space-y-8 pt-48">
+      <div className="container mx-auto px-4 py-4 space-y-4 pt-20">
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-gray-500 mb-2">Total Amount</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-xs font-semibold text-gray-500 mb-1">Total Amount</p>
+                <p className="text-lg font-bold text-gray-900">
                   {formatCurrency(calculatedSummary.totalAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg">
-                <Euro className="h-8 w-8 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md">
+                <Euro className="h-5 w-5 text-white" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-gray-500 mb-2">Paid</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-xs font-semibold text-gray-500 mb-1">Paid</p>
+                <p className="text-lg font-bold text-gray-900">
                   {formatCurrency(calculatedSummary.paidAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg">
-                <CheckCircle className="h-8 w-8 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-md">
+                <CheckCircle className="h-5 w-5 text-white" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-gray-500 mb-2">Pending</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-xs font-semibold text-gray-500 mb-1">Pending</p>
+                <p className="text-lg font-bold text-gray-900">
                   {formatCurrency(calculatedSummary.pendingAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl shadow-lg">
-                <Clock className="h-8 w-8 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg shadow-md">
+                <Clock className="h-5 w-5 text-white" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl hover:shadow-3xl transition-all duration-500">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-gray-500 mb-2">Overdue</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-xs font-semibold text-gray-500 mb-1">Overdue</p>
+                <p className="text-lg font-bold text-gray-900">
                   {formatCurrency(calculatedSummary.overdueAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-lg">
-                <AlertCircle className="h-8 w-8 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg shadow-md">
+                <AlertCircle className="h-5 w-5 text-white" />
               </div>
             </div>
           </div>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 p-8 shadow-2xl">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
             {/* Search Bar */}
             <div className="flex-1 max-w-md">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search invoices, guests, properties..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 placeholder-gray-500 shadow-lg"
+                  className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 placeholder-gray-500 shadow-md"
                 />
               </div>
             </div>
@@ -344,21 +355,21 @@ const Invoices: React.FC = () => {
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`px-6 py-4 rounded-2xl font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-all duration-300 flex items-center gap-1 ${
                 showFilters 
-                  ? 'bg-gradient-to-r from-[#5FFF56] to-[#4FEF46] text-white hover:from-[#4FEF46] hover:to-[#5FFF56]' 
+                  ? 'bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white hover:from-[#0284c7] hover:to-[#0ea5e9]' 
                   : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
               }`}
             >
-              <Filter className="w-5 h-5" />
+              <Filter className="w-4 h-4" />
               Filters
             </button>
           </div>
 
           {/* Advanced Filters */}
           {showFilters && (
-            <div className="mt-8 p-8 bg-gradient-to-r from-gray-50/80 to-white/80 rounded-2xl border border-gray-100/50 shadow-lg">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="mt-4 p-4 bg-gradient-to-r from-gray-50/80 to-white/80 rounded-lg border border-gray-100/50 shadow-md">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Property</label>
                   <PropertySelector
@@ -374,7 +385,7 @@ const Invoices: React.FC = () => {
                   <select
                     value={selectedDateRange}
                     onChange={(e) => setSelectedDateRange(e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                   >
                     <option value="7d">Last 7 days</option>
                     <option value="30d">Last 30 days</option>
@@ -387,7 +398,7 @@ const Invoices: React.FC = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">From Date</label>
                   <input 
                     type="date" 
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
                   />
@@ -397,7 +408,7 @@ const Invoices: React.FC = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">To Date</label>
                   <input 
                     type="date" 
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
                   />
@@ -414,7 +425,7 @@ const Invoices: React.FC = () => {
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Amount Range</label>
                   <select className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg">
@@ -431,10 +442,10 @@ const Invoices: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={fetchInvoices}
-                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl flex items-center gap-2"
+                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-semibold shadow-md hover:shadow-lg flex items-center gap-1"
                     disabled={!selectedPropertyId || isLoading}
                   >
-                    <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                     {isLoading ? 'Loading...' : 'Refresh'}
                   </button>
                 </div>
@@ -442,13 +453,13 @@ const Invoices: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={() => setShowFilters(false)}
-                    className="px-6 py-3 bg-white text-gray-700 border border-gray-200 rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold shadow-lg"
+                    className="px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-300 font-semibold shadow-md"
                   >
                     Clear All
                   </button>
                   <button
                     onClick={fetchInvoices}
-                    className="px-6 py-3 bg-gradient-to-r from-[#5FFF56] to-[#4FEF46] text-white rounded-2xl hover:from-[#4FEF46] hover:to-[#5FFF56] transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
+                    className="px-4 py-2 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white rounded-lg hover:from-[#0284c7] hover:to-[#0ea5e9] transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
                     disabled={!selectedPropertyId}
                   >
                     Apply Filters
@@ -460,16 +471,9 @@ const Invoices: React.FC = () => {
         </div>
 
         {/* Invoices Table */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl border border-white/30 shadow-2xl overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
-            {isLoading ? (
-              <div className="flex items-center justify-center py-16">
-                <div className="text-center">
-                  <RefreshCw className="h-12 w-12 animate-spin text-[#5FFF56] mx-auto mb-4" />
-                  <p className="text-lg font-semibold text-gray-700">Loading invoices...</p>
-                </div>
-              </div>
-            ) : filteredInvoices.length === 0 ? (
+            {filteredInvoices.length === 0 ? (
               <div className="text-center py-16">
                 <FileText className="h-16 w-16 mx-auto text-gray-400 mb-6" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">No invoices found</h3>
@@ -479,53 +483,53 @@ const Invoices: React.FC = () => {
               <table className="w-full table-auto">
                 <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                   <tr>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Invoice</th>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Guest</th>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Property</th>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Date</th>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                    <th className="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Invoice</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Guest</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Property</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Date</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {filteredInvoices.map((invoice, index) => (
                     <tr key={`${invoice.id}-${invoice.propertyId}-${index}`} className="hover:bg-gradient-to-r hover:from-gray-50 hover:to-white transition-all duration-300 group">
-                      <td className="px-8 py-6 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <FileText className="h-6 w-6 text-white" />
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+                            <FileText className="h-4 w-4 text-white" />
                           </div>
                           <div>
-                            <p className="font-bold text-gray-900 text-lg group-hover:text-[#5FFF56] transition-colors">{invoice.id}</p>
-                            <p className="text-sm text-gray-500 font-medium">
+                            <p className="font-bold text-gray-900 text-sm group-hover:text-[#5FFF56] transition-colors">{invoice.id}</p>
+                            <p className="text-xs text-gray-500 font-medium">
                               {invoice.closed ? 'Closed' : 'Open'}
                             </p>
                           </div>
                         </div>
                       </td>
                       
-                      <td className="px-8 py-6 whitespace-nowrap">
-                        <p className="font-bold text-gray-900 text-lg">{invoice.guestName}</p>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <p className="font-bold text-gray-900 text-sm">{invoice.guestName}</p>
                       </td>
                       
-                      <td className="px-8 py-6 whitespace-nowrap">
-                        <p className="font-bold text-gray-900 text-lg">{invoice.propertyName}</p>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <p className="font-bold text-gray-900 text-sm">{invoice.propertyName}</p>
                       </td>
                       
-                      <td className="px-8 py-6 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center">
-                          <Calendar className="h-5 w-5 text-gray-400 mr-2" />
+                          <Calendar className="h-4 w-4 text-gray-400 mr-1" />
                           <span className="font-semibold text-gray-900">{formatDate(invoice.date)}</span>
                         </div>
                       </td>
                       
-                      <td className="px-8 py-6 whitespace-nowrap">
-                        <span className="font-bold text-gray-900 text-lg">{invoice.valueFormatted}</span>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className="font-bold text-gray-900 text-sm">{invoice.valueFormatted}</span>
                       </td>
                       
-                      <td className="px-8 py-6 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-4 py-2 rounded-2xl text-sm font-bold shadow-lg ${
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-lg text-xs font-bold shadow-md ${
                           invoice.status === 'paid' ? 'bg-green-100 text-green-800' :
                           invoice.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                           invoice.status === 'overdue' ? 'bg-red-100 text-red-800' :
@@ -535,14 +539,14 @@ const Invoices: React.FC = () => {
                         </span>
                       </td>
                       
-                      <td className="px-8 py-6 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center space-x-3">
                           <button 
                             onClick={() => handleViewInvoice(invoice)}
-                            className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                            className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
                             title="View Invoice"
                           >
-                            <Eye className="w-5 h-5" />
+                            <Eye className="w-4 h-4" />
                           </button>
                           
                         </div>

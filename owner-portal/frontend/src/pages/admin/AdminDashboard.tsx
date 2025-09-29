@@ -1460,7 +1460,7 @@ const AccountantEditModal: React.FC<AccountantEditModalProps> = ({ accountant, a
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-transparent rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <div className="flex items-center">
@@ -1701,7 +1701,7 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-transparent rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <div className="flex items-center">
@@ -1917,8 +1917,11 @@ const AdminDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-500"></div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-semibold text-gray-700">Loading Admin Dashboard...</p>
+        </div>
       </div>
     )
   }
@@ -1930,10 +1933,10 @@ const AdminDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-8">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">
+              <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">
                 Admin Dashboard
               </h1>
-              <p className="mt-2 text-lg text-gray-600">
+              <p className="mt-1 text-sm text-gray-600">
                 Welcome back, <span className="font-semibold text-black">{user?.name}</span>
               </p>
             </div>
@@ -1975,9 +1978,9 @@ const AdminDashboard: React.FC = () => {
               
               <button
                 onClick={() => setShowOwnerModal(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] hover:from-[#0284c7] hover:to-[#0369a1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0ea5e9]"
               >
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="h-3 w-3 mr-1" />
                 Add User
               </button>
             </div>
@@ -1987,21 +1990,21 @@ const AdminDashboard: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="p-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                    <Users className="h-6 w-6 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] rounded-lg flex items-center justify-center">
+                    <Users className="h-4 w-4 text-white" />
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="ml-3 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                    <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
                       Total Owners
                     </dt>
-                    <dd className="text-3xl font-bold text-gray-900 mt-1">
+                    <dd className="text-lg font-bold text-gray-900 mt-1">
                       {stats?.totalOwners || 0}
                     </dd>
                   </dl>
@@ -2010,20 +2013,20 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="p-6">
+          <div className="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-                    <Users className="h-6 w-6 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] rounded-lg flex items-center justify-center">
+                    <Users className="h-4 w-4 text-white" />
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="ml-3 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                    <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
                       Total Accountants
                     </dt>
-                    <dd className="text-3xl font-bold text-gray-900 mt-1">
+                    <dd className="text-lg font-bold text-gray-900 mt-1">
                       {stats?.totalAccountants || 0}
                     </dd>
                   </dl>
@@ -2032,20 +2035,20 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="p-6">
+          <div className="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <Building2 className="h-6 w-6 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-r from-[#10b981] to-[#059669] rounded-lg flex items-center justify-center">
+                    <Building2 className="h-4 w-4 text-white" />
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="ml-3 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                    <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
                       Total Properties
                     </dt>
-                    <dd className="text-3xl font-bold text-gray-900 mt-1">
+                    <dd className="text-lg font-bold text-gray-900 mt-1">
                       {stats?.totalProperties || 0}
                     </dd>
                   </dl>
@@ -2055,20 +2058,20 @@ const AdminDashboard: React.FC = () => {
           </div>
 
 
-          <div className="bg-white overflow-hidden shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="p-6">
+          <div className="bg-white overflow-hidden shadow-lg rounded-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-r from-[#f97316] to-[#ea580c] rounded-lg flex items-center justify-center">
+                    <TrendingUp className="h-4 w-4 text-white" />
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="ml-3 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-semibold text-gray-600 truncate uppercase tracking-wide">
+                    <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
                       Current View
                     </dt>
-                    <dd className="text-lg font-bold text-gray-900 mt-1">
+                    <dd className="text-sm font-bold text-gray-900 mt-1">
                       {getSelectedOwnerName()} | {getSelectedAccountantName()}
                     </dd>
                   </dl>
@@ -2081,18 +2084,18 @@ const AdminDashboard: React.FC = () => {
         {/* Owners Section */}
         <div className="bg-white shadow-xl rounded-xl border border-gray-100 mb-8">
           <div className="px-6 py-6">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                <h3 className="text-lg font-bold text-gray-900 mb-1">
                   Owners Management
                 </h3>
-                <p className="text-gray-600">Manage property owners and their company information</p>
+                <p className="text-sm text-gray-600">Manage property owners and their company information</p>
               </div>
               <button
                 onClick={() => setShowOwnerModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                className="bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] hover:from-[#0284c7] hover:to-[#0369a1] text-white px-3 py-1.5 rounded-md flex items-center gap-1 transition-all duration-300 text-sm shadow-md hover:shadow-lg"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-3 w-3" />
                 Add Owner
               </button>
             </div>
@@ -2200,7 +2203,7 @@ const AdminDashboard: React.FC = () => {
               </div>
               <button
                 onClick={() => setShowPropertyModal(true)}
-                className="inline-flex items-center px-4 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-lg hover:shadow-xl transition-all duration-200"
+                className="inline-flex items-center px-4 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2563eb] shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 <Plus className="h-5 w-5 mr-2" />
                 Add Property
@@ -2682,8 +2685,8 @@ const AdminDashboard: React.FC = () => {
         {/* Full Properties Management Section */}
         <div className="bg-white shadow rounded-lg mt-6" data-property-management>
           <div className="px-4 py-5 sm:p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-base leading-6 font-medium text-gray-900">
                 Full Properties Management ({getSelectedOwnerName()})
               </h3>
             </div>

@@ -86,8 +86,8 @@ export default {
           '50%': { transform: 'scale(1.05)' }
         },
         'glow-pulse': {
-          '0%, 100%': { filter: 'drop-shadow(0 0 10px rgba(95, 255, 86, 0.4))' },
-          '50%': { filter: 'drop-shadow(0 0 30px rgba(95, 255, 86, 0.9))' }
+          '0%, 100%': { filter: 'drop-shadow(0 0 10px rgba(14, 165, 233, 0.4))' },
+          '50%': { filter: 'drop-shadow(0 0 30px rgba(14, 165, 233, 0.9))' }
         }
       },
       animation: {

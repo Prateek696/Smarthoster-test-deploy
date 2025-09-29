@@ -61,10 +61,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       roles: ['admin']
     },
     { 
-      name: t('nav.ownerManagement'), 
-      href: '/admin/owners', 
-      icon: Users,
-      roles: ['admin']
+      name: t('nav.saft'), 
+      href: '/saft', 
+      icon: Receipt
     },
     { 
       name: t('nav.bookings'), 
@@ -77,14 +76,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       icon: FileText 
     },
     { 
+      name: t('nav.calendar'), 
+      href: '/calendar', 
+      icon: Calendar 
+    },
+    { 
       name: t('nav.sibaManager'), 
       href: '/siba-manager', 
       icon: Shield
-    },
-    { 
-      name: t('nav.saft'), 
-      href: '/saft', 
-      icon: Receipt
     },
     { 
       name: t('nav.properties'), 
@@ -92,9 +91,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       icon: Building2
     },
     { 
-      name: t('nav.calendar'), 
-      href: '/calendar', 
-      icon: Calendar 
+      name: t('nav.ownerManagement'), 
+      href: '/admin/owners', 
+      icon: Users,
+      roles: ['admin']
     },
     { 
       name: t('nav.ownerStatements'), 

@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from '../store';
 import BookingCalendar from '../components/calendar/BookingCalendar';
 import { fetchPropertiesAsync } from '../store/properties.slice';
 import usePropertyRefresh from '../hooks/usePropertyRefresh';
+import PropertySelector from '../components/common/PropertySelector';
 
 const Calendar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +18,7 @@ const Calendar: React.FC = () => {
 
   // Get authentication state
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { properties } = useSelector((state: RootState) => state.properties);
 
   // Fetch properties on component mount when authenticated
   useEffect(() => {
@@ -53,20 +55,8 @@ const Calendar: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
-      {/* Header - Fixed */}
-      <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
-        <div className="container mx-auto px-4 py-8">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Property Calendar</h1>
-            <p className="text-lg text-gray-600">
-              Manage your property availability and view bookings
-              {calendarProps.propertyId && ` for Property ${calendarProps.propertyId}`}
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-8 pt-48">
+      <div className="container mx-auto px-4 py-1 pt-8">
         {/* Calendar Section */}
         <div>
           <BookingCalendar 

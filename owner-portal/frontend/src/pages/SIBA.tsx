@@ -125,11 +125,11 @@ const SIBA: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">SIBA Compliance</h1>
-              <p className="text-gray-600">Real-time compliance monitoring and guest reporting</p>
+              <h1 className="text-sm lg:text-base font-bold text-gray-900 mb-1">SIBA Manager Dashboard</h1>
+              <p className="text-[10px] text-gray-600">Real-time compliance monitoring and guest reporting</p>
             </div>
             <div className="flex items-center space-x-4">
               <PropertySelector
@@ -158,11 +158,10 @@ const SIBA: React.FC = () => {
         </div>
 
         {isLoading ? (
-          <div className="flex items-center justify-center py-20">
+          <div className="flex items-center justify-center min-h-screen">
             <div className="text-center">
-              <RefreshCw className="h-12 w-12 text-blue-600 animate-spin mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Loading Real Data</h3>
-              <p className="text-gray-500">Fetching SIBA status and booking information...</p>
+              <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-lg font-semibold text-gray-700">Loading SIBA Data...</p>
             </div>
           </div>
         ) : sibaStatus ? (
@@ -175,8 +174,8 @@ const SIBA: React.FC = () => {
                     {getStatusIcon(sibaStatus.status)}
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">SIBA Status: {getStatusText(sibaStatus.status)}</h2>
-                    <p className="text-lg text-gray-600 mb-2">{sibaStatus.message}</p>
+                    <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-2">SIBA Status: {getStatusText(sibaStatus.status)}</h2>
+                    <p className="text-sm text-gray-600 mb-2">{sibaStatus.message}</p>
                     {sibaStatus.lastSibaSendDate && (
                       <p className="text-sm text-gray-500">
                         Last submission: <span className={`font-semibold ${sibaStatus.status === 'green' ? 'text-green-600' : sibaStatus.status === 'amber' ? 'text-yellow-600' : 'text-red-600'}`}>{formatDate(sibaStatus.lastSibaSendDate)}</span>
@@ -191,8 +190,8 @@ const SIBA: React.FC = () => {
                 </div>
                 
                 <div className="text-right">
-                  <p className="text-4xl font-bold text-gray-900 mb-2">{complianceRate}%</p>
-                  <p className="text-lg text-gray-600">Compliance Rate</p>
+                  <p className="text-lg lg:text-xl font-bold text-gray-900 mb-2">{complianceRate}%</p>
+                  <p className="text-sm text-gray-600">Compliance Rate</p>
                   <p className="text-sm text-gray-500 mt-2">
                     Data source: {sibaStatus.dataSource} • Last updated: {new Date().toLocaleTimeString()}
                   </p>
@@ -201,41 +200,41 @@ const SIBA: React.FC = () => {
             </div>
 
             {/* Real Statistics - Full Width Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-8 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl w-fit mx-auto mb-6">
-                  <Users className="h-8 w-8 text-white" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-3">
+              <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center hover:shadow-md transition-all duration-300">
+                <div className="p-0.5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-md w-fit mx-auto mb-1">
+                  <Users className="h-3 w-3 text-white" />
                 </div>
-                <p className="text-4xl font-bold text-gray-900 mb-2">{submittedGuests}</p>
-                <p className="text-lg text-gray-600 mb-1">Submitted Guests</p>
-                <p className="text-sm text-gray-500">Real booking data</p>
+                <p className="text-sm font-bold text-gray-900 mb-0.5">{submittedGuests}</p>
+                <p className="text-[10px] text-gray-600 mb-0.5">Submitted Guests</p>
+                <p className="text-[9px] text-gray-500">Real booking data</p>
               </div>
 
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-8 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <div className="p-4 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl w-fit mx-auto mb-6">
-                  <Clock className="h-8 w-8 text-white" />
+              <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center hover:shadow-md transition-all duration-300">
+                <div className="p-0.5 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-md w-fit mx-auto mb-1">
+                  <Clock className="h-3 w-3 text-white" />
                 </div>
-                <p className="text-4xl font-bold text-gray-900 mb-2">{pendingGuests}</p>
-                <p className="text-lg text-gray-600 mb-1">Pending Guests</p>
-                <p className="text-sm text-gray-500">Awaiting submission</p>
+                <p className="text-sm font-bold text-gray-900 mb-0.5">{pendingGuests}</p>
+                <p className="text-[10px] text-gray-600 mb-0.5">Pending Guests</p>
+                <p className="text-[9px] text-gray-500">Awaiting submission</p>
               </div>
 
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-8 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <div className="p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl w-fit mx-auto mb-6">
-                  <Calendar className="h-8 w-8 text-white" />
+              <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center hover:shadow-md transition-all duration-300">
+                <div className="p-0.5 bg-gradient-to-br from-green-500 to-green-600 rounded-md w-fit mx-auto mb-1">
+                  <Calendar className="h-3 w-3 text-white" />
                 </div>
-                <p className="text-4xl font-bold text-gray-900 mb-2">{totalBookings}</p>
-                <p className="text-lg text-gray-600 mb-1">Total Bookings</p>
-                <p className="text-sm text-gray-500">Current period</p>
+                <p className="text-sm font-bold text-gray-900 mb-0.5">{totalBookings}</p>
+                <p className="text-[10px] text-gray-600 mb-0.5">Total Bookings</p>
+                <p className="text-[9px] text-gray-500">Current period</p>
               </div>
 
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-8 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <div className="p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl w-fit mx-auto mb-6">
-                  <FileCheck className="h-8 w-8 text-white" />
+              <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center hover:shadow-md transition-all duration-300">
+                <div className="p-0.5 bg-gradient-to-br from-purple-500 to-purple-600 rounded-md w-fit mx-auto mb-1">
+                  <FileCheck className="h-3 w-3 text-white" />
                 </div>
-                <p className="text-4xl font-bold text-gray-900 mb-2">{totalGuests}</p>
-                <p className="text-lg text-gray-600 mb-1">Total Guests</p>
-                <p className="text-sm text-gray-500">All visitors</p>
+                <p className="text-sm font-bold text-gray-900 mb-0.5">{totalGuests}</p>
+                <p className="text-[10px] text-gray-600 mb-0.5">Total Guests</p>
+                <p className="text-[9px] text-gray-500">All visitors</p>
               </div>
             </div>
 
