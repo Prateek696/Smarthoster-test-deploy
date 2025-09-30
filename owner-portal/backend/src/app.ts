@@ -40,18 +40,29 @@ app.use('/saft/files', express.static(path.join(__dirname, 'saft_files')));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(helmet());
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'https://smarthoster.io',
-    'https://test.smarthoster.io',
-    'https://dashboard.smarthoster.io',
-    // Vercel domains for testing
-    /^https:\/\/.*\.vercel\.app$/,
-    /^https:\/\/.*\.vercel\.dev$/,
-    // Specific frontend domain
-    'https://smarthoster-test-deploy-owner-porta.vercel.app'
-  ],
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, or server-to-server)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'https://smarthoster.io',
+      'https://test.smarthoster.io',
+      'https://dashboard.smarthoster.io',
+      'https://smarthoster-test-deploy-owner-porta.vercel.app'
+    ];
+    
+    // Check if origin is in allowed list or matches Vercel pattern
+    if (allowedOrigins.includes(origin) || 
+        /^https:\/\/.*\.vercel\.app$/.test(origin) ||
+        /^https:\/\/.*\.vercel\.dev$/.test(origin)) {
+      callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
