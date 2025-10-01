@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProperties, updateProperty, getDashboardMetrics } from "../controllers/propertyManagement.controller";
+import { getProperties, updateProperty, getDashboardMetrics, fetchHostawayPropertyDetails } from "../controllers/propertyManagement.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { requireOwner, requireOwnerOrAccountant, requireRole } from "../middlewares/role.middleware";
 
@@ -10,6 +10,13 @@ router.get("/", authMiddleware, getProperties);
 
 // Get dashboard metrics
 router.get("/dashboard/metrics", authMiddleware, getDashboardMetrics);
+
+// Fetch property details from Hostaway by listing ID
+router.get("/fetch-hostaway/:hostawayListingId", 
+  authMiddleware, 
+  requireRole(['owner', 'admin']), 
+  fetchHostawayPropertyDetails
+);
 
 // Update property - owners and admins can update
 router.put("/:propertyId", 

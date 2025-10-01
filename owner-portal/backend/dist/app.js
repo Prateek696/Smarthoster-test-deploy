@@ -44,18 +44,7 @@ app.use('/saft/files', express_1.default.static(path_1.default.join(__dirname, '
 app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
 app.use((0, helmet_1.default)());
 app.use((0, cors_1.default)({
-    origin: [
-        'http://localhost:3000',
-        'http://localhost:5173',
-        'https://smarthoster.io',
-        'https://test.smarthoster.io',
-        'https://dashboard.smarthoster.io',
-        // Vercel domains for testing
-        /^https:\/\/.*\.vercel\.app$/,
-        /^https:\/\/.*\.vercel\.dev$/,
-        // Specific frontend domain
-        'https://smarthoster-test-deploy-owner-porta.vercel.app'
-    ],
+    origin: true, // Allow all origins for now (temporary)
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],

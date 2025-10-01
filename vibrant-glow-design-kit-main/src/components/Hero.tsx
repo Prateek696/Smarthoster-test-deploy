@@ -30,7 +30,7 @@ const Hero = () => {
             </div>
             
             <div className="space-y-4">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight tracking-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
                 {t?.hero?.title?.empowering || "Empowering"}
                 <span className="block text-transparent bg-gradient-to-r from-[#5FFF56] to-[#00CFFF] bg-clip-text">
                   {t?.hero?.title?.hosts || "Hosts"}

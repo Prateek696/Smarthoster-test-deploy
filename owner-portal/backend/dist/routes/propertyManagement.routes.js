@@ -9,6 +9,8 @@ const router = (0, express_1.Router)();
 router.get("/", auth_middleware_1.authMiddleware, propertyManagement_controller_1.getProperties);
 // Get dashboard metrics
 router.get("/dashboard/metrics", auth_middleware_1.authMiddleware, propertyManagement_controller_1.getDashboardMetrics);
+// Fetch property details from Hostaway by listing ID
+router.get("/fetch-hostaway/:hostawayListingId", auth_middleware_1.authMiddleware, (0, role_middleware_1.requireRole)(['owner', 'admin']), propertyManagement_controller_1.fetchHostawayPropertyDetails);
 // Update property - owners and admins can update
 router.put("/:propertyId", auth_middleware_1.authMiddleware, (0, role_middleware_1.requireRole)(['owner', 'admin']), propertyManagement_controller_1.updateProperty);
 // Update property (POST method for frontend compatibility) - owners and admins

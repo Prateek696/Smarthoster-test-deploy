@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { getPropertiesService } from "../services/property.service";
 import Property from "../models/property.model";
 import { UserModel } from "../models/User.model";
+import { getHostawayListingDetails } from "../integrations/hostaway.api";
 
 export const getProperties = async (req: Request, res: Response) => {
   try {
@@ -182,6 +183,44 @@ export const updateProperty = async (req: Request, res: Response) => {
     res.status(500).json({
       message: error.message || "Failed to update property",
       error: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  }
+};
+
+/**
+ * Fetch property details from Hostaway by listing ID
+ * Auto-populates property form fields
+ */
+export const fetchHostawayPropertyDetails = async (req: Request, res: Response) => {
+  try {
+    const { hostawayListingId } = req.params;
+    
+    if (!hostawayListingId) {
+      return res.status(400).json({ message: "Hostaway listing ID is required" });
+    }
+
+    const listingId = parseInt(hostawayListingId);
+    
+    if (isNaN(listingId)) {
+      return res.status(400).json({ message: "Invalid Hostaway listing ID format" });
+    }
+
+    console.log(`🔍 Fetching Hostaway property details for listing ID: ${listingId}`);
+
+    const propertyDetails = await getHostawayListingDetails(listingId);
+
+    res.status(200).json({
+      success: true,
+      data: propertyDetails,
+      message: "Property details fetched successfully from Hostaway"
+    });
+
+  } catch (error: any) {
+    console.error('❌ Error fetching Hostaway property details:', error);
+    res.status(error.status || 500).json({
+      success: false,
+      message: error.message || "Failed to fetch property details from Hostaway",
+      details: error.details
     });
   }
 };

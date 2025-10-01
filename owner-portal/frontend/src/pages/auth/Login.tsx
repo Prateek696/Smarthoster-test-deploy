@@ -52,14 +52,19 @@ const Login: React.FC = () => {
   }, [error, dispatch])
 
   const onSubmit = async (data: LoginFormData) => {
+    // Show loading toast for better UX during cold starts
+    const loadingToast = toast.loading('Connecting to server...')
+    
     try {
       await dispatch(sendLoginOTPAsync({ email: data.email, password: data.password })).unwrap()
       setEmail(data.email)
       setPassword(data.password)
       setStep('otp')
       setOtpSent(true)
+      toast.dismiss(loadingToast)
       toast.success('OTP sent to your email!')
     } catch (error) {
+      toast.dismiss(loadingToast)
       // Error handled by Redux slice and displayed via useEffect
     }
   }
@@ -77,10 +82,14 @@ const Login: React.FC = () => {
   }
 
   const handleResendOTP = async () => {
+    const loadingToast = toast.loading('Resending OTP...')
+    
     try {
       await dispatch(sendLoginOTPAsync({ email, password })).unwrap()
+      toast.dismiss(loadingToast)
       toast.success('OTP resent to your email!')
     } catch (error) {
+      toast.dismiss(loadingToast)
       // Error handled by Redux slice and displayed via useEffect
     }
   }

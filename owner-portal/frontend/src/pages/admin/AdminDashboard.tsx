@@ -10,6 +10,7 @@ import {
   updateAccountant,
   updateAccountantProperties,
   deleteAccountant,
+  deleteOwner,
   deleteProperty,
   Owner,
   Accountant,
@@ -28,10 +29,15 @@ import {
   Trash2,
   ChevronDown,
   X,
+  RefreshCw,
+  CheckCircle,
+  Download,
   Minus
 } from 'lucide-react'
 import PropertyManagement from '../../components/property/PropertyManagement'
 import OwnerStatementComponent from '../../components/admin/OwnerStatement'
+import apiClient from '../../services/apiClient'
+import toast from 'react-hot-toast'
 
 interface AddOwnerFormProps {
   onSuccess: () => void
@@ -74,6 +80,8 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
   const [showApiKey, setShowApiKey] = useState(false)
   const [selectedProperties, setSelectedProperties] = useState<string[]>([])
   const [availableProperties, setAvailableProperties] = useState<any[]>([])
+  const [isFetchingProperty, setIsFetchingProperty] = useState(false)
+  const [propertyFetchSuccess, setPropertyFetchSuccess] = useState(false)
 
   // Company management functions
   const addCompany = () => {
@@ -113,6 +121,59 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
       fetchProperties()
     }
   }, [formData.role])
+
+  const handleFetchPropertyFromHostaway = async () => {
+    if (!propertyData.id) {
+      toast.error('Please enter a Hostaway Property ID first')
+      return
+    }
+
+    setIsFetchingProperty(true)
+    setError('')
+    setPropertyFetchSuccess(false)
+
+    try {
+      const response = await apiClient.get(`/property-management/fetch-hostaway/${propertyData.id}`)
+      
+      if (response.success && response.data) {
+        const data = response.data
+        
+        // Build full address from all components
+        const addressParts = [
+          data.address?.street,
+          data.address?.city,
+          data.address?.state,
+          data.address?.country
+        ].filter(Boolean)
+        
+        const fullAddress = addressParts.length > 0 
+          ? addressParts.join(', ') 
+          : data.address?.full || propertyData.address
+        
+        // Auto-populate property form fields
+        setPropertyData(prev => ({
+          ...prev,
+          name: data.name || prev.name,
+          address: fullAddress,
+          bedrooms: data.bedrooms || prev.bedrooms,
+          bathrooms: data.bathrooms || prev.bathrooms,
+          maxGuests: data.accommodates || prev.maxGuests,
+          type: data.propertyType || prev.type
+        }))
+
+        setPropertyFetchSuccess(true)
+        toast.success('Property details fetched from Hostaway!')
+        console.log('✅ Fetched property details for owner form:', data)
+      }
+    } catch (err: any) {
+      console.error('❌ Error fetching from Hostaway:', err)
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch property details'
+      setError(errorMessage)
+      toast.error(errorMessage)
+    } finally {
+      setIsFetchingProperty(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -471,38 +532,67 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
           <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
             <h4 className="text-lg font-medium text-gray-900">Property Details</h4>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Hostaway Property ID *
-                </label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Hostaway Property ID *
+              </label>
+              <div className="flex gap-2">
                 <input
                   type="number"
                   value={propertyData.id}
                   onChange={(e) => setPropertyData(prev => ({ ...prev, id: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g., 392777"
                   required={includeProperty}
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Property Type *
-                </label>
-                <select
-                  value={propertyData.type}
-                  onChange={(e) => setPropertyData(prev => ({ ...prev, type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <button
+                  type="button"
+                  onClick={handleFetchPropertyFromHostaway}
+                  disabled={isFetchingProperty || !propertyData.id}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-colors"
                 >
-                  <option value="Apartment">Apartment</option>
-                  <option value="House">House</option>
-                  <option value="Villa">Villa</option>
-                  <option value="Condominium">Condominium</option>
-                  <option value="Penthouse">Penthouse</option>
-                  <option value="Studio">Studio</option>
-                </select>
+                  {isFetchingProperty ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      Fetching...
+                    </>
+                  ) : propertyFetchSuccess ? (
+                    <>
+                      <CheckCircle className="h-4 w-4" />
+                      Fetched
+                    </>
+                  ) : (
+                    <>
+                      <Download className="h-4 w-4" />
+                      Fetch
+                    </>
+                  )}
+                </button>
               </div>
+              {propertyFetchSuccess && (
+                <p className="mt-1 text-sm text-green-600 flex items-center gap-1">
+                  <CheckCircle className="h-4 w-4" />
+                  Property details loaded from Hostaway.
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Property Type *
+              </label>
+              <select
+                value={propertyData.type}
+                onChange={(e) => setPropertyData(prev => ({ ...prev, type: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="Apartment">Apartment</option>
+                <option value="House">House</option>
+                <option value="Villa">Villa</option>
+                <option value="Condominium">Condominium</option>
+                <option value="Penthouse">Penthouse</option>
+                <option value="Studio">Studio</option>
+              </select>
             </div>
 
             <div>
@@ -588,19 +678,6 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g., 10030"
                 required={includeProperty}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Amenities (comma-separated)
-              </label>
-              <input
-                type="text"
-                value={propertyData.amenities}
-                onChange={(e) => setPropertyData(prev => ({ ...prev, amenities: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="WiFi, Kitchen, Pool, Parking"
               />
             </div>
 
@@ -901,6 +978,8 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
   const [selectedImages, setSelectedImages] = useState<File[]>([])
   const [isUploadingImages, setIsUploadingImages] = useState(false)
   const [showHostkitApiKey, setShowHostkitApiKey] = useState(false)
+  const [isFetchingHostaway, setIsFetchingHostaway] = useState(false)
+  const [fetchSuccess, setFetchSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -971,6 +1050,59 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
     }
   }
 
+  const handleFetchFromHostaway = async () => {
+    if (!formData.id) {
+      toast.error('Please enter a Hostaway Property ID first')
+      return
+    }
+
+    setIsFetchingHostaway(true)
+    setError('')
+    setFetchSuccess(false)
+
+    try {
+      const response = await apiClient.get(`/property-management/fetch-hostaway/${formData.id}`)
+      
+      if (response.success && response.data) {
+        const data = response.data
+        
+        // Auto-populate form fields
+        // Build full address from all components
+        const addressParts = [
+          data.address?.street,
+          data.address?.city,
+          data.address?.state,
+          data.address?.country
+        ].filter(Boolean); // Remove empty parts
+        
+        const fullAddress = addressParts.length > 0 
+          ? addressParts.join(', ') 
+          : data.address?.full || formData.address;
+        
+        setFormData(prev => ({
+          ...prev,
+          name: data.name || prev.name,
+          address: fullAddress,
+          bedrooms: data.bedrooms || prev.bedrooms,
+          bathrooms: data.bathrooms || prev.bathrooms,
+          maxGuests: data.accommodates || prev.maxGuests,
+          type: data.propertyType || prev.type
+        }))
+
+        setFetchSuccess(true)
+        toast.success('Property details fetched successfully from Hostaway!')
+        console.log('✅ Fetched Hostaway property details:', data)
+      }
+    } catch (err: any) {
+      console.error('❌ Error fetching from Hostaway:', err)
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch property details from Hostaway'
+      setError(errorMessage)
+      toast.error(errorMessage)
+    } finally {
+      setIsFetchingHostaway(false)
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
@@ -980,19 +1112,50 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Hostaway Property ID *
           </label>
-          <input
-            type="number"
-            name="id"
-            value={formData.id}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., 392777"
-            required
-          />
+          <div className="flex gap-2">
+            <input
+              type="number"
+              name="id"
+              value={formData.id}
+              onChange={handleChange}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g., 392777"
+              required
+            />
+            <button
+              type="button"
+              onClick={handleFetchFromHostaway}
+              disabled={isFetchingHostaway || !formData.id}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-colors"
+            >
+              {isFetchingHostaway ? (
+                <>
+                  <RefreshCw className="h-4 w-4 animate-spin" />
+                  Fetching...
+                </>
+              ) : fetchSuccess ? (
+                <>
+                  <CheckCircle className="h-4 w-4" />
+                  Fetched
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" />
+                  Fetch from Hostaway
+                </>
+              )}
+            </button>
+          </div>
+          {fetchSuccess && (
+            <p className="mt-1 text-sm text-green-600 flex items-center gap-1">
+              <CheckCircle className="h-4 w-4" />
+              Property details loaded from Hostaway. Review and edit if needed.
+            </p>
+          )}
         </div>
         
         <div>
@@ -1167,24 +1330,6 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Amenities (comma separated)
-        </label>
-        <input
-          type="text"
-          value={amenitiesInput}
-          onChange={handleAmenitiesChange}
-          onKeyDown={(e) => {
-            console.log('🔍 Key pressed:', e.key, 'Code:', e.code)
-            if (e.key === ' ') {
-              console.log('🔍 Space key detected!')
-            }
-          }}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="WiFi, Kitchen, Pool, Parking"
-        />
-      </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -1862,6 +2007,21 @@ const AdminDashboard: React.FC = () => {
     setShowEditOwnerModal(true)
   }
 
+  const handleDeleteOwner = async (owner: Owner) => {
+    if (!window.confirm(`Are you sure you want to delete owner "${owner.name}"? This will also remove all their associated properties.`)) {
+      return
+    }
+
+    try {
+      await deleteOwner(owner._id)
+      toast.success(`Owner "${owner.name}" deleted successfully`)
+      await fetchDashboardData() // Reload the dashboard data
+    } catch (error: any) {
+      console.error('Error deleting owner:', error)
+      toast.error(error.message || 'Failed to delete owner')
+    }
+  }
+
   const handleViewAccountant = (accountant: Accountant) => {
     setViewingAccountant(accountant)
     setShowAccountantViewModal(true)
@@ -2149,7 +2309,7 @@ const AdminDashboard: React.FC = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {owner.companies?.length || 0} company{(owner.companies?.length || 0) !== 1 ? 'ies' : 'y'}
+                        {owner.companies?.length || 0} {(owner.companies?.length || 0) !== 1 ? 'companies' : 'company'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -2166,6 +2326,12 @@ const AdminDashboard: React.FC = () => {
                           className="text-blue-600 hover:text-blue-900 mr-3"
                         >
                           Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteOwner(owner)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          Delete
                         </button>
                       </td>
                     </tr>

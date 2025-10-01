@@ -18,11 +18,22 @@ const SAFT: React.FC = () => {
   const navigate = useNavigate();
   const [selectedYear, setSelectedYear] = useState<number>(() => {
     const now = new Date();
-    return now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+    // If it's January OR first week of any month, show previous year
+    const isEarlyMonth = now.getMonth() === 0 || now.getDate() <= 7;
+    return isEarlyMonth && now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
   });
   const [selectedMonth, setSelectedMonth] = useState<number>(() => {
     const now = new Date();
-    return now.getMonth() === 0 ? 12 : now.getMonth();
+    // If it's the first week of the month, default to previous month
+    // (SAFT is typically generated after month end)
+    const isEarlyMonth = now.getDate() <= 7;
+    if (now.getMonth() === 0 && isEarlyMonth) {
+      return 12; // December of previous year
+    } else if (isEarlyMonth) {
+      return now.getMonth(); // Previous month (getMonth() is 0-indexed, so current-1)
+    } else {
+      return now.getMonth() + 1; // Current month
+    }
   });
   const [invoicingNif, setInvoicingNif] = useState<string>('');
   const [selectedCompany, setSelectedCompany] = useState<{ownerId: string, companyIndex: number} | null>(null);
@@ -54,42 +65,95 @@ const SAFT: React.FC = () => {
   useEffect(() => {
     const fetchOwners = async () => {
       try {
-        const ownersData = await getAllOwners();
+        let ownersData: Owner[] = [];
         
-        // Try to get current user's profile data if companies not in Redux store
-        let currentUserCompanies = user?.companies;
-        if (!currentUserCompanies || currentUserCompanies.length === 0) {
-          try {
-            const userProfile = await settingsAPI.getUserProfile();
-            currentUserCompanies = userProfile.companies;
-          } catch (profileError) {
-            // Silent fail - user profile fetch failed
-          }
+        // Try to fetch all owners (only works for admin users)
+        try {
+          ownersData = await getAllOwners();
+          console.log('✅ Admin: Fetched all owners successfully');
+        } catch (adminError: any) {
+          console.log('ℹ️ Not admin or getAllOwners failed, using current user companies only');
+          // Not admin or API failed, will use current user's companies below
         }
         
-        // Add current user's companies if they have any
-        if (currentUserCompanies && currentUserCompanies.length > 0) {
-          const currentUserAsOwner: Owner = {
-            _id: user?.id || 'current-user',
-            name: user?.name || 'Current User',
-            email: user?.email || '',
-            phone: user?.phone,
-            role: user?.role || 'user',
-            isVerified: user?.isVerified || false,
+        // Always fetch and use current user's profile to get latest companies
+        let currentUserCompanies = user?.companies;
+        console.log('📋 Initial companies from Redux:', currentUserCompanies);
+        
+        try {
+          const userProfile = await settingsAPI.getUserProfile();
+          currentUserCompanies = userProfile.companies;
+          console.log('✅ Fetched user profile companies from API:', currentUserCompanies);
+          console.log('📊 User profile full data:', userProfile);
+        } catch (profileError: any) {
+          console.error('⚠️ Failed to fetch user profile:', profileError);
+          console.log('⚠️ Using Redux companies as fallback');
+        }
+        
+        // For non-admin users OR if no owners data, show only current user's companies
+        if (user?.role !== 'admin' || ownersData.length === 0) {
+          if (currentUserCompanies && currentUserCompanies.length > 0) {
+            const currentUserAsOwner: Owner = {
+              _id: user?.id || 'current-user',
+              name: user?.name || 'Current User',
+              email: user?.email || '',
+              phone: user?.phone,
+              role: user?.role || 'user',
+              isVerified: user?.isVerified || false,
+              hasApiKeys: false,
+              apiKeysActive: false,
+              companies: currentUserCompanies,
+              createdAt: user?.createdAt || new Date().toISOString(),
+              updatedAt: user?.updatedAt || new Date().toISOString()
+            };
+            setOwners([currentUserAsOwner]);
+            console.log('✅ Owner user: Using own companies only');
+          } else {
+            setOwners([]);
+            console.log('⚠️ No companies found for current user');
+          }
+        } else {
+          // Admin user: show all owners + their own companies
+          if (currentUserCompanies && currentUserCompanies.length > 0) {
+            const currentUserAsOwner: Owner = {
+              _id: user?.id || 'current-user',
+              name: user?.name || 'Current User (Me)',
+              email: user?.email || '',
+              phone: user?.phone,
+              role: user?.role || 'user',
+              isVerified: user?.isVerified || false,
+              hasApiKeys: false,
+              apiKeysActive: false,
+              companies: currentUserCompanies,
+              createdAt: user?.createdAt || new Date().toISOString(),
+              updatedAt: user?.updatedAt || new Date().toISOString()
+            };
+            ownersData.unshift(currentUserAsOwner); // Add to beginning
+          }
+          setOwners(ownersData);
+          console.log('✅ Admin: Final owners list with all users');
+        }
+        
+        console.log('📋 Total companies available:', owners.length > 0 ? owners.reduce((total, owner) => total + (owner.companies?.length || 0), 0) : 0);
+      } catch (error) {
+        console.error('❌ Error in fetchOwners:', error);
+        // Fallback: try to show at least current user's companies
+        if (user?.companies && user.companies.length > 0) {
+          const fallbackOwner: Owner = {
+            _id: user.id || 'current-user',
+            name: user.name || 'Current User',
+            email: user.email || '',
+            phone: user.phone,
+            role: user.role || 'user',
+            isVerified: user.isVerified || false,
             hasApiKeys: false,
             apiKeysActive: false,
-            companies: currentUserCompanies,
-            createdAt: user?.createdAt || new Date().toISOString(),
-            updatedAt: user?.updatedAt || new Date().toISOString()
+            companies: user.companies,
+            createdAt: user.createdAt || new Date().toISOString(),
+            updatedAt: user.updatedAt || new Date().toISOString()
           };
-          ownersData.unshift(currentUserAsOwner); // Add to beginning
+          setOwners([fallbackOwner]);
         }
-        
-        setOwners(ownersData);
-        console.log('✅ Final owners list:', ownersData);
-        console.log('📋 Total companies available:', ownersData.reduce((total, owner) => total + (owner.companies?.length || 0), 0));
-      } catch (error) {
-        console.error('❌ Error fetching owners:', error);
       }
     };
     fetchOwners();
@@ -126,9 +190,21 @@ const SAFT: React.FC = () => {
 
       const data = await apiClient.get(`/saft/get?${params}`);
       setSaftData(data);
-    } catch (error) {
-      setError('Network error occurred');
+    } catch (error: any) {
       console.error('SAFT retrieval error:', error);
+      
+      // Check if it's a 404 or specific "not found" error
+      const errorMessage = error?.response?.data?.message || error?.message || '';
+      
+      if (error?.response?.status === 404 || errorMessage.includes('not found') || errorMessage.includes('Invalid response')) {
+        setError(`SAFT file not generated for ${months.find(m => m.value === selectedMonth)?.name} ${selectedYear}. Please try selecting an earlier month.`);
+      } else if (error?.response?.status === 400) {
+        setError(errorMessage || 'Invalid request. Please check your company selection.');
+      } else if (!error?.response) {
+        setError('Network error occurred. Please check your connection.');
+      } else {
+        setError(errorMessage || 'Error retrieving SAFT file. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -289,11 +365,16 @@ const SAFT: React.FC = () => {
 
         {/* Error Display */}
         {error && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-red-500 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-medium text-red-800">Error</h3>
-              <p className="text-sm text-red-700 mt-1">{error}</p>
+          <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-start space-x-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-amber-900 mb-1">SAFT File Not Available</h3>
+              <p className="text-sm text-amber-800">{error}</p>
+              {error.includes('not generated') && (
+                <p className="text-xs text-amber-700 mt-2">
+                  💡 Tip: SAFT files are typically generated at the end of each month. Try selecting a previous month.
+                </p>
+              )}
             </div>
           </div>
         )}

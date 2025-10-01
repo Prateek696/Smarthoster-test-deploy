@@ -11,6 +11,7 @@ const property_model_1 = __importDefault(require("../models/property.model"));
 const OwnerApiKeys_model_1 = __importDefault(require("../models/OwnerApiKeys.model"));
 const otp_service_1 = require("../services/otp.service");
 const invoice_service_1 = require("../services/invoice.service");
+const email_service_1 = require("../services/email.service");
 /**
  * @desc Check if admin user already exists
  */
@@ -230,7 +231,9 @@ const createOwner = async (req, res) => {
         // Property data (optional)
         propertyData, 
         // Assigned properties for accountants
-        assignedProperties } = req.body;
+        assignedProperties, 
+        // Company information for SAFT
+        companies } = req.body;
         // Check if UserModel is available
         if (!User_model_1.UserModel) {
             console.error('UserModel is undefined');
@@ -250,16 +253,18 @@ const createOwner = async (req, res) => {
         // Hash the provided password
         const hashedPassword = await bcryptjs_1.default.hash(password, 12);
         // Create user (owner or accountant)
-        console.log('Creating user with data:', { name, email, phone, role, isVerified: true });
+        console.log('Creating user with data:', { name, email, phone, role, isVerified: true, companies });
         const owner = await User_model_1.UserModel.create({
             name,
             email,
             phone,
             password: hashedPassword,
             role: role,
-            isVerified: true
+            isVerified: true,
+            companies: companies || [] // Include companies for SAFT
         });
         console.log('Owner created successfully:', owner);
+        console.log('Owner companies saved:', owner.companies);
         // Create API keys if provided
         if (hostkitApiId && hostkitApiKey) {
             console.log('Creating API keys for owner:', owner._id);
@@ -319,6 +324,21 @@ const createOwner = async (req, res) => {
                 // Don't fail the whole request if property assignment fails
             }
         }
+        // Send welcome email to the new owner
+        try {
+            console.log('📧 Sending welcome email to new owner:', email);
+            await (0, email_service_1.sendWelcomeEmail)({
+                name,
+                email,
+                password, // Plain text password (before hashing)
+                portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+            });
+            console.log('✅ Welcome email sent successfully to:', email);
+        }
+        catch (emailError) {
+            console.error('⚠️  Error sending welcome email (continuing anyway):', emailError.message);
+            // Don't fail the owner creation if email fails - owner is already created
+        }
         const responseData = {
             data: {
                 _id: owner._id,
@@ -329,6 +349,7 @@ const createOwner = async (req, res) => {
                 isVerified: owner.isVerified,
                 hasApiKeys: !!(hostkitApiId && hostkitApiKey),
                 apiKeysActive: !!(hostkitApiId && hostkitApiKey),
+                companies: owner.companies || [], // Include companies in response
                 createdAt: owner.createdAt,
                 updatedAt: owner.updatedAt,
                 property: createdProperty // Include the created property
@@ -392,14 +413,33 @@ exports.updateOwner = updateOwner;
 const deleteOwner = async (req, res) => {
     try {
         const { ownerId } = req.params;
-        // Delete owner
-        await User_model_1.UserModel.findByIdAndDelete(ownerId);
-        // Delete API keys
-        await OwnerApiKeys_model_1.default.deleteOne({ ownerId });
-        res.json({ message: "Owner deleted successfully" });
+        console.log(`🗑️  Deleting owner and all associated data: ${ownerId}`);
+        // Find all properties owned by this owner
+        const ownerProperties = await property_model_1.default.find({ owner: ownerId });
+        console.log(`📋 Found ${ownerProperties.length} properties to delete`);
+        // Delete all properties owned by this owner
+        const deletedProperties = await property_model_1.default.deleteMany({ owner: ownerId });
+        console.log(`✅ Deleted ${deletedProperties.deletedCount} properties`);
+        // Delete API keys associated with this owner
+        const deletedApiKeys = await OwnerApiKeys_model_1.default.deleteOne({ ownerId });
+        console.log(`✅ Deleted API keys for owner`);
+        // Finally, delete the owner
+        const deletedOwner = await User_model_1.UserModel.findByIdAndDelete(ownerId);
+        if (!deletedOwner) {
+            return res.status(404).json({ message: "Owner not found" });
+        }
+        console.log(`✅ Owner deleted successfully: ${deletedOwner.name}`);
+        res.json({
+            message: "Owner and all associated properties deleted successfully",
+            deletedProperties: deletedProperties.deletedCount,
+            deletedOwner: {
+                name: deletedOwner.name,
+                email: deletedOwner.email
+            }
+        });
     }
     catch (error) {
-        console.error('Error in createOwner:', error);
+        console.error('❌ Error deleting owner:', error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -837,20 +877,45 @@ exports.generateOwnerStatement = generateOwnerStatement;
 const deleteProperty = async (req, res) => {
     try {
         const { propertyId } = req.params;
+        console.log(`🗑️  Attempting to delete property: ${propertyId}`);
         if (!propertyId) {
             return res.status(400).json({ message: "Property ID is required" });
         }
-        // Find and delete the property
-        const property = await property_model_1.default.findOneAndDelete({
-            $or: [
-                { id: parseInt(propertyId) },
-                { _id: propertyId }
-            ]
-        });
+        // First, find the property to get its details
+        // Check if propertyId is a valid MongoDB ObjectId or a numeric ID
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(propertyId);
+        const query = isObjectId
+            ? { _id: propertyId } // If it's an ObjectId format, use _id
+            : { id: parseInt(propertyId) }; // Otherwise, use the numeric id field
+        const property = await property_model_1.default.findOne(query);
         if (!property) {
+            console.log(`❌ Property not found: ${propertyId}`);
             return res.status(404).json({ message: "Property not found" });
         }
-        console.log(`Property ${property.id} (${property.name}) deleted successfully`);
+        console.log(`📋 Found property: ${property.id} (${property.name})`);
+        // Clean up related data before deleting the property
+        try {
+            // Remove property from any accountants who have it assigned
+            // Use both _id (ObjectId) and id (number) to ensure we catch all references
+            const propertyObjectId = property._id;
+            const accountantsUpdated = await User_model_1.UserModel.updateMany({ role: 'accountant' }, {
+                $pull: {
+                    assignedProperties: {
+                        $in: [propertyObjectId.toString(), propertyObjectId, property.id, property.id.toString()]
+                    }
+                }
+            });
+            console.log(`✅ Removed property from ${accountantsUpdated.modifiedCount} accountants`);
+            // Note: Bookings and other related data might need cleanup too
+            // For now, we'll just delete the property and let MongoDB handle orphaned references
+        }
+        catch (cleanupError) {
+            console.error('⚠️  Error during cleanup (continuing with deletion):', cleanupError.message);
+            // Continue with deletion even if cleanup fails
+        }
+        // Now delete the property using the same query logic
+        await property_model_1.default.findOneAndDelete(query);
+        console.log(`✅ Property ${property.id} (${property.name}) deleted successfully`);
         res.json({
             message: "Property deleted successfully",
             deletedProperty: {
@@ -860,8 +925,15 @@ const deleteProperty = async (req, res) => {
         });
     }
     catch (error) {
-        console.error('Error deleting property:', error);
-        res.status(500).json({ message: error.message });
+        console.error('❌ Error deleting property:', {
+            error: error.message,
+            stack: error.stack,
+            propertyId: req.params.propertyId
+        });
+        res.status(500).json({
+            message: error.message || "Failed to delete property",
+            details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 exports.deleteProperty = deleteProperty;

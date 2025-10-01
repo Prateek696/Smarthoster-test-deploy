@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserPlus, Mail, User, Shield, Phone, Building2, Calculator, Lock, Eye, EyeOff } from 'lucide-react'
+import toast from 'react-hot-toast'
 import { AppDispatch, RootState } from '../../store'
 import { sendSignupOTPAsync, verifySignupOTPAsync } from '../../store/auth.slice'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
@@ -113,6 +114,8 @@ const Signup: React.FC = () => {
     setErrors({})
     
     // Send OTP for signup
+    const loadingToast = toast.loading('Connecting to server...')
+    
     try {
       await dispatch(sendSignupOTPAsync({
         email: formData.email,
@@ -122,8 +125,10 @@ const Signup: React.FC = () => {
         role: formData.role
       })).unwrap()
       
+      toast.dismiss(loadingToast)
       setStep('otp')
     } catch (err) {
+      toast.dismiss(loadingToast)
       // Error is handled by the slice
     }
   }

@@ -3,12 +3,138 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHostawayDailyCalendar = exports.updateHostawayCalendarAvailability = exports.getHostawayExpenses = exports.downloadHostawayOwnerStatementCSV = exports.downloadHostawayOwnerStatementPDF = exports.getHostawayOwnerStatement = exports.getHostawayOwnerStatements = exports.respondToHostawayReview = exports.getHostawayReviews = exports.bulkUpdateHostawayCOACOD = exports.bulkUpdateHostawayCleaning = exports.bulkUpdateHostawayMaintenance = exports.updateHostawayCOACOD = exports.updateHostawayCleaning = exports.updateHostawayMaintenance = exports.bulkUpdateHostawayMinimumStay = exports.bulkUpdateHostawayPricing = exports.updateHostawayCheckInOut = exports.updateHostawayMinimumStay = exports.updateHostawayPricing = exports.getHostawayReservations = exports.updateHostawayCalendar = exports.getHostawayCalendarMonth = exports.getHostawayCalendarDate = exports.getHostawayCalendar = exports.createHostawayCreditNote = exports.getHostawayCreditNotes = void 0;
+exports.getHostawayDailyCalendar = exports.updateHostawayCalendarAvailability = exports.getHostawayExpenses = exports.downloadHostawayOwnerStatementCSV = exports.downloadHostawayOwnerStatementPDF = exports.getHostawayOwnerStatement = exports.getHostawayOwnerStatements = exports.respondToHostawayReview = exports.getHostawayReviews = exports.bulkUpdateHostawayCOACOD = exports.bulkUpdateHostawayCleaning = exports.bulkUpdateHostawayMaintenance = exports.updateHostawayCOACOD = exports.updateHostawayCleaning = exports.updateHostawayMaintenance = exports.bulkUpdateHostawayMinimumStay = exports.bulkUpdateHostawayPricing = exports.updateHostawayCheckInOut = exports.updateHostawayMinimumStay = exports.updateHostawayPricing = exports.getHostawayReservations = exports.updateHostawayCalendar = exports.getHostawayCalendarMonth = exports.getHostawayCalendarDate = exports.getHostawayCalendar = exports.createHostawayCreditNote = exports.getHostawayCreditNotes = exports.getHostawayListingDetails = void 0;
 const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const HOSTAWAY_TOKEN = process.env.HOSTAWAY_TOKEN;
 const HOSTAWAY_BASE_URL = process.env.HOSTAWAY_API_BASE || "https://api.hostaway.com/v1";
+/**
+ * Fetch all amenities from Hostaway to map amenity IDs to names
+ */
+let amenitiesCache = null;
+const fetchHostawayAmenities = async () => {
+    try {
+        // Return cached amenities if already fetched
+        if (amenitiesCache) {
+            return amenitiesCache;
+        }
+        if (!HOSTAWAY_TOKEN) {
+            throw new Error("HOSTAWAY_TOKEN environment variable is not set");
+        }
+        console.log('📋 Fetching Hostaway amenities list...');
+        const { data } = await axios_1.default.get(`${HOSTAWAY_BASE_URL}/amenities`, {
+            headers: {
+                Authorization: `Bearer ${HOSTAWAY_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const amenitiesList = data.result || data;
+        // Create a map of amenityId -> amenity name
+        amenitiesCache = {};
+        if (Array.isArray(amenitiesList)) {
+            amenitiesList.forEach((amenity) => {
+                amenitiesCache[amenity.id] = amenity.name || amenity.title || '';
+            });
+        }
+        console.log(`✅ Cached ${Object.keys(amenitiesCache).length} amenities`);
+        return amenitiesCache;
+    }
+    catch (error) {
+        console.error('⚠️  Error fetching Hostaway amenities (continuing without):', error.message);
+        // Return empty map if fetch fails
+        return {};
+    }
+};
+/**
+ * Fetch detailed property information from Hostaway by listing ID
+ * Returns: name, address, bedrooms, bathrooms, beds, accommodates, property type, etc.
+ */
+const getHostawayListingDetails = async (listingId) => {
+    try {
+        if (!HOSTAWAY_TOKEN) {
+            throw new Error("HOSTAWAY_TOKEN environment variable is not set");
+        }
+        console.log(`Fetching Hostaway listing details for ID: ${listingId}`);
+        // Fetch listing details
+        const { data } = await axios_1.default.get(`${HOSTAWAY_BASE_URL}/listings/${listingId}`, {
+            headers: {
+                Authorization: `Bearer ${HOSTAWAY_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const listing = data.result || data;
+        console.log('🔍 Raw Hostaway API response:', JSON.stringify(listing, null, 2));
+        // Fetch amenities map to convert IDs to names
+        const amenitiesMap = await fetchHostawayAmenities();
+        // Map amenity IDs to names
+        let amenitiesArray = [];
+        if (listing.listingAmenities && Array.isArray(listing.listingAmenities)) {
+            amenitiesArray = listing.listingAmenities
+                .map((a) => {
+                // Try to get amenity name from the map using amenityId
+                const amenityId = a.amenityId || a.id;
+                return amenitiesMap[amenityId] || null;
+            })
+                .filter(Boolean); // Remove nulls
+            console.log(`✅ Mapped ${amenitiesArray.length} amenities from IDs:`, amenitiesArray);
+        }
+        // Extract and format the property details
+        // Try multiple possible field names from Hostaway API
+        const propertyDetails = {
+            id: listing.id,
+            name: listing.name || listing.internalListingName || listing.nickname || listing.title || '',
+            address: {
+                street: listing.address?.street || listing.address?.address1 || listing.address?.line1 || listing.street || '',
+                city: listing.address?.city || listing.city || '',
+                state: listing.address?.state || listing.address?.region || listing.state || '',
+                zipCode: listing.address?.zipcode || listing.address?.postalCode || listing.address?.zip || listing.zipCode || '',
+                country: listing.address?.country || listing.address?.countryCode || listing.country || '',
+                full: listing.address?.full || listing.fullAddress || listing.address || ''
+            },
+            bedrooms: listing.bedroomsNumber || listing.bedrooms || listing.bedroomCount || listing.numberOfBedrooms || 0,
+            bathrooms: listing.bathroomsNumber || listing.bathrooms || listing.bathroomCount || listing.numberOfBathrooms || 0,
+            beds: listing.bedsNumber || listing.beds || listing.bedCount || listing.numberOfBeds || 0,
+            accommodates: listing.personCapacity || listing.accommodates || listing.maxGuests || listing.guestCount || listing.capacity || 0,
+            propertyType: listing.propertyType || listing.propertyTypeName || listing.type || listing.listingType || '',
+            roomType: listing.roomType || listing.spaceType || '',
+            status: listing.status || '',
+            timezone: listing.timezone || '',
+            currency: listing.currency || 'EUR',
+            // Additional useful fields
+            description: listing.description || listing.summary || listing.airbnbSummary || '',
+            // Use the mapped amenities array
+            amenities: amenitiesArray,
+            photos: listing.listingImages?.map((img) => img.url || img.original || img) ||
+                listing.photos ||
+                listing.images || [],
+            coordinates: {
+                latitude: listing.lat || listing.latitude || null,
+                longitude: listing.lng || listing.longitude || null
+            },
+            // Store raw listing for debugging
+            _raw: listing
+        };
+        console.log('✅ Successfully fetched Hostaway listing details:', propertyDetails);
+        console.log('🔍 Available fields in listing:', Object.keys(listing));
+        return propertyDetails;
+    }
+    catch (error) {
+        console.error('❌ Error fetching Hostaway listing details:', {
+            error: error.message,
+            response: error.response?.data,
+            httpStatus: error.response?.status,
+            listingId
+        });
+        // Return error details for better frontend handling
+        throw {
+            message: error.response?.data?.message || error.message || 'Failed to fetch property details from Hostaway',
+            status: error.response?.status || 500,
+            details: error.response?.data
+        };
+    }
+};
+exports.getHostawayListingDetails = getHostawayListingDetails;
 const getHostawayCreditNotes = async (listingId, status) => {
     try {
         const params = {};

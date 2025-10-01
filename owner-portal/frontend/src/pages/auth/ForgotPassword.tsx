@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react'
+import toast from 'react-hot-toast'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
 import { authAPI } from '../../services/auth.api'
 
@@ -13,12 +14,20 @@ const ForgotPassword: React.FC = () => {
     e.preventDefault()
     setIsLoading(true)
     
+    const loadingToast = toast.loading('Connecting to server...')
+    
     try {
       await authAPI.forgotPassword({ email })
+      toast.dismiss(loadingToast)
+      toast.success('Password reset OTP sent to your email!')
       setIsSubmitted(true)
     } catch (error: any) {
-      console.error('Error:', error)
-      alert(error.response?.data?.message || 'Failed to send reset OTP')
+      toast.dismiss(loadingToast)
+      console.error('❌ Forgot Password Error:', error)
+      console.error('❌ Error Response:', error.response?.data)
+      console.error('❌ Error Status:', error.response?.status)
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to send reset OTP'
+      toast.error(errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -51,7 +60,7 @@ const ForgotPassword: React.FC = () => {
             {/* Action buttons */}
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-6 space-y-4">
               <Link 
-                to="/auth/reset-password" 
+                to={`/auth/reset-password?email=${encodeURIComponent(email)}`}
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2563eb] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 Enter OTP to reset password

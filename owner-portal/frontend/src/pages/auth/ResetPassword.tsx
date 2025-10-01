@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Eye, EyeOff, Lock, CheckCircle, Mail, ArrowRight, ArrowLeft } from 'lucide-react'
+import toast from 'react-hot-toast'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
 import { authAPI } from '../../services/auth.api'
 
 const ResetPassword: React.FC = () => {
+  const [searchParams] = useSearchParams()
+  const emailFromUrl = searchParams.get('email') || ''
+  
   const [formData, setFormData] = useState({
-    email: '',
+    email: emailFromUrl,
     otp: '',
     password: '',
     confirmPassword: ''
@@ -16,6 +20,13 @@ const ResetPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  // Update email from URL params
+  useEffect(() => {
+    if (emailFromUrl) {
+      setFormData(prev => ({ ...prev, email: emailFromUrl }))
+    }
+  }, [emailFromUrl])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -66,6 +77,7 @@ const ResetPassword: React.FC = () => {
     }
 
     setIsLoading(true)
+    const loadingToast = toast.loading('Connecting to server...')
     
     try {
       await authAPI.resetPassword({
@@ -73,10 +85,13 @@ const ResetPassword: React.FC = () => {
         otp: formData.otp,
         password: formData.password
       })
+      toast.dismiss(loadingToast)
+      toast.success('Password reset successfully!')
       setIsSuccess(true)
     } catch (error: any) {
+      toast.dismiss(loadingToast)
       console.error('Error:', error)
-      alert(error.response?.data?.message || 'Failed to reset password')
+      toast.error(error.response?.data?.message || 'Failed to reset password')
     } finally {
       setIsLoading(false)
     }
@@ -142,7 +157,7 @@ const ResetPassword: React.FC = () => {
           {/* Reset password form */}
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Email field */}
+              {/* Email field - Read-only, pre-filled from forgot password */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-500 mb-2">
                   Email Address
@@ -157,12 +172,19 @@ const ResetPassword: React.FC = () => {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={handleChange}
-                    className={`w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.email ? 'border-red-500 focus:ring-red-500/20' : ''}`}
+                    readOnly
+                    className="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-600 cursor-not-allowed"
                     placeholder="Enter your email"
                   />
                 </div>
-                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                {!formData.email && (
+                  <p className="mt-1 text-sm text-amber-600">
+                    Please request a password reset from the{' '}
+                    <Link to="/auth/forgot-password" className="underline font-medium">
+                      forgot password page
+                    </Link>
+                  </p>
+                )}
               </div>
 
               {/* OTP field */}

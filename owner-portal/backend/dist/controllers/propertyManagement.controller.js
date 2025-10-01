@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDashboardMetrics = exports.updateProperty = exports.getProperties = void 0;
+exports.getDashboardMetrics = exports.fetchHostawayPropertyDetails = exports.updateProperty = exports.getProperties = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const property_service_1 = require("../services/property.service");
 const property_model_1 = __importDefault(require("../models/property.model"));
 const User_model_1 = require("../models/User.model");
+const hostaway_api_1 = require("../integrations/hostaway.api");
 const getProperties = async (req, res) => {
     try {
         const userId = req.user?.id;
@@ -166,6 +167,38 @@ const updateProperty = async (req, res) => {
     }
 };
 exports.updateProperty = updateProperty;
+/**
+ * Fetch property details from Hostaway by listing ID
+ * Auto-populates property form fields
+ */
+const fetchHostawayPropertyDetails = async (req, res) => {
+    try {
+        const { hostawayListingId } = req.params;
+        if (!hostawayListingId) {
+            return res.status(400).json({ message: "Hostaway listing ID is required" });
+        }
+        const listingId = parseInt(hostawayListingId);
+        if (isNaN(listingId)) {
+            return res.status(400).json({ message: "Invalid Hostaway listing ID format" });
+        }
+        console.log(`🔍 Fetching Hostaway property details for listing ID: ${listingId}`);
+        const propertyDetails = await (0, hostaway_api_1.getHostawayListingDetails)(listingId);
+        res.status(200).json({
+            success: true,
+            data: propertyDetails,
+            message: "Property details fetched successfully from Hostaway"
+        });
+    }
+    catch (error) {
+        console.error('❌ Error fetching Hostaway property details:', error);
+        res.status(error.status || 500).json({
+            success: false,
+            message: error.message || "Failed to fetch property details from Hostaway",
+            details: error.details
+        });
+    }
+};
+exports.fetchHostawayPropertyDetails = fetchHostawayPropertyDetails;
 const getDashboardMetrics = async (req, res) => {
     try {
         const userId = req.user?.id;

@@ -472,24 +472,6 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
             </div>
           </div>
 
-          {property.amenities && property.amenities.length > 0 && (
-            <div className="mb-3">
-              <div className="text-xs text-gray-600 mb-1">Amenities:</div>
-              <div className="flex flex-wrap gap-1">
-                {property.amenities.slice(0, 3).map((amenity: string, index: number) => (
-                  <span key={index} className="badge badge-secondary text-xs">
-                    {amenity}
-                  </span>
-                ))}
-                {property.amenities.length > 3 && (
-                  <span className="text-xs text-gray-500">
-                    +{property.amenities.length - 3} more
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-          
           <div className="flex gap-2 pt-3 border-t border-gray-100">
             <button
               onClick={() => handleEdit(property)}
@@ -792,19 +774,6 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
                       </div>
                     )}
                   </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Amenities (comma-separated)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.amenities?.join(', ') || ''}
-                    onChange={handleAmenitiesChange}
-                    className="input"
-                    placeholder="WiFi, Kitchen, Pool, Parking"
-                  />
                 </div>
 
                 {/* Image Upload Section - Only show in edit mode */}
