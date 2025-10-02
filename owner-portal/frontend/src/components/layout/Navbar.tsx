@@ -50,14 +50,14 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
                 onClick={() => setShowProfile(!showProfile)}
                 className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] rounded-full">
-                  <span className="text-xs font-bold text-white">
+                <div className="flex items-center justify-center w-8 h-8 bg-blue-500/20 rounded-full border border-blue-200">
+                  <span className="text-xs font-bold text-gray-900 opacity-70">
                     {(user?.firstName || user?.name || user?.username || user?.email || 'U').charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-bold text-gray-900">{user?.firstName || user?.name || user?.username || 'John'}</p>
-                  <p className="text-xs text-[#0ea5e9] font-semibold capitalize">{user?.role?.toLowerCase() || 'Owner'}</p>
+                  <p className="text-xs text-blue-600 font-semibold capitalize">{user?.role?.toLowerCase() || 'Owner'}</p>
                 </div>
                 <ChevronDown className="h-3 w-3 text-gray-500" />
               </button>

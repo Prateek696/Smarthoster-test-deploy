@@ -6,7 +6,7 @@ import PropertyModel from "../models/property.model";
 import OwnerApiKeysModel from "../models/OwnerApiKeys.model";
 import { sendOTP } from "../services/otp.service";
 import { getInvoicesService } from "../services/invoice.service";
-import { sendWelcomeEmail } from "../services/email.service";
+import { sendWelcomeEmail, sendAccountantWelcomeEmail } from "../services/email.service";
 
 /**
  * @desc Check if admin user already exists
@@ -237,6 +237,71 @@ export const getAllAccountants = async (req: Request, res: Response) => {
 };
 
 /**
+ * @desc Get companies from accountant's assigned properties
+ */
+export const getAccountantCompanies = async (req: Request, res: Response) => {
+  try {
+    const accountantId = (req as any).user?.id;
+    console.log('📋 getAccountantCompanies called for accountant:', accountantId);
+
+    // Get all properties assigned to this accountant
+    const assignedProperties = await PropertyModel.find({ accountants: accountantId })
+      .populate('owner', 'name email companies');
+    
+    console.log('✅ Found assigned properties:', assignedProperties.length);
+    console.log('📋 Property details:', assignedProperties.map(p => ({
+      id: p.id,
+      name: p.name,
+      isAdminOwned: (p as any).isAdminOwned,
+      owner: (p.owner as any)?.name,
+      ownerCompanies: (p.owner as any)?.companies
+    })));
+
+    // Get admin user for admin-owned properties
+    const adminUser = await UserModel.findOne({ role: 'admin' });
+    console.log('👨‍💼 Admin user found:', adminUser?.name, 'Companies:', adminUser?.companies);
+
+    // Extract unique companies from all assigned properties' owners
+    const companiesSet = new Map<string, { name: string; nif: string; ownerId: string; ownerName: string }>();
+    
+    for (const property of assignedProperties) {
+      let owner = property.owner as any;
+      
+      // If property is admin-owned, use the admin user
+      if ((property as any).isAdminOwned && !owner && adminUser) {
+        owner = adminUser;
+        console.log('🔄 Using admin user for admin-owned property:', property.name);
+      }
+      
+      if (owner && owner.companies && Array.isArray(owner.companies)) {
+        owner.companies.forEach((company: { name: string; nif: string }) => {
+          const key = `${company.name}-${company.nif}`;
+          if (!companiesSet.has(key)) {
+            companiesSet.set(key, {
+              name: company.name,
+              nif: company.nif,
+              ownerId: owner._id.toString(),
+              ownerName: owner.name
+            });
+          }
+        });
+      }
+    }
+
+    const uniqueCompanies = Array.from(companiesSet.values());
+    console.log('📊 Unique companies found:', uniqueCompanies.length, uniqueCompanies);
+
+    res.json({ 
+      success: true,
+      companies: uniqueCompanies
+    });
+  } catch (error: any) {
+    console.error('❌ Error in getAccountantCompanies:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/**
  * @desc Create new owner
  */
 export const createOwner = async (req: Request, res: Response) => {
@@ -357,19 +422,30 @@ export const createOwner = async (req: Request, res: Response) => {
       }
     }
 
-    // Send welcome email to the new owner
+    // Send welcome email based on role
     try {
-      console.log('📧 Sending welcome email to new owner:', email);
-      await sendWelcomeEmail({
-        name,
-        email,
-        password, // Plain text password (before hashing)
-        portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
-      });
-      console.log('✅ Welcome email sent successfully to:', email);
+      if (role === 'accountant') {
+        console.log('📧 Sending welcome email to new accountant:', email);
+        await sendAccountantWelcomeEmail({
+          name,
+          email,
+          password, // Plain text password (before hashing)
+          portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+        });
+        console.log('✅ Accountant welcome email sent successfully to:', email);
+      } else {
+        console.log('📧 Sending welcome email to new owner:', email);
+        await sendWelcomeEmail({
+          name,
+          email,
+          password, // Plain text password (before hashing)
+          portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+        });
+        console.log('✅ Owner welcome email sent successfully to:', email);
+      }
     } catch (emailError: any) {
       console.error('⚠️  Error sending welcome email (continuing anyway):', emailError.message);
-      // Don't fail the owner creation if email fails - owner is already created
+      // Don't fail the user creation if email fails - user is already created
     }
 
     const responseData = { 

@@ -18,7 +18,8 @@ import {
   AlertCircle,
   Loader,
   Upload,
-  X
+  X,
+  RefreshCw
 } from 'lucide-react';
 import { RootState, AppDispatch } from '../../store';
 import { getImageUrl } from '../../utils/imageUtils';
@@ -35,6 +36,8 @@ import {
 import { CreatePropertyData } from '../../services/properties.api';
 import { uploadPropertyImages, deletePropertyImage } from '../../services/imageUpload.api';
 import { canUpdateProperties } from '../../utils/roleUtils';
+import toast from 'react-hot-toast';
+import apiClient from '../../services/apiClient';
 
 interface PropertyManagementProps {
   filteredProperties?: any[]; // Properties filtered by admin dashboard
@@ -69,6 +72,8 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
   const [localSelectedProperty, setLocalSelectedProperty] = useState<any>(null);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [isUploadingImages, setIsUploadingImages] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncSuccess, setSyncSuccess] = useState(false);
   
   const [formData, setFormData] = useState<CreatePropertyData>({
     id: 0,
@@ -320,6 +325,56 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
     }
   };
 
+  const handleSyncFromHostaway = async () => {
+    if (!formData.id) {
+      toast.error('Property ID is required to sync from Hostaway');
+      return;
+    }
+
+    setIsSyncing(true);
+    setSyncSuccess(false);
+
+    try {
+      const response = await apiClient.get(`/property-management/fetch-hostaway/${formData.id}`);
+      
+      if (response.success && response.data) {
+        const data = response.data;
+        
+        // Build address from city and country only
+        const addressParts = [
+          data.address?.city,
+          data.address?.country
+        ].filter(Boolean);
+        
+        const fullAddress = addressParts.length > 0 
+          ? addressParts.join(', ') 
+          : data.address?.full || formData.address;
+        
+        // Update form with synced data
+        setFormData(prev => ({
+          ...prev,
+          name: data.name || prev.name,
+          address: fullAddress,
+          bedrooms: data.bedrooms || prev.bedrooms,
+          bathrooms: data.bathrooms || prev.bathrooms,
+          maxGuests: data.accommodates || prev.maxGuests,
+          type: data.propertyType || prev.type
+        }));
+        
+        setSyncSuccess(true);
+        toast.success('Property details synced successfully from Hostaway!');
+        
+        // Reset success state after 3 seconds
+        setTimeout(() => setSyncSuccess(false), 3000);
+      }
+    } catch (error: any) {
+      console.error('Error syncing from Hostaway:', error);
+      toast.error(error.message || 'Failed to sync property details from Hostaway');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   const handleEdit = (property: any) => {
     console.log('🔍 handleEdit called with property:', {
       id: property.id,
@@ -441,22 +496,22 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
             </div>
           )}
           <div className="absolute top-3 right-3">
-            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold text-white shadow-lg ${
-              currentProperty.status === 'active' ? 'bg-green-500' : 
-              currentProperty.status === 'inactive' ? 'bg-gray-500' : 'bg-yellow-500'
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold shadow-sm ${
+              currentProperty.status === 'active' ? 'bg-green-500/60 text-white' : 
+              currentProperty.status === 'inactive' ? 'bg-gray-500/20 text-gray-900 border border-gray-200' : 'bg-yellow-500/20 text-gray-900 border border-yellow-200'
             }`}>
               {currentProperty.status || 'Active'}
             </span>
           </div>
-          <div className="absolute bottom-2 left-2">
-            <div className="bg-black/70 backdrop-blur-sm rounded px-1 py-0.5">
-              <h3 className="font-bold mb-0 text-white" style={{fontSize: '7px'}}>{currentProperty.name}</h3>
-              <p className="text-white/90" style={{fontSize: '9px'}}>{currentProperty.address}</p>
-            </div>
-          </div>
         </div>
         
         <div className="p-4">
+          {/* Property Name and Address */}
+          <div className="mb-4">
+            <h3 className="font-bold text-gray-900 text-base mb-1 truncate">{currentProperty.name}</h3>
+            <p className="text-gray-600 text-xs truncate">{currentProperty.address || 'Lisbon, Portugal'}</p>
+          </div>
+
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="text-center">
               <p className="text-xs text-gray-500 mb-1 font-semibold">Type</p>
@@ -472,28 +527,6 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
             </div>
           </div>
 
-          <div className="flex gap-2 pt-3 border-t border-gray-100">
-            <button
-              onClick={() => handleEdit(property)}
-              className="btn-outline btn-sm flex-1"
-              disabled={isUpdating || !canUpdate}
-              title={!canUpdate ? "Only owners can edit properties" : ""}
-            >
-              <Edit className="h-4 w-4 mr-1" />
-              Edit
-            </button>
-            <button
-              onClick={() => {
-                dispatch(setSelectedProperty(property));
-                setShowDeleteConfirm(true);
-              }}
-              className="btn-outline btn-sm text-red-600 border-red-300 hover:bg-red-50"
-              disabled={isDeleting || !canUpdate}
-              title={!canUpdate ? "Only owners can delete properties" : ""}
-            >
-              <Trash2 className="h-4 w-4" />
-            </button>
-          </div>
         </div>
       </div>
     );
@@ -557,9 +590,36 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold">
-                  {showEditForm ? 'Edit Property' : 'Add New Property'}
-                </h3>
+                <div className="flex items-center gap-4">
+                  <h3 className="text-xl font-semibold">
+                    {showEditForm ? 'Edit Property' : 'Add New Property'}
+                  </h3>
+                  {showEditForm && formData.id && (
+                    <button
+                      type="button"
+                      onClick={handleSyncFromHostaway}
+                      disabled={isSyncing}
+                      className="px-3 py-1.5 bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-all duration-300 border border-blue-200 shadow-sm hover:shadow-md text-sm"
+                    >
+                      {isSyncing ? (
+                        <>
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                          Syncing...
+                        </>
+                      ) : syncSuccess ? (
+                        <>
+                          <CheckCircle className="h-3.5 w-3.5" />
+                          Synced
+                        </>
+                      ) : (
+                        <>
+                          <RefreshCw className="h-3.5 w-3.5" />
+                          Sync
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
                 <button
                   onClick={() => {
                     setShowCreateForm(false);
@@ -875,7 +935,7 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
                       multiple
                       accept="image/*"
                       onChange={handleImageSelect}
-                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-blue-200 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-gray-900 hover:file:bg-blue-500/30 file:shadow-sm hover:file:shadow-md file:transition-all file:duration-300"
                     />
                     
                     {selectedImages.length > 0 && (

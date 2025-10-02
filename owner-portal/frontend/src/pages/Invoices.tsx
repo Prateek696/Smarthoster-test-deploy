@@ -286,8 +286,8 @@ const Invoices: React.FC = () => {
                   {formatCurrency(calculatedSummary.totalAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md">
-                <Euro className="h-5 w-5 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-blue-500/20 rounded-lg shadow-sm border border-blue-200">
+                <Euro className="h-5 w-5 text-gray-900 opacity-70" />
               </div>
             </div>
           </div>
@@ -300,8 +300,8 @@ const Invoices: React.FC = () => {
                   {formatCurrency(calculatedSummary.paidAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-md">
-                <CheckCircle className="h-5 w-5 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-green-500/20 rounded-lg shadow-sm border border-green-200">
+                <CheckCircle className="h-5 w-5 text-gray-900 opacity-70" />
               </div>
             </div>
           </div>
@@ -314,8 +314,8 @@ const Invoices: React.FC = () => {
                   {formatCurrency(calculatedSummary.pendingAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg shadow-md">
-                <Clock className="h-5 w-5 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-yellow-500/20 rounded-lg shadow-sm border border-yellow-200">
+                <Clock className="h-5 w-5 text-gray-900 opacity-70" />
               </div>
             </div>
           </div>
@@ -328,8 +328,8 @@ const Invoices: React.FC = () => {
                   {formatCurrency(calculatedSummary.overdueAmount)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg shadow-md">
-                <AlertCircle className="h-5 w-5 text-white" />
+              <div className="flex items-center justify-center w-10 h-10 bg-red-500/20 rounded-lg shadow-sm border border-red-200">
+                <AlertCircle className="h-5 w-5 text-gray-900 opacity-70" />
               </div>
             </div>
           </div>
@@ -355,13 +355,13 @@ const Invoices: React.FC = () => {
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-all duration-300 flex items-center gap-1 ${
+              className={`px-4 py-2 rounded-lg font-semibold shadow-sm transition-all duration-300 flex items-center gap-1 border ${
                 showFilters 
-                  ? 'bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white hover:from-[#0284c7] hover:to-[#0ea5e9]' 
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  ? 'bg-blue-500/20 text-gray-900 border-blue-200 hover:bg-blue-500/30' 
+                  : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
               }`}
             >
-              <Filter className="w-4 h-4" />
+              <Filter className="w-4 h-4 opacity-70" />
               Filters
             </button>
           </div>
@@ -442,10 +442,10 @@ const Invoices: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={fetchInvoices}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-semibold shadow-md hover:shadow-lg flex items-center gap-1"
+                    className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md border border-blue-200 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={!selectedPropertyId || isLoading}
                   >
-                    <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-4 h-4 opacity-70 ${isLoading ? 'animate-spin' : ''}`} />
                     {isLoading ? 'Loading...' : 'Refresh'}
                   </button>
                 </div>
@@ -459,7 +459,7 @@ const Invoices: React.FC = () => {
                   </button>
                   <button
                     onClick={fetchInvoices}
-                    className="px-4 py-2 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white rounded-lg hover:from-[#0284c7] hover:to-[#0ea5e9] transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
+                    className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md border border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={!selectedPropertyId}
                   >
                     Apply Filters
@@ -497,11 +497,11 @@ const Invoices: React.FC = () => {
                     <tr key={`${invoice.id}-${invoice.propertyId}-${index}`} className="hover:bg-gradient-to-r hover:from-gray-50 hover:to-white transition-all duration-300 group">
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center space-x-4">
-                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
-                            <FileText className="h-4 w-4 text-white" />
+                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center shadow-sm border border-blue-200">
+                            <FileText className="h-4 w-4 text-gray-900 opacity-70" />
                           </div>
                           <div>
-                            <p className="font-bold text-gray-900 text-sm group-hover:text-[#5FFF56] transition-colors">{invoice.id}</p>
+                            <p className="font-bold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">{invoice.id}</p>
                             <p className="text-xs text-gray-500 font-medium">
                               {invoice.closed ? 'Closed' : 'Open'}
                             </p>
@@ -541,12 +541,12 @@ const Invoices: React.FC = () => {
                       
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center space-x-3">
-                          <button 
+                          <button
                             onClick={() => handleViewInvoice(invoice)}
-                            className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                            className="p-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200"
                             title="View Invoice"
                           >
-                            <Eye className="w-4 h-4" />
+                            <Eye className="w-4 h-4 opacity-70" />
                           </button>
                           
                         </div>

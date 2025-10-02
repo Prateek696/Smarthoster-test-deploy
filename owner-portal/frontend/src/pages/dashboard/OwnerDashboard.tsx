@@ -337,28 +337,28 @@ const OwnerDashboard: React.FC = () => {
                 <h3 className="text-lg font-bold text-gray-900">{t('dashboard.quickActions')}</h3>
                 <p className="text-sm text-gray-600">{t('dashboard.manageEfficiently')}</p>
               </div>
-              <div className="w-10 h-10 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] rounded-xl flex items-center justify-center shadow-md">
-                <Settings className="h-5 w-5 text-white" />
+              <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center shadow-sm border border-blue-200">
+                <Settings className="h-5 w-5 text-blue-700 opacity-70" />
               </div>
             </div>
             <div className="grid grid-cols-4 gap-3">
-              <a href="/calendar" className="group flex flex-col items-center p-3 bg-gradient-to-br from-blue-50/80 to-blue-100/80 rounded-xl hover:from-blue-100 hover:to-blue-200 transition-all duration-300 hover:scale-105 hover:shadow-md">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                  <Calendar className="h-5 w-5 text-white" />
+              <a href="/calendar" className="group flex flex-col items-center p-3 bg-blue-50/50 rounded-xl hover:bg-blue-100/50 transition-all duration-300 hover:scale-105 hover:shadow-sm border border-blue-100">
+                <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-blue-200">
+                  <Calendar className="h-5 w-5 text-blue-700 opacity-70" />
                 </div>
                 <span className="text-xs font-bold text-gray-900 text-center">{t('dashboard.viewCalendar')}</span>
               </a>
               
-              <a href="/bookings" className="group flex flex-col items-center p-3 bg-gradient-to-br from-emerald-50/80 to-emerald-100/80 rounded-xl hover:from-emerald-100 hover:to-emerald-200 transition-all duration-300 hover:scale-105 hover:shadow-md">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                  <Users className="h-5 w-5 text-white" />
+              <a href="/bookings" className="group flex flex-col items-center p-3 bg-green-50/50 rounded-xl hover:bg-green-100/50 transition-all duration-300 hover:scale-105 hover:shadow-sm border border-green-100">
+                <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-green-200">
+                  <Users className="h-5 w-5 text-green-700 opacity-70" />
                 </div>
                 <span className="text-xs font-bold text-gray-900 text-center">{t('dashboard.manageBookings')}</span>
               </a>
               
-              <a href="/invoices" className="group flex flex-col items-center p-3 bg-gradient-to-br from-purple-50/80 to-purple-100/80 rounded-xl hover:from-purple-100 hover:to-purple-200 transition-all duration-300 hover:scale-105 hover:shadow-md">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#8b5cf6] to-[#7c3aed] rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                  <Euro className="h-5 w-5 text-white" />
+              <a href="/invoices" className="group flex flex-col items-center p-3 bg-purple-50/50 rounded-xl hover:bg-purple-100/50 transition-all duration-300 hover:scale-105 hover:shadow-sm border border-purple-100">
+                <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-purple-200">
+                  <Euro className="h-5 w-5 text-purple-700 opacity-70" />
                 </div>
                 <span className="text-xs font-bold text-gray-900 text-center">{t('dashboard.viewInvoices')}</span>
               </a>
@@ -368,10 +368,10 @@ const OwnerDashboard: React.FC = () => {
                   const { month, year } = getLastMonth();
                   navigate(`/saft?month=${month}&year=${year}`);
                 }}
-                className="group flex flex-col items-center p-3 bg-gradient-to-br from-orange-50/80 to-orange-100/80 rounded-xl hover:from-orange-100 hover:to-orange-200 transition-all duration-300 hover:scale-105 hover:shadow-md w-full"
+                className="group flex flex-col items-center p-3 bg-orange-50/50 rounded-xl hover:bg-orange-100/50 transition-all duration-300 hover:scale-105 hover:shadow-sm w-full border border-orange-100"
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-[#f97316] to-[#ea580c] rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                  <FileText className="h-5 w-5 text-white" />
+                <div className="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-orange-200">
+                  <FileText className="h-5 w-5 text-orange-700 opacity-70" />
                 </div>
                 <span className="text-xs font-bold text-gray-900 text-center">{t('dashboard.getSAFT')}</span>
               </button>
@@ -417,22 +417,22 @@ const OwnerDashboard: React.FC = () => {
                       </div>
                     )}
                     <div className="absolute top-3 right-3">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold text-white shadow-lg ${
-                        property.status === 'active' ? 'bg-green-500' : 
-                        property.status === 'inactive' ? 'bg-gray-500' : 'bg-yellow-500'
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold shadow-sm ${
+                        property.status === 'active' ? 'bg-green-500/60 text-white' : 
+                        property.status === 'inactive' ? 'bg-gray-500/20 text-gray-900 border border-gray-200' : 'bg-yellow-500/20 text-gray-900 border border-yellow-200'
                       }`}>
                         {property.status || 'Active'}
                       </span>
                     </div>
-                    <div className="absolute bottom-2 left-2">
-                      <div className="bg-black/70 backdrop-blur-sm rounded px-1 py-0.5">
-                        <h3 className="font-bold mb-0 text-white" style={{fontSize: '7px'}}>{property.name}</h3>
-                        <p className="text-white/90" style={{fontSize: '9px'}}>{property.address || 'Algarve, Portugal'}</p>
-                      </div>
-                    </div>
                   </div>
                   
                   <div className="p-4">
+                    {/* Property Name and Address */}
+                    <div className="mb-4">
+                      <h3 className="font-bold text-gray-900 text-base mb-1 truncate">{property.name}</h3>
+                      <p className="text-gray-600 text-xs truncate">{property.address || 'Lisbon, Portugal'}</p>
+                    </div>
+                    
                     <div className="grid grid-cols-3 gap-3 mb-4">
                       <div className="text-center">
                         <p className="text-xs text-gray-500 mb-1 font-semibold">Type</p>
@@ -454,9 +454,8 @@ const OwnerDashboard: React.FC = () => {
                           e.stopPropagation()
                           handlePropertyClick(property.id, 'bookings')
                         }}
-                        className="flex items-center justify-center gap-1 px-2 py-2 bg-gradient-to-r from-[#10b981] to-[#059669] text-white rounded-lg hover:from-[#059669] hover:to-[#047857] transition-all duration-300 font-semibold shadow-md hover:shadow-lg text-xs"
+                        className="px-2 py-2 bg-green-500/20 text-gray-900 rounded-lg hover:bg-green-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md text-xs border border-green-200"
                       >
-                        <BookOpen className="h-3 w-3" />
                         Bookings
                       </button>
                       <button 
@@ -464,9 +463,8 @@ const OwnerDashboard: React.FC = () => {
                           e.stopPropagation()
                           handlePropertyClick(property.id, 'invoices')
                         }}
-                        className="flex items-center justify-center gap-1 px-2 py-2 bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] text-white rounded-lg hover:from-[#7c3aed] hover:to-[#6d28d9] transition-all duration-300 font-semibold shadow-md hover:shadow-lg text-xs"
+                        className="px-2 py-2 bg-purple-500/20 text-gray-900 rounded-lg hover:bg-purple-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md text-xs border border-purple-200"
                       >
-                        <FileText className="h-3 w-3" />
                         Invoices
                       </button>
                       <button 
@@ -474,9 +472,8 @@ const OwnerDashboard: React.FC = () => {
                           e.stopPropagation()
                           handlePropertyClick(property.id, 'calendar')
                         }}
-                        className="flex items-center justify-center gap-1 px-2 py-2 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white rounded-lg hover:from-[#0284c7] hover:to-[#0369a1] transition-all duration-300 font-semibold shadow-md hover:shadow-lg text-xs"
+                        className="px-2 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md text-xs border border-blue-200"
                       >
-                        <Calendar className="h-3 w-3" />
                         Calendar
                       </button>
                     </div>
@@ -491,7 +488,7 @@ const OwnerDashboard: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">No Properties Found</h3>
                 <p className="text-gray-500 mb-6">Add your first property to start tracking bookings and revenue</p>
-                <button className="px-6 py-3 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white rounded-2xl hover:from-[#0284c7] hover:to-[#0369a1] transition-all duration-300 font-bold shadow-lg hover:shadow-xl">
+                <button className="px-6 py-3 bg-blue-500/20 text-blue-700 rounded-2xl hover:bg-blue-500/30 transition-all duration-300 font-bold shadow-sm hover:shadow-md border border-blue-200">
                   Add Property
                 </button>
               </div>
@@ -502,8 +499,8 @@ const OwnerDashboard: React.FC = () => {
 
       {/* Floating Action Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <button className="w-10 h-10 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center group">
-          <Settings className="h-4 w-4 text-white group-hover:rotate-180 transition-transform duration-300" />
+        <button className="w-10 h-10 bg-blue-500/20 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-110 flex items-center justify-center group border border-blue-200">
+          <Settings className="h-4 w-4 text-blue-700 opacity-70 group-hover:rotate-180 transition-transform duration-300" />
         </button>
       </div>
 

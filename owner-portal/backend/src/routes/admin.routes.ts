@@ -6,6 +6,7 @@ import {
   getAdminDashboardStats,
   getAllOwners,
   getAllAccountants,
+  getAccountantCompanies,
   createOwner,
   updateOwner,
   deleteOwner,
@@ -22,6 +23,7 @@ import {
 } from '../controllers/admin.controller'
 import { requireAdmin, requireAdminOrOwner } from '../middlewares/admin.middleware'
 import { authMiddleware } from '../middlewares/auth.middleware'
+import { requireRole } from '../middlewares/role.middleware'
 
 const router = Router()
 
@@ -48,6 +50,7 @@ router.delete('/owners/:ownerId', requireAdmin, deleteOwner)
 
 // Accountant management routes
 router.get('/accountants', requireAdmin, getAllAccountants)
+router.get('/accountants/companies', requireRole(['accountant']), getAccountantCompanies)
 router.put('/accountants/:accountantId', requireAdmin, updateAccountant)
 router.put('/accountants/:accountantId/properties', requireAdmin, updateAccountantProperties)
 router.delete('/accountants/:accountantId', requireAdmin, deleteAccountant)

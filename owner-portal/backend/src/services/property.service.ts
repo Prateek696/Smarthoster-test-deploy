@@ -19,9 +19,10 @@ export const getPropertiesService = async (ownerId: string, userRole?: string, s
     else if (userRole === 'admin') {
       properties = await Property.find({});
     }
-    // If user is accountant, show all properties
+    // If user is accountant, show only assigned properties
     else if (userRole === 'accountant') {
-      properties = await Property.find({});
+      properties = await Property.find({ accountants: ownerId });
+      console.log(`📊 Accountant ${ownerId}: Found ${properties.length} assigned properties`);
     } else {
       // For owners and other roles, show only their properties (exclude admin properties)
       properties = await Property.find({ owner: ownerId, isAdminOwned: false });

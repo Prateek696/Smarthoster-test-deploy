@@ -462,13 +462,13 @@ const Bookings: React.FC = () => {
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-all duration-300 flex items-center gap-1 ${
+              className={`px-4 py-2 rounded-lg font-semibold shadow-sm transition-all duration-300 flex items-center gap-1 border ${
                 showFilters 
-                  ? 'bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white hover:from-[#0284c7] hover:to-[#0ea5e9]' 
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  ? 'bg-blue-500/20 text-gray-900 border-blue-200 hover:bg-blue-500/30' 
+                  : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
               }`}
             >
-              <Filter className="w-4 h-4" />
+              <Filter className="w-4 h-4 opacity-70" />
               Filters
             </button>
           </div>
@@ -535,7 +535,7 @@ const Bookings: React.FC = () => {
                 </button>
                 <button
                   onClick={applyFilters}
-                  className="px-4 py-2 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] text-white rounded-lg hover:from-[#0284c7] hover:to-[#0ea5e9] transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
+                  className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md border border-blue-200"
                 >
                   Apply Filters
                 </button>
@@ -564,13 +564,13 @@ const Bookings: React.FC = () => {
                   <tr key={booking.id} className="hover:bg-gradient-to-r hover:from-gray-50 hover:to-white transition-all duration-300 group">
                     <td className="px-4 py-3 whitespace-nowrap">
                       <div className="flex items-center space-x-4">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
-                          <span className="text-sm font-bold text-white">
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center shadow-sm border border-blue-200">
+                          <span className="text-sm font-bold text-gray-900 opacity-70">
                             {booking.guestName?.charAt(0) || 'G'}
                           </span>
                         </div>
                         <div>
-                          <p className="font-bold text-gray-900 text-sm group-hover:text-[#5FFF56] transition-colors">{booking.guestName || 'Guest'}</p>
+                          <p className="font-bold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">{booking.guestName || 'Guest'}</p>
                           <p className="text-xs text-gray-500 font-medium">ID: {booking.bookingId}</p>
                         </div>
                       </div>
@@ -607,10 +607,10 @@ const Bookings: React.FC = () => {
                       <div className="flex items-center space-x-3">
                         <button
                           onClick={() => handleViewBooking(booking.id, booking.propertyId || 392776)}
-                          className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                          className="p-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200"
                           title="View Details"
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-4 h-4 opacity-70" />
                         </button>
                         {/* SIBA Manager Button - Commented out as requested */}
                         {/* <button

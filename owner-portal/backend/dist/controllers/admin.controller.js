@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProperty = exports.generateOwnerStatement = exports.createProperty = exports.assignPropertyToOwner = exports.updateOwnerApiKeys = exports.getOwnerApiKeys = exports.getAllProperties = exports.deleteAccountant = exports.updateAccountantProperties = exports.updateAccountant = exports.deleteOwner = exports.updateOwner = exports.createOwner = exports.getAllAccountants = exports.getAllOwners = exports.getAdminDashboardStats = exports.checkAdminSetup = exports.createFirstAdmin = exports.checkAdminExists = void 0;
+exports.deleteProperty = exports.generateOwnerStatement = exports.createProperty = exports.assignPropertyToOwner = exports.updateOwnerApiKeys = exports.getOwnerApiKeys = exports.getAllProperties = exports.deleteAccountant = exports.updateAccountantProperties = exports.updateAccountant = exports.deleteOwner = exports.updateOwner = exports.createOwner = exports.getAccountantCompanies = exports.getAllAccountants = exports.getAllOwners = exports.getAdminDashboardStats = exports.checkAdminSetup = exports.createFirstAdmin = exports.checkAdminExists = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const User_model_1 = require("../models/User.model");
@@ -221,6 +221,63 @@ const getAllAccountants = async (req, res) => {
 };
 exports.getAllAccountants = getAllAccountants;
 /**
+ * @desc Get companies from accountant's assigned properties
+ */
+const getAccountantCompanies = async (req, res) => {
+    try {
+        const accountantId = req.user?.id;
+        console.log('📋 getAccountantCompanies called for accountant:', accountantId);
+        // Get all properties assigned to this accountant
+        const assignedProperties = await property_model_1.default.find({ accountants: accountantId })
+            .populate('owner', 'name email companies');
+        console.log('✅ Found assigned properties:', assignedProperties.length);
+        console.log('📋 Property details:', assignedProperties.map(p => ({
+            id: p.id,
+            name: p.name,
+            isAdminOwned: p.isAdminOwned,
+            owner: p.owner?.name,
+            ownerCompanies: p.owner?.companies
+        })));
+        // Get admin user for admin-owned properties
+        const adminUser = await User_model_1.UserModel.findOne({ role: 'admin' });
+        console.log('👨‍💼 Admin user found:', adminUser?.name, 'Companies:', adminUser?.companies);
+        // Extract unique companies from all assigned properties' owners
+        const companiesSet = new Map();
+        for (const property of assignedProperties) {
+            let owner = property.owner;
+            // If property is admin-owned, use the admin user
+            if (property.isAdminOwned && !owner && adminUser) {
+                owner = adminUser;
+                console.log('🔄 Using admin user for admin-owned property:', property.name);
+            }
+            if (owner && owner.companies && Array.isArray(owner.companies)) {
+                owner.companies.forEach((company) => {
+                    const key = `${company.name}-${company.nif}`;
+                    if (!companiesSet.has(key)) {
+                        companiesSet.set(key, {
+                            name: company.name,
+                            nif: company.nif,
+                            ownerId: owner._id.toString(),
+                            ownerName: owner.name
+                        });
+                    }
+                });
+            }
+        }
+        const uniqueCompanies = Array.from(companiesSet.values());
+        console.log('📊 Unique companies found:', uniqueCompanies.length, uniqueCompanies);
+        res.json({
+            success: true,
+            companies: uniqueCompanies
+        });
+    }
+    catch (error) {
+        console.error('❌ Error in getAccountantCompanies:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+exports.getAccountantCompanies = getAccountantCompanies;
+/**
  * @desc Create new owner
  */
 const createOwner = async (req, res) => {
@@ -324,20 +381,32 @@ const createOwner = async (req, res) => {
                 // Don't fail the whole request if property assignment fails
             }
         }
-        // Send welcome email to the new owner
+        // Send welcome email based on role
         try {
-            console.log('📧 Sending welcome email to new owner:', email);
-            await (0, email_service_1.sendWelcomeEmail)({
-                name,
-                email,
-                password, // Plain text password (before hashing)
-                portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
-            });
-            console.log('✅ Welcome email sent successfully to:', email);
+            if (role === 'accountant') {
+                console.log('📧 Sending welcome email to new accountant:', email);
+                await (0, email_service_1.sendAccountantWelcomeEmail)({
+                    name,
+                    email,
+                    password, // Plain text password (before hashing)
+                    portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+                });
+                console.log('✅ Accountant welcome email sent successfully to:', email);
+            }
+            else {
+                console.log('📧 Sending welcome email to new owner:', email);
+                await (0, email_service_1.sendWelcomeEmail)({
+                    name,
+                    email,
+                    password, // Plain text password (before hashing)
+                    portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+                });
+                console.log('✅ Owner welcome email sent successfully to:', email);
+            }
         }
         catch (emailError) {
             console.error('⚠️  Error sending welcome email (continuing anyway):', emailError.message);
-            // Don't fail the owner creation if email fails - owner is already created
+            // Don't fail the user creation if email fails - user is already created
         }
         const responseData = {
             data: {

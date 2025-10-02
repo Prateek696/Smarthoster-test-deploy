@@ -4,6 +4,7 @@ const express_1 = require("express");
 const admin_controller_1 = require("../controllers/admin.controller");
 const admin_middleware_1 = require("../middlewares/admin.middleware");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
+const role_middleware_1 = require("../middlewares/role.middleware");
 const router = (0, express_1.Router)();
 // Public route to check if admin exists (no auth required)
 router.get('/check-admin-exists', admin_controller_1.checkAdminExists);
@@ -22,6 +23,7 @@ router.put('/owners/:ownerId', admin_middleware_1.requireAdmin, admin_controller
 router.delete('/owners/:ownerId', admin_middleware_1.requireAdmin, admin_controller_1.deleteOwner);
 // Accountant management routes
 router.get('/accountants', admin_middleware_1.requireAdmin, admin_controller_1.getAllAccountants);
+router.get('/accountants/companies', (0, role_middleware_1.requireRole)(['accountant']), admin_controller_1.getAccountantCompanies);
 router.put('/accountants/:accountantId', admin_middleware_1.requireAdmin, admin_controller_1.updateAccountant);
 router.put('/accountants/:accountantId/properties', admin_middleware_1.requireAdmin, admin_controller_1.updateAccountantProperties);
 router.delete('/accountants/:accountantId', admin_middleware_1.requireAdmin, admin_controller_1.deleteAccountant);

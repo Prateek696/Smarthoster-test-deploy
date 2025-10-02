@@ -280,13 +280,13 @@ const SibaManagerDashboard: React.FC = () => {
                 <button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 border ${
                     isRefreshing 
-                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed border-gray-300' 
+                      : 'bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 border-blue-200 shadow-sm hover:shadow-md'
                   }`}
                 >
-                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`h-4 w-4 opacity-70 ${isRefreshing ? 'animate-spin' : ''}`} />
                   <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
                 </button>
               </div>
@@ -297,40 +297,40 @@ const SibaManagerDashboard: React.FC = () => {
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-4">
           <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center">
-            <div className="p-0.5 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] rounded-md w-fit mx-auto mb-1">
-              <Shield className="h-3 w-3 text-white" />
+            <div className="flex items-center justify-center w-10 h-10 bg-blue-500/20 rounded-lg shadow-sm border border-blue-200 mx-auto mb-1">
+              <Shield className="h-5 w-5 text-gray-900 opacity-70" />
             </div>
             <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.totalProperties}</p>
             <p className="text-[10px] text-gray-600">Total Properties</p>
           </div>
 
           <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-red-200 p-2 text-center">
-            <div className="p-0.5 bg-gradient-to-br from-[#f97316] to-[#ea580c] rounded-md w-fit mx-auto mb-1">
-              <AlertCircle className="h-3 w-3 text-white" />
+            <div className="flex items-center justify-center w-10 h-10 bg-red-500/20 rounded-lg shadow-sm border border-red-200 mx-auto mb-1">
+              <AlertCircle className="h-5 w-5 text-gray-900 opacity-70" />
             </div>
             <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.overdue}</p>
             <p className="text-[10px] text-gray-600">Overdue</p>
           </div>
 
           <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-yellow-200 p-2 text-center">
-            <div className="p-0.5 bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-md w-fit mx-auto mb-1">
-              <Clock className="h-3 w-3 text-white" />
+            <div className="flex items-center justify-center w-10 h-10 bg-yellow-500/20 rounded-lg shadow-sm border border-yellow-200 mx-auto mb-1">
+              <Clock className="h-5 w-5 text-gray-900 opacity-70" />
             </div>
             <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.dueSoon}</p>
             <p className="text-[10px] text-gray-600">Due Soon</p>
           </div>
 
           <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-green-200 p-2 text-center">
-            <div className="p-0.5 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-md w-fit mx-auto mb-1">
-              <CheckCircle className="h-3 w-3 text-white" />
+            <div className="flex items-center justify-center w-10 h-10 bg-green-500/20 rounded-lg shadow-sm border border-green-200 mx-auto mb-1">
+              <CheckCircle className="h-5 w-5 text-gray-900 opacity-70" />
             </div>
             <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.compliant}</p>
             <p className="text-[10px] text-gray-600">Compliant</p>
           </div>
 
           <div className="bg-white/95 backdrop-blur-sm rounded-md shadow-sm border border-gray-200 p-2 text-center">
-            <div className="p-0.5 bg-gradient-to-br from-[#ef4444] to-[#dc2626] rounded-md w-fit mx-auto mb-1">
-              <AlertTriangle className="h-3 w-3 text-white" />
+            <div className="flex items-center justify-center w-10 h-10 bg-red-500/20 rounded-lg shadow-sm border border-red-200 mx-auto mb-1">
+              <AlertTriangle className="h-5 w-5 text-gray-900 opacity-70" />
             </div>
             <p className="text-sm font-bold text-gray-900 mb-0.5">{realSummary.errors}</p>
             <p className="text-[10px] text-gray-600">Errors</p>

@@ -17,6 +17,7 @@ import {
   AdminDashboardStats,
   CreateOwnerData
 } from '../../services/admin.api'
+import { createProperty } from '../../services/properties.api'
 import { 
   Users, 
   Building2, 
@@ -82,6 +83,14 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
   const [availableProperties, setAvailableProperties] = useState<any[]>([])
   const [isFetchingProperty, setIsFetchingProperty] = useState(false)
   const [propertyFetchSuccess, setPropertyFetchSuccess] = useState(false)
+  const [propertiesToCreate, setPropertiesToCreate] = useState<Array<{
+    hostkitId: string
+    hostkitApiKey: string
+    hostawayId: string
+    fetched: boolean
+    data?: any
+  }>>([])
+  const [isFetchingAll, setIsFetchingAll] = useState(false)
 
   // Company management functions
   const addCompany = () => {
@@ -105,6 +114,84 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
         i === index ? { ...company, [field]: value } : company
       ) || []
     }))
+  }
+
+  // Property management functions
+  const addProperty = () => {
+    setPropertiesToCreate(prev => [
+      ...prev,
+      { hostkitId: '', hostkitApiKey: '', hostawayId: '', fetched: false }
+    ])
+  }
+
+  const removeProperty = (index: number) => {
+    setPropertiesToCreate(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const updatePropertyField = (index: number, field: 'hostkitId' | 'hostkitApiKey' | 'hostawayId', value: string) => {
+    setPropertiesToCreate(prev =>
+      prev.map((prop, i) => (i === index ? { ...prop, [field]: value } : prop))
+    )
+  }
+
+  const handleFetchAllProperties = async () => {
+    setIsFetchingAll(true)
+    
+    for (let i = 0; i < propertiesToCreate.length; i++) {
+      const property = propertiesToCreate[i]
+      
+      if (!property.hostawayId) {
+        toast.error(`Property ${i + 1}: Hostaway ID is required`)
+        continue
+      }
+
+      try {
+        const response = await apiClient.get(`/property-management/fetch-hostaway/${property.hostawayId}`)
+        
+        if (response.success && response.data) {
+          const data = response.data
+          
+          // Build address from city and country only
+          const addressParts = [
+            data.address?.city,
+            data.address?.country
+          ].filter(Boolean)
+          
+          const fullAddress = addressParts.length > 0 
+            ? addressParts.join(', ') 
+            : data.address?.full || ''
+
+          // Update the property with fetched data
+          setPropertiesToCreate(prev =>
+            prev.map((prop, idx) =>
+              idx === i
+                ? {
+                    ...prop,
+                    fetched: true,
+                    data: {
+                      id: property.hostawayId,
+                      name: data.name,
+                      address: fullAddress,
+                      bedrooms: data.bedrooms,
+                      bathrooms: data.bathrooms,
+                      maxGuests: data.accommodates,
+                      type: data.propertyType || 'Apartment',
+                      hostkitId: property.hostkitId
+                    }
+                  }
+                : prop
+            )
+          )
+          
+          toast.success(`Property ${i + 1}: ${data.name} fetched successfully!`)
+        }
+      } catch (error: any) {
+        console.error(`Error fetching property ${i + 1}:`, error)
+        toast.error(`Property ${i + 1}: Failed to fetch details`)
+      }
+    }
+    
+    setIsFetchingAll(false)
   }
 
   // Fetch available properties when role changes to accountant
@@ -138,11 +225,9 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
       if (response.success && response.data) {
         const data = response.data
         
-        // Build full address from all components
+        // Build address from city and country only
         const addressParts = [
-          data.address?.street,
           data.address?.city,
-          data.address?.state,
           data.address?.country
         ].filter(Boolean)
         
@@ -191,7 +276,6 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
       const requestData = {
         ...formData,
         companies: filteredCompanies,
-        ...(includeProperty && propertyData.name && propertyData.id && { propertyData }),
         ...(formData.role === 'accountant' && selectedProperties.length > 0 && { assignedProperties: selectedProperties })
       }
       const ownerResult = await createOwner(requestData)
@@ -201,26 +285,31 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
         throw new Error('Invalid response from createOwner API')
       }
       
-      // If property data is included, create property and assign to owner
-      if (includeProperty && propertyData.name && propertyData.id) {
-        console.log('Creating property with data:', propertyData)
-        // The backend will handle property creation automatically
-        console.log('Property created and assigned to owner:', ownerResult._id)
+      // Create all fetched properties for the owner
+      if (propertiesToCreate.length > 0 && formData.role === 'owner') {
+        const fetchedProperties = propertiesToCreate.filter(p => p.fetched && p.data)
         
-        // Upload images after property creation
-        if (selectedImages.length > 0) {
-          try {
-            setIsUploadingImages(true)
-            const { uploadPropertyImages } = await import('../../services/imageUpload.api')
-            await uploadPropertyImages(propertyData.id, selectedImages)
-            console.log('Images uploaded successfully for property:', propertyData.id)
-            setSelectedImages([]) // Clear selected images after upload
-          } catch (imageError) {
-            console.error('Error uploading images:', imageError)
-            // Don't fail the entire operation if image upload fails
-          } finally {
-            setIsUploadingImages(false)
+        if (fetchedProperties.length > 0) {
+          console.log(`Creating ${fetchedProperties.length} properties for owner:`, ownerResult._id)
+          
+          for (const property of fetchedProperties) {
+            try {
+              const propertyPayload = {
+                ...property.data,
+                hostkitApiKey: property.hostkitApiKey,
+                owner: ownerResult._id
+              }
+              
+              console.log('Creating property:', propertyPayload)
+              await createProperty(propertyPayload)
+              console.log('✅ Property created:', property.data.name)
+            } catch (propertyError: any) {
+              console.error('❌ Error creating property:', propertyError)
+              toast.error(`Failed to create property: ${property.data?.name || 'Unknown'}`)
+            }
           }
+          
+          toast.success(`${fetchedProperties.length} ${fetchedProperties.length === 1 ? 'property' : 'properties'} created successfully!`)
         }
       }
       
@@ -306,84 +395,6 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Phone
-        </label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      {/* Company Information Section */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <label className="block text-sm font-medium text-gray-700">
-            Company Information (for SAFT)
-          </label>
-          <button
-            type="button"
-            onClick={addCompany}
-            className="flex items-center gap-1 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="h-4 w-4" />
-            Add Company
-          </button>
-        </div>
-        
-        {formData.companies?.map((company, index) => (
-          <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-gray-700">Company {index + 1}</h4>
-              {formData.companies && formData.companies.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeCompany(index)}
-                  className="flex items-center gap-1 px-2 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-                >
-                  <Minus className="h-4 w-4" />
-                  Remove
-                </button>
-              )}
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Company Name *
-                </label>
-                <input
-                  type="text"
-                  value={company.name}
-                  onChange={(e) => updateCompany(index, 'name', e.target.value)}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter company name"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  NIF *
-                </label>
-                <input
-                  type="text"
-                  value={company.nif}
-                  onChange={(e) => updateCompany(index, 'nif', e.target.value)}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter NIF number"
-                />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
           Role *
         </label>
         <select
@@ -397,49 +408,187 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
         </select>
       </div>
 
+      {/* Company Information Section - Only for Owners */}
       {formData.role === 'owner' && (
-        <>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Hostkit API ID
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <label className="block text-sm font-medium text-gray-700">
+              Company Information (for SAFT)
             </label>
-            <input
-              type="text"
-              name="hostkitApiId"
-              value={formData.hostkitApiId || ''}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter Hostkit API ID (e.g., 10028)"
-            />
+            <button
+              type="button"
+              onClick={addCompany}
+              className="flex items-center gap-1 px-2 py-1 text-xs bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 transition-all duration-300 border border-blue-200 shadow-sm hover:shadow-md"
+            >
+              <Plus className="h-3 w-3 opacity-70" />
+              Add Company
+            </button>
+          </div>
+          
+          {formData.companies?.map((company, index) => (
+            <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-medium text-gray-700">Company {index + 1}</h4>
+                {formData.companies && formData.companies.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeCompany(index)}
+                    className="flex items-center gap-1 px-2 py-1 text-sm bg-red-500/20 text-gray-900 rounded-md hover:bg-red-500/30 transition-all duration-300 border border-red-200 shadow-sm hover:shadow-md"
+                  >
+                    <Minus className="h-4 w-4 opacity-70" />
+                    Remove
+                  </button>
+                )}
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={company.name}
+                    onChange={(e) => updateCompany(index, 'name', e.target.value)}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter company name"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    NIF *
+                  </label>
+                  <input
+                    type="text"
+                    value={company.nif}
+                    onChange={(e) => updateCompany(index, 'nif', e.target.value)}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter NIF number"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Properties to Create Section - Only for Owners */}
+      {formData.role === 'owner' && (
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <label className="block text-sm font-medium text-gray-700">
+              Properties to Create
+            </label>
+            <button
+              type="button"
+              onClick={addProperty}
+              className="flex items-center gap-1 px-2 py-1 text-xs bg-green-500/20 text-gray-900 rounded-md hover:bg-green-500/30 transition-all duration-300 border border-green-200 shadow-sm hover:shadow-md"
+            >
+              <Plus className="h-3 w-3 opacity-70" />
+              Add Property
+            </button>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Hostkit API Key
-            </label>
-            <div className="relative">
-              <input
-                type={showApiKey ? 'text' : 'password'}
-                name="hostkitApiKey"
-                value={formData.hostkitApiKey}
-                onChange={handleChange}
-                className="w-full px-3 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Hostkit API Key"
-              />
+          {propertiesToCreate.map((property, index) => (
+            <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-medium text-gray-700">Property {index + 1}</h4>
+                <button
+                  type="button"
+                  onClick={() => removeProperty(index)}
+                  className="flex items-center gap-1 px-2 py-1 text-sm bg-red-500/20 text-gray-900 rounded-md hover:bg-red-500/30 transition-all duration-300 border border-red-200 shadow-sm hover:shadow-md"
+                >
+                  <Minus className="h-4 w-4 opacity-70" />
+                  Remove
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Hostkit ID
+                  </label>
+                  <input
+                    type="text"
+                    value={property.hostkitId}
+                    onChange={(e) => updatePropertyField(index, 'hostkitId', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="12602"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Hostkit API Key
+                  </label>
+                  <input
+                    type="password"
+                    value={property.hostkitApiKey}
+                    onChange={(e) => updatePropertyField(index, 'hostkitApiKey', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter API Key"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Hostaway ID *
+                  </label>
+                  <input
+                    type="text"
+                    value={property.hostawayId}
+                    onChange={(e) => updatePropertyField(index, 'hostawayId', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="414661"
+                  />
+                </div>
+              </div>
+
+              {/* Show fetched property data */}
+              {property.fetched && property.data && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <span className="font-semibold text-green-900">{property.data.name}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <p><span className="font-medium">Address:</span> {property.data.address}</p>
+                    <p><span className="font-medium">Type:</span> {property.data.type}</p>
+                    <p><span className="font-medium">Bedrooms:</span> {property.data.bedrooms}</p>
+                    <p><span className="font-medium">Bathrooms:</span> {property.data.bathrooms}</p>
+                    <p><span className="font-medium">Max Guests:</span> {property.data.maxGuests}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {propertiesToCreate.length > 0 && (
+            <div className="flex justify-end">
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                onClick={() => setShowApiKey(!showApiKey)}
+                onClick={handleFetchAllProperties}
+                disabled={isFetchingAll}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-300 border border-blue-200 shadow-sm hover:shadow-md"
               >
-                {showApiKey ? (
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                {isFetchingAll ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                    Fetching...
+                  </>
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  <>
+                    <Download className="h-4 w-4" />
+                    Fetch All Properties
+                  </>
                 )}
               </button>
             </div>
-          </div>
-        </>
+          )}
+        </div>
       )}
 
       <div>
@@ -469,24 +618,9 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
         </div>
       </div>
 
-      {/* Property Section */}
-      <div className="border-t pt-4 mt-6">
-        {formData.role === 'owner' && (
-          <div className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              id="includeProperty"
-              checked={includeProperty}
-              onChange={(e) => setIncludeProperty(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label htmlFor="includeProperty" className="ml-2 text-sm font-medium text-gray-700">
-              Also create a property for this {getRoleText(formData.role)}
-            </label>
-          </div>
-        )}
-
-        {formData.role === 'accountant' && (
+      {/* Accountant Property Assignment Section */}
+      {formData.role === 'accountant' && (
+        <div className="border-t pt-4 mt-6">
           <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
             <h4 className="text-lg font-medium text-gray-900">Assign Properties to Accountant</h4>
             
@@ -526,197 +660,8 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
               </div>
             )}
           </div>
-        )}
-
-        {includeProperty && (
-          <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
-            <h4 className="text-lg font-medium text-gray-900">Property Details</h4>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Hostaway Property ID *
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  value={propertyData.id}
-                  onChange={(e) => setPropertyData(prev => ({ ...prev, id: e.target.value }))}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., 392777"
-                  required={includeProperty}
-                />
-                <button
-                  type="button"
-                  onClick={handleFetchPropertyFromHostaway}
-                  disabled={isFetchingProperty || !propertyData.id}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-colors"
-                >
-                  {isFetchingProperty ? (
-                    <>
-                      <RefreshCw className="h-4 w-4 animate-spin" />
-                      Fetching...
-                    </>
-                  ) : propertyFetchSuccess ? (
-                    <>
-                      <CheckCircle className="h-4 w-4" />
-                      Fetched
-                    </>
-                  ) : (
-                    <>
-                      <Download className="h-4 w-4" />
-                      Fetch
-                    </>
-                  )}
-                </button>
-              </div>
-              {propertyFetchSuccess && (
-                <p className="mt-1 text-sm text-green-600 flex items-center gap-1">
-                  <CheckCircle className="h-4 w-4" />
-                  Property details loaded from Hostaway.
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Property Type *
-              </label>
-              <select
-                value={propertyData.type}
-                onChange={(e) => setPropertyData(prev => ({ ...prev, type: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="Apartment">Apartment</option>
-                <option value="House">House</option>
-                <option value="Villa">Villa</option>
-                <option value="Condominium">Condominium</option>
-                <option value="Penthouse">Penthouse</option>
-                <option value="Studio">Studio</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Property Name *
-              </label>
-              <input
-                type="text"
-                value={propertyData.name}
-                onChange={(e) => setPropertyData(prev => ({ ...prev, name: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter property name"
-                required={includeProperty}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Address *
-              </label>
-              <input
-                type="text"
-                value={propertyData.address}
-                onChange={(e) => setPropertyData(prev => ({ ...prev, address: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter property address"
-                required={includeProperty}
-              />
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Bedrooms *
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  value={propertyData.bedrooms}
-                  onChange={(e) => setPropertyData(prev => ({ ...prev, bedrooms: parseInt(e.target.value) || 0 }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required={includeProperty}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Bathrooms *
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  value={propertyData.bathrooms}
-                  onChange={(e) => setPropertyData(prev => ({ ...prev, bathrooms: parseInt(e.target.value) || 0 }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required={includeProperty}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Max Guests *
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  value={propertyData.maxGuests}
-                  onChange={(e) => setPropertyData(prev => ({ ...prev, maxGuests: parseInt(e.target.value) || 1 }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required={includeProperty}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Hostkit ID *
-              </label>
-              <input
-                type="text"
-                value={propertyData.hostkitId}
-                onChange={(e) => setPropertyData(prev => ({ ...prev, hostkitId: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="e.g., 10030"
-                required={includeProperty}
-              />
-            </div>
-
-            {/* Property Images */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Property Images
-              </label>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleImageSelect}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
-              />
-              
-              {selectedImages.length > 0 && (
-                <div className="mt-3">
-                  <p className="text-sm text-gray-600 mb-2">Selected Images:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedImages.map((file, index) => (
-                      <div key={index} className="flex items-center bg-gray-100 px-2 py-1 rounded text-sm">
-                        <span className="mr-2">{file.name}</span>
-                        <button
-                          type="button"
-                          onClick={() => removeImage(index)}
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="flex justify-end space-x-3 pt-4">
         <button
@@ -728,10 +673,10 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
         </button>
         <button
           type="submit"
-          disabled={loading || isUploadingImages}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          disabled={loading}
+          className="px-4 py-2 text-sm font-medium bg-blue-500/20 text-gray-900 border border-blue-200 rounded-md hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:opacity-50 shadow-sm hover:shadow-md transition-all duration-300"
         >
-          {loading ? 'Creating...' : isUploadingImages ? 'Uploading Images...' : includeProperty ? `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'} & Property` : `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'}`}
+          {loading ? 'Creating...' : `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'}${propertiesToCreate.length > 0 ? ` & ${propertiesToCreate.length} ${propertiesToCreate.length === 1 ? 'Property' : 'Properties'}` : ''}`}
         </button>
       </div>
     </form>
@@ -875,9 +820,9 @@ const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCance
           <button
             type="button"
             onClick={addCompany}
-            className="flex items-center gap-1 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-1 px-2 py-1 text-xs bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 transition-all duration-300 border border-blue-200 shadow-sm hover:shadow-md"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3 w-3 opacity-70" />
             Add Company
           </button>
         </div>
@@ -890,9 +835,9 @@ const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCance
                 <button
                   type="button"
                   onClick={() => removeCompany(index)}
-                  className="flex items-center gap-1 px-2 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                  className="flex items-center gap-1 px-2 py-1 text-sm bg-red-500/20 text-gray-900 rounded-md hover:bg-red-500/30 transition-all duration-300 border border-red-200 shadow-sm hover:shadow-md"
                 >
-                  <Minus className="h-4 w-4" />
+                  <Minus className="h-4 w-4 opacity-70" />
                   Remove
                 </button>
               )}
@@ -942,7 +887,7 @@ const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCance
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          className="px-4 py-2 text-sm font-medium bg-blue-500/20 text-gray-900 border border-blue-200 rounded-md hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:opacity-50 shadow-sm hover:shadow-md transition-all duration-300"
         >
           {loading ? 'Updating...' : 'Update Owner'}
         </button>
@@ -1067,11 +1012,9 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
         const data = response.data
         
         // Auto-populate form fields
-        // Build full address from all components
+        // Build address from city and country only
         const addressParts = [
-          data.address?.street,
           data.address?.city,
-          data.address?.state,
           data.address?.country
         ].filter(Boolean); // Remove empty parts
         
@@ -1130,7 +1073,7 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
               type="button"
               onClick={handleFetchFromHostaway}
               disabled={isFetchingHostaway || !formData.id}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-colors"
+              className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-all duration-300 border border-blue-200 shadow-sm hover:shadow-md"
             >
               {isFetchingHostaway ? (
                 <>
@@ -1340,7 +1283,7 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
           multiple
           accept="image/*"
           onChange={handleImageSelect}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-blue-200 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-gray-900 hover:file:bg-blue-500/30 file:shadow-sm hover:file:shadow-md file:transition-all file:duration-300"
         />
         
         {selectedImages.length > 0 && (
@@ -1361,7 +1304,7 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
         <button
           type="submit"
           disabled={loading || isUploadingImages}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          className="px-4 py-2 text-sm font-medium bg-blue-500/20 text-gray-900 border border-blue-200 rounded-md hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:opacity-50 shadow-sm hover:shadow-md transition-all duration-300"
         >
           {loading ? 'Creating...' : isUploadingImages ? 'Uploading Images...' : 'Create Property'}
         </button>
@@ -1605,11 +1548,11 @@ const AccountantEditModal: React.FC<AccountantEditModalProps> = ({ accountant, a
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-transparent rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 text-sm font-semibold bg-blue-500/20 text-gray-900 border border-blue-200 rounded-lg hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 {loading ? (
                   <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
                     Updating...
                   </div>
                 ) : (
@@ -1643,6 +1586,8 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
     ownerId: property.isAdminOwned ? 'admin' : (property.owner?._id || '')
   })
   const [loading, setLoading] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
+  const [syncSuccess, setSyncSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -1671,6 +1616,56 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
     }))
   }
 
+  const handleSyncFromHostaway = async () => {
+    if (!property.id) {
+      toast.error('Property ID is required to sync from Hostaway')
+      return
+    }
+
+    setIsSyncing(true)
+    setSyncSuccess(false)
+
+    try {
+      const response = await apiClient.get(`/property-management/fetch-hostaway/${property.id}`)
+      
+      if (response.success && response.data) {
+        const data = response.data
+        
+        // Build address from city and country only
+        const addressParts = [
+          data.address?.city,
+          data.address?.country
+        ].filter(Boolean)
+        
+        const fullAddress = addressParts.length > 0 
+          ? addressParts.join(', ') 
+          : data.address?.full || formData.address
+        
+        // Update form with synced data
+        setFormData(prev => ({
+          ...prev,
+          name: data.name || prev.name,
+          address: fullAddress,
+          bedrooms: data.bedrooms || prev.bedrooms,
+          bathrooms: data.bathrooms || prev.bathrooms,
+          maxGuests: data.accommodates || prev.maxGuests,
+          type: data.propertyType || prev.type
+        }))
+        
+        setSyncSuccess(true)
+        toast.success('Property details synced successfully from Hostaway!')
+        
+        // Reset success state after 3 seconds
+        setTimeout(() => setSyncSuccess(false), 3000)
+      }
+    } catch (error: any) {
+      console.error('Error syncing from Hostaway:', error)
+      toast.error(error.message || 'Failed to sync property details from Hostaway')
+    } finally {
+      setIsSyncing(false)
+    }
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -1694,10 +1689,35 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Property Details Section */}
             <div className="bg-gray-50 rounded-xl p-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <Building2 className="h-5 w-5 mr-2 text-blue-600" />
-                Property Details
-              </h4>
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-lg font-semibold text-gray-900 flex items-center">
+                  <Building2 className="h-5 w-5 mr-2 text-blue-600" />
+                  Property Details
+                </h4>
+                <button
+                  type="button"
+                  onClick={handleSyncFromHostaway}
+                  disabled={isSyncing || !property.id}
+                  className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-all duration-300 border border-blue-200 shadow-sm hover:shadow-md text-sm"
+                >
+                  {isSyncing ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      Syncing...
+                    </>
+                  ) : syncSuccess ? (
+                    <>
+                      <CheckCircle className="h-4 w-4" />
+                      Synced
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="h-4 w-4" />
+                      Sync from Hostaway
+                    </>
+                  )}
+                </button>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -1846,11 +1866,11 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-transparent rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 text-sm font-semibold bg-blue-500/20 text-gray-900 border border-blue-200 rounded-lg hover:bg-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 {loading ? (
                   <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
                     Updating...
                   </div>
                 ) : (
@@ -2138,9 +2158,9 @@ const AdminDashboard: React.FC = () => {
               
               <button
                 onClick={() => setShowOwnerModal(true)}
-                className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] hover:from-[#0284c7] hover:to-[#0369a1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0ea5e9]"
+                className="inline-flex items-center px-3 py-1.5 border text-sm font-medium rounded-md bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <Plus className="h-3 w-3 mr-1" />
+                <Plus className="h-3 w-3 mr-1 opacity-70" />
                 Add User
               </button>
             </div>
@@ -2155,8 +2175,8 @@ const AdminDashboard: React.FC = () => {
             <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] rounded-lg flex items-center justify-center">
-                    <Users className="h-4 w-4 text-white" />
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center border border-blue-200 shadow-sm">
+                    <Users className="h-4 w-4 text-gray-900 opacity-70" />
                   </div>
                 </div>
                 <div className="ml-3 w-0 flex-1">
@@ -2177,8 +2197,8 @@ const AdminDashboard: React.FC = () => {
             <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] rounded-lg flex items-center justify-center">
-                    <Users className="h-4 w-4 text-white" />
+                  <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center border border-purple-200 shadow-sm">
+                    <Users className="h-4 w-4 text-gray-900 opacity-70" />
                   </div>
                 </div>
                 <div className="ml-3 w-0 flex-1">
@@ -2199,8 +2219,8 @@ const AdminDashboard: React.FC = () => {
             <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-gradient-to-r from-[#10b981] to-[#059669] rounded-lg flex items-center justify-center">
-                    <Building2 className="h-4 w-4 text-white" />
+                  <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center border border-green-200 shadow-sm">
+                    <Building2 className="h-4 w-4 text-gray-900 opacity-70" />
                   </div>
                 </div>
                 <div className="ml-3 w-0 flex-1">
@@ -2222,8 +2242,8 @@ const AdminDashboard: React.FC = () => {
             <div className="p-4">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-gradient-to-r from-[#f97316] to-[#ea580c] rounded-lg flex items-center justify-center">
-                    <TrendingUp className="h-4 w-4 text-white" />
+                  <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center border border-orange-200 shadow-sm">
+                    <TrendingUp className="h-4 w-4 text-gray-900 opacity-70" />
                   </div>
                 </div>
                 <div className="ml-3 w-0 flex-1">
@@ -2253,9 +2273,9 @@ const AdminDashboard: React.FC = () => {
               </div>
               <button
                 onClick={() => setShowOwnerModal(true)}
-                className="bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] hover:from-[#0284c7] hover:to-[#0369a1] text-white px-3 py-1.5 rounded-md flex items-center gap-1 transition-all duration-300 text-sm shadow-md hover:shadow-lg"
+                className="bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 px-3 py-1.5 rounded-md flex items-center gap-1 transition-all duration-300 text-sm shadow-sm hover:shadow-md border border-blue-200"
               >
-                <Plus className="h-3 w-3" />
+                <Plus className="h-3 w-3 opacity-70" />
                 Add Owner
               </button>
             </div>
@@ -2346,9 +2366,9 @@ const AdminDashboard: React.FC = () => {
                   <p className="text-gray-500 mb-4">Get started by adding your first property owner.</p>
                   <button
                     onClick={() => setShowOwnerModal(true)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors mx-auto"
+                    className="bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300 mx-auto border border-blue-200 shadow-sm hover:shadow-md"
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4 opacity-70" />
                     Add Owner
                   </button>
                 </div>
@@ -2369,9 +2389,9 @@ const AdminDashboard: React.FC = () => {
               </div>
               <button
                 onClick={() => setShowPropertyModal(true)}
-                className="inline-flex items-center px-4 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2563eb] shadow-lg hover:shadow-xl transition-all duration-200"
+                className="inline-flex items-center px-4 py-3 border text-sm font-semibold rounded-lg bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <Plus className="h-5 w-5 mr-2" />
+                <Plus className="h-5 w-5 mr-2 opacity-70" />
                 Add Property
               </button>
             </div>

@@ -1187,12 +1187,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleBlockDates}
                 disabled={isBlocking}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 font-medium"
+                className="bg-red-500/40 text-gray-900 px-4 py-2 rounded-lg hover:bg-red-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 font-medium border border-red-300 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
                 ) : (
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 opacity-70" />
                 )}
                 Block Dates
               </button>
@@ -1200,19 +1200,19 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleUnblockDates}
                 disabled={isBlocking}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 font-medium"
+                className="bg-green-500/40 text-gray-900 px-4 py-2 rounded-lg hover:bg-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 font-medium border border-green-300 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
                 ) : (
-                  <Check className="h-4 w-4" />
+                  <Check className="h-4 w-4 opacity-70" />
                 )}
                 Unblock Dates
               </button>
               
               <button
                 onClick={() => setSelectedDates(null)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 font-medium"
+                className="bg-gray-500/20 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-500/30 font-medium border border-gray-300 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 Cancel
               </button>
@@ -1221,8 +1221,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         </div>
       )}
 
-      {/* Start Selection Mode Button */}
-      {!doubleClickMode && (
+      {/* Start Selection Mode Button - Hidden for accountants */}
+      {!doubleClickMode && user?.role !== 'accountant' && (
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
           <div className="flex items-center justify-between">
             <div>
@@ -1244,7 +1244,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 setIsSelecting(false);
                 console.log('Started selection mode manually');
               }}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium"
+              className="bg-blue-500/20 text-gray-900 px-4 py-2 rounded-lg hover:bg-blue-500/30 font-medium border border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
             >
               Start Selection
             </button>
@@ -1294,12 +1294,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleBulkBlock}
                 disabled={isBlocking}
-                className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                className="bg-red-500/40 text-gray-900 px-3 py-1 rounded-lg hover:bg-red-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 border border-red-300 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-gray-900"></div>
                 ) : (
-                  <X className="h-3 w-3" />
+                  <X className="h-3 w-3 opacity-70" />
                 )}
                 Block All ({selectedDateList.length})
               </button>
@@ -1307,12 +1307,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               <button
                 onClick={handleBulkUnblock}
                 disabled={isBlocking}
-                className="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                className="bg-green-500/40 text-gray-900 px-3 py-1 rounded-lg hover:bg-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 border border-green-300 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 {isBlocking ? (
-                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-gray-900"></div>
                 ) : (
-                  <Check className="h-3 w-3" />
+                  <Check className="h-3 w-3 opacity-70" />
                 )}
                 Unblock All ({selectedDateList.length})
               </button>
@@ -1398,13 +1398,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                       <button
                         onClick={handleUnblockSingleDate}
                         disabled={isBlocking}
-                        className="flex-1 bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="flex-1 bg-green-500/40 text-gray-900 px-3 py-1 rounded-lg hover:bg-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border border-green-300 shadow-sm hover:shadow-md transition-all duration-300"
                       >
                         {isBlocking ? (
-                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-gray-900"></div>
                         ) : (
                           <>
-                            <Check className="h-3 w-3 mr-1" />
+                            <Check className="h-3 w-3 mr-1 opacity-70" />
                             Unblock Date
                           </>
                         )}
@@ -1413,13 +1413,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                       <button
                         onClick={handleBlockSingleDate}
                         disabled={isBlocking}
-                        className="flex-1 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="flex-1 bg-red-500/40 text-gray-900 px-3 py-1 rounded-lg hover:bg-red-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border border-red-300 shadow-sm hover:shadow-md transition-all duration-300"
                       >
                         {isBlocking ? (
-                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-gray-900"></div>
                         ) : (
                           <>
-                            <X className="h-3 w-3 mr-1" />
+                            <X className="h-3 w-3 mr-1 opacity-70" />
                             Block Date
                           </>
                         )}

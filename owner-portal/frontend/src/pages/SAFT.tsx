@@ -67,6 +67,50 @@ const SAFT: React.FC = () => {
       try {
         let ownersData: Owner[] = [];
         
+        // For accountants, fetch companies from assigned properties
+        if (user?.role === 'accountant') {
+          console.log('📊 Accountant: Fetching companies from assigned properties');
+          try {
+            const response = await apiClient.get('/admin/accountants/companies');
+            if (response.success && response.companies && response.companies.length > 0) {
+              console.log('✅ Fetched accountant companies:', response.companies);
+              
+              // Transform companies into Owner format for compatibility
+              const companiesAsOwners: Owner[] = response.companies.map((company: any, index: number) => ({
+                _id: company.ownerId,
+                name: company.ownerName,
+                email: '',
+                phone: '',
+                role: 'owner',
+                isVerified: true,
+                hasApiKeys: false,
+                apiKeysActive: false,
+                companies: [{ name: company.name, nif: company.nif }],
+                createdAt: '',
+                updatedAt: ''
+              }));
+              
+              setOwners(companiesAsOwners);
+              console.log('👤 Accountant companies set:', companiesAsOwners);
+              console.log('📊 Total companies available in dropdown:', companiesAsOwners.reduce((sum, o) => sum + (o.companies?.length || 0), 0));
+              console.log('📋 Dropdown options will be:', companiesAsOwners.flatMap(o => 
+                o.companies?.map(c => `${c.name} (${c.nif}) - ${o.name}`)
+              ));
+              return;
+            } else {
+              console.log('⚠️ No companies found for accountant');
+              setOwners([]);
+              return;
+            }
+          } catch (accountantError: any) {
+            console.error('❌ Failed to fetch accountant companies:', accountantError);
+            console.error('❌ Error details:', accountantError.response?.data);
+            setError('Failed to fetch company information. Please ensure: 1) Properties are assigned to you, 2) Property owners have company information added.');
+            setOwners([]);
+            return;
+          }
+        }
+        
         // Try to fetch all owners (only works for admin users)
         try {
           ownersData = await getAllOwners();
@@ -347,16 +391,16 @@ const SAFT: React.FC = () => {
           <button
             onClick={() => getSAFT()}
             disabled={isLoading || !invoicingNif}
-            className="w-full md:w-auto px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full md:w-auto px-6 py-3 bg-blue-500/20 text-gray-900 rounded-md hover:bg-blue-500/30 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2 border border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
           >
             {isLoading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
                 <span>Retrieving...</span>
               </>
             ) : (
               <>
-                <Receipt className="w-4 h-4" />
+                <Receipt className="w-4 h-4 opacity-70" />
                 <span>Retrieve SAFT-T</span>
               </>
             )}
@@ -391,9 +435,9 @@ const SAFT: React.FC = () => {
               </div>
               <button
                 onClick={() => downloadSAFT()}
-                className="mt-3 inline-flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                className="mt-3 inline-flex items-center space-x-2 px-4 py-2 bg-green-500/20 text-gray-900 rounded-md hover:bg-green-500/30 border border-green-200 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-4 h-4 opacity-70" />
                 <span>Download SAFT-T File</span>
               </button>
             </div>
