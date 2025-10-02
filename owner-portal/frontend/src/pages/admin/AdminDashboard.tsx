@@ -2421,7 +2421,7 @@ const AdminDashboard: React.FC = () => {
                     
                     <div className="flex justify-between items-start mb-4 pr-20">
                       <div>
-                        <h4 className="text-xl font-bold text-gray-900 mb-1">
+                        <h4 className="text-sm font-bold text-gray-900 mb-1">
                           {property.name || property.title || 'Unnamed Property'}
                         </h4>
                         <div className="flex items-center space-x-4 text-sm text-gray-600">

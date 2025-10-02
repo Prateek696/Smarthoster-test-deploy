@@ -429,7 +429,7 @@ const OwnerDashboard: React.FC = () => {
                   <div className="p-4">
                     {/* Property Name and Address */}
                     <div className="mb-4">
-                      <h3 className="font-bold text-gray-900 text-base mb-1 truncate">{property.name}</h3>
+                      <h3 className="font-bold text-gray-900 text-sm mb-1 truncate">{property.name}</h3>
                       <p className="text-gray-600 text-xs truncate">{property.address || 'Lisbon, Portugal'}</p>
                     </div>
                     
