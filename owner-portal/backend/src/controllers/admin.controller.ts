@@ -422,29 +422,31 @@ export const createOwner = async (req: Request, res: Response) => {
       }
     }
 
-    // Send welcome email based on role
+    // Send welcome email based on role (via Vercel deployment for SMTP)
     try {
-      if (role === 'accountant') {
-        console.log('📧 Sending welcome email to new accountant:', email);
-        await sendAccountantWelcomeEmail({
-          name,
-          email,
-          password, // Plain text password (before hashing)
-          portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
-        });
-        console.log('✅ Accountant welcome email sent successfully to:', email);
-      } else {
-        console.log('📧 Sending welcome email to new owner:', email);
-        await sendWelcomeEmail({
-          name,
-          email,
-          password, // Plain text password (before hashing)
-          portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
-        });
-        console.log('✅ Owner welcome email sent successfully to:', email);
-      }
+      const emailEndpoint = role === 'accountant' 
+        ? 'https://smarthoster-test-deploy.vercel.app/welcome-email/send-accountant-welcome'
+        : 'https://smarthoster-test-deploy.vercel.app/welcome-email/send-owner-welcome';
+      
+      console.log(`📧 Calling Vercel email endpoint for new ${role}:`, emailEndpoint);
+      
+      const axios = require('axios');
+      const emailResponse = await axios.post(emailEndpoint, {
+        name,
+        email,
+        password, // Plain text password (before hashing)
+        portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+      }, {
+        timeout: 10000 // 10 second timeout
+      });
+      
+      console.log(`✅ ${role === 'accountant' ? 'Accountant' : 'Owner'} welcome email sent successfully to:`, email);
+      console.log('Email response:', emailResponse.data);
     } catch (emailError: any) {
       console.error('⚠️  Error sending welcome email (continuing anyway):', emailError.message);
+      if (emailError.response) {
+        console.error('⚠️  Email error response:', emailError.response.status, emailError.response.data);
+      }
       // Don't fail the user creation if email fails - user is already created
     }
 

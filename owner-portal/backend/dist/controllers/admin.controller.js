@@ -380,24 +380,29 @@ const createOwner = async (req, res) => {
                 // Don't fail the whole request if property assignment fails
             }
         }
-        // Send welcome email based on role (via Vercel serverless function)
+        // Send welcome email based on role (via Vercel deployment for SMTP)
         try {
             const emailEndpoint = role === 'accountant'
-                ? 'https://smarthoster-test-deploy.vercel.app/api/send-accountant-welcome-email'
-                : 'https://smarthoster-test-deploy.vercel.app/api/send-welcome-email';
-            console.log(`📧 Sending welcome email to new ${role}:`, email);
+                ? 'https://smarthoster-test-deploy.vercel.app/welcome-email/send-accountant-welcome'
+                : 'https://smarthoster-test-deploy.vercel.app/welcome-email/send-owner-welcome';
+            console.log(`📧 Calling Vercel email endpoint for new ${role}:`, emailEndpoint);
             const axios = require('axios');
-            await axios.post(emailEndpoint, {
+            const emailResponse = await axios.post(emailEndpoint, {
                 name,
                 email,
                 password, // Plain text password (before hashing)
                 portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+            }, {
+                timeout: 10000 // 10 second timeout
             });
             console.log(`✅ ${role === 'accountant' ? 'Accountant' : 'Owner'} welcome email sent successfully to:`, email);
+            console.log('Email response:', emailResponse.data);
         }
         catch (emailError) {
             console.error('⚠️  Error sending welcome email (continuing anyway):', emailError.message);
-            console.error('⚠️  Email error details:', emailError.response?.data);
+            if (emailError.response) {
+                console.error('⚠️  Email error response:', emailError.response.status, emailError.response.data);
+            }
             // Don't fail the user creation if email fails - user is already created
         }
         const responseData = {
