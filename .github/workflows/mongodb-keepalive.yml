@@ -18,10 +18,19 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping MongoDB
+      - name: Ping MongoDB and Auth Services
         run: |
-          echo "🔄 Running MongoDB keep-alive at $(date)"
+          echo "🔄 Running keep-alive at $(date)"
+          
+          # Ping MongoDB keep-alive
           curl -X POST "https://smarthoster-test-deploy.vercel.app/api/cron/keep-alive" \
             -H "Content-Type: application/json" \
-            -w "\nStatus: %{http_code}\n"
+            -w "\nMongoDB Status: %{http_code}\n"
+          
+          # Ping Auth OTP endpoint (with invalid email to just wake it up)
+          curl -X POST "https://smarthoster-test-deploy.vercel.app/auth/send-login-otp" \
+            -H "Content-Type: application/json" \
+            -d '{"email":"keepalive@test.com"}' \
+            -w "\nAuth OTP Status: %{http_code}\n" || true
+          
           echo "✅ Keep-alive completed at $(date)"
