@@ -43,11 +43,15 @@ interface PropertyManagementProps {
   filteredProperties?: any[]; // Properties filtered by admin dashboard
   onPropertyUpdate?: () => void; // Callback to refresh properties in parent component
   owners?: any[]; // Available owners for assignment
+  showActions?: boolean; // Show Edit/Delete buttons (default: true for admin, false for others)
 }
 
-const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredProperties, onPropertyUpdate, owners = [] }) => {
+const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredProperties, onPropertyUpdate, owners = [], showActions }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
+  
+  // Default showActions based on user role if not explicitly provided
+  const shouldShowActions = showActions !== undefined ? showActions : (user?.role === 'admin');
   const {
     properties: reduxProperties,
     selectedProperty,
@@ -527,6 +531,30 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
             </div>
           </div>
 
+          {/* Action Buttons - Only show for admin */}
+          {shouldShowActions && (
+            <div className="flex gap-2 pt-3 border-t border-gray-100">
+              <button
+                onClick={() => handleEdit(property)}
+                className="btn-outline btn-sm flex-1"
+                disabled={isUpdating || !canUpdate}
+                title={!canUpdate ? "Only owners can edit properties" : ""}
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => {
+                  dispatch(setSelectedProperty(property));
+                  setShowDeleteConfirm(true);
+                }}
+                className="btn-outline btn-sm text-red-600 border-red-300 hover:bg-red-50"
+                disabled={isDeleting || !canUpdate}
+                title={!canUpdate ? "Only owners can delete properties" : ""}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );

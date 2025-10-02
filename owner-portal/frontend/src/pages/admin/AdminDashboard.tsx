@@ -2881,6 +2881,7 @@ const AdminDashboard: React.FC = () => {
               filteredProperties={properties}
               onPropertyUpdate={fetchProperties}
               owners={owners}
+              showActions={true}
             />
           </div>
         </div>
