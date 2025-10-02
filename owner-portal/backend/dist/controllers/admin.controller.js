@@ -11,7 +11,6 @@ const property_model_1 = __importDefault(require("../models/property.model"));
 const OwnerApiKeys_model_1 = __importDefault(require("../models/OwnerApiKeys.model"));
 const otp_service_1 = require("../services/otp.service");
 const invoice_service_1 = require("../services/invoice.service");
-const email_service_1 = require("../services/email.service");
 /**
  * @desc Check if admin user already exists
  */
@@ -381,31 +380,24 @@ const createOwner = async (req, res) => {
                 // Don't fail the whole request if property assignment fails
             }
         }
-        // Send welcome email based on role
+        // Send welcome email based on role (via Vercel serverless function)
         try {
-            if (role === 'accountant') {
-                console.log('📧 Sending welcome email to new accountant:', email);
-                await (0, email_service_1.sendAccountantWelcomeEmail)({
-                    name,
-                    email,
-                    password, // Plain text password (before hashing)
-                    portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
-                });
-                console.log('✅ Accountant welcome email sent successfully to:', email);
-            }
-            else {
-                console.log('📧 Sending welcome email to new owner:', email);
-                await (0, email_service_1.sendWelcomeEmail)({
-                    name,
-                    email,
-                    password, // Plain text password (before hashing)
-                    portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
-                });
-                console.log('✅ Owner welcome email sent successfully to:', email);
-            }
+            const emailEndpoint = role === 'accountant'
+                ? 'https://smarthoster-test-deploy.vercel.app/api/send-accountant-welcome-email'
+                : 'https://smarthoster-test-deploy.vercel.app/api/send-welcome-email';
+            console.log(`📧 Sending welcome email to new ${role}:`, email);
+            const axios = require('axios');
+            await axios.post(emailEndpoint, {
+                name,
+                email,
+                password, // Plain text password (before hashing)
+                portalUrl: process.env.PORTAL_URL || 'https://smarthoster-test-deploy-final.vercel.app'
+            });
+            console.log(`✅ ${role === 'accountant' ? 'Accountant' : 'Owner'} welcome email sent successfully to:`, email);
         }
         catch (emailError) {
             console.error('⚠️  Error sending welcome email (continuing anyway):', emailError.message);
+            console.error('⚠️  Email error details:', emailError.response?.data);
             // Don't fail the user creation if email fails - user is already created
         }
         const responseData = {
