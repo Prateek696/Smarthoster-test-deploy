@@ -190,21 +190,19 @@ const Bookings: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     const colors: { [key: string]: string } = {
-      'Confirmed': 'bg-blue-100 text-blue-800 border-blue-200',
-      'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      'In Enquiry': 'bg-blue-100 text-blue-800 border-blue-200',
-      'Expired': 'bg-orange-100 text-orange-800 border-orange-200',
+      'Modified': 'bg-blue-100 text-blue-800 border-blue-200',
+      'In Enquiry': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+      'inquiryPreapproved': 'bg-yellow-100 text-yellow-800 border-yellow-200',
       'Cancelled': 'bg-red-100 text-red-800 border-red-200',
-      'Modified': 'bg-purple-100 text-purple-800 border-purple-200',
-      'No Show': 'bg-gray-100 text-gray-800 border-gray-200',
-      'Completed': 'bg-blue-100 text-blue-800 border-blue-200',
-      'Unknown': 'bg-gray-100 text-gray-800 border-gray-200',
+      'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
       // Legacy support
-      'confirmed': 'bg-blue-100 text-blue-800 border-blue-200',
-      'pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+      'modified': 'bg-blue-100 text-blue-800 border-blue-200',
+      'inquiry': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+      'inquiry-pre-approved': 'bg-yellow-100 text-yellow-800 border-yellow-200',
       'cancelled': 'bg-red-100 text-red-800 border-red-200',
-      'completed': 'bg-blue-100 text-blue-800 border-blue-200',
-      'no-show': 'bg-gray-100 text-gray-800 border-gray-200'
+      'pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+      // Fallback for unknown statuses
+      'Unknown': 'bg-gray-100 text-gray-800 border-gray-200'
     }
     return colors[status] || 'bg-gray-100 text-gray-800 border-gray-200'
   }
@@ -494,14 +492,10 @@ const Bookings: React.FC = () => {
                         className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                       >
                         <option value="">All Statuses</option>
-                        <option value="paid">Paid</option>
-                        <option value="pending">Pending</option>
-                        <option value="failed">Failed</option>
-                        <option value="refunded">Refunded</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="completed">Completed</option>
-                        <option value="modified">Modified</option>
+                        <option value="Modified">Modified</option>
+                        <option value="In Enquiry">Inquiry</option>
+                        <option value="inquiryPreapproved">Inquiry Pre-approved</option>
+                        <option value="Cancelled">Cancelled</option>
                       </select>
                 </div>
                 
@@ -590,14 +584,11 @@ const Bookings: React.FC = () => {
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       <span className={`inline-flex items-center px-2 py-1 rounded-lg text-xs font-bold shadow-md ${
-                        booking.paymentStatus === 'Paid' ? 'bg-blue-100 text-blue-800' :
-                        booking.paymentStatus === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                        booking.paymentStatus === 'Failed' ? 'bg-red-100 text-red-800' :
-                        booking.paymentStatus === 'Refunded' ? 'bg-purple-100 text-purple-800' :
-                        booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                        booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                        booking.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                        booking.status === 'modified' ? 'bg-blue-100 text-blue-800' :
+                        booking.status === 'Modified' ? 'bg-blue-100 text-blue-800' :
+                        booking.status === 'In Enquiry' ? 'bg-yellow-100 text-yellow-800' :
+                        booking.status === 'inquiryPreapproved' ? 'bg-yellow-100 text-yellow-800' :
+                        booking.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
+                        booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
                         'bg-gray-100 text-gray-800'
                       }`}>
                         {booking.status || booking.paymentStatus || 'Pending'}

@@ -17,7 +17,7 @@ export interface Booking {
   totalPrice: number
   commission: number
   cleaningFee: number
-  status: 'confirmed' | 'cancelled' | 'pending' | 'completed' | 'modified'
+  status: 'confirmed' | 'cancelled' | 'pending' | 'completed' | 'modified' | 'Modified' | 'In Enquiry' | 'inquiryPreapproved' | 'Cancelled' | 'Pending'
   paymentStatus?: 'Paid' | 'Pending' | 'Failed' | 'Refunded'
   platform: string
   provider?: string

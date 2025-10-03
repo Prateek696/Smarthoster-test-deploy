@@ -119,14 +119,17 @@ const SibaManagerDashboard: React.FC = () => {
         propertyId: property.id,
         propertyName: property.name || `Property ${property.id}`,
         sibaStatus: sibaStatus?.status || 'red',
-        lastSubmission: sibaStatus?.lastSibaSendDate || null,
-        nextDue: sibaStatus?.nextDueDate || null,
+        lastSibaSendDate: sibaStatus?.lastSibaSendDate || null,
+        nextDueDate: sibaStatus?.nextDueDate || null,
         daysUntilDue: sibaStatus?.daysUntilDue || null,
+        daysAgo: sibaStatus?.daysAgo || null,
         totalReservations,
         pendingSubmissions,
         overdueSubmissions,
         complianceRate,
-        flags
+        flags,
+        message: sibaStatus?.message || '',
+        dataSource: sibaStatus?.dataSource || 'generated'
       };
     });
   };
@@ -346,6 +349,9 @@ const SibaManagerDashboard: React.FC = () => {
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Property</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Last Submission</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Next Due</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Days Until Due</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Flags</th>
                 </tr>
               </thead>
@@ -365,6 +371,43 @@ const SibaManagerDashboard: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-4 py-3">
+                      <div className="text-sm text-gray-900">
+                        {property.lastSibaSendDate ? new Date(property.lastSibaSendDate).toLocaleDateString() : 'N/A'}
+                      </div>
+                      {property.daysAgo !== null && property.daysAgo !== undefined && (
+                        <div className="text-xs text-gray-500">
+                          {property.daysAgo === 0 ? 'Today' : `${property.daysAgo} days ago`}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="text-sm text-gray-900">
+                        {property.nextDueDate ? new Date(property.nextDueDate).toLocaleDateString() : 'N/A'}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="text-sm font-semibold">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          property.daysUntilDue === null || property.daysUntilDue === undefined 
+                            ? 'bg-gray-100 text-gray-800'
+                            : property.daysUntilDue > 7 
+                              ? 'bg-green-100 text-green-800'
+                              : property.daysUntilDue > 0 
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-red-100 text-red-800'
+                        }`}>
+                          {property.daysUntilDue === null || property.daysUntilDue === undefined 
+                            ? 'N/A' 
+                            : property.daysUntilDue === 0 
+                              ? 'Due today'
+                              : property.daysUntilDue < 0 
+                                ? `${Math.abs(property.daysUntilDue)} days overdue`
+                                : `${property.daysUntilDue} days`
+                          }
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-2">
                         {property.flags.map((flag, index) => (
                           <span
@@ -379,7 +422,7 @@ const SibaManagerDashboard: React.FC = () => {
                   </tr>
                 )) : (
                   <tr>
-                    <td colSpan={3} className="px-8 py-12 text-center text-gray-500">
+                    <td colSpan={6} className="px-8 py-12 text-center text-gray-500">
                       No properties data available. Click refresh to load data.
                     </td>
                   </tr>

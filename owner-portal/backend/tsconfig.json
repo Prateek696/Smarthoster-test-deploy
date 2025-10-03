@@ -7,5 +7,6 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["temp_calendar.tsx", "node_modules", "dist"]
 }

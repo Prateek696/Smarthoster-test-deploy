@@ -18,10 +18,10 @@ const mapBookingStatus = (rawStatus) => {
         'reserved': 'Confirmed',
         // Pending/Inquiry statuses
         'inquiry': 'In Enquiry',
-        'inquiryPreapproved': 'In Enquiry',
+        'inquiryPreapproved': 'inquiryPreapproved',
         'pending': 'Pending',
         'waiting': 'Pending',
-        'preapproved': 'In Enquiry',
+        'preapproved': 'inquiryPreapproved',
         // Expired statuses
         'expired': 'Expired',
         'timeout': 'Expired',

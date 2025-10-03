@@ -802,7 +802,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         <div
           key={dayIndex}
           className={`
-              relative min-h-[20px] p-0 group
+              relative min-h-[80px] p-0 group border-r border-b border-gray-200 last:border-r-0
               ${isCurrentMonth && !isDateInSelection(date) && !isSelected ? 'bg-gray-50' : ''}
               ${!isCurrentMonth && !isDateInSelection(date) && !isSelected ? 'bg-gray-100' : ''}
               ${isToday && !isDateInSelection(date) && !isSelected ? 'bg-blue-50' : ''}
@@ -1131,11 +1131,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       </div>
 
       {/* Calendar Grid */}
-      <div className="bg-white rounded-lg border">
+      <div className="bg-white rounded-lg border-2">
         {/* Day Headers */}
-        <div className="grid grid-cols-7 gap-0 bg-gray-100 p-0">
+        <div className="grid grid-cols-7 gap-0 bg-gray-100 p-0 border-b-2">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="p-0.5 text-center text-[10px] font-semibold text-gray-600 bg-white">
+            <div key={day} className="p-0.5 text-center text-[10px] font-semibold text-gray-600 bg-white border-r border-gray-300 last:border-r-0">
               {day}
             </div>
           ))}

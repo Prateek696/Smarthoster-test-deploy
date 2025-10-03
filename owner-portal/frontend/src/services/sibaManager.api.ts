@@ -108,14 +108,17 @@ export interface SibaPropertyData {
   propertyId: number;
   propertyName: string;
   sibaStatus: 'green' | 'amber' | 'red' | 'error';
-  lastSubmission: string | null;
-  nextDue: string | null;
+  lastSibaSendDate: string | null;
+  nextDueDate: string | null;
   daysUntilDue: number | null;
+  daysAgo: number | null;
   totalReservations: number;
   pendingSubmissions: number;
   overdueSubmissions: number;
   complianceRate: number;
   flags: string[];
+  message: string;
+  dataSource: string;
 }
 
 export interface BulkSibaDashboard {
