@@ -166,16 +166,19 @@ const Invoices: React.FC = () => {
     if (invoiceUrl && invoiceUrl !== '#') {
       setDownloadingInvoiceId(invoice.id)
       try {
-        // Use backend download endpoint (CORS-safe) and pass the URL to avoid re-fetching invoices
-        console.log(`🔄 Downloading invoice ${invoice.id} via backend proxy with URL: ${invoiceUrl}`);
+        // Download directly from external URL (works on both localhost and deployment)
+        console.log(`🔄 Downloading invoice ${invoice.id} directly from: ${invoiceUrl}`);
         
-        // Pass the invoice URL as query parameter to avoid backend re-fetching
-        const downloadUrl = `/invoices/${selectedPropertyId}/${invoice.id}/download?invoiceUrl=${encodeURIComponent(invoiceUrl)}`;
+        // Create a temporary link to download the file
+        const link = document.createElement('a');
+        link.href = invoiceUrl;
+        link.download = `invoice_${invoice.id}.pdf`;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         
-        // Use apiClient.downloadFile which handles authentication and forces download
-        await apiClient.downloadFile(downloadUrl, `invoice_${invoice.id}.pdf`);
-        
-        console.log(`✅ Download completed for invoice ${invoice.id}`);
+        console.log(`✅ Download initiated for invoice ${invoice.id}`);
       } catch (error) {
         console.error('Error downloading invoice:', error)
         alert('Failed to download invoice. Please try again.')
