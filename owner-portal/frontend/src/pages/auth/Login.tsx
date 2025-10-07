@@ -10,6 +10,10 @@ import { sendLoginOTPAsync, verifyLoginOTPAsync, clearError } from '../../store/
 import LoadingSpinner from '../../components/common/LoadingSpinner'
 import Logo from '../../components/common/Logo'
 import OTPInput from '../../components/auth/OTPInput'
+import { useLanguage, Language } from '../../contexts/LanguageContext'
+import BritainFlag from '../../assets/Britain.png'
+import PortugalFlag from '../../assets/Portugal.png'
+import FranceFlag from '../../assets/France.png'
 
 interface LoginFormData {
   email: string
@@ -25,6 +29,17 @@ const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const { isLoading, error, isAuthenticated, user } = useSelector((state: RootState) => state.auth)
+  const { t, language, setLanguage } = useLanguage()
+
+  const flags = [
+    { code: 'en' as Language, image: BritainFlag, alt: 'English' },
+    { code: 'pt' as Language, image: PortugalFlag, alt: 'Português' },
+    { code: 'fr' as Language, image: FranceFlag, alt: 'Français' }
+  ]
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage)
+  }
 
   const {
     register,
@@ -114,11 +129,35 @@ const Login: React.FC = () => {
               </div>
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
-              Welcome back
+              {t('auth.welcomeBack')}
             </h2>
             <p className="text-base text-gray-600 leading-relaxed">
-              Sign in to your property management dashboard
+              {t('auth.signInToDashboard')}
             </p>
+            
+            {/* Language Switcher */}
+            <div className="flex justify-center mt-4">
+              <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-sm border border-gray-200">
+                {flags.map((flag) => (
+                  <button
+                    key={flag.code}
+                    onClick={() => handleLanguageChange(flag.code)}
+                    className={`p-1 rounded-md transition-all duration-200 hover:scale-110 ${
+                      language === flag.code 
+                        ? 'ring-2 ring-green-500 ring-offset-1 bg-green-50' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                    title={flag.alt}
+                  >
+                    <img
+                      src={flag.image}
+                      alt={flag.alt}
+                      className="w-5 h-4 object-cover rounded-sm"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Login form */}
@@ -128,7 +167,7 @@ const Login: React.FC = () => {
                 {/* Email field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-500 mb-2">
-                    Email address
+                    {t('auth.emailAddress')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -144,7 +183,7 @@ const Login: React.FC = () => {
                       })}
                       type="email"
                       className={`w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.email ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                      placeholder="Enter your email"
+                      placeholder={t('auth.enterEmail')}
                     />
                   </div>
                   {errors.email && (
@@ -155,7 +194,7 @@ const Login: React.FC = () => {
                 {/* Password field */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-500 mb-2">
-                    Password
+                    {t('auth.password')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -171,7 +210,7 @@ const Login: React.FC = () => {
                       })}
                       type={showPassword ? 'text' : 'password'}
                       className={`w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.password ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                      placeholder="Enter your password"
+                      placeholder={t('auth.enterPassword')}
                     />
                     <button
                       type="button"
@@ -200,7 +239,7 @@ const Login: React.FC = () => {
                     <LoadingSpinner size="sm" className="mr-2" />
                   ) : (
                     <>
-                      Send OTP
+                      {t('auth.sendOTP')}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
@@ -212,7 +251,7 @@ const Login: React.FC = () => {
                     to="/auth/forgot-password"
                     className="text-sm text-green-600 hover:text-green-700 font-medium transition-colors duration-200"
                   >
-                    Forgot your password?
+                    {t('auth.forgotPassword')}
                   </Link>
                 </div>
               </form>
@@ -295,12 +334,12 @@ const Login: React.FC = () => {
           {/* Sign up link */}
           <div className="text-center">
             <p className="text-sm text-gray-500">
-              Don't have an account?{' '}
+              {t('auth.noAccount')}{' '}
               <Link
                 to="/auth/signup"
                 className="font-semibold text-green-600 hover:text-green-500 transition-colors duration-200"
               >
-                Sign up for free
+                {t('auth.signUpFree')}
               </Link>
             </p>
           </div>
@@ -315,27 +354,27 @@ const Login: React.FC = () => {
         <div className="relative h-full flex flex-col justify-center px-12 xl:px-16">
           <div className="max-w-md">
             <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 leading-tight">
-              Manage your properties with confidence
+              {t('marketing.manageProperties')}
             </h3>
             <p className="text-lg text-white/90 mb-8 leading-relaxed">
-              Track bookings, monitor performance, handle compliance, and maximize your rental income with our comprehensive property management platform.
+              {t('marketing.platformDescription')}
             </p>
             <div className="space-y-5">
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Real-time booking management</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.realTimeBooking')}</span>
               </div>
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Financial performance tracking</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.financialTracking')}</span>
               </div>
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Automated compliance reporting</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.complianceReporting')}</span>
               </div>
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Multi-property dashboard</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.multiPropertyDashboard')}</span>
               </div>
             </div>
           </div>

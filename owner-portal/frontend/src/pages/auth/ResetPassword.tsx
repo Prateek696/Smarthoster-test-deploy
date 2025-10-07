@@ -3,6 +3,11 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Eye, EyeOff, Lock, CheckCircle, Mail, ArrowRight, ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
+import Logo from '../../components/common/Logo'
+import { useLanguage, Language } from '../../contexts/LanguageContext'
+import BritainFlag from '../../assets/Britain.png'
+import PortugalFlag from '../../assets/Portugal.png'
+import FranceFlag from '../../assets/France.png'
 import { authAPI } from '../../services/auth.api'
 
 const ResetPassword: React.FC = () => {
@@ -18,6 +23,17 @@ const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { t, language, setLanguage } = useLanguage()
+
+  const flags = [
+    { code: 'en' as Language, image: BritainFlag, alt: 'English' },
+    { code: 'pt' as Language, image: PortugalFlag, alt: 'Português' },
+    { code: 'fr' as Language, image: FranceFlag, alt: 'Français' }
+  ]
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage)
+  }
   const [isSuccess, setIsSuccess] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -143,15 +159,39 @@ const ResetPassword: React.FC = () => {
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6">
               <div className="flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200">
-                <Lock className="h-10 w-10 text-green-600" />
+                <Logo size="lg" className="rounded-lg" />
               </div>
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
-              Reset your password
+              {t('auth.resetPasswordTitle')}
             </h2>
             <p className="text-base text-gray-600 leading-relaxed">
-              Enter your email, OTP code, and new password below.
+              {t('auth.resetPasswordDescription')}
             </p>
+            
+            {/* Language Switcher */}
+            <div className="flex justify-center mt-4">
+              <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-sm border border-gray-200">
+                {flags.map((flag) => (
+                  <button
+                    key={flag.code}
+                    onClick={() => handleLanguageChange(flag.code)}
+                    className={`p-1 rounded-md transition-all duration-200 hover:scale-110 ${
+                      language === flag.code 
+                        ? 'ring-2 ring-green-500 ring-offset-1 bg-green-50' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                    title={flag.alt}
+                  >
+                    <img
+                      src={flag.image}
+                      alt={flag.alt}
+                      className="w-5 h-4 object-cover rounded-sm"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Reset password form */}

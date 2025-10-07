@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast'
 import App from './App.tsx'
 import { store } from './store/index.ts'
 import './index.css'
+import logoImage from './assets/Real-logo.jpg'
 
 // Create square favicon with rounded corners dynamically
 const createRoundedSquareFavicon = () => {
@@ -34,7 +35,7 @@ const createRoundedSquareFavicon = () => {
         favicon.href = canvas.toDataURL('image/png')
       }
     }
-    img.src = '/src/assets/Real-logo.jpg'
+    img.src = logoImage
   }
 }
 

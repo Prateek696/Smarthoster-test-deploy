@@ -3,12 +3,28 @@ import { Link } from 'react-router-dom'
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react'
 import toast from 'react-hot-toast'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
+import Logo from '../../components/common/Logo'
+import { useLanguage, Language } from '../../contexts/LanguageContext'
+import BritainFlag from '../../assets/Britain.png'
+import PortugalFlag from '../../assets/Portugal.png'
+import FranceFlag from '../../assets/France.png'
 import { authAPI } from '../../services/auth.api'
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const { t, language, setLanguage } = useLanguage()
+
+  const flags = [
+    { code: 'en' as Language, image: BritainFlag, alt: 'English' },
+    { code: 'pt' as Language, image: PortugalFlag, alt: 'Português' },
+    { code: 'fr' as Language, image: FranceFlag, alt: 'Français' }
+  ]
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -72,7 +88,7 @@ const ForgotPassword: React.FC = () => {
                 className="w-full flex justify-center items-center py-3 px-4 border border-gray-200 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to login
+                {t('auth.backToLogin')}
               </Link>
             </div>
           </div>
@@ -90,15 +106,39 @@ const ForgotPassword: React.FC = () => {
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6">
               <div className="flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200">
-                <Mail className="h-10 w-10 text-green-600" />
+                <Logo size="lg" className="rounded-lg" />
               </div>
             </div>
             <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
-              Forgot your password?
+              {t('auth.forgotPasswordTitle')}
             </h2>
             <p className="text-base text-gray-600 leading-relaxed">
-              No worries! Enter your email and we'll send you a reset OTP.
+              {t('auth.forgotPasswordDescription')}
             </p>
+            
+            {/* Language Switcher */}
+            <div className="flex justify-center mt-4">
+              <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-sm border border-gray-200">
+                {flags.map((flag) => (
+                  <button
+                    key={flag.code}
+                    onClick={() => handleLanguageChange(flag.code)}
+                    className={`p-1 rounded-md transition-all duration-200 hover:scale-110 ${
+                      language === flag.code 
+                        ? 'ring-2 ring-green-500 ring-offset-1 bg-green-50' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                    title={flag.alt}
+                  >
+                    <img
+                      src={flag.image}
+                      alt={flag.alt}
+                      className="w-5 h-4 object-cover rounded-sm"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Forgot password form */}
@@ -107,7 +147,7 @@ const ForgotPassword: React.FC = () => {
               {/* Email field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-500 mb-2">
-                  Email address
+                  {t('auth.emailAddress')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -121,7 +161,7 @@ const ForgotPassword: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300"
-                    placeholder="Enter your email"
+                    placeholder={t('auth.enterEmail')}
                   />
                 </div>
               </div>
@@ -140,7 +180,7 @@ const ForgotPassword: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      Send reset OTP
+                      {t('auth.sendResetOTP')}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}

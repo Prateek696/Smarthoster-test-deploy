@@ -6,8 +6,13 @@ import toast from 'react-hot-toast'
 import { AppDispatch, RootState } from '../../store'
 import { sendSignupOTPAsync, verifySignupOTPAsync } from '../../store/auth.slice'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
+import Logo from '../../components/common/Logo'
 import OTPInput from '../../components/auth/OTPInput'
 import { checkAdminExists } from '../../services/admin.api'
+import { useLanguage, Language } from '../../contexts/LanguageContext'
+import BritainFlag from '../../assets/Britain.png'
+import PortugalFlag from '../../assets/Portugal.png'
+import FranceFlag from '../../assets/France.png'
 
 const Signup: React.FC = () => {
   const [step, setStep] = useState<'form' | 'otp'>('form')
@@ -27,6 +32,17 @@ const Signup: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>()
   const { isLoading, isAuthenticated, error } = useSelector((state: RootState) => state.auth)
+  const { t, language, setLanguage } = useLanguage()
+
+  const flags = [
+    { code: 'en' as Language, image: BritainFlag, alt: 'English' },
+    { code: 'pt' as Language, image: PortugalFlag, alt: 'Português' },
+    { code: 'fr' as Language, image: FranceFlag, alt: 'Français' }
+  ]
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage)
+  }
 
   const validateForm = (): Record<string, string> => {
     const newErrors: Record<string, string> = {}
@@ -174,16 +190,40 @@ const Signup: React.FC = () => {
           {/* Logo and header */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6">
-              <div className="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gray-400 to-gray-500 rounded-3xl shadow-lg">
-                <Shield className="h-8 w-8 text-white" />
+              <div className="flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200">
+                <Logo size="lg" className="rounded-lg" />
               </div>
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-3">
-              Account Creation
+              {t('auth.accountCreation')}
             </h2>
             <p className="text-base text-gray-600 leading-relaxed">
-              Contact your administrator to request account creation
+              {t('auth.contactAdmin')}
             </p>
+            
+            {/* Language Switcher */}
+            <div className="flex justify-center mt-4">
+              <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-sm border border-gray-200">
+                {flags.map((flag) => (
+                  <button
+                    key={flag.code}
+                    onClick={() => handleLanguageChange(flag.code)}
+                    className={`p-1 rounded-md transition-all duration-200 hover:scale-110 ${
+                      language === flag.code 
+                        ? 'ring-2 ring-green-500 ring-offset-1 bg-green-50' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                    title={flag.alt}
+                  >
+                    <img
+                      src={flag.image}
+                      alt={flag.alt}
+                      className="w-5 h-4 object-cover rounded-sm"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Signup form */}
@@ -194,7 +234,7 @@ const Signup: React.FC = () => {
                   {/* First Name field */}
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-500 mb-2">
-                      First Name
+                      {t('auth.firstName')}
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -208,7 +248,7 @@ const Signup: React.FC = () => {
                         value={formData.firstName}
                         onChange={handleChange}
                         className={`w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.firstName ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                        placeholder="Enter your first name"
+                        placeholder={t('auth.enterFirstName')}
                       />
                     </div>
                     {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
@@ -217,7 +257,7 @@ const Signup: React.FC = () => {
                   {/* Last Name field */}
             <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-gray-500 mb-2">
-                      Last Name
+                      {t('auth.lastName')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -231,7 +271,7 @@ const Signup: React.FC = () => {
                         value={formData.lastName}
                   onChange={handleChange}
                         className={`w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.lastName ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                        placeholder="Enter your last name"
+                        placeholder={t('auth.enterLastName')}
                 />
               </div>
                     {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
@@ -240,7 +280,7 @@ const Signup: React.FC = () => {
             {/* Email field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-500 mb-2">
-                Email address
+                {t('auth.emailAddress')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -254,7 +294,7 @@ const Signup: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.email ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                  placeholder="Enter your email"
+                  placeholder={t('auth.enterEmail')}
                 />
               </div>
               {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
@@ -263,7 +303,7 @@ const Signup: React.FC = () => {
                   {/* Phone field */}
             <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-500 mb-2">
-                      Phone Number
+                      {t('auth.phoneNumber')}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -277,7 +317,7 @@ const Signup: React.FC = () => {
                         value={formData.phone}
                   onChange={handleChange}
                         className={`w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.phone ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                        placeholder="Enter your phone number"
+                        placeholder={t('auth.enterPhoneNumber')}
                       />
               </div>
                     {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
@@ -286,7 +326,7 @@ const Signup: React.FC = () => {
                   {/* Password field */}
                   <div>
                     <label htmlFor="password" className="block text-sm font-medium text-gray-500 mb-2">
-                      Password
+                      {t('auth.password')}
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -300,7 +340,7 @@ const Signup: React.FC = () => {
                         value={formData.password}
                         onChange={handleChange}
                         className={`w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.password ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                        placeholder="Enter your password"
+                        placeholder={t('auth.enterPassword')}
                       />
                       <button
                         type="button"
@@ -320,7 +360,7 @@ const Signup: React.FC = () => {
                   {/* Confirm Password field */}
                   <div>
                     <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-500 mb-2">
-                      Confirm Password
+                      {t('auth.confirmPassword')}
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -334,7 +374,7 @@ const Signup: React.FC = () => {
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         className={`w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white text-gray-900 placeholder-gray-400 transition-all duration-200 hover:border-gray-300 ${errors.confirmPassword ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-                        placeholder="Confirm your password"
+                        placeholder={t('auth.confirmYourPassword')}
                       />
                       <button
                         type="button"
@@ -354,7 +394,7 @@ const Signup: React.FC = () => {
                   {/* Role Selection */}
             <div>
                     <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
-                      Account Type
+                      {t('auth.accountType')}
               </label>
                     
                     
@@ -368,17 +408,17 @@ const Signup: React.FC = () => {
                             </div>
                             <div>
                               <h4 className="text-lg font-semibold text-blue-900 mb-2">
-                                Account Creation by Administrator
+                                {t('auth.accountCreationByAdmin')}
                               </h4>
                               <p className="text-sm text-blue-700 mb-3">
-                                All user accounts are created by the system administrator. Please contact your administrator to request account creation.
+                                {t('auth.allAccountsCreatedByAdmin')}
                               </p>
                               <div className="bg-white border border-blue-200 rounded-lg p-3">
-                                <p className="text-sm text-blue-800 font-medium mb-1">To request an account:</p>
+                                <p className="text-sm text-blue-800 font-medium mb-1">{t('auth.toRequestAccount')}</p>
                                 <ul className="text-sm text-blue-700 space-y-1">
-                                  <li>• Contact your system administrator</li>
-                                  <li>• Provide your email address and role requirements</li>
-                                  <li>• Administrator will create your account and send login credentials</li>
+                                  <li>• {t('auth.contactSystemAdmin')}</li>
+                                  <li>• {t('auth.provideEmailAndRole')}</li>
+                                  <li>• {t('auth.adminWillCreateAccount')}</li>
                                 </ul>
                               </div>
                             </div>
@@ -388,8 +428,8 @@ const Signup: React.FC = () => {
                         {/* Admin Option (Disabled) */}
                         <div className="flex items-center justify-center px-4 py-3 border-2 border-gray-300 bg-gray-100 rounded-xl">
                           <Shield className="h-5 w-5 mr-2 text-gray-400" />
-                          <span className="font-medium text-gray-400">Admin Account (Unavailable)</span>
-                          <span className="ml-2 text-xs text-gray-400">(Already exists)</span>
+                          <span className="font-medium text-gray-400">{t('auth.adminAccountUnavailable')}</span>
+                          <span className="ml-2 text-xs text-gray-400">{t('auth.alreadyExists')}</span>
                         </div>
                       </>
                     ) : (
@@ -439,7 +479,7 @@ const Signup: React.FC = () => {
                 className="w-full flex justify-center items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-gray-400 bg-gray-200 cursor-not-allowed transition-all duration-300"
               >
                 <Shield className="mr-2 h-4 w-4" />
-                Contact Administrator for Account Creation
+                {t('auth.contactAdminForAccount')}
               </button>
             ) : (
               <button
@@ -550,12 +590,12 @@ const Signup: React.FC = () => {
           {/* Login link */}
           <div className="text-center">
             <p className="text-sm text-gray-500">
-              Already have an account?{' '}
+              {t('auth.alreadyHaveAccount')}{' '}
               <Link
                 to="/auth/login"
                 className="font-semibold text-green-600 hover:text-green-500 transition-colors duration-200"
               >
-                Sign in here
+                {t('auth.signInHere')}
               </Link>
             </p>
           </div>
@@ -570,27 +610,27 @@ const Signup: React.FC = () => {
         <div className="relative h-full flex flex-col justify-center px-12 xl:px-16">
           <div className="max-w-md">
             <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 leading-tight">
-              Join thousands of property owners
+              {t('marketing.joinOwners')}
             </h3>
             <p className="text-lg text-white/90 mb-8 leading-relaxed">
-              Start your property management journey with our comprehensive platform designed to maximize your rental income and streamline operations.
+              {t('marketing.journeyDescription')}
             </p>
             <div className="space-y-5">
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Easy property onboarding</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.easyOnboarding')}</span>
               </div>
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Automated booking management</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.automatedBookings')}</span>
               </div>
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">Financial reporting & analytics</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.financialReporting')}</span>
               </div>
               <div className="flex items-center group">
                 <div className="w-3 h-3 bg-white/30 rounded-full mr-4 group-hover:bg-white/50 transition-colors duration-200"></div>
-                <span className="text-white/90 group-hover:text-white transition-colors duration-200">24/7 customer support</span>
+                <span className="text-white/90 group-hover:text-white transition-colors duration-200">{t('marketing.customerSupport')}</span>
               </div>
             </div>
           </div>
