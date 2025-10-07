@@ -78,7 +78,7 @@ const verifyLoginOTP = async (req, res) => {
         const parsed = auth_schema_1.otpSchema.parse(req.body);
         // Verify OTP
         const verification = (0, otp_service_1.verifyOTP)(parsed.email, parsed.otp);
-        if (!verification.valid || verification.purpose !== 'login') {
+        if (!verification) {
             return res.status(400).json({ message: "Invalid or expired OTP" });
         }
         // Find user
@@ -105,7 +105,7 @@ const verifySignupOTP = async (req, res) => {
         const { email, otp, name, phone, password, role } = req.body;
         // Verify OTP
         const verification = (0, otp_service_1.verifyOTP)(email, otp);
-        if (!verification.valid || verification.purpose !== 'signup') {
+        if (!verification) {
             return res.status(400).json({ message: "Invalid or expired OTP" });
         }
         // Check if email already exists
@@ -190,7 +190,7 @@ const resetPassword = async (req, res) => {
         const parsed = auth_schema_1.resetPasswordSchema.parse(req.body);
         // Verify OTP
         const verification = (0, otp_service_1.verifyOTP)(parsed.email, parsed.otp);
-        if (!verification.valid || verification.purpose !== 'forgot-password') {
+        if (!verification) {
             return res.status(400).json({ message: "Invalid or expired OTP" });
         }
         // Check if user exists

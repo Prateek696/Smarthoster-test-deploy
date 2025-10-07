@@ -82,7 +82,7 @@ export const verifyLoginOTP = async (req: Request, res: Response) => {
 
     // Verify OTP
     const verification = verifyOTP(parsed.email, parsed.otp);
-    if (!verification.valid || verification.purpose !== 'login') {
+    if (!verification) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
@@ -112,7 +112,7 @@ export const verifySignupOTP = async (req: Request, res: Response) => {
 
     // Verify OTP
     const verification = verifyOTP(email, otp);
-    if (!verification.valid || verification.purpose !== 'signup') {
+    if (!verification) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
@@ -204,7 +204,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
     // Verify OTP
     const verification = verifyOTP(parsed.email, parsed.otp);
-    if (!verification.valid || verification.purpose !== 'forgot-password') {
+    if (!verification) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
