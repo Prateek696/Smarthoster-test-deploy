@@ -6,6 +6,9 @@ import { RootState, AppDispatch } from '../../store'
 import { logoutAsync } from '../../store/auth.slice'
 import Logo from '../common/Logo'
 import { useLanguage, Language } from '../../contexts/LanguageContext'
+import BritainFlag from '../../assets/Britain.png'
+import PortugalFlag from '../../assets/Portugal.png'
+import FranceFlag from '../../assets/France.png'
 
 interface NavbarProps {
   onMenuClick: () => void
@@ -28,9 +31,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   }
 
   const flags = [
-    { code: 'en' as Language, image: '/src/assets/Britain.png', alt: 'English' },
-    { code: 'pt' as Language, image: '/src/assets/Portugal.png', alt: 'Português' },
-    { code: 'fr' as Language, image: '/src/assets/France.png', alt: 'Français' }
+    { code: 'en' as Language, image: BritainFlag, alt: 'English' },
+    { code: 'pt' as Language, image: PortugalFlag, alt: 'Português' },
+    { code: 'fr' as Language, image: FranceFlag, alt: 'Français' }
   ]
 
 
