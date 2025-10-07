@@ -8,22 +8,27 @@ import {
   Euro,
   Calendar,
   Eye,
-  RefreshCw,
   CheckCircle,
   Clock,
   AlertCircle,
-  Plus
+  Plus,
+  Download
 } from 'lucide-react'
 import { RootState, AppDispatch } from '../store'
 import { fetchInvoicesAsync } from '../store/invoices.slice'
 import { fetchPropertiesAsync } from '../store/properties.slice'
 import PropertySelector from '../components/common/PropertySelector'
+import { getPropertyName } from '../utils/propertyUtils'
+import { apiClient } from '../services/apiClient'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Invoices: React.FC = () => {
+  const { t } = useLanguage()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchTerm, setSearchTerm] = useState('')
-  const [showFilters, setShowFilters] = useState(false)
-  const [selectedDateRange, setSelectedDateRange] = useState('30d')
+  const [showFilters, setShowFilters] = useState(true)
+  const [selectedDateRange, setSelectedDateRange] = useState('lastMonth')
+  const [downloadingInvoiceId, setDownloadingInvoiceId] = useState<string | null>(null)
   
   const dispatch = useDispatch<AppDispatch>()
   const { invoices, isLoading, summary } = useSelector((state: RootState) => state.invoices)
@@ -102,6 +107,20 @@ const Invoices: React.FC = () => {
     }
   }, [searchParams])
 
+  // Auto-select first property if none selected
+  useEffect(() => {
+    if (properties.length > 0 && !selectedPropertyId) {
+      const firstProperty = properties[0]
+      setSelectedPropertyId(firstProperty.id)
+      console.log('Auto-selected first property:', firstProperty.name)
+    }
+  }, [properties, selectedPropertyId])
+
+  // Get property name using utility function (dynamic from database)
+  const getPropertyNameById = (propertyId: number) => {
+    return getPropertyName(propertyId, { properties: { properties } } as RootState)
+  }
+
   // Auto-fetch invoices when dates are auto-selected (but no property is selected)
   useEffect(() => {
     if (startDate && endDate && !selectedPropertyId && properties.length > 0) {
@@ -132,12 +151,40 @@ const Invoices: React.FC = () => {
     }
   }
 
-  // Function to view invoice
-  const handleViewInvoice = (invoice: any) => {
-    if (invoice.invoiceUrl && invoice.invoiceUrl !== '#') {
-      window.open(invoice.invoiceUrl, '_blank')
+  // Function to download invoice - Direct download using invoice URL
+  const handleViewInvoice = async (invoice: any) => {
+    // Check both possible URL field names (invoice_url from API, invoiceUrl from Redux)
+    const invoiceUrl = invoice.invoice_url || invoice.invoiceUrl;
+    
+    console.log('🔍 Invoice data for download:', {
+      id: invoice.id,
+      invoice_url: invoice.invoice_url,
+      invoiceUrl: invoice.invoiceUrl,
+      finalUrl: invoiceUrl
+    });
+    
+    if (invoiceUrl && invoiceUrl !== '#') {
+      setDownloadingInvoiceId(invoice.id)
+      try {
+        // Use backend download endpoint (CORS-safe) and pass the URL to avoid re-fetching invoices
+        console.log(`🔄 Downloading invoice ${invoice.id} via backend proxy with URL: ${invoiceUrl}`);
+        
+        // Pass the invoice URL as query parameter to avoid backend re-fetching
+        const downloadUrl = `/invoices/${selectedPropertyId}/${invoice.id}/download?invoiceUrl=${encodeURIComponent(invoiceUrl)}`;
+        
+        // Use apiClient.downloadFile which handles authentication and forces download
+        await apiClient.downloadFile(downloadUrl, `invoice_${invoice.id}.pdf`);
+        
+        console.log(`✅ Download completed for invoice ${invoice.id}`);
+      } catch (error) {
+        console.error('Error downloading invoice:', error)
+        alert('Failed to download invoice. Please try again.')
+      } finally {
+        setDownloadingInvoiceId(null)
+      }
     } else {
-      alert('Invoice URL not available')
+      console.log('❌ No valid invoice URL found:', { invoice_url: invoice.invoice_url, invoiceUrl: invoice.invoiceUrl });
+      alert('Invoice URL not available for download')
     }
   }
 
@@ -159,19 +206,31 @@ const Invoices: React.FC = () => {
     }
   }, [selectedPropertyId])
 
-  const getDateRangeStart = (range: string) => {
+  const getDateRange = (range: string) => {
     const now = new Date()
+    const endDate = now.toISOString().split('T')[0]
+    
     switch (range) {
-      case '7d':
-        return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      case '30d':
-        return new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      case '90d':
-        return new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      case '1y':
-        return new Date(now.getFullYear() - 1, now.getMonth(), now.getDate()).toISOString().split('T')[0]
+      case 'lastMonth':
+        const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0)
+        return {
+          startDate: lastMonth.toISOString().split('T')[0],
+          endDate: lastMonthEnd.toISOString().split('T')[0]
+        }
+      case 'last3Months':
+        const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, 1)
+        return {
+          startDate: threeMonthsAgo.toISOString().split('T')[0],
+          endDate: endDate
+        }
       default:
-        return new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+        const defaultStart = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        const defaultEnd = new Date(now.getFullYear(), now.getMonth(), 0)
+        return {
+          startDate: defaultStart.toISOString().split('T')[0],
+          endDate: defaultEnd.toISOString().split('T')[0]
+        }
     }
   }
 
@@ -253,7 +312,7 @@ const Invoices: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg font-semibold text-gray-700">Loading Invoices...</p>
+          <p className="text-lg font-semibold text-gray-700">{t('invoices.loading')}</p>
         </div>
       </div>
     )
@@ -266,9 +325,9 @@ const Invoices: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Invoices</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{t('invoices.title')}</h1>
               <p className="text-lg text-gray-600">
-                Manage guest invoices and billing
+                {t('invoices.manageGuestInvoices')}
               </p>
             </div>
           </div>
@@ -276,82 +335,9 @@ const Invoices: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-4 py-4 space-y-4 pt-20">
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold text-gray-500 mb-1">Total Amount</p>
-                <p className="text-lg font-bold text-gray-900">
-                  {formatCurrency(calculatedSummary.totalAmount)}
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-blue-500/20 rounded-lg shadow-sm border border-blue-200">
-                <Euro className="h-5 w-5 text-gray-900 opacity-70" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold text-gray-500 mb-1">Paid</p>
-                <p className="text-lg font-bold text-gray-900">
-                  {formatCurrency(calculatedSummary.paidAmount)}
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-green-500/20 rounded-lg shadow-sm border border-green-200">
-                <CheckCircle className="h-5 w-5 text-gray-900 opacity-70" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold text-gray-500 mb-1">Pending</p>
-                <p className="text-lg font-bold text-gray-900">
-                  {formatCurrency(calculatedSummary.pendingAmount)}
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-yellow-500/20 rounded-lg shadow-sm border border-yellow-200">
-                <Clock className="h-5 w-5 text-gray-900 opacity-70" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg hover:shadow-xl transition-all duration-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold text-gray-500 mb-1">Overdue</p>
-                <p className="text-lg font-bold text-gray-900">
-                  {formatCurrency(calculatedSummary.overdueAmount)}
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 bg-red-500/20 rounded-lg shadow-sm border border-red-200">
-                <AlertCircle className="h-5 w-5 text-gray-900 opacity-70" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Search and Filters */}
+        {/* Filters */}
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            {/* Search Bar */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search invoices, guests, properties..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 placeholder-gray-500 shadow-md"
-                />
-              </div>
-            </div>
-
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -362,40 +348,43 @@ const Invoices: React.FC = () => {
               }`}
             >
               <Filter className="w-4 h-4 opacity-70" />
-              Filters
+              {t('invoices.filters')}
             </button>
           </div>
 
           {/* Advanced Filters */}
           {showFilters && (
             <div className="mt-4 p-4 bg-gradient-to-r from-gray-50/80 to-white/80 rounded-lg border border-gray-100/50 shadow-md">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Property</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('invoices.property')}</label>
                   <PropertySelector
-                    properties={properties}
                     selectedId={selectedPropertyId}
-                    onChange={(propertyId) => setSelectedPropertyId(propertyId)}
-                    placeholder="Select Property"
+                    onChange={setSelectedPropertyId}
+                    properties={properties}
+                    className="w-full"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Date Range</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('invoices.dateRange')}</label>
                   <select
                     value={selectedDateRange}
-                    onChange={(e) => setSelectedDateRange(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedDateRange(e.target.value)
+                      const { startDate: newStartDate, endDate: newEndDate } = getDateRange(e.target.value)
+                      setStartDate(newStartDate)
+                      setEndDate(newEndDate)
+                    }}
                     className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                   >
-                    <option value="7d">Last 7 days</option>
-                    <option value="30d">Last 30 days</option>
-                    <option value="90d">Last 90 days</option>
-                    <option value="1y">Last year</option>
+                    <option value="lastMonth">{t('invoices.lastMonth')}</option>
+                    <option value="last3Months">{t('invoices.last3Months')}</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">From Date</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('invoices.fromDate')}</label>
                   <input 
                     type="date" 
                     className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
@@ -405,7 +394,7 @@ const Invoices: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">To Date</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('invoices.toDate')}</label>
                   <input 
                     type="date" 
                     className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
@@ -413,56 +402,22 @@ const Invoices: React.FC = () => {
                     onChange={(e) => setEndDate(e.target.value)}
                   />
                 </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
-                  <select className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg">
-                    <option value="">All Statuses</option>
-                    <option value="paid">Paid</option>
-                    <option value="pending">Pending</option>
-                    <option value="overdue">Overdue</option>
-                  </select>
-                </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Amount Range</label>
-                  <select className="w-full px-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-lg">
-                    <option value="">All Amounts</option>
-                    <option value="0-100">€0 - €100</option>
-                    <option value="100-500">€100 - €500</option>
-                    <option value="500-1000">€500 - €1000</option>
-                    <option value="1000+">€1000+</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between mt-8">
-                <div className="flex items-center space-x-4">
-                  <button
-                    onClick={fetchInvoices}
-                    className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md border border-blue-200 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={!selectedPropertyId || isLoading}
-                  >
-                    <RefreshCw className={`w-4 h-4 opacity-70 ${isLoading ? 'animate-spin' : ''}`} />
-                    {isLoading ? 'Loading...' : 'Refresh'}
-                  </button>
-                </div>
-                
+              <div className="flex items-center justify-end mt-8">
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={() => setShowFilters(false)}
                     className="px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-300 font-semibold shadow-md"
                   >
-                    Clear All
+{t('invoices.clearAll')}
                   </button>
                   <button
                     onClick={fetchInvoices}
                     className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md border border-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={!selectedPropertyId}
                   >
-                    Apply Filters
+{t('invoices.applyFilters')}
                   </button>
                 </div>
               </div>
@@ -476,20 +431,20 @@ const Invoices: React.FC = () => {
             {filteredInvoices.length === 0 ? (
               <div className="text-center py-16">
                 <FileText className="h-16 w-16 mx-auto text-gray-400 mb-6" />
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">No invoices found</h3>
-                <p className="text-lg text-gray-600 mb-6">No invoices are currently available for this property.</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('invoices.noInvoicesFound')}</h3>
+                <p className="text-lg text-gray-600 mb-6">{t('invoices.noInvoicesAvailable')}</p>
               </div>
             ) : (
               <table className="w-full table-auto">
                 <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                   <tr>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Invoice</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Guest</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Property</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.invoice')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.guest')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.property')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.date')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.amount')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.status')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('invoices.actions')}</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
@@ -503,7 +458,7 @@ const Invoices: React.FC = () => {
                           <div>
                             <p className="font-bold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">{invoice.id}</p>
                             <p className="text-xs text-gray-500 font-medium">
-                              {invoice.closed ? 'Closed' : 'Open'}
+                              {invoice.closed ? t('invoices.closed') : t('invoices.open')}
                             </p>
                           </div>
                         </div>
@@ -514,7 +469,7 @@ const Invoices: React.FC = () => {
                       </td>
                       
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <p className="font-bold text-gray-900 text-sm">{invoice.propertyName}</p>
+                        <p className="font-bold text-gray-900 text-sm">{getPropertyNameById(invoice.propertyId || 0)}</p>
                       </td>
                       
                       <td className="px-4 py-3 whitespace-nowrap">
@@ -541,12 +496,21 @@ const Invoices: React.FC = () => {
                       
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center space-x-3">
-                          <button
+                          <button 
                             onClick={() => handleViewInvoice(invoice)}
-                            className="p-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200"
-                            title="View Invoice"
+                            disabled={downloadingInvoiceId === invoice.id}
+                            className={`p-2 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200 ${
+                              downloadingInvoiceId === invoice.id 
+                                ? 'bg-blue-500/40 text-gray-900 cursor-not-allowed' 
+                                : 'bg-blue-500/20 text-gray-900 hover:bg-blue-500/30'
+                            }`}
+                            title={downloadingInvoiceId === invoice.id ? t('invoices.downloading') : t('invoices.downloadInvoice')}
                           >
-                            <Eye className="w-4 h-4 opacity-70" />
+                            {downloadingInvoiceId === invoice.id ? (
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+                            ) : (
+                              <Download className="w-4 h-4 opacity-70" />
+                            )}
                           </button>
                           
                         </div>

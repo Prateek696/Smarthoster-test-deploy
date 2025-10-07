@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
 import { 
   Search, 
   Filter, 
@@ -24,9 +25,10 @@ import { getPropertyName } from '../utils/propertyUtils'
 import SibaManagerTools from '../components/siba/SibaManagerTools'
 
 const Bookings: React.FC = () => {
+  const { t } = useLanguage()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchTerm, setSearchTerm] = useState('')
-  const [showFilters, setShowFilters] = useState(false)
+  const [showFilters, setShowFilters] = useState(true)
   const [selectedBooking, setSelectedBooking] = useState<any>(null)
   const [showBookingDetails, setShowBookingDetails] = useState(false)
   const [appliedFilters, setAppliedFilters] = useState<{
@@ -42,6 +44,7 @@ const Bookings: React.FC = () => {
     endDate: '',
     platform: ''
   })
+  const [selectedDateRange, setSelectedDateRange] = useState('')
   
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
@@ -90,6 +93,36 @@ const Bookings: React.FC = () => {
       endDate: formatDate(endOfCurrentMonth)
     }
   }
+
+  // Function to get date range based on selection
+  const getDateRange = (range: string) => {
+    const now = new Date()
+    const endDate = now.toISOString().split('T')[0]
+    
+    switch (range) {
+      case 'lastMonth':
+        const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0)
+        return {
+          startDate: lastMonth.toISOString().split('T')[0],
+          endDate: lastMonthEnd.toISOString().split('T')[0]
+        }
+      case 'last3Months':
+        const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, 1)
+        return {
+          startDate: threeMonthsAgo.toISOString().split('T')[0],
+          endDate: endDate
+        }
+      default:
+        const defaultStart = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        const defaultEnd = new Date(now.getFullYear(), now.getMonth(), 0)
+        return {
+          startDate: defaultStart.toISOString().split('T')[0],
+          endDate: defaultEnd.toISOString().split('T')[0]
+        }
+    }
+  }
+
 
   // Handle URL parameters for property-specific navigation
   useEffect(() => {
@@ -321,7 +354,7 @@ const Bookings: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg font-semibold text-gray-700">Loading bookings...</p>
+          <p className="text-lg font-semibold text-gray-700">{t('bookings.loading')}</p>
         </div>
       </div>
     )
@@ -357,7 +390,7 @@ const Bookings: React.FC = () => {
               <MapPin className="w-8 h-8 text-gray-400" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No Property Selected</h3>
-            <p className="text-gray-500 mb-4">Please select a property to view its bookings.</p>
+            <p className="text-gray-500 mb-4">{t('bookings.selectProperty')}</p>
             <button
               onClick={() => setShowFilters(true)}
               className="btn btn-primary"
@@ -377,9 +410,9 @@ const Bookings: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Bookings</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{t('bookings.title')}</h1>
               <p className="text-lg text-gray-600">
-                Manage reservations and guest communications
+                {t('bookings.manageReservations')}
               </p>
               {appliedFilters && (
                 <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
@@ -387,10 +420,10 @@ const Bookings: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                       <span className="text-sm text-blue-700 font-medium">
-                        Showing {appliedFilters.period} data
-                        {appliedFilters.propertyId && ` for Property ${appliedFilters.propertyId}`}
+                        {t('bookings.showingData').replace('{period}', appliedFilters.period || '')}
+                        {appliedFilters.propertyId && ` ${t('bookings.forProperty').replace('{propertyId}', appliedFilters.propertyId.toString())}`}
                         {appliedFilters.startDate && appliedFilters.endDate && 
-                          ` (${appliedFilters.startDate} to ${appliedFilters.endDate})`
+                          ` ${t('bookings.dateRange').replace('{startDate}', appliedFilters.startDate).replace('{endDate}', appliedFilters.endDate)}`
                         }
                       </span>
                     </div>
@@ -413,7 +446,7 @@ const Bookings: React.FC = () => {
                       }}
                       className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                     >
-                      Clear Filters
+{t('bookings.clearFilters')}
                     </button>
                   </div>
                 </div>
@@ -421,7 +454,7 @@ const Bookings: React.FC = () => {
             </div>
             <div className="flex gap-4 mt-6 lg:mt-0">
               <div className="flex items-center gap-3">
-                <label className="text-sm font-semibold text-gray-700">Property:</label>
+                <label className="text-sm font-semibold text-gray-700">{t('bookings.property')}</label>
                 <PropertySelector
                   selectedId={tempFilters.propertyId}
                   onChange={(value) => {
@@ -443,19 +476,6 @@ const Bookings: React.FC = () => {
         {/* Search and Filters */}
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            {/* Search Bar */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search bookings, guests, properties..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 placeholder-gray-500 shadow-md"
-                />
-              </div>
-            </div>
 
             {/* Filter Button */}
             <button
@@ -485,22 +505,43 @@ const Bookings: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('bookings.status')}</label>
                       <select
                         value={tempFilters.status}
                         onChange={(e) => handleFilterChange('status', e.target.value)}
                         className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
                       >
-                        <option value="">All Statuses</option>
-                        <option value="Modified">Modified</option>
-                        <option value="In Enquiry">Inquiry</option>
-                        <option value="inquiryPreapproved">Inquiry Pre-approved</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="">{t('bookings.allStatuses')}</option>
+                        <option value="Modified">{t('bookings.modified')}</option>
+                        <option value="In Enquiry">{t('bookings.inquiry')}</option>
+                        <option value="inquiryPreapproved">{t('bookings.inquiryPreapproved')}</option>
+                        <option value="Cancelled">{t('bookings.cancelled')}</option>
                       </select>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Check-in From</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('bookings.dateRange')}</label>
+                  <select
+                    value={selectedDateRange}
+                    onChange={(e) => {
+                      setSelectedDateRange(e.target.value)
+                      const { startDate: newStartDate, endDate: newEndDate } = getDateRange(e.target.value)
+                      setTempFilters(prev => ({
+                        ...prev,
+                        startDate: newStartDate,
+                        endDate: newEndDate
+                      }))
+                    }}
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#5FFF56] focus:border-[#5FFF56] text-gray-900 shadow-md"
+                  >
+                    <option value="">{t('bookings.selectDateRange')}</option>
+                    <option value="lastMonth">{t('bookings.lastMonth')}</option>
+                    <option value="last3Months">{t('bookings.last3Months')}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('bookings.checkinFrom')}</label>
                   <input
                     type="date"
                     value={tempFilters.startDate}
@@ -510,7 +551,7 @@ const Bookings: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Check-in To</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('bookings.checkinTo')}</label>
                   <input
                     type="date"
                     value={tempFilters.endDate}
@@ -525,13 +566,13 @@ const Bookings: React.FC = () => {
                   onClick={clearFilters}
                   className="px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-300 font-semibold shadow-md"
                 >
-                  Clear All
+{t('bookings.clearAll')}
                 </button>
                 <button
                   onClick={applyFilters}
                   className="px-4 py-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 font-semibold shadow-sm hover:shadow-md border border-blue-200"
                 >
-                  Apply Filters
+{t('bookings.applyFilters')}
                 </button>
               </div>
             </div>
@@ -544,13 +585,13 @@ const Bookings: React.FC = () => {
             <table className="w-full table-auto">
               <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Guest</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Property</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check-in</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check-out</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.guest')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.property')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.checkin')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.checkout')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.amount')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.status')}</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">{t('bookings.actions')}</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-100">
@@ -599,7 +640,7 @@ const Bookings: React.FC = () => {
                         <button
                           onClick={() => handleViewBooking(booking.id, booking.propertyId || 392776)}
                           className="p-2 bg-blue-500/20 text-gray-900 rounded-lg hover:bg-blue-500/30 transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200"
-                          title="View Details"
+                          title={t('bookings.viewDetails')}
                         >
                           <Eye className="w-4 h-4 opacity-70" />
                         </button>
@@ -970,7 +1011,7 @@ const Bookings: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Booking Details & SIBA Manager</h2>
+                <h2 className="text-2xl font-bold text-gray-900">{t('bookings.bookingDetails')}</h2>
                 <button
                   onClick={handleCloseBookingDetails}
                   className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
@@ -987,39 +1028,39 @@ const Bookings: React.FC = () => {
                       <div className="p-2 bg-blue-100 rounded-lg mr-3">
                         <Calendar className="h-5 w-5 text-blue-600" />
                       </div>
-                      Booking Information
+{t('bookings.bookingInformation')}
                     </h3>
                     <div className="space-y-3">
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Guest Name:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.guestName')}</span>
                         <span className="text-gray-900 font-semibold">{selectedBooking.guestName}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Property:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.propertyLabel')}</span>
                         <span className="text-gray-900 font-semibold">{getPropertyNameById(selectedBooking.propertyId)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Check-in:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.checkinLabel')}</span>
                         <span className="text-gray-900 font-semibold">{formatDate(selectedBooking.checkInDate)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Check-out:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.checkoutLabel')}</span>
                         <span className="text-gray-900 font-semibold">{formatDate(selectedBooking.checkOutDate)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Adults:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.adults')}</span>
                         <span className="text-gray-900 font-semibold">{selectedBooking.adults}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Children:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.children')}</span>
                         <span className="text-gray-900 font-semibold">{selectedBooking.children}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Total Amount:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.totalAmount')}</span>
                         <span className="text-gray-900 font-semibold">{formatCurrency(selectedBooking.totalAmount)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 font-medium">Status:</span>
+                        <span className="text-gray-600 font-medium">{t('bookings.status')}:</span>
                         <span className={`font-semibold ${
                           selectedBooking.paymentStatus === 'Paid' ? 'text-green-600' : 
                           selectedBooking.paymentStatus === 'Pending' ? 'text-yellow-600' : 

@@ -48,6 +48,7 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
           <!-- Header with gradient -->
           <tr>
             <td style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 40px 30px; text-align: center;">
+              <img src="${portalUrl}/images/Real-logo.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 12px;">
               <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
                 🏠 SmartHoster Owner Portal
               </h1>
@@ -104,7 +105,7 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
                 <tr>
                   <td align="center">
-                    <a href="${portalUrl}/auth/login" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                    <a href="${portalUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
                       Login to Portal →
                     </a>
                   </td>
@@ -215,6 +216,7 @@ export const sendAccountantWelcomeEmail = async (data: WelcomeEmailData): Promis
           <!-- Header with gradient -->
           <tr>
             <td style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 40px 30px; text-align: center;">
+              <img src="${portalUrl}/images/Real-logo.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin-bottom: 20px; border-radius: 12px;">
               <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
                 📊 SmartHoster Accountant Portal
               </h1>
@@ -271,7 +273,7 @@ export const sendAccountantWelcomeEmail = async (data: WelcomeEmailData): Promis
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
                 <tr>
                   <td align="center">
-                    <a href="${portalUrl}/auth/login" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                    <a href="${portalUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
                       Login to Portal →
                     </a>
                   </td>

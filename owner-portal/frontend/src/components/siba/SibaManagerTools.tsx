@@ -18,6 +18,7 @@ import {
   clearValidation,
   clearSubmission
 } from '../../store/sibaManager.slice';
+import { sanitizeUserErrorMessage } from '../../utils/errorSanitizer';
 
 interface SibaManagerToolsProps {
   reservation: any;
@@ -144,13 +145,9 @@ const SibaManagerTools: React.FC<SibaManagerToolsProps> = ({
               <ul className="list-disc list-inside space-y-1">
                 {validation.result.warnings.map((warning, index) => (
                   <li key={index} className="text-sm text-blue-700">
-                    {warning.includes('not found in Hostkit') 
-                      ? 'This reservation is from a different booking system. SIBA submission will be recorded locally.'
-                      : warning.includes('Hostkit API unavailable')
-                      ? 'Hostkit system is temporarily unavailable. SIBA submission will be recorded locally.'
-                      : warning.includes('No reservation code')
-                      ? 'No reservation code available. SIBA submission will be recorded locally.'
-                      : warning
+                    {warning.includes('not found in') || warning.includes('unavailable') || warning.includes('No reservation code')
+                      ? 'This reservation requires manual processing. SIBA submission will be recorded locally.'
+                      : sanitizeUserErrorMessage(warning)
                     }
                   </li>
                 ))}
@@ -219,13 +216,13 @@ const SibaManagerTools: React.FC<SibaManagerToolsProps> = ({
       {/* Error Messages */}
       {validation.error && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{validation.error}</p>
+          <p className="text-sm text-red-700">{sanitizeUserErrorMessage(validation.error)}</p>
         </div>
       )}
 
       {submission.error && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700">{submission.error}</p>
+          <p className="text-sm text-red-700">{sanitizeUserErrorMessage(submission.error)}</p>
         </div>
       )}
     </div>

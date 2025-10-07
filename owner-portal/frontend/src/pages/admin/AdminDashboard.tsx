@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { 
   getAdminDashboardStats, 
   getAllOwners, 
@@ -46,6 +47,7 @@ interface AddOwnerFormProps {
 }
 
 const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
+  const { t } = useLanguage()
   const getRoleText = (role: 'owner' | 'accountant' | undefined) => {
     if (role === 'accountant') return 'accountant'
     return 'owner'
@@ -442,16 +444,16 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
                     Company Name *
-                  </label>
-                  <input
-                    type="text"
+            </label>
+            <input
+              type="text"
                     value={company.name}
                     onChange={(e) => updateCompany(index, 'name', e.target.value)}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter company name"
                   />
                 </div>
@@ -488,7 +490,7 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
               className="flex items-center gap-1 px-2 py-1 text-xs bg-green-500/20 text-gray-900 rounded-md hover:bg-green-500/30 transition-all duration-300 border border-green-200 shadow-sm hover:shadow-md"
             >
               <Plus className="h-3 w-3 opacity-70" />
-              Add Property
+{t('admin.addProperty')}
             </button>
           </div>
 
@@ -517,14 +519,14 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
                     onChange={(e) => updatePropertyField(index, 'hostkitId', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="12602"
-                  />
-                </div>
+            />
+          </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Hostkit API Key
-                  </label>
-                  <input
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Hostkit API Key
+            </label>
+              <input
                     type="password"
                     value={property.hostkitApiKey}
                     onChange={(e) => updatePropertyField(index, 'hostkitApiKey', e.target.value)}
@@ -588,7 +590,7 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
               </button>
             </div>
           )}
-        </div>
+          </div>
       )}
 
       <div>
@@ -619,7 +621,7 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
       </div>
 
       {/* Accountant Property Assignment Section */}
-      {formData.role === 'accountant' && (
+        {formData.role === 'accountant' && (
         <div className="border-t pt-4 mt-6">
           <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
             <h4 className="text-lg font-medium text-gray-900">Assign Properties to Accountant</h4>
@@ -660,8 +662,8 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
               </div>
             )}
           </div>
-        </div>
-      )}
+          </div>
+        )}
 
       <div className="flex justify-end space-x-3 pt-4">
         <button
@@ -678,7 +680,7 @@ const AddOwnerForm: React.FC<AddOwnerFormProps> = ({ onSuccess, onCancel }) => {
         >
           {loading ? 'Creating...' : `Create ${formData.role === 'accountant' ? 'Accountant' : 'Owner'}${propertiesToCreate.length > 0 ? ` & ${propertiesToCreate.length} ${propertiesToCreate.length === 1 ? 'Property' : 'Properties'}` : ''}`}
         </button>
-      </div>
+              </div>
     </form>
   )
 }
@@ -764,59 +766,59 @@ const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCance
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
           {error}
-        </div>
+              </div>
       )}
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
           Name *
-        </label>
-        <input
-          type="text"
+              </label>
+              <input
+                type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter owner name"
-        />
-      </div>
+              />
+            </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
           Email *
-        </label>
-        <input
+              </label>
+              <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter email address"
-        />
-      </div>
+              />
+            </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
           Phone
-        </label>
-        <input
+                </label>
+                <input
           type="tel"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter phone number"
-        />
-      </div>
+                />
+              </div>
 
       {/* Company Information Section */}
-      <div>
+              <div>
         <div className="flex items-center justify-between mb-3">
           <label className="block text-sm font-medium text-gray-700">
             Company Information (for SAFT)
-          </label>
+                </label>
           <button
             type="button"
             onClick={addCompany}
@@ -825,8 +827,8 @@ const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCance
             <Plus className="h-3 w-3 opacity-70" />
             Add Company
           </button>
-        </div>
-        
+              </div>
+
         {formData.companies?.map((company, index) => (
           <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
             <div className="flex items-center justify-between mb-3">
@@ -842,38 +844,38 @@ const EditOwnerForm: React.FC<EditOwnerFormProps> = ({ owner, onSuccess, onCance
                 </button>
               )}
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                   Company Name *
-                </label>
-                <input
-                  type="text"
+              </label>
+              <input
+                type="text"
                   value={company.name}
                   onChange={(e) => updateCompany(index, 'name', e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter company name"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                   NIF *
-                </label>
-                <input
-                  type="text"
+              </label>
+              <input
+                type="text"
                   value={company.nif}
                   onChange={(e) => updateCompany(index, 'nif', e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter NIF number"
-                />
-              </div>
+              />
             </div>
-          </div>
-        ))}
+            </div>
+                      </div>
+                    ))}
       </div>
 
       <div className="flex justify-end space-x-3">
@@ -1060,15 +1062,15 @@ const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ owners, onSuccess, on
             Hostaway Property ID *
           </label>
           <div className="flex gap-2">
-            <input
-              type="number"
-              name="id"
-              value={formData.id}
-              onChange={handleChange}
+          <input
+            type="number"
+            name="id"
+            value={formData.id}
+            onChange={handleChange}
               className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g., 392777"
-              required
-            />
+            placeholder="e.g., 392777"
+            required
+          />
             <button
               type="button"
               onClick={handleFetchFromHostaway}
@@ -1321,6 +1323,7 @@ interface AccountantEditModalProps {
 }
 
 const AccountantEditModal: React.FC<AccountantEditModalProps> = ({ accountant, availableProperties, onUpdate, onCancel }) => {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     name: accountant.name,
     email: accountant.email,
@@ -1382,7 +1385,7 @@ const AccountantEditModal: React.FC<AccountantEditModalProps> = ({ accountant, a
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-2xl">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">Edit Accountant</h3>
+              <h3 className="text-2xl font-bold text-gray-900">{t('admin.edit')} {t('admin.accountant')}</h3>
               <p className="text-sm text-gray-600 mt-1">Update accountant details and property assignments</p>
             </div>
             <button
@@ -1575,6 +1578,7 @@ interface PropertyEditModalProps {
 }
 
 const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners, onUpdate, onCancel }) => {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     name: property.name || property.title || '',
     address: property.address || '',
@@ -1672,7 +1676,7 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-2xl">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">Edit Property</h3>
+              <h3 className="text-2xl font-bold text-gray-900">{t('admin.edit')} Property</h3>
               <p className="text-sm text-gray-600 mt-1">Update property details and settings</p>
             </div>
             <button
@@ -1691,9 +1695,9 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
             <div className="bg-gray-50 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-lg font-semibold text-gray-900 flex items-center">
-                  <Building2 className="h-5 w-5 mr-2 text-blue-600" />
-                  Property Details
-                </h4>
+                <Building2 className="h-5 w-5 mr-2 text-blue-600" />
+                Property Details
+              </h4>
                 <button
                   type="button"
                   onClick={handleSyncFromHostaway}
@@ -1887,6 +1891,7 @@ const PropertyEditModal: React.FC<PropertyEditModalProps> = ({ property, owners,
 
 const AdminDashboard: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth)
+  const { t } = useLanguage()
   const [stats, setStats] = useState<AdminDashboardStats | null>(null)
   const [owners, setOwners] = useState<Owner[]>([])
   const [accountants, setAccountants] = useState<Accountant[]>([])
@@ -1965,14 +1970,14 @@ const AdminDashboard: React.FC = () => {
   }
 
   const getSelectedOwnerName = () => {
-    if (selectedOwnerId === 'all') return 'All Owners'
+    if (selectedOwnerId === 'all') return t('admin.allOwners')
     if (selectedOwnerId === 'admin') return 'Admin'
     const owner = owners.find(o => o._id === selectedOwnerId)
     return owner ? owner.name : 'Unknown Owner'
   }
 
   const getSelectedAccountantName = () => {
-    if (selectedAccountantId === 'all') return 'All Accountants'
+    if (selectedAccountantId === 'all') return t('admin.allAccountants')
     const accountant = accountants.find(a => a._id === selectedAccountantId)
     return accountant ? accountant.name : 'Unknown Accountant'
   }
@@ -2100,7 +2105,7 @@ const AdminDashboard: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg font-semibold text-gray-700">Loading Admin Dashboard...</p>
+          <p className="text-lg font-semibold text-gray-700">{t('admin.loadingDashboard')}</p>
         </div>
       </div>
     )
@@ -2114,10 +2119,10 @@ const AdminDashboard: React.FC = () => {
           <div className="flex justify-between items-center py-8">
             <div>
               <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">
-                Admin Dashboard
+                {t('admin.dashboard')}
               </h1>
               <p className="mt-1 text-sm text-gray-600">
-                Welcome back, <span className="font-semibold text-black">{user?.name}</span>
+                {t('admin.welcomeBack')}, <span className="font-semibold text-black">{user?.name}</span>
               </p>
             </div>
             
@@ -2129,7 +2134,7 @@ const AdminDashboard: React.FC = () => {
                   onChange={(e) => handleOwnerChange(e.target.value)}
                   className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 >
-                  <option value="all">All Owners</option>
+                  <option value="all">{t('admin.allOwners')}</option>
                   <option value="admin">Admin</option>
                   {owners.map((owner) => (
                     <option key={owner._id} value={owner._id}>
@@ -2146,7 +2151,7 @@ const AdminDashboard: React.FC = () => {
                   onChange={(e) => setSelectedAccountantId(e.target.value)}
                   className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 >
-                  <option value="all">All Accountants</option>
+                  <option value="all">{t('admin.allAccountants')}</option>
                   {accountants.map((accountant) => (
                     <option key={accountant._id} value={accountant._id}>
                       {accountant.name}
@@ -2161,7 +2166,7 @@ const AdminDashboard: React.FC = () => {
                 className="inline-flex items-center px-3 py-1.5 border text-sm font-medium rounded-md bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 <Plus className="h-3 w-3 mr-1 opacity-70" />
-                Add User
+                {t('admin.addUser')}
               </button>
             </div>
           </div>
@@ -2182,7 +2187,7 @@ const AdminDashboard: React.FC = () => {
                 <div className="ml-3 w-0 flex-1">
                   <dl>
                     <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
-                      Total Owners
+                      {t('admin.totalOwners')}
                     </dt>
                     <dd className="text-lg font-bold text-gray-900 mt-1">
                       {stats?.totalOwners || 0}
@@ -2204,7 +2209,7 @@ const AdminDashboard: React.FC = () => {
                 <div className="ml-3 w-0 flex-1">
                   <dl>
                     <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
-                      Total Accountants
+                      {t('admin.totalAccountants')}
                     </dt>
                     <dd className="text-lg font-bold text-gray-900 mt-1">
                       {stats?.totalAccountants || 0}
@@ -2226,7 +2231,7 @@ const AdminDashboard: React.FC = () => {
                 <div className="ml-3 w-0 flex-1">
                   <dl>
                     <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
-                      Total Properties
+                      {t('admin.totalProperties')}
                     </dt>
                     <dd className="text-lg font-bold text-gray-900 mt-1">
                       {stats?.totalProperties || 0}
@@ -2249,7 +2254,7 @@ const AdminDashboard: React.FC = () => {
                 <div className="ml-3 w-0 flex-1">
                   <dl>
                     <dt className="text-xs font-semibold text-gray-600 truncate uppercase tracking-wide">
-                      Current View
+                      {t('admin.currentView')}
                     </dt>
                     <dd className="text-sm font-bold text-gray-900 mt-1">
                       {getSelectedOwnerName()} | {getSelectedAccountantName()}
@@ -2267,16 +2272,16 @@ const AdminDashboard: React.FC = () => {
             <div className="flex justify-between items-center mb-4">
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-1">
-                  Owners Management
+                  {t('admin.ownersManagement')}
                 </h3>
-                <p className="text-sm text-gray-600">Manage property owners and their company information</p>
+                <p className="text-sm text-gray-600">{t('admin.manageOwners')}</p>
               </div>
               <button
                 onClick={() => setShowOwnerModal(true)}
                 className="bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 px-3 py-1.5 rounded-md flex items-center gap-1 transition-all duration-300 text-sm shadow-sm hover:shadow-md border border-blue-200"
               >
                 <Plus className="h-3 w-3 opacity-70" />
-                Add Owner
+                {t('admin.addOwner')}
               </button>
             </div>
 
@@ -2337,7 +2342,7 @@ const AdminDashboard: React.FC = () => {
                             ? 'bg-green-100 text-green-800' 
                             : 'bg-yellow-100 text-yellow-800'
                         }`}>
-                          {owner.isVerified ? 'Verified' : 'Pending'}
+                          {owner.isVerified ? t('admin.verified') : t('admin.pending')}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -2345,13 +2350,13 @@ const AdminDashboard: React.FC = () => {
                           onClick={() => handleEditOwner(owner)}
                           className="text-blue-600 hover:text-blue-900 mr-3"
                         >
-                          Edit
+                          {t('admin.edit')}
                         </button>
                         <button
                           onClick={() => handleDeleteOwner(owner)}
                           className="text-red-600 hover:text-red-900"
                         >
-                          Delete
+                          {t('admin.delete')}
                         </button>
                       </td>
                     </tr>
@@ -2363,13 +2368,13 @@ const AdminDashboard: React.FC = () => {
                 <div className="text-center py-8">
                   <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No owners found</h3>
-                  <p className="text-gray-500 mb-4">Get started by adding your first property owner.</p>
+                  <p className="text-gray-500 mb-4">{t('admin.getStartedAddOwner')}.</p>
                   <button
                     onClick={() => setShowOwnerModal(true)}
                     className="bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300 mx-auto border border-blue-200 shadow-sm hover:shadow-md"
                   >
                     <Plus className="h-4 w-4 opacity-70" />
-                    Add Owner
+                    {t('admin.addOwner')}
                   </button>
                 </div>
               )}
@@ -2383,16 +2388,16 @@ const AdminDashboard: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                  Properties ({getSelectedOwnerName()})
+                  {t('admin.propertiesAllOwners')}
                 </h3>
-                <p className="text-gray-600">Manage and monitor your property portfolio</p>
+                <p className="text-gray-600">{t('admin.managePortfolio')}</p>
               </div>
               <button
                 onClick={() => setShowPropertyModal(true)}
                 className="inline-flex items-center px-4 py-3 border text-sm font-semibold rounded-lg bg-blue-500/20 text-gray-900 hover:bg-blue-500/30 border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
               >
                 <Plus className="h-5 w-5 mr-2 opacity-70" />
-                Add Property
+                {t('admin.addProperty')}
               </button>
             </div>
 
@@ -2401,7 +2406,7 @@ const AdminDashboard: React.FC = () => {
                 <Building2 className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-2 text-sm font-medium text-gray-900">No properties</h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Get started by adding a new property.
+                  {t('admin.getStartedAddProperty')}.
                 </p>
               </div>
             ) : (
@@ -2415,7 +2420,7 @@ const AdminDashboard: React.FC = () => {
                           ? 'bg-purple-100 text-purple-800' 
                           : 'bg-green-100 text-green-800'
                       }`}>
-                        {property.isAdminOwned ? 'Admin Owned' : 'Owner Owned'}
+                        {property.isAdminOwned ? t('admin.adminOwned') : t('admin.ownerOwned')}
                       </span>
                     </div>
                     
@@ -2475,18 +2480,18 @@ const AdminDashboard: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                  Accountants ({getSelectedAccountantName()})
+                  {t('admin.accountantsAllAccountants')}
                 </h3>
-                <p className="text-gray-600">Manage accountant access and property assignments</p>
+                <p className="text-gray-600">{t('admin.manageAccountants')}</p>
               </div>
             </div>
 
             {getFilteredAccountants().length === 0 ? (
               <div className="text-center py-12">
                 <Users className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No accountants</h3>
+                <h3 className="mt-2 text-sm font-medium text-gray-900">{t('admin.noAccountants')}</h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Get started by adding a new accountant.
+                  {t('admin.getStartedAddAccountant')}.
                 </p>
               </div>
             ) : (
@@ -2732,7 +2737,7 @@ const AdminDashboard: React.FC = () => {
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
               <div className="mt-3">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">Edit Owner</h3>
+                  <h3 className="text-lg font-medium text-gray-900">{t('admin.edit')} {t('admin.owner')}</h3>
                   <button
                     onClick={() => setShowEditOwnerModal(false)}
                     className="text-gray-400 hover:text-gray-600"
@@ -2873,7 +2878,7 @@ const AdminDashboard: React.FC = () => {
           <div className="px-4 py-5 sm:p-6">
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-base leading-6 font-medium text-gray-900">
-                Full Properties Management ({getSelectedOwnerName()})
+{t('admin.propertiesAllOwners')}
               </h3>
             </div>
             

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useLanguage } from '../contexts/LanguageContext'
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -53,6 +54,7 @@ interface PortfolioTrends {
 }
 
 const Portfolio: React.FC = () => {
+  const { t } = useLanguage()
   const dispatch = useDispatch<AppDispatch>()
   const [selectedProperties, setSelectedProperties] = useState<number[]>([])
   const [selectedMonth, setSelectedMonth] = useState<string>('2025-01')
@@ -133,7 +135,7 @@ const Portfolio: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Portfolio Management</h1>
+          <h1 className="text-2xl font-bold text-white">{t('nav.portfolio')}</h1>
           <p className="text-slate-400 mt-1">Multi-property performance overview and analytics</p>
         </div>
         

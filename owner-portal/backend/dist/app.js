@@ -43,6 +43,7 @@ const keepAlive_1 = require("./utils/keepAlive");
 const app = (0, express_1.default)();
 app.use('/saft/files', express_1.default.static(path_1.default.join(__dirname, 'saft_files')));
 app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
+app.use('/images', express_1.default.static(path_1.default.join(__dirname, '../public/images')));
 app.use((0, helmet_1.default)());
 app.use((0, cors_1.default)({
     origin: true, // Allow all origins for now (temporary)

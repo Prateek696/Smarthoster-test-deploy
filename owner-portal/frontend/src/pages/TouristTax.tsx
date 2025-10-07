@@ -47,14 +47,14 @@ const TouristTax: React.FC = () => {
     propertyId: data.propertyId || selectedPropertyId || 392776,
     startDate: data.startDate || dateRange.startDate,
     endDate: data.endDate || dateRange.endDate,
-    // City Tax Report Data (matching Hostkit format)
+    // City Tax Report Data
     cityTaxCalculated: data.cityTaxCalculated || 0,
     cityTaxCalculatedFormatted: data.cityTaxCalculatedFormatted || "€0,00",
     cityTaxNights: data.cityTaxNights || 0,
     childrenNights: data.childrenNights || 0,
     nightsBeyond: data.nightsBeyond || 0,
     totalNights: data.totalNights || 0,
-    hostkitTotalNights: data.hostkitTotalNights || 0,
+    totalNightsFromAPI: data.hostkitTotalNights || 0,
     cityTaxInvoiced: data.cityTaxInvoiced || 0,
     cityTaxInvoicedFormatted: data.cityTaxInvoicedFormatted || "€0,00",
     cityTaxInvoicedNights: data.cityTaxInvoicedNights || 0,
@@ -470,7 +470,7 @@ const TouristTax: React.FC = () => {
               </div>
           </div>
 
-          {/* City Tax Report Data (matching Hostkit format) */}
+          {/* City Tax Report Data */}
           <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 mb-8">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">City Tax Report Data</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -505,9 +505,9 @@ const TouristTax: React.FC = () => {
                 <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-fit mx-auto mb-3">
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
-                <p className="text-2xl font-bold text-gray-900 mb-1">{displayData.hostkitTotalNights}</p>
+                <p className="text-2xl font-bold text-gray-900 mb-1">{displayData.totalNightsFromAPI}</p>
                 <p className="text-sm text-gray-600 mb-1">Total Nights</p>
-                <p className="text-xs text-gray-500">Guest nights (Hostkit format)</p>
+                <p className="text-xs text-gray-500">Guest nights from booking system</p>
               </div>
             </div>
             
@@ -636,8 +636,8 @@ const TouristTax: React.FC = () => {
                 <p className="text-2xl font-bold text-green-600">{displayData.childrenNights}</p>
               </div>
               <div className="bg-purple-50 rounded-lg p-4">
-                <h4 className="font-medium text-purple-900">Hostkit Total Nights</h4>
-                <p className="text-2xl font-bold text-purple-600">{displayData.hostkitTotalNights}</p>
+                <h4 className="font-medium text-purple-900">Total Nights from API</h4>
+                <p className="text-2xl font-bold text-purple-600">{displayData.totalNightsFromAPI}</p>
               </div>
             </div>
           </div>

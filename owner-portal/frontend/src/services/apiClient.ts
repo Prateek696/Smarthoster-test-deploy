@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { sanitizeErrorMessage } from '../utils/errorSanitizer'
 
 const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '')
 
@@ -76,7 +77,9 @@ class ApiClient {
             console.error('Server error. Please try again later.')
             break
           default:
-            console.error(response.data?.message || 'An unexpected error occurred.')
+            // Sanitize error messages to remove Hostkit/Hostaway references
+            const sanitizedMessage = sanitizeErrorMessage(response.data?.message || 'An unexpected error occurred.')
+            console.error(sanitizedMessage)
         }
 
         return Promise.reject(error)

@@ -14,14 +14,12 @@ import {
   Home,
   X,
   ChevronRight,
-  Star,
   BarChart3,
   LogOut,
   Shield,
   Receipt,
   Users,
   Crown,
-  Settings
 } from 'lucide-react'
 import { RootState, AppDispatch } from '../../store'
 import { logoutAsync } from '../../store/auth.slice'
@@ -91,26 +89,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       icon: Building2
     },
     { 
-      name: t('nav.ownerManagement'), 
-      href: '/admin/owners', 
-      icon: Users,
-      roles: ['admin']
-    },
-    { 
       name: t('nav.ownerStatements'), 
       href: '/owner-statements', 
       icon: FileText 
-    },
-    { 
-      name: 'Settings', 
-      href: '/settings', 
-      icon: Settings 
-    },
-    { 
-      name: t('nav.reviews'), 
-      href: '/reviews', 
-      icon: Star,
-      roles: ['owner']
     },
   ]
 

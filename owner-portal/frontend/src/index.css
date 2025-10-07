@@ -206,10 +206,7 @@
   }
 
   .gradient-text {
-    background-color: #E0F2FE; /* Light blue background */
     color: #0369A1; /* Dark blue text */
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
     font-weight: 600;
   }
 

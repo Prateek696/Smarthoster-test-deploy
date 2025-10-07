@@ -39,6 +39,7 @@ import { pingMongoDB, ensureTempCollection } from './utils/keepAlive';
 const app = express();
 app.use('/saft/files', express.static(path.join(__dirname, 'saft_files')));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.use(helmet());
 app.use(cors({
   origin: true, // Allow all origins for now (temporary)

@@ -4,6 +4,9 @@ import { getProperties } from '../services/properties.api';
 import { apiClient } from '../services/apiClient';
 import { Calendar, Download, Calculator, Euro, Users, FileText } from 'lucide-react';
 import { RootState } from '../store';
+import FinancialDetailsTable from '../components/financial/FinancialDetailsTable';
+import DetailedReport from '../components/financial/DetailedReport';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Property {
   id: number;
@@ -40,6 +43,10 @@ interface OwnerStatement {
   createdAt: string;
   updatedAt: string;
   attachments?: string[];
+  isAdminOwned?: boolean;
+  summary?: {
+    management_commission_vat?: number;
+  };
   invoiceDetails?: {
     totalInvoices: number;
     paidInvoices: number;
@@ -49,6 +56,7 @@ interface OwnerStatement {
 }
 
 const OwnerStatements: React.FC = () => {
+  const { t } = useLanguage();
   const { user } = useSelector((state: RootState) => state.auth);
   const [properties, setProperties] = useState<Property[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<number | ''>('');
@@ -149,89 +157,285 @@ const OwnerStatements: React.FC = () => {
     return new Date(dateString).toLocaleDateString('en-EU');
   };
 
-  const downloadStatements = () => {
+  const handleDownloadPDF = () => {
     if (!statements || statements.length === 0) return;
 
     const statement = statements[0];
     
-    // Calculate detailed breakdown
-    const grossAmount = statement.revenue.total;
-    const portalCommission = grossAmount * 0.15; // 15% portal commission
-    const cleaningFee = statement.expenses.fees; // From reservation data (varies by property)
-    const managementCommission = statement.expenses.commission; // From backend calculation (25% of Gross - Cleaning Fee)
-    const finalOwnerAmount = grossAmount - portalCommission - cleaningFee - managementCommission;
-    
-    const csvContent = [
-      // Header
-      ['OWNER STATEMENT DETAILED BREAKDOWN'],
-      ['Property ID', 'Property Name', 'Period', 'Generated At'],
-      [statement.propertyId.toString(), statement.propertyName, `${statement.period.startDate} to ${statement.period.endDate}`, new Date(statement.createdAt).toLocaleString()],
-      [],
-      
-      // Summary Calculations
-      ['CALCULATION SUMMARY'],
-      ['Gross Amount (sum of all invoices)', formatCurrency(grossAmount)],
-      ['Portal Commission (15% of gross)', formatCurrency(portalCommission)],
-      ['Cleaning Fee (from reservation API)', formatCurrency(cleaningFee)],
-      ['Management Commission (25% of gross-cleaning)', formatCurrency(managementCommission)],
-      ['Final Amount to Owner', formatCurrency(finalOwnerAmount)],
-      [],
-      
-      // Reservation Details
-      ['RESERVATION BREAKDOWN'],
-      ['Reservation Code', 'Guest Name', 'Check-in', 'Check-out', 'Received Amount', 'Host Commission', 'Cleaning Fee', 'Invoiced Value', 'Provider'],
-      ...statement.reservations.map((res: any) => [
-        res.rcode,
-        `${res.firstname} ${res.lastname}`,
-        formatDate(new Date(parseInt(res.arrival) * 1000).toISOString()),
-        formatDate(new Date(parseInt(res.departure) * 1000).toISOString()),
-        formatCurrency(res.received_amount),
-        formatCurrency(res.host_commission),
-        formatCurrency(res.cleaning_fee), // Actual cleaning fee from reservation data
-        formatCurrency(res.invoiced_value),
-        res.provider
-      ]),
-      [],
-      
-      // Invoice Details (if available)
-      ['INVOICE BREAKDOWN'],
-      ['Invoice ID', 'Invoice Date', 'Invoice Value', 'Status', 'Type'],
-      ...(statement.invoices && statement.invoices.length > 0 ? 
-        statement.invoices.map((inv: any) => [
-          inv.id || inv.refid || 'N/A',
-          inv.date ? formatDate(inv.date) : 'N/A',
-          formatCurrency(inv.value || inv.amount || 0),
-          inv.status || 'N/A',
-          inv.type || 'N/A'
-        ]) : 
-        [['No invoices available for this period']]
-      ),
-      [],
-      
-      // Commission Details
-      ['COMMISSION BREAKDOWN'],
-      ['Commission Type', 'Percentage', 'Formula', 'Amount'],
-      ['Portal Commission', '15%', '15% of Gross', formatCurrency(portalCommission)],
-      ['Management Commission', `${commissionPercentage}%`, `${commissionPercentage}% of (Gross - Cleaning Fee)`, formatCurrency(managementCommission)],
-      ['Total Commission', `${15 + commissionPercentage}%`, 'Portal + Management', formatCurrency(portalCommission + managementCommission)],
-      [],
-      
-      // Final Summary
-      ['FINAL SUMMARY'],
-      ['Total Reservations', statement.reservations.length],
-      ['Total Revenue (sum of all invoices)', formatCurrency(grossAmount)],
-      ['Total Deductions', formatCurrency(portalCommission + cleaningFee + managementCommission)],
-      ['Final Amount to Owner', formatCurrency(finalOwnerAmount)]
-    ];
+    // Calculate values for PDF
+    const totalReceivedAmount = statement.reservations.reduce((sum: number, res: any) => sum + res.received_amount, 0);
+    const totalToInvoice = statement.expenses.commission + statement.expenses.fees;
+    const totalToPay = totalReceivedAmount - totalToInvoice;
+    const commissionableAmount = statement.reservations.reduce((sum: number, res: any) => 
+      sum + ((res.received_amount + res.host_commission) - res.cleaning_fee), 0
+    );
 
-    const csv = csvContent.map(row => row.join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `owner-statement-detailed-${statement.propertyId}-${statement.period.startDate}-${statement.period.endDate}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    
+    if (!printWindow) {
+      alert('Please allow popups to download PDF');
+      return;
+    }
+    
+    // Create HTML content for PDF
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Owner Statement - ${statement.propertyId}</title>
+        <style>
+          @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+          }
+          body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            line-height: 1.6;
+            color: #333;
+          }
+          .header { 
+            text-align: center; 
+            border-bottom: 2px solid #333; 
+            padding-bottom: 15px; 
+            margin-bottom: 25px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+          }
+          .header .logo {
+            height: 60px;
+            width: auto;
+          }
+          .header .title-section {
+            flex: 1;
+          }
+          .header h1 { 
+            margin: 0; 
+            color: #333; 
+            font-size: 24px;
+          }
+          .header p { 
+            margin: 5px 0 0 0; 
+            color: #666; 
+            font-size: 14px;
+          }
+          .property-header {
+            background-color: #f5f5f5;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+          }
+          .property-header h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+          }
+          .report-section {
+            margin-bottom: 25px;
+          }
+          .report-section h3 {
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 18px;
+          }
+          .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+          }
+          .label {
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+          }
+          .value {
+            color: #666;
+            flex: 1;
+            text-align: right;
+          }
+          .total-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+            margin-top: 20px;
+          }
+          .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+          }
+          .total-row:last-child {
+            border-top: 2px solid #333;
+            padding-top: 12px;
+            margin-top: 8px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <img src="/src/assets/Real-logo.jpg" alt="Company Logo" class="logo" />
+          <div class="title-section">
+            <h1>${t('ownerStatements.detailedReport')}</h1>
+            <p>${new Date().toLocaleString()}</p>
+          </div>
+        </div>
+        
+        <div class="property-header">
+          <h2>${statement.propertyId} (« ${statement.propertyName} ») (${t('ownerStatements.propertyOwner')})</h2>
+          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">
+            ${t('ownerStatements.period')}: ${new Date(statement.period.startDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+          </p>
+        </div>
+        
+        <!-- Financial Table Section -->
+        <div class="report-section">
+          <h3>${t('ownerStatements.detailedFinancialBreakdown')}</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead style="background-color: #f5f5f5;">
+              <tr>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableProperty')}</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableInvoice')}</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableReservation')}</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableReceivedAmount')}</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableHostCommission')}</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableCleaningFee')}</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-weight: bold;">${t('ownerStatements.tableMgmtCommission')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${statement.reservations.map((res: any) => {
+                const hostCommissionPercentage = res.received_amount > 0 ? ((res.host_commission / res.received_amount) * 100).toFixed(1) : '0.0';
+                return `
+                  <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${statement.propertyName}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">FR ${statement.propertyName.replace(/\s+/g, '').toUpperCase()}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                      <div style="font-weight: bold;">${res.firstname} ${res.lastname}</div>
+                      <div style="font-size: 12px; color: #666;">(${res.rcode} | ${new Date(parseInt(res.arrival) * 1000).toISOString().split('T')[0]})</div>
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">€${res.received_amount.toFixed(2)}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                      <div>€${res.host_commission.toFixed(2)}</div>
+                      <div style="font-size: 12px; color: #666;">(${hostCommissionPercentage}%)</div>
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">€${res.cleaning_fee.toFixed(2)}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">€${statement.isAdminOwned ? 0 : Math.max(0, 0.25 * ((res.received_amount + res.host_commission) - res.cleaning_fee)).toFixed(2)}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+            <tfoot style="background-color: #f0f0f0; font-weight: bold;">
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">${t('ownerStatements.tableTotal')}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;"></td>
+                <td style="border: 1px solid #ddd; padding: 8px;"></td>
+                <td style="border: 1px solid #ddd; padding: 8px;">€${totalReceivedAmount.toFixed(2)}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">
+                  <div>€${statement.reservations.reduce((sum: number, res: any) => sum + res.host_commission, 0).toFixed(2)}</div>
+                  <div style="font-size: 12px; color: #666;">(${totalReceivedAmount > 0 ? ((statement.reservations.reduce((sum: number, res: any) => sum + res.host_commission, 0) / totalReceivedAmount) * 100).toFixed(1) : '0.0'}%)</div>
+                </td>
+                <td style="border: 1px solid #ddd; padding: 8px;">€${statement.reservations.reduce((sum: number, res: any) => sum + res.cleaning_fee, 0).toFixed(2)}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">€${statement.reservations.reduce((sum: number, res: any) => sum + (statement.isAdminOwned ? 0 : Math.max(0, 0.25 * ((res.received_amount + res.host_commission) - res.cleaning_fee))), 0).toFixed(2)}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        
+        <div class="report-section">
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.calculationBasis')}</span>
+            <span class="value">Invoices</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.commissionableAmount')}</span>
+            <span class="value">€${commissionableAmount.toFixed(2)}</span>
+          </div>
+          <div class="info-row">
+            <span class="label"></span>
+            <span class="value" style="font-style: italic; font-size: 12px;">${t('ownerStatements.commissionableAmountNote')}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.rule')}</span>
+            <span class="value">25% of Commissionable amount</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.managementCommissions')}</span>
+            <span class="value">€${statement.expenses.commission.toFixed(2)}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.cleaningFees')}</span>
+            <span class="value">€${statement.expenses.fees.toFixed(2)} (${t('ownerStatements.cleaningFeesNote')})</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.hostCommissions')}</span>
+            <span class="value">€0.00</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.extraFees')}</span>
+            <span class="value">€0.00 (${t('ownerStatements.cleaningFeesNote')})</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.expenses')}</span>
+            <span class="value">€0.00</span>
+          </div>
+        </div>
+        
+        <div class="report-section">
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.issuer')}</span>
+            <span class="value">514142057 (series: FR COMMLT14 | product: GEST)</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${t('ownerStatements.recipient')}</span>
+            <span class="value">${statement.propertyId} (« ${statement.propertyName} »)</span>
+          </div>
+        </div>
+        
+        <div class="total-section">
+          <div class="total-row">
+            <span>${t('ownerStatements.totalToInvoice')}</span>
+            <span>€${totalToInvoice.toFixed(2)}</span>
+          </div>
+          <div class="total-row">
+            <span>${t('ownerStatements.totalToPay')}</span>
+            <span>€${totalToPay.toFixed(2)}</span>
+          </div>
+          <div class="info-row">
+            <span class="label"></span>
+            <span class="value" style="font-style: italic; font-size: 12px;">${t('ownerStatements.totalToPayNote')}</span>
+          </div>
+        </div>
+        
+        <script>
+          // Auto-print when window loads
+          window.onload = function() {
+            setTimeout(function() {
+              window.print();
+              // Close window after printing
+              setTimeout(function() {
+                window.close();
+              }, 1000);
+            }, 500);
+          };
+        </script>
+      </body>
+      </html>
+    `;
+    
+    // Write content to new window
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
   };
 
   return (
@@ -242,9 +446,9 @@ const OwnerStatements: React.FC = () => {
           <div className="flex items-center">
             <Calculator className="w-8 h-8 mr-3 text-gray-700" />
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Owner Statements</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{t('ownerStatements.title')}</h1>
               <p className="text-lg text-gray-600">
-                Generate financial statements for property owners
+                {t('ownerStatements.description')}
               </p>
             </div>
           </div>
@@ -258,14 +462,14 @@ const OwnerStatements: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Property
+                  {t('ownerStatements.property')}
                 </label>
                 <select
                   value={selectedProperty}
                   onChange={(e) => setSelectedProperty(e.target.value ? parseInt(e.target.value) : '')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="">Select Property</option>
+                  <option value="">{t('ownerStatements.selectProperty')}</option>
                   {properties.map((property) => (
                     <option key={property.id} value={property.id}>
                       {property.name}
@@ -276,7 +480,7 @@ const OwnerStatements: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Start Date
+                  {t('ownerStatements.startDate')}
                 </label>
                 <input
                   type="date"
@@ -288,7 +492,7 @@ const OwnerStatements: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  End Date
+                  {t('ownerStatements.endDate')}
                 </label>
                 <input
                   type="date"
@@ -301,7 +505,7 @@ const OwnerStatements: React.FC = () => {
               {user?.role === 'admin' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Management Commission Rate (Ignored for admin properties)
+                    {t('ownerStatements.managementCommissionRate')}
                   </label>
                   <select
                     value={commissionPercentage}
@@ -325,12 +529,12 @@ const OwnerStatements: React.FC = () => {
                 {loading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Generating...
+{t('ownerStatements.generating')}
                   </>
                 ) : (
                   <>
                     <Calculator className="w-4 h-4 mr-2" />
-                    Generate Statements
+{t('ownerStatements.generateStatements')}
                   </>
                 )}
               </button>
@@ -343,80 +547,36 @@ const OwnerStatements: React.FC = () => {
         </div>
       )}
 
-            {/* Results */}
-            {statements && statements.length > 0 && (
-              <div className="space-y-6">
-                {/* Calculation Table */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Owner Statement Calculation</h3>
-                  
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Calculation Base:</span>
-                      <span className="font-semibold">Invoices</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Gross Amount (sum of all invoices):</span>
-                      <span className="font-semibold">{formatCurrency(statements[0].revenue.total)}</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Portal Commission (15% of gross):</span>
-                      <span className="font-semibold text-red-600">-{formatCurrency(statements[0].revenue.total * 0.15)}</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Cleaning Fee (from reservation API):</span>
-                      <span className="font-semibold text-red-600">-{formatCurrency(statements[0].expenses.fees)}</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Management Commission (25% of gross-cleaning):</span>
-                      <span className="font-semibold text-red-600">-{formatCurrency(statements[0].expenses.commission)}</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Additional Fees:</span>
-                      <span className="font-semibold text-red-600">-{formatCurrency(statements[0].expenses.other)}</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600 font-medium">Expenses:</span>
-                      <span className="font-semibold text-red-600">-{formatCurrency(0)}</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-3 bg-green-50 rounded-lg px-4">
-                      <span className="text-green-600 font-bold text-lg">Final Amount to Owner:</span>
-                      <span className="text-green-600 font-bold text-lg">
-                        {formatCurrency(
-                          statements[0].revenue.total - 
-                          (statements[0].revenue.total * 0.15) - 
-                          statements[0].expenses.fees - 
-                          statements[0].expenses.commission - 
-                          statements[0].expenses.other
-                        )}
-                      </span>
-                    </div>
-                  </div>
+            {/* Loading State */}
+            {loading && (
+              <div className="flex items-center justify-center min-h-screen">
+                <div className="text-center">
+                  <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-lg font-semibold text-gray-700">{t('ownerStatements.generatingStatements')}</p>
                 </div>
+              </div>
+            )}
+
+            {/* Results */}
+            {!loading && statements && statements.length > 0 && (
+              <div className="space-y-6">
 
                 {/* Property Information */}
                 <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Property Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('ownerStatements.propertyInformation')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Property Name:</span>
+                          <span className="text-gray-600">{t('ownerStatements.propertyName')}</span>
                           <span className="font-semibold">{statements[0].propertyName}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Property ID:</span>
+                          <span className="text-gray-600">{t('ownerStatements.propertyId')}</span>
                           <span className="font-semibold">{statements[0].propertyId}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Status:</span>
+                          <span className="text-gray-600">{t('ownerStatements.status')}</span>
                           <span className="font-semibold">{statements[0].status}</span>
                         </div>
                       </div>
@@ -424,15 +584,15 @@ const OwnerStatements: React.FC = () => {
                     <div>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Period:</span>
+                          <span className="text-gray-600">{t('ownerStatements.period')}</span>
                           <span className="font-semibold">{formatDate(statements[0].period.startDate)} - {formatDate(statements[0].period.endDate)}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Created:</span>
+                          <span className="text-gray-600">{t('ownerStatements.created')}</span>
                           <span className="font-semibold">{formatDate(statements[0].createdAt)}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Commission Rate:</span>
+                          <span className="text-gray-600">{t('ownerStatements.commissionRate')}</span>
                           <span className="font-semibold">{commissionPercentage}%</span>
                         </div>
                       </div>
@@ -440,14 +600,65 @@ const OwnerStatements: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Detailed Financial Table */}
+                {statements[0].reservations && statements[0].reservations.length > 0 && (
+                  <div className="mt-6">
+                    <FinancialDetailsTable
+                      title={t('ownerStatements.detailedFinancialBreakdown')}
+                      data={statements[0].reservations.map((res: any) => ({
+                        property: statements[0].propertyName,
+                        invoice: res.invoiced_value > 0 ? `FR ${statements[0].propertyName.replace(/\s+/g, '').toUpperCase()}` : 'N/A',
+                        reservation: {
+                          guestName: `${res.firstname} ${res.lastname}`,
+                          reservationId: res.rcode,
+                          date: new Date(parseInt(res.arrival) * 1000).toISOString().split('T')[0]
+                        },
+                        receivedAmount: res.received_amount || 0,
+                        hostCommission: res.host_commission || 0,
+                        cleaningFee: res.cleaning_fee || 0,
+                        mgmtCommission: statements[0].isAdminOwned ? 0 : Math.max(0, 0.25 * ((res.received_amount + res.host_commission) - res.cleaning_fee))
+                      }))}
+                    />
+                  </div>
+                )}
+
+                {/* Detailed Report */}
+                {statements[0].reservations && statements[0].reservations.length > 0 && (() => {
+                  const totalToInvoice = statements[0].expenses.commission + statements[0].expenses.fees;
+                  const totalReceivedAmount = statements[0].reservations.reduce((sum, res) => sum + res.received_amount, 0);
+                  return (
+                    <div className="mt-6">
+                      <DetailedReport
+                        data={{
+                          calculationBasis: 'Invoices',
+                          commissionableAmount: statements[0].reservations.reduce((sum, res) => sum + ((res.received_amount + res.host_commission) - res.cleaning_fee), 0),
+                          rule: '25% of Commissionable amount',
+                          managementCommissions: statements[0].expenses.commission,
+                          managementCommissionsVAT: statements[0].summary?.management_commission_vat || 0,
+                          cleaningFees: statements[0].expenses.fees,
+                          hostCommissions: 0,
+                          extraFees: statements[0].expenses.other,
+                          expenses: 0,
+                          issuer: '514142057',
+                          issuerDetails: 'series: FR COMMLT14 | product: GEST',
+                          recipient: `${statements[0].propertyId} (${statements[0].propertyName})`,
+                          totalToInvoice: totalToInvoice,
+                          totalToPay: totalReceivedAmount - totalToInvoice,
+                          totalToPayFormula: 'Received amounts - Total to invoice'
+                        }}
+                      />
+                    </div>
+                  );
+                })()}
+
                 {/* Download Button */}
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-6">
                   <button
-                    onClick={downloadStatements}
+                    onClick={handleDownloadPDF}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                   >
                     <Download className="h-4 w-4 mr-2" />
-                    Download CSV
+                    {t('ownerStatements.downloadPdf')}
                   </button>
                 </div>
               </div>

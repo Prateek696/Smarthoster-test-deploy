@@ -33,7 +33,7 @@ import CreditNotes from './pages/CreditNotes'
 import Expenses from './pages/Expenses'
 import Reviews from './pages/Reviews'
 import OwnerStatements from './pages/OwnerStatements'
-import Settings from './pages/Settings'
+import FinancialDetails from './pages/FinancialDetails'
 import Profile from './pages/Profile'
 import AdvancedCalendar from './pages/AdvancedCalendar'
 import Automations from './pages/Automations'
@@ -125,8 +125,8 @@ function App() {
         <Route path="expenses" element={<Expenses />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="owner-statements" element={<OwnerStatements />} />
+        <Route path="financial-details" element={<FinancialDetails />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
         <Route path="advanced-calendar" element={<AdvancedCalendar />} />
         <Route path="automations" element={<Automations />} />
         

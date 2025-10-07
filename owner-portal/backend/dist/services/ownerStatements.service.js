@@ -153,14 +153,73 @@ const calculateOwnerStatements = async (propertyId, startDate, endDate, commissi
         const total_revenue = total_invoiced_value > 0 ? total_invoiced_value : reservations.reduce((sum, res) => sum + res.received_amount, 0);
         console.log(`[DEBUG] Revenue source: ${total_invoiced_value > 0 ? 'INVOICES' : 'RESERVATIONS (fallback)'}`);
         console.log(`[DEBUG] Final total revenue: ${total_revenue}`);
-        // Calculate management commission: 25% of (Gross - Cleaning Fee) (only if property requires commission)
-        const management_commission = requiresCommission
-            ? (total_revenue - total_cleaning_fees) * (commissionPercentage / 100)
+        // Calculate management commission: 25% of ((Received amount + Host commission) - Cleaning fee) (only if property requires commission)
+        const total_received_plus_host_commission_minus_cleaning = reservations.reduce((sum, res) => sum + (res.received_amount + res.host_commission - res.cleaning_fee), 0);
+        const management_commission_base = requiresCommission
+            ? Math.max(0, total_received_plus_host_commission_minus_cleaning * (commissionPercentage / 100))
             : 0;
+        // Calculate VAT for management commission using real invoice VAT data
+        let management_commission_vat = 0;
+        let vat_rate_used = 0;
+        if (filteredInvoices.length > 0) {
+            console.log(`[DEBUG] Processing ${filteredInvoices.length} invoices for VAT calculation`);
+            // Calculate average VAT rate from actual invoices
+            const total_invoice_vat = filteredInvoices.reduce((sum, invoice) => {
+                let invoiceVat = 0;
+                // Extract VAT from invoice data (same logic as statements.service.ts)
+                if (invoice.vat != null) {
+                    invoiceVat = parseFloat(String(invoice.vat)) || 0;
+                    console.log(`[DEBUG] Invoice ${invoice.id}: VAT from direct field = ${invoiceVat}`);
+                }
+                else if (invoice.total != null && invoice.value != null) {
+                    const total = parseFloat(String(invoice.total)) || 0;
+                    const gross = parseFloat(String(invoice.value)) || 0;
+                    if (total > gross) {
+                        invoiceVat = total - gross;
+                        console.log(`[DEBUG] Invoice ${invoice.id}: VAT calculated from total (${total}) - gross (${gross}) = ${invoiceVat}`);
+                    }
+                }
+                else {
+                    console.log(`[DEBUG] Invoice ${invoice.id}: No VAT data available (vat: ${invoice.vat}, total: ${invoice.total}, value: ${invoice.value})`);
+                }
+                return sum + invoiceVat;
+            }, 0);
+            const total_invoice_gross = filteredInvoices.reduce((sum, invoice) => {
+                return sum + (parseFloat(invoice.value) || 0);
+            }, 0);
+            console.log(`[DEBUG] Invoice VAT Summary: total_vat=${total_invoice_vat}, total_gross=${total_invoice_gross}`);
+            // Calculate average VAT rate from invoices
+            if (total_invoice_gross > 0 && total_invoice_vat > 0) {
+                vat_rate_used = total_invoice_vat / total_invoice_gross;
+                management_commission_vat = management_commission_base * vat_rate_used;
+            }
+            else {
+                // Fallback to 23% if no VAT data in invoices
+                vat_rate_used = 0.23;
+                management_commission_vat = management_commission_base * vat_rate_used;
+            }
+        }
+        else {
+            // Fallback to 23% VAT rate if no invoices available
+            vat_rate_used = 0.23;
+            management_commission_vat = management_commission_base * vat_rate_used;
+        }
+        const management_commission_total = management_commission_base + management_commission_vat;
+        console.log(`[DEBUG] Management Commission VAT Calculation:`, {
+            baseCommission: management_commission_base,
+            vatRateUsed: vat_rate_used,
+            vatRateSource: filteredInvoices.length > 0 ? 'CALCULATED_FROM_INVOICES' : 'FALLBACK_23%',
+            vatAmount: management_commission_vat,
+            totalWithVAT: management_commission_total,
+            invoiceCount: filteredInvoices.length
+        });
         // Calculate net amount owner receives
-        const net_amount_owner = total_revenue - management_commission;
+        const net_amount_owner = total_revenue - management_commission_total;
         console.log(`💰 Commission calculation: ${requiresCommission ? 'ENABLED' : 'DISABLED'}`);
-        console.log(`💰 Management commission: €${management_commission.toFixed(2)}`);
+        console.log(`💰 Total ((Received + Host Commission) - Cleaning Fee): €${total_received_plus_host_commission_minus_cleaning.toFixed(2)}`);
+        console.log(`💰 25% of Total: €${(total_received_plus_host_commission_minus_cleaning * 0.25).toFixed(2)}`);
+        console.log(`💰 Management commission (base): €${management_commission_base.toFixed(2)}`);
+        console.log(`💰 Management commission (with VAT): €${management_commission_total.toFixed(2)}`);
         console.log(`💰 Net payout: €${net_amount_owner.toFixed(2)}`);
         const summary = {
             total_revenue,
@@ -169,7 +228,9 @@ const calculateOwnerStatements = async (propertyId, startDate, endDate, commissi
             total_extra_fees,
             total_city_tax,
             total_invoiced_value,
-            management_commission: Math.round(management_commission * 100) / 100, // Round to 2 decimal places
+            management_commission: Math.round(management_commission_total * 100) / 100, // Round to 2 decimal places
+            management_commission_base: Math.round(management_commission_base * 100) / 100,
+            management_commission_vat: Math.round(management_commission_vat * 100) / 100,
             net_amount_owner: Math.round(net_amount_owner * 100) / 100,
             commission_percentage: commissionPercentage,
             reservation_count: reservations.length
@@ -180,7 +241,9 @@ const calculateOwnerStatements = async (propertyId, startDate, endDate, commissi
             property_id: propertyId,
             start_date: startDate,
             end_date: endDate,
-            generated_at: new Date().toISOString()
+            generated_at: new Date().toISOString(),
+            isAdminOwned: property ? property.isAdminOwned : false,
+            requiresCommission: requiresCommission
         };
     }
     catch (error) {

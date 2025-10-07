@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLanguage } from '../contexts/LanguageContext';
 import { AppDispatch, RootState } from '../store';
 import BookingCalendar from '../components/calendar/BookingCalendar';
 import { fetchPropertiesAsync } from '../store/properties.slice';
@@ -8,6 +9,7 @@ import usePropertyRefresh from '../hooks/usePropertyRefresh';
 import PropertySelector from '../components/common/PropertySelector';
 
 const Calendar: React.FC = () => {
+  const { t } = useLanguage();
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
   const [calendarProps, setCalendarProps] = useState({

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PerformanceCard from '../components/dashboard/PerformanceCard';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Performance: React.FC = () => {
+  const { t } = useLanguage();
   const { propertyId } = useParams<{ propertyId: string }>();
   const [searchParams] = useSearchParams();
   const [performanceProps, setPerformanceProps] = useState({
@@ -48,7 +50,7 @@ const Performance: React.FC = () => {
     <div className="space-y-8">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white">Property Performance</h1>
+        <h1 className="text-3xl font-bold text-white">{t('nav.performance')}</h1>
         <p className="text-slate-400 mt-2">
           Track your monthly performance metrics and revenue breakdown
           {propertyId && ` for Property ${propertyId}`}

@@ -5,8 +5,7 @@ import { Menu, ChevronDown, LogOut } from 'lucide-react'
 import { RootState, AppDispatch } from '../../store'
 import { logoutAsync } from '../../store/auth.slice'
 import Logo from '../common/Logo'
-import LanguageSwitcher from '../common/LanguageSwitcher'
-import { useLanguage } from '../../contexts/LanguageContext'
+import { useLanguage, Language } from '../../contexts/LanguageContext'
 
 interface NavbarProps {
   onMenuClick: () => void
@@ -16,13 +15,23 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const [showProfile, setShowProfile] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const { t } = useLanguage()
+  const { t, language, setLanguage } = useLanguage()
   
   const { user } = useSelector((state: RootState) => state.auth)
 
   const handleLogout = () => {
     dispatch(logoutAsync())
   }
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage)
+  }
+
+  const flags = [
+    { code: 'en' as Language, image: '/src/assets/Britain.png', alt: 'English' },
+    { code: 'pt' as Language, image: '/src/assets/Portugal.png', alt: 'Português' },
+    { code: 'fr' as Language, image: '/src/assets/France.png', alt: 'Français' }
+  ]
 
 
   return (
@@ -41,8 +50,27 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
           {/* Right extreme - Language and Profile */}
           <div className="flex items-center space-x-4">
-            {/* Language Switcher */}
-            <LanguageSwitcher showLabel={false} />
+            {/* Flag Language Switcher */}
+            <div className="flex items-center space-x-2">
+              {flags.map((flag) => (
+                <button
+                  key={flag.code}
+                  onClick={() => handleLanguageChange(flag.code)}
+                  className={`p-1 rounded-md transition-all duration-200 hover:scale-110 ${
+                    language === flag.code 
+                      ? 'ring-2 ring-blue-500 ring-offset-1 bg-blue-50' 
+                      : 'hover:bg-gray-100'
+                  }`}
+                  title={flag.alt}
+                >
+                  <img
+                    src={flag.image}
+                    alt={flag.alt}
+                    className="w-6 h-4 object-cover rounded-sm"
+                  />
+                </button>
+              ))}
+            </div>
 
             {/* Profile dropdown */}
             <div className="relative">

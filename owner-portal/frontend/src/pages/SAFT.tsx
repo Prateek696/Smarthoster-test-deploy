@@ -6,6 +6,7 @@ import { Receipt, Download, Calendar, AlertCircle, CheckCircle, ChevronDown } fr
 import { getAllOwners, Owner } from '../services/admin.api';
 import { settingsAPI } from '../services/settings.api';
 import apiClient from '../services/apiClient';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface SAFTResponse {
   generated: string;
@@ -14,6 +15,7 @@ interface SAFTResponse {
 }
 
 const SAFT: React.FC = () => {
+  const { t } = useLanguage();
   const { user } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const [selectedYear, setSelectedYear] = useState<number>(() => {
@@ -47,18 +49,18 @@ const SAFT: React.FC = () => {
   
   // Generate months array
   const months = [
-    { value: 1, name: 'January' },
-    { value: 2, name: 'February' },
-    { value: 3, name: 'March' },
-    { value: 4, name: 'April' },
-    { value: 5, name: 'May' },
-    { value: 6, name: 'June' },
-    { value: 7, name: 'July' },
-    { value: 8, name: 'August' },
-    { value: 9, name: 'September' },
-    { value: 10, name: 'October' },
-    { value: 11, name: 'November' },
-    { value: 12, name: 'December' }
+    { value: 1, name: t('saft.month.january') },
+    { value: 2, name: t('saft.month.february') },
+    { value: 3, name: t('saft.month.march') },
+    { value: 4, name: t('saft.month.april') },
+    { value: 5, name: t('saft.month.may') },
+    { value: 6, name: t('saft.month.june') },
+    { value: 7, name: t('saft.month.july') },
+    { value: 8, name: t('saft.month.august') },
+    { value: 9, name: t('saft.month.september') },
+    { value: 10, name: t('saft.month.october') },
+    { value: 11, name: t('saft.month.november') },
+    { value: 12, name: t('saft.month.december') }
   ];
 
   // Fetch owners on component mount
@@ -231,7 +233,7 @@ const SAFT: React.FC = () => {
         month: selectedMonth.toString(),
         invoicing_nif: invoicingNif
       });
-
+      
       const data = await apiClient.get(`/saft/get?${params}`);
       setSaftData(data);
     } catch (error: any) {
@@ -281,10 +283,10 @@ const SAFT: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center space-x-3 mb-2">
           <Receipt className="w-8 h-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">SAFT-T Retrieval</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('saft.title')}</h1>
         </div>
         <p className="text-gray-600">
-          Retrieve existing SAFT (Sistema de Apuramento de Faturas e Transações) files for Portuguese tax compliance.
+          {t('saft.description')}
         </p>
       </div>
 
@@ -293,7 +295,7 @@ const SAFT: React.FC = () => {
           {/* Company Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Company Selection
+              {t('saft.companySelection')}
             </label>
             <div className="space-y-3">
               {/* Company Dropdown */}
@@ -316,7 +318,7 @@ const SAFT: React.FC = () => {
                 }}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Select a company...</option>
+                <option value="">{t('saft.selectCompany')}</option>
                 {owners.map((owner) => {
                   return owner.companies?.map((company, index) => {
                     const optionValue = `${owner._id}-${index}`;
@@ -332,18 +334,18 @@ const SAFT: React.FC = () => {
               {/* Manual NIF Input (fallback) */}
               <div className="text-sm text-gray-500">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Or enter NIF manually:
-                </label>
-                <input
-                  type="text"
-                  value={invoicingNif}
+                  {t('saft.enterNifManually')}
+            </label>
+            <input
+              type="text"
+              value={invoicingNif}
                   onChange={(e) => {
                     setInvoicingNif(e.target.value);
                     setSelectedCompany(null); // Clear selection when typing manually
                   }}
-                  placeholder="e.g., 234567890"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                  placeholder={t('saft.nifPlaceholder')}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
               </div>
             </div>
           </div>
@@ -352,7 +354,7 @@ const SAFT: React.FC = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Calendar className="w-4 h-4 inline mr-2" />
-              Year
+              {t('saft.year')}
             </label>
             <select
               value={selectedYear}
@@ -370,7 +372,7 @@ const SAFT: React.FC = () => {
           {/* Month Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Month
+              {t('saft.month')}
             </label>
             <select
               value={selectedMonth}
@@ -396,12 +398,12 @@ const SAFT: React.FC = () => {
             {isLoading ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
-                <span>Retrieving...</span>
+                <span>{t('saft.retrieving')}</span>
               </>
             ) : (
               <>
                 <Receipt className="w-4 h-4 opacity-70" />
-                <span>Retrieve SAFT-T</span>
+                <span>{t('saft.retrieveSaft')}</span>
               </>
             )}
           </button>
@@ -412,11 +414,11 @@ const SAFT: React.FC = () => {
           <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-start space-x-3">
             <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-amber-900 mb-1">SAFT File Not Available</h3>
+              <h3 className="text-sm font-semibold text-amber-900 mb-1">{t('saft.saftNotAvailable')}</h3>
               <p className="text-sm text-amber-800">{error}</p>
               {error.includes('not generated') && (
                 <p className="text-xs text-amber-700 mt-2">
-                  💡 Tip: SAFT files are typically generated at the end of each month. Try selecting a previous month.
+                  {t('saft.tipNotGenerated')}
                 </p>
               )}
             </div>
@@ -426,20 +428,20 @@ const SAFT: React.FC = () => {
         {/* Success Display */}
         {saftData && (
           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md flex items-start space-x-3">
-            <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
-            <div className="flex-1">
-              <h3 className="text-sm font-medium text-green-800">SAFT-T Retrieved Successfully</h3>
-              <div className="mt-2 text-sm text-green-700">
-                <p><strong>Generated:</strong> {new Date(saftData.generated).toLocaleString()}</p>
-                <p><strong>Sent:</strong> {new Date(saftData.sent).toLocaleString()}</p>
-              </div>
-              <button
+              <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+              <div className="flex-1">
+              <h3 className="text-sm font-medium text-green-800">{t('saft.retrievedSuccessfully')}</h3>
+                <div className="mt-2 text-sm text-green-700">
+                <p><strong>{t('saft.generated')}:</strong> {new Date(saftData.generated).toLocaleString()}</p>
+                <p><strong>{t('saft.sent')}:</strong> {new Date(saftData.sent).toLocaleString()}</p>
+                </div>
+                <button
                 onClick={() => downloadSAFT()}
                 className="mt-3 inline-flex items-center space-x-2 px-4 py-2 bg-green-500/20 text-gray-900 rounded-md hover:bg-green-500/30 border border-green-200 shadow-sm hover:shadow-md transition-all duration-300"
-              >
+                >
                 <Download className="w-4 h-4 opacity-70" />
-                <span>Download SAFT-T File</span>
-              </button>
+                <span>{t('saft.downloadSaftFile')}</span>
+                </button>
             </div>
           </div>
         )}
@@ -447,14 +449,12 @@ const SAFT: React.FC = () => {
 
       {/* Information Section */}
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-blue-900 mb-3">About SAFT-T</h2>
+        <h2 className="text-lg font-semibold text-blue-900 mb-3">{t('saft.aboutSaft')}</h2>
         <p className="text-blue-800 text-sm leading-relaxed">
-          The SAFT-T (Sistema de Apuramento de Faturas e Transações - Transmissão) is a Portuguese tax compliance system 
-          that requires businesses to submit detailed transaction data to the tax authorities. This tool helps you 
-          retrieve existing SAFT-T files for the specified period and invoicing VAT ID.
+          {t('saft.aboutDescription1')}
         </p>
         <p className="text-blue-800 text-sm leading-relaxed mt-2">
-          The SAFT-T file contains all invoice and transaction data and can be submitted directly to the Portuguese tax authorities.
+          {t('saft.aboutDescription2')}
         </p>
       </div>
     </div>

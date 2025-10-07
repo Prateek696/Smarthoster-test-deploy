@@ -5,7 +5,7 @@
   "main": "simple-index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "tsc && npx copyfiles public/**/* dist/ && npx copyfiles public/**/* .",
     "start": "node dist/server.js",
     "seed:properties": "ts-node src/scripts/seedProperties.ts",
     "verify:properties": "ts-node src/scripts/verifyProperties.ts",

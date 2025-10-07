@@ -112,29 +112,44 @@ const debugInvoices = async (req, res) => {
     }
 };
 exports.debugInvoices = debugInvoices;
-// Download invoice endpoint
+// Download invoice endpoint - Optimized version
 const downloadInvoice = async (req, res) => {
     const listingId = parseInt(req.params.listingId);
     const invoiceId = req.params.invoiceId;
+    const { invoiceUrl } = req.query; // Accept invoice URL as query parameter
     try {
         console.log(`[DOWNLOAD] Attempting to download invoice ${invoiceId} for property ${listingId}`);
-        // First, get the invoice to find its URL
-        const invoices = await (0, invoice_service_1.getInvoicesService)(listingId, '', '');
-        const invoice = invoices.find((inv) => inv.id === invoiceId);
-        if (!invoice) {
-            console.log(`[DOWNLOAD] Invoice ${invoiceId} not found`);
-            return res.status(404).json({ message: "Invoice not found" });
+        let pdfUrl;
+        // If invoice URL is provided in query params, use it directly (faster)
+        if (invoiceUrl && typeof invoiceUrl === 'string' && invoiceUrl !== '#') {
+            console.log(`[DOWNLOAD] Using provided invoice URL: ${invoiceUrl}`);
+            pdfUrl = invoiceUrl;
         }
-        console.log(`[DOWNLOAD] Found invoice: ${JSON.stringify(invoice)}`);
-        if (!invoice.invoice_url || invoice.invoice_url === '#') {
-            console.log(`[DOWNLOAD] No valid invoice URL: ${invoice.invoice_url}`);
-            return res.status(404).json({ message: "Invoice URL not available" });
+        else {
+            // Fallback: search for invoice in last 3 months (slower)
+            console.log(`[DOWNLOAD] No URL provided, searching for invoice...`);
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setMonth(endDate.getMonth() - 3);
+            const startDateStr = startDate.toISOString().split('T')[0];
+            const endDateStr = endDate.toISOString().split('T')[0];
+            const invoices = await (0, invoice_service_1.getInvoicesService)(listingId, startDateStr, endDateStr);
+            const invoice = invoices.find((inv) => inv.id === invoiceId);
+            if (!invoice) {
+                console.log(`[DOWNLOAD] Invoice ${invoiceId} not found in date range ${startDateStr} to ${endDateStr}`);
+                return res.status(404).json({ message: "Invoice not found" });
+            }
+            if (!invoice.invoice_url || invoice.invoice_url === '#') {
+                console.log(`[DOWNLOAD] No valid invoice URL: ${invoice.invoice_url}`);
+                return res.status(404).json({ message: "Invoice URL not available" });
+            }
+            pdfUrl = invoice.invoice_url;
         }
-        console.log(`[DOWNLOAD] Fetching PDF from: ${invoice.invoice_url}`);
+        console.log(`[DOWNLOAD] Fetching PDF from URL: ${pdfUrl}`);
         // Fetch the PDF from the external URL as buffer
-        const response = await axios_1.default.get(invoice.invoice_url, {
-            responseType: 'arraybuffer', // Use arraybuffer instead of stream
-            timeout: 30000, // 30 second timeout
+        const response = await axios_1.default.get(pdfUrl, {
+            responseType: 'arraybuffer',
+            timeout: 8000, // Increased timeout for better reliability
             headers: {
                 'Accept': 'application/pdf,*/*',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'

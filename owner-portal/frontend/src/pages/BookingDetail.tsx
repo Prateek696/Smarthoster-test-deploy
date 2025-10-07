@@ -15,11 +15,13 @@ import {
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const BookingDetail: React.FC = () => {
   const { bookingId } = useParams<{ bookingId: string }>()
   const [searchParams] = useSearchParams()
   const propertyId = searchParams.get('propertyId')
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const [booking, setBooking] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -96,6 +98,17 @@ const BookingDetail: React.FC = () => {
             border-bottom: 2px solid #333; 
             padding-bottom: 15px; 
             margin-bottom: 25px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+          }
+          .header .logo {
+            height: 60px;
+            width: auto;
+          }
+          .header .title-section {
+            flex: 1;
           }
           .header h1 { 
             margin: 0; 
@@ -160,110 +173,113 @@ const BookingDetail: React.FC = () => {
       </head>
       <body>
         <div class="header">
-          <h1>Booking Detail Report</h1>
-          <p>Generated on: ${new Date().toLocaleString()}</p>
+          <img src="/src/assets/Real-logo.jpg" alt="Company Logo" class="logo" />
+          <div class="title-section">
+            <h1>${t('bookingDetail.reportTitle')}</h1>
+            <p>${t('bookingDetail.generatedOn')} ${new Date().toLocaleString()}</p>
+          </div>
         </div>
         
         <div class="section">
-          <h3>Basic Information</h3>
+          <h3>${t('bookingDetail.basicInformation')}</h3>
           <div class="info-row">
-            <span class="label">Hostaway Reservation ID:</span>
+            <span class="label">${t('bookingDetail.hostawayReservationId')}</span>
             <span class="value">${booking.hostawayReservationId || booking.id || 'N/A'}</span>
           </div>
           <div class="info-row">
-            <span class="label">Channel Reservation ID:</span>
+            <span class="label">${t('bookingDetail.channelReservationId')}</span>
             <span class="value">${booking.channelReservationId || booking.reservationId || 'N/A'}</span>
           </div>
           <div class="info-row">
-            <span class="label">Property:</span>
+            <span class="label">${t('bookingDetail.property')}</span>
             <span class="value">${booking.propertyName}</span>
           </div>
           <div class="info-row">
-            <span class="label">Guest Name:</span>
+            <span class="label">${t('bookingDetail.guestName')}</span>
             <span class="value">${booking.guestName}</span>
           </div>
           <div class="info-row">
-            <span class="label">Guest Email:</span>
+            <span class="label">${t('bookingDetail.guestEmail')}</span>
             <span class="value">${booking.guestEmail}</span>
           </div>
           <div class="info-row">
-            <span class="label">Guest Phone:</span>
-            <span class="value">${booking.guestPhone || 'Not provided'}</span>
+            <span class="label">${t('bookingDetail.guestPhone')}</span>
+            <span class="value">${booking.guestPhone || t('bookingDetail.notProvided')}</span>
           </div>
         </div>
         
         <div class="section">
-          <h3>Dates & Duration</h3>
+          <h3>${t('bookingDetail.datesDuration')}</h3>
           <div class="info-row">
-            <span class="label">Check-in:</span>
+            <span class="label">${t('bookingDetail.checkin')}</span>
             <span class="value">${new Date(booking.arrivalDate).toLocaleDateString()}</span>
           </div>
           <div class="info-row">
-            <span class="label">Check-out:</span>
+            <span class="label">${t('bookingDetail.checkout')}</span>
             <span class="value">${new Date(booking.departureDate).toLocaleDateString()}</span>
           </div>
           <div class="info-row">
-            <span class="label">Total Nights:</span>
+            <span class="label">${t('bookingDetail.totalNights')}</span>
             <span class="value">${booking.nights}</span>
           </div>
           ${booking.checkInTime ? `
           <div class="info-row">
-            <span class="label">Check-in Time:</span>
+            <span class="label">${t('bookingDetail.checkinTime')}</span>
             <span class="value">${booking.checkInTime}</span>
           </div>
           <div class="info-row">
-            <span class="label">Check-out Time:</span>
+            <span class="label">${t('bookingDetail.checkoutTime')}</span>
             <span class="value">${booking.checkOutTime}</span>
           </div>
           ` : ''}
         </div>
         
         <div class="section">
-          <h3>Guest Information</h3>
+          <h3>${t('bookingDetail.guestInformation')}</h3>
           <div class="info-row">
-            <span class="label">Adults:</span>
+            <span class="label">${t('bookingDetail.adults')}</span>
             <span class="value">${booking.adults}</span>
           </div>
           <div class="info-row">
-            <span class="label">Children:</span>
+            <span class="label">${t('bookingDetail.children')}</span>
             <span class="value">${booking.children}</span>
           </div>
           <div class="info-row">
-            <span class="label">Total Guests:</span>
+            <span class="label">${t('bookingDetail.totalGuests')}</span>
             <span class="value">${booking.totalGuests}</span>
           </div>
         </div>
         
         <div class="section">
-          <h3>Booking Details</h3>
+          <h3>${t('bookingDetail.bookingDetails')}</h3>
           <div class="info-row">
-            <span class="label">Platform:</span>
+            <span class="label">${t('bookingDetail.platform')}</span>
             <span class="value">${booking.provider}</span>
           </div>
           <div class="info-row">
-            <span class="label">Status:</span>
+            <span class="label">${t('bookingDetail.status')}</span>
             <span class="value">${booking.status}</span>
           </div>
           <div class="info-row">
-            <span class="label">Payment Status:</span>
+            <span class="label">${t('bookingDetail.paymentStatus')}</span>
             <span class="value">${booking.paymentStatus}</span>
           </div>
         </div>
         
         <div class="section">
-          <h3>Financial Breakdown</h3>
+          <h3>${t('bookingDetail.financialBreakdown')}</h3>
           <div class="financial">
             <div class="info-row">
-              <span class="label">Total Revenue:</span>
+              <span class="label">${t('bookingDetail.totalRevenue')}</span>
               <span class="value">€${booking.totalPrice?.toFixed(2)}</span>
             </div>
             <div class="info-row" style="background-color: #f8f9fa; padding: 8px; border-radius: 4px;">
               <span class="label" style="font-style: italic;">Note:</span>
-              <span class="value" style="font-style: italic;">Final amount - includes all fees (cleaning, city tax, etc.)</span>
+              <span class="value" style="font-style: italic;">${t('bookingDetail.finalAmountNote')}</span>
             </div>
             ${booking.cityTax ? `
             <div class="info-row">
-              <span class="label">City Tax:</span>
+              <span class="label">${t('bookingDetail.cityTax')}</span>
               <span class="value">€${booking.cityTax?.toFixed(2)}</span>
             </div>
             ` : ''}
@@ -272,7 +288,7 @@ const BookingDetail: React.FC = () => {
         
         ${booking.specialRequests ? `
         <div class="section">
-          <h3>Special Requests</h3>
+          <h3>${t('bookingDetail.specialRequests')}</h3>
           <div class="special-requests">
             <p>${booking.specialRequests}</p>
           </div>
@@ -300,23 +316,6 @@ const BookingDetail: React.FC = () => {
     printWindow.document.close()
   }
 
-  const handleDownloadCSV = () => {
-    if (!booking) return
-    
-    // Create CSV content with proper data handling
-    const csvContent = `Hostaway Reservation ID,Channel Reservation ID,Property,Guest Name,Guest Email,Guest Phone,Check-in,Check-out,Nights,Adults,Children,Total Revenue (Final Amount),Platform,Status,Payment Status,Check-in Time,Check-out Time,Special Requests
-"${booking.hostawayReservationId || booking.id || 'N/A'}","${booking.channelReservationId || booking.reservationId || 'N/A'}","${booking.propertyName || 'N/A'}","${booking.guestName || 'N/A'}","${booking.guestEmail || 'N/A'}","${booking.guestPhone || 'N/A'}","${booking.arrivalDate || 'N/A'}","${booking.departureDate || 'N/A'}","${booking.nights || 0}","${booking.adults || 0}","${booking.children || 0}","${booking.totalPrice || 0}","${booking.provider || 'N/A'}","${booking.status || 'N/A'}","${booking.paymentStatus || 'N/A'}","${booking.checkInTime || 'N/A'}","${booking.checkOutTime || 'N/A'}","${(booking.specialRequests || '').replace(/"/g, '""')}"`
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `booking-${booking.id}.csv`
-    document.body.appendChild(a)
-    a.click()
-    window.URL.revokeObjectURL(url)
-    document.body.removeChild(a)
-  }
 
   if (loading) {
     return (
@@ -340,7 +339,7 @@ const BookingDetail: React.FC = () => {
             onClick={() => navigate('/bookings')}
             className="btn-primary"
           >
-            Back to Bookings
+{t('bookingDetail.backToBookings')}
           </button>
         </div>
       </div>
@@ -359,7 +358,7 @@ const BookingDetail: React.FC = () => {
             className="btn-primary"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Bookings
+{t('bookingDetail.backToBookings')}
           </button>
         </div>
       </div>
@@ -378,7 +377,7 @@ const BookingDetail: React.FC = () => {
                 className="btn-outline btn-sm mr-4"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Bookings
+    {t('bookingDetail.backToBookings')}
               </button>
               <h1 className="text-xl font-semibold text-white">
                 Booking Details - {booking.id}
@@ -390,14 +389,7 @@ const BookingDetail: React.FC = () => {
                 className="btn-outline btn-sm"
               >
                 <Download className="h-4 w-4 mr-2" />
-                Print PDF
-              </button>
-              <button
-                onClick={handleDownloadCSV}
-                className="btn-primary btn-sm"
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Download CSV
+{t('bookingDetail.printPdf')}
               </button>
             </div>
           </div>
@@ -412,14 +404,14 @@ const BookingDetail: React.FC = () => {
             {/* Basic Information */}
             <div className="card">
               <div className="card-header">
-                <h2 className="text-lg font-semibold text-gray-900">Basic Information</h2>
+                <h2 className="text-lg font-semibold text-gray-900">{t('bookingDetail.basicInformation')}</h2>
               </div>
               <div className="card-content">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                      Hostaway reservation ID
+{t('bookingDetail.hostawayReservationId')}
                     </label>
                     <input 
                       type="text" 
@@ -431,7 +423,7 @@ const BookingDetail: React.FC = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                      Channel reservation ID
+{t('bookingDetail.channelReservationId')}
                     </label>
                     <input 
                       type="text" 
@@ -441,15 +433,15 @@ const BookingDetail: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Guest Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.guestName')}</label>
                     <p className="text-sm text-gray-900">{booking.guestName}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Platform</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.platform')}</label>
                     <p className="text-sm text-gray-900 capitalize">{booking.provider}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.status')}</label>
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       booking.status === 'confirmed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                     }`}>
@@ -463,26 +455,26 @@ const BookingDetail: React.FC = () => {
             {/* Dates and Duration */}
             <div className="card">
               <div className="card-header">
-                <h2 className="text-lg font-semibold text-gray-900">Dates & Duration</h2>
+                <h2 className="text-lg font-semibold text-gray-900">{t('bookingDetail.datesDuration')}</h2>
               </div>
               <div className="card-content">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Check-in</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.checkin')}</label>
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 text-gray-400 mr-2" />
                       <p className="text-sm text-gray-900">{new Date(booking.arrivalDate).toLocaleDateString()}</p>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Check-out</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.checkout')}</label>
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 text-gray-400 mr-2" />
                       <p className="text-sm text-gray-900">{new Date(booking.departureDate).toLocaleDateString()}</p>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Total Nights</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.totalNights')}</label>
                     <p className="text-2xl font-bold text-primary-600">{booking.nights}</p>
                   </div>
                 </div>
@@ -492,42 +484,42 @@ const BookingDetail: React.FC = () => {
             {/* Guest Information */}
             <div className="card">
               <div className="card-header">
-                <h2 className="text-lg font-semibold text-gray-900">Guest Information</h2>
+                <h2 className="text-lg font-semibold text-gray-900">{t('bookingDetail.guestInformation')}</h2>
               </div>
               <div className="card-content">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Guest Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.guestEmail')}</label>
                     <p className="text-sm text-gray-900">{booking.guestEmail}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Guest Phone</label>
-                    <p className="text-sm text-gray-900">{booking.guestPhone || 'Not provided'}</p>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.guestPhone')}</label>
+                    <p className="text-sm text-gray-900">{booking.guestPhone || t('bookingDetail.notProvided')}</p>
                   </div>
                 </div>
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Adults</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.adults')}</label>
                     <div className="flex items-center">
                       <Users className="h-4 w-4 text-gray-400 mr-2" />
                       <p className="text-sm text-gray-900">{booking.adults}</p>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Children</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.children')}</label>
                     <div className="flex items-center">
                       <Users className="h-4 w-4 text-gray-400 mr-2" />
                       <p className="text-sm text-gray-900">{booking.children}</p>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Total Guests</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.totalGuests')}</label>
                     <p className="text-2xl font-bold text-primary-600">{booking.totalGuests}</p>
                   </div>
                 </div>
                 {booking.specialRequests && (
                   <div className="mt-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Special Requests</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.specialRequests')}</label>
                     <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">{booking.specialRequests}</p>
                   </div>
                 )}
@@ -573,22 +565,22 @@ const BookingDetail: React.FC = () => {
             {/* Financial Information */}
             <div className="card">
               <div className="card-header">
-                <h3 className="text-lg font-semibold text-gray-900">Financial Information</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{t('bookingDetail.financialBreakdown')}</h3>
               </div>
               <div className="card-content space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Total Revenue</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('bookingDetail.totalRevenue')}</label>
                   <p className="text-2xl font-bold text-primary-600">€{booking.totalPrice?.toFixed(2)}</p>
-                  <p className="text-xs text-gray-500 mt-1">Final amount - includes all fees (cleaning, city tax, etc.)</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('bookingDetail.finalAmountNote')}</p>
                 </div>
                 {booking.checkInTime && (
                   <div className="pt-4 border-t border-gray-200">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Check-in Time:</span>
+                      <span className="text-gray-600">{t('bookingDetail.checkinTime')}</span>
                       <span className="font-medium">{booking.checkInTime}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Check-out Time:</span>
+                      <span className="text-gray-600">{t('bookingDetail.checkoutTime')}</span>
                       <span className="font-medium">{booking.checkOutTime}</span>
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLanguage } from '../../contexts/LanguageContext';
 import {
   Plus,
   Edit,
@@ -48,6 +49,7 @@ interface PropertyManagementProps {
 
 const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredProperties, onPropertyUpdate, owners = [], showActions }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useLanguage();
   const { user } = useSelector((state: RootState) => state.auth);
   
   // Default showActions based on user role if not explicitly provided
@@ -518,16 +520,16 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
 
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="text-center">
-              <p className="text-xs text-gray-500 mb-1 font-semibold">Type</p>
+              <p className="text-xs text-gray-500 mb-1 font-semibold">{t('property.type')}</p>
               <p className="text-sm font-bold text-gray-900">{property.type}</p>
             </div>
             <div className="text-center">
-              <p className="text-xs text-gray-500 mb-1 font-semibold">ID</p>
+              <p className="text-xs text-gray-500 mb-1 font-semibold">{t('admin.id')}</p>
               <p className="text-sm font-bold text-gray-900">{property.hostkitId}</p>
             </div>
             <div className="text-center">
-              <p className="text-xs text-gray-500 mb-1 font-semibold">Status</p>
-              <p className="text-sm font-bold text-gray-900">{property.status}</p>
+              <p className="text-xs text-gray-500 mb-1 font-semibold">{t('property.status')}</p>
+              <p className="text-sm font-bold text-gray-900">{property.status === 'active' ? t('admin.active') : property.status}</p>
             </div>
           </div>
 
@@ -540,7 +542,7 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
                 disabled={isUpdating || !canUpdate}
                 title={!canUpdate ? "Only owners can edit properties" : ""}
               >
-                Edit
+                {t('admin.edit')}
               </button>
               <button
                 onClick={() => {
@@ -551,7 +553,7 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
                 disabled={isDeleting || !canUpdate}
                 title={!canUpdate ? "Only owners can delete properties" : ""}
               >
-                Delete
+                {t('admin.delete')}
               </button>
             </div>
           )}

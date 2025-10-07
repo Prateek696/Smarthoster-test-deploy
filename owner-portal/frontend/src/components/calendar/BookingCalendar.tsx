@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, CalendarDays, X, Check, AlertCircle, ChevronLeft, ChevronRight, Euro, Clock, Edit, Lock, Building2 } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { useCalendar } from '../../hooks/useCalendar';
 import PropertySelector from '../common/PropertySelector';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +18,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   propertyId: initialPropertyId,
   onDateSelect 
 }) => {
+  const { t } = useLanguage();
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.auth);
   
@@ -128,7 +130,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && error.response.status === 401) {
         console.error('Authentication failed - token may be expired. Please refresh the page.');
         // Show a message to the user
-        alert('Your session has expired. Please refresh the page to continue.');
+        alert(t('calendar.sessionExpired'));
         return;
       }
       
@@ -171,83 +173,35 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   const handleDateClick = async (date: Date) => {
     // Check if user can update calendar
     if (!canUpdateCalendar(user?.role || null)) {
-      alert('Only owners can manage calendar dates. You can view the calendar but cannot make changes.');
+      alert(t('calendar.onlyOwnersCanManageAlert'));
       return;
     }
 
     const dateStr = formatDateLocal(date);
 
-    // If we have any selected dates, handle selection
-    if (selectedDateList.length > 0 || doubleClickMode) {
-      if (selectedDateList.includes(dateStr)) {
-        // Clicked on selected date - just stop hover mode (keep date selected)
-        setHoverMode(false);
-        setIsSelecting(false); // Stop active selection
-        console.log('Stopped hover mode, date remains selected:', dateStr);
-      } else {
-        // Add to selection and enable hover mode
-        setSelectedDateList(prev => [...prev, dateStr]);
-        setDoubleClickMode(true);
-        setShowBulkActions(true);
-        setHoverMode(true); // Enable hover mode
-        setIsSelecting(true); // Start active selection
-        console.log('Added date to selection and enabled hover mode:', dateStr);
-      }
-      return; // Don't open modal in selection mode
-    }
-
-    // Normal click mode: open date modal
-    setClickedDate(date);
-    setShowDateModal(true);
-    setIsLoadingDateData(true);
-    
-    try {
-      // Fetch real calendar data from Hostaway
-      const dateStr = formatDateLocal(date);
-      const data = await getCalendarDateData(selectedPropertyId || 392776, dateStr);
-      setCalendarDateData(data);
-      
-      // Set edit form values
-      setEditPrice(data.price || 0);
-      setEditMinimumStay(data.minimumStay || 1);
-    } catch (error) {
-      console.error('Failed to fetch calendar date data:', error);
-      // Set default values if API fails
-      setCalendarDateData({
-        date: formatDateLocal(date),
-        status: 'available',
-        price: null,
-        minimumStay: null,
-        checkInAvailable: true,
-        checkOutAvailable: true
-      });
-    } finally {
-      setIsLoadingDateData(false);
-    }
-    
-    // Also update selected dates for range selection
-    if (!selectedDates) {
-      setSelectedDates({ start: formatDateLocal(date), end: formatDateLocal(date) });
+    // Always use multi-date selection mode (default behavior)
+    if (selectedDateList.includes(dateStr)) {
+      // Clicked on selected date - just stop hover mode (keep date selected)
+      setHoverMode(false);
+      setIsSelecting(false); // Stop active selection
+      console.log('Stopped hover mode, date remains selected:', dateStr);
     } else {
-      const start = new Date(selectedDates.start);
-      const end = new Date(selectedDates.end);
-      const clicked = date;
-
-      if (clicked < start) {
-        setSelectedDates({ start: formatDateLocal(clicked), end: selectedDates.end });
-      } else if (clicked > end) {
-        setSelectedDates({ start: selectedDates.start, end: formatDateLocal(clicked) });
-      } else {
-        setSelectedDates(null);
-      }
+      // Add to selection and enable hover mode
+      setSelectedDateList(prev => [...prev, dateStr]);
+      setDoubleClickMode(true);
+      setShowBulkActions(true);
+      setHoverMode(true); // Enable hover mode
+      setIsSelecting(true); // Start active selection
+      console.log('Added date to selection and enabled hover mode:', dateStr);
     }
+    return; // Don't open modal, use multi-date selection instead
   };
 
   const handleDateDoubleClick = (date: Date) => {
     console.log('Double-click detected!', date);
     
     if (!canUpdateCalendar(user?.role || null)) {
-      alert('Only owners can manage calendar dates. You can view the calendar but cannot make changes.');
+      alert(t('calendar.onlyOwnersCanManageAlert'));
       return;
     }
 
@@ -802,7 +756,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         <div
           key={dayIndex}
           className={`
-              relative min-h-[80px] p-0 group border-r border-b border-gray-200 last:border-r-0
+              relative min-h-[100px] min-w-[120px] p-0 group border-r border-b border-gray-200 last:border-r-0
               ${isCurrentMonth && !isDateInSelection(date) && !isSelected ? 'bg-gray-50' : ''}
               ${!isCurrentMonth && !isDateInSelection(date) && !isSelected ? 'bg-gray-100' : ''}
               ${isToday && !isDateInSelection(date) && !isSelected ? 'bg-blue-50' : ''}
@@ -830,7 +784,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           {/* Date Number */}
            <div className="flex justify-between items-center mb-2 p-2">
              <span className={`
-               text-[11px] font-medium px-2 py-1 rounded
+               text-[14px] font-medium px-2 py-1 rounded
                ${isCurrentMonth ? 'text-gray-900 bg-gray-200' : 'text-gray-400 bg-gray-100'}
                ${isToday ? 'text-blue-600 bg-blue-100' : ''}
                ${isSelected ? 'text-blue-700 bg-blue-200 font-bold' : ''}
@@ -843,12 +797,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           </div>
 
           {/* Blocked indicator - positioned between date and price */}
-          {isBlocked && (
+            {isBlocked && (
             <div className="flex justify-center mb-1">
               <span className="text-[7px] bg-red-500 text-white px-1 py-0.5 rounded font-bold">
-                BLOCKED
+                {t('calendar.blockedCaps')}
               </span>
-            </div>
+          </div>
           )}
 
           {/* Pricing and Minimum Stay Info - Bottom Right */}
@@ -863,7 +817,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             if (isLoadingPricing) {
               return (
                 <div className="absolute bottom-1 right-1 px-2 py-1 bg-gray-100 rounded-md text-[10px] text-gray-400 z-10 shadow-md">
-                  Loading...
+{t('calendar.loading')}
                 </div>
               );
             }
@@ -880,16 +834,16 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                   €{pricingInfo?.price || 'N/A'}
                 </div>
                 <div className="text-[8px] text-gray-500">
-                  {pricingInfo?.minimumStay || 'N/A'} nights min
+{pricingInfo?.minimumStay || 'N/A'} {t('calendar.nightsMin')}
                 </div>
                 {pricingInfo?.status === 'reserved' && (
                   <div className="text-[8px] text-blue-600 font-bold">
-                    RESERVED
+{t('calendar.reserved')}
                   </div>
                 )}
                 {pricingInfo?.status === 'blocked' && (
                   <div className="text-[8px] text-red-600 font-bold">
-                    BLOCKED
+{t('calendar.blockedCaps')}
                   </div>
                 )}
               </div>
@@ -901,7 +855,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             const bookings = getBookingsForDate(date);
             
             return (
-              <div className="mt-2 relative" style={{ height: '25px' }}>
+              <div className="mt-2 relative" style={{ height: '32px' }}>
                 {bookings.map((booking, bookingIndex) => {
                   const isCheckIn = booking.isCheckInDay;
                   const isCheckOut = booking.isCheckOutDay;
@@ -912,13 +866,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                   
                   if (isCheckOut && !isCheckIn) {
                     // Check-out only: 30% width from left (morning departure)
-                    height = '25px';
+                    height = '32px';
                     top = '0px';
                     width = '30%';
                     left = '0px';
                   } else if (isCheckIn && !isCheckOut) {
                     // Check-in only: 70% width from right (afternoon arrival)
-                    height = '25px';
+                    height = '32px';
                     top = '0px';
                     width = '70%';
                     left = '30%';
@@ -931,11 +885,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                           key={`${bookingIndex}-checkout`}
                           className="absolute bg-blue-500 flex items-center px-2"
                           style={{
-                            left: '-6px',
+                            left: '-12px',
                             top: '0px',
-                            height: '25px',
+                            height: '32px',
                             width: '30%',
-                            zIndex: 10,
+                            zIndex: 15,
                             borderRadius: '0 6px 6px 0'
                           }}
                         >
@@ -949,9 +903,9 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                           style={{
                             left: '30%',
                             top: '0px',
-                            height: '25px',
+                            height: '32px',
                             width: '70%',
-                            zIndex: 10,
+                            zIndex: 15,
                             borderRadius: '0'
                           }}
                         >
@@ -976,7 +930,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                     );
                   } else {
                     // Staying: full day seamless line
-                    height = '25px';
+                    height = '32px';
                     top = '0px';
                     width = '100%';
                     left = '0px';
@@ -987,12 +941,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                       key={bookingIndex}
                       className="absolute bg-blue-500 flex items-center px-2"
                       style={{
-                        left: left === '0px' ? '-9px' : left,
-                        right: left === '0px' ? '-9px' : '0px',
+                        left: left === '0px' ? '-12px' : left,
+                        right: left === '0px' ? '-12px' : '0px',
                         top: top,
                         height: height,
                         width: width,
-                        zIndex: 9,
+                        zIndex: 15,
                         borderRadius: isCheckIn ? '6px 0 0 6px' : isCheckOut ? '0 6px 6px 0' : '0'
                       }}
                     >
@@ -1010,7 +964,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                               {booking.guestName}
                             </div>
                             <div className="text-[8.5px] text-teal-100 whitespace-nowrap relative z-0">
-                              {booking.guestCount} guests
+                              {booking.guestCount} {t('calendar.guests')}
                             </div>
                           </div>
                         </div>
@@ -1036,7 +990,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 ? 'cursor-pointer disabled:cursor-not-allowed' 
                 : 'cursor-not-allowed'
             } ${doubleClickMode && !isSelecting ? 'bg-green-100 bg-opacity-50' : ''}`}
-            title={!canUpdateCalendar(user?.role || null) ? 'Only owners can manage calendar dates' : 
+            title={!canUpdateCalendar(user?.role || null) ? t('calendar.onlyOwnersCanManage') : 
                    doubleClickMode && isSelecting ? 'Click to complete selection or stop selecting' : 
                    doubleClickMode ? 'Click to start selection' : 'Click to manage date, double-click to select multiple'}
           />
@@ -1050,7 +1004,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg font-semibold text-gray-700">Loading Calendar...</p>
+          <p className="text-lg font-semibold text-gray-700">{t('calendar.loading')}</p>
         </div>
       </div>
     );
@@ -1071,8 +1025,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
           <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No Property Selected</h3>
-          <p className="text-gray-500">Please select a property to view its calendar and bookings.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{t('calendar.noPropertySelected')}</h3>
+          <p className="text-gray-500">{t('calendar.selectPropertyToView')}</p>
         </div>
       </div>
     );
@@ -1084,18 +1038,18 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center space-x-1">
-            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Property Calendar</h2>
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">{t('calendar.title')}</h2>
             {!canUpdateCalendar(user?.role || null) && (
               <div className="flex items-center space-x-1 px-2 py-1 bg-amber-100 text-amber-800 rounded-md text-xs">
                 <Lock className="h-3 w-3" />
-                <span>View Only</span>
+                <span>{t('calendar.viewOnly')}</span>
               </div>
             )}
           </div>
           <p className="text-lg text-gray-600">
             {canUpdateCalendar(user?.role || null) 
-              ? 'Manage your property availability and view bookings' 
-              : 'View availability and bookings (read-only)'
+              ? t('calendar.manageAvailability')
+              : t('calendar.viewAvailability')
             }
           </p>
         </div>
@@ -1134,8 +1088,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       <div className="bg-white rounded-lg border-2">
         {/* Day Headers */}
         <div className="grid grid-cols-7 gap-0 bg-gray-100 p-0 border-b-2">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="p-0.5 text-center text-[10px] font-semibold text-gray-600 bg-white border-r border-gray-300 last:border-r-0">
+          {[t('calendar.day.sun'), t('calendar.day.mon'), t('calendar.day.tue'), t('calendar.day.wed'), t('calendar.day.thu'), t('calendar.day.fri'), t('calendar.day.sat')].map(day => (
+            <div key={day} className="p-1 text-center text-[12px] font-semibold text-gray-600 bg-white border-r border-gray-300 last:border-r-0">
               {day}
             </div>
           ))}
@@ -1152,22 +1106,22 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
         <div className="flex flex-wrap items-center justify-center gap-4">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-blue-100 border-2 border-blue-400 rounded-full"></div>
-            <span className="text-xs font-medium text-gray-700">Booked</span>
-          </div>
+            <span className="text-xs font-medium text-gray-700">{t('calendar.status.booked')}</span>
+        </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-red-100 border-2 border-red-400 rounded-full"></div>
-            <span className="text-xs font-medium text-gray-700">Blocked</span>
-          </div>
+            <span className="text-xs font-medium text-gray-700">{t('calendar.status.blocked')}</span>
+         </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-white border-2 border-gray-400 rounded-full"></div>
-            <span className="text-xs font-medium text-gray-700">Available</span>
-          </div>
+            <span className="text-xs font-medium text-gray-700">{t('calendar.status.available')}</span>
+         </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-green-100 border-2 border-green-400 rounded-full"></div>
-            <span className="text-xs font-medium text-gray-700">Guest Details</span>
+            <span className="text-xs font-medium text-gray-700">{t('calendar.status.guestDetails')}</span>
           </div>
-        </div>
-      </div>
+         </div>
+       </div>
 
 
       {/* Date Selection Actions */}
@@ -1176,10 +1130,10 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-blue-900">
-                Selected: {selectedDates.start} to {selectedDates.end}
+{t('calendar.selected').replace('{start}', selectedDates.start).replace('{end}', selectedDates.end)}
               </p>
               <p className="text-xs text-blue-700">
-                Click to block or unblock these dates
+{t('calendar.clickToBlockUnblock')}
               </p>
             </div>
             
@@ -1194,7 +1148,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 ) : (
                   <X className="h-4 w-4 opacity-70" />
                 )}
-                Block Dates
+{t('calendar.blockDates')}
               </button>
               
               <button
@@ -1207,50 +1161,20 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 ) : (
                   <Check className="h-4 w-4 opacity-70" />
                 )}
-                Unblock Dates
+{t('calendar.unblockDates')}
               </button>
               
               <button
                 onClick={() => setSelectedDates(null)}
                 className="bg-gray-500/20 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-500/30 font-medium border border-gray-300 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                Cancel
+{t('calendar.cancel')}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Start Selection Mode Button - Hidden for accountants */}
-      {!doubleClickMode && user?.role !== 'accountant' && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-blue-900">
-                Multi-Date Selection
-              </p>
-              <p className="text-xs text-blue-700">
-                Click "Start Selection" → Click start date → Hover to end date → Click end date
-              </p>
-            </div>
-            <button
-              onClick={() => {
-                setDoubleClickMode(true);
-                setSelectedDateList([]);
-                setShowBulkActions(false);
-                setHoverMode(false); // Start without hover mode
-                setSelectionStart(null);
-                setSelectionEnd(null);
-                setIsSelecting(false);
-                console.log('Started selection mode manually');
-              }}
-              className="bg-blue-500/20 text-gray-900 px-4 py-2 rounded-lg hover:bg-blue-500/30 font-medium border border-blue-200 shadow-sm hover:shadow-md transition-all duration-300"
-            >
-              Start Selection
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Selection Status */}
       {doubleClickMode && isSelecting && (
@@ -1258,17 +1182,17 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-blue-900">
-                Selecting Date Range
+{t('calendar.selectingDateRange')}
               </p>
               <p className="text-xs text-blue-700">
-                Hover to preview range, then click to complete selection
+{t('calendar.hoverToPreview')}
               </p>
             </div>
             <button
               onClick={exitDoubleClickMode}
               className="text-blue-600 hover:text-blue-800 px-2 py-1"
             >
-              Cancel
+{t('calendar.cancel')}
             </button>
           </div>
         </div>
@@ -1280,13 +1204,13 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-green-900">
-                Double-Click Mode: {selectedDateList.length} date{selectedDateList.length > 1 ? 's' : ''} selected
+{t('calendar.doubleClickMode').replace('{count}', selectedDateList.length.toString()).replace('{plural}', selectedDateList.length > 1 ? 's' : '')}
               </p>
               <p className="text-xs text-green-700">
                 {selectedDateList.join(', ')}
               </p>
               <p className="text-xs text-green-600 mt-1">
-                Hover over dates to add them to selection
+{t('calendar.hoverToAdd')}
               </p>
             </div>
             
@@ -1301,7 +1225,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 ) : (
                   <X className="h-3 w-3 opacity-70" />
                 )}
-                Block All ({selectedDateList.length})
+{t('calendar.blockAll').replace('{count}', selectedDateList.length.toString())}
               </button>
               
               <button
@@ -1314,14 +1238,14 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                 ) : (
                   <Check className="h-3 w-3 opacity-70" />
                 )}
-                Unblock All ({selectedDateList.length})
+{t('calendar.unblockAll').replace('{count}', selectedDateList.length.toString())}
               </button>
               
               <button
                 onClick={exitDoubleClickMode}
                 className="text-green-600 hover:text-green-800 px-2 py-1"
               >
-                Exit Mode
+{t('calendar.exitMode')}
               </button>
             </div>
           </div>
@@ -1334,7 +1258,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 border-b">
-              <h3 className="text-base font-semibold text-gray-900">Manage Date</h3>
+              <h3 className="text-base font-semibold text-gray-900">{t('calendar.manageDate')}</h3>
               <button
                 onClick={() => setShowDateModal(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -1346,7 +1270,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             {/* Modal Content */}
             <div className="p-4">
               <div className="mb-4">
-                <p className="text-xs text-gray-600 mb-1">Selected Date:</p>
+                <p className="text-xs text-gray-600 mb-1">{t('calendar.selectedDate')}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {clickedDate.toLocaleDateString('en-US', { 
                     weekday: 'long', 
@@ -1360,27 +1284,27 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               {isLoadingDateData ? (
                 <div className="flex items-center justify-center py-6">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                  <span className="ml-2 text-sm text-gray-600">Loading date data...</span>
+                  <span className="ml-2 text-sm text-gray-600">{t('calendar.loadingDateData')}</span>
                 </div>
               ) : (
                 <>
                   <div className="mb-4">
-                    <p className="text-xs text-gray-600 mb-2">Date Status:</p>
+                    <p className="text-xs text-gray-600 mb-2">{t('calendar.dateStatus')}</p>
                     <div className="flex items-center space-x-1">
                       {calendarDateData?.status === 'unavailable' || isDateBlocked(clickedDate) ? (
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                           <X className="h-2 w-2 mr-1" />
-                          Blocked
+{t('calendar.blocked')}
                         </span>
                       ) : isDateBooked(clickedDate) ? (
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                           <Check className="h-2 w-2 mr-1" />
-                          Booked
+{t('calendar.booked')}
                         </span>
                       ) : (
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           <Check className="h-2 w-2 mr-1" />
-                          Available
+{t('calendar.available')}
                         </span>
                       )}
                     </div>
@@ -1405,7 +1329,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                         ) : (
                           <>
                             <Check className="h-3 w-3 mr-1 opacity-70" />
-                            Unblock Date
+{t('calendar.unblockDate')}
                           </>
                         )}
                       </button>
@@ -1420,7 +1344,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                         ) : (
                           <>
                             <X className="h-3 w-3 mr-1 opacity-70" />
-                            Block Date
+{t('calendar.blockDate')}
                           </>
                         )}
                       </button>
@@ -1433,7 +1357,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
               {isDateBooked(clickedDate) && (
                 <div className="mt-3 p-2 bg-blue-50 rounded-lg">
                   <p className="text-xs text-blue-800">
-                    This date is booked and cannot be blocked or unblocked.
+{t('calendar.dateBookedCannotBlock')}
                   </p>
                 </div>
               )}

@@ -75,7 +75,10 @@ export const getOwnerStatements = async (req: Request, res: Response) => {
       updatedAt: new Date().toISOString(),
       // Include detailed data for debugging
       reservations: result.reservations,
-      summary: result.summary
+      summary: result.summary,
+      // Include admin ownership flags
+      isAdminOwned: result.isAdminOwned,
+      requiresCommission: result.requiresCommission
     }];
 
     res.json(formattedResult);
