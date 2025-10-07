@@ -165,7 +165,7 @@ export const downloadInvoice = async (req: Request, res: Response) => {
     // Fetch the PDF from the external URL as buffer
     const response = await axios.get(pdfUrl, {
       responseType: 'arraybuffer',
-      timeout: 8000, // Increased timeout for better reliability
+      timeout: 8000,
       headers: {
         'Accept': 'application/pdf,*/*',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'

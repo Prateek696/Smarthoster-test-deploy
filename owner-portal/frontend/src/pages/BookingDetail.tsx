@@ -173,7 +173,7 @@ const BookingDetail: React.FC = () => {
       </head>
       <body>
         <div class="header">
-          <img src="/src/assets/Real-logo.jpg" alt="Company Logo" class="logo" />
+          <img src="/images/Real-logo.jpg" alt="Company Logo" class="logo" />
           <div class="title-section">
             <h1>${t('bookingDetail.reportTitle')}</h1>
             <p>${t('bookingDetail.generatedOn')} ${new Date().toLocaleString()}</p>

@@ -166,17 +166,31 @@ const Invoices: React.FC = () => {
     if (invoiceUrl && invoiceUrl !== '#') {
       setDownloadingInvoiceId(invoice.id)
       try {
-        // Download directly from external URL (works on both localhost and deployment)
-        console.log(`🔄 Downloading invoice ${invoice.id} directly from: ${invoiceUrl}`);
+        // Use AllOrigins CORS proxy to download external files (works on both localhost and deployment)
+        console.log(`🔄 Downloading invoice ${invoice.id} via AllOrigins proxy with URL: ${invoiceUrl}`);
         
-        // Create a temporary link to download the file
+        // Use AllOrigins CORS proxy that handles external URLs
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(invoiceUrl)}`;
+        
+        // Fetch directly without authentication headers (AllOrigins doesn't allow them)
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        // Create download link
         const link = document.createElement('a');
-        link.href = invoiceUrl;
+        link.href = url;
         link.download = `invoice_${invoice.id}.pdf`;
-        link.target = '_blank';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        
+        // Clean up
+        window.URL.revokeObjectURL(url);
         
         console.log(`✅ Download initiated for invoice ${invoice.id}`);
       } catch (error) {

@@ -19,6 +19,7 @@ router.get("/:listingId/:invoiceId/download",
   downloadInvoice
 );
 
+
 // Debug endpoint for testing invoice API
 router.get("/:listingId/debug", 
   authMiddleware, 

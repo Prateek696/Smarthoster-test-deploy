@@ -423,7 +423,7 @@ const Bookings: React.FC = () => {
                         {t('bookings.showingData').replace('{period}', appliedFilters.period || '')}
                         {appliedFilters.propertyId && ` ${t('bookings.forProperty').replace('{propertyId}', appliedFilters.propertyId.toString())}`}
                         {appliedFilters.startDate && appliedFilters.endDate && 
-                          ` ${t('bookings.dateRange').replace('{startDate}', appliedFilters.startDate).replace('{endDate}', appliedFilters.endDate)}`
+                          ` ${t('bookings.dateRange').replace('{startDate}', new Date(appliedFilters.startDate).toLocaleDateString()).replace('{endDate}', new Date(appliedFilters.endDate).toLocaleDateString())}`
                         }
                       </span>
                     </div>
@@ -520,7 +520,7 @@ const Bookings: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">{t('bookings.dateRange')}</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Date Range</label>
                   <select
                     value={selectedDateRange}
                     onChange={(e) => {
