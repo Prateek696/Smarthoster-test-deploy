@@ -7,6 +7,7 @@ import { RootState } from '../store';
 import FinancialDetailsTable from '../components/financial/FinancialDetailsTable';
 import DetailedReport from '../components/financial/DetailedReport';
 import { useLanguage } from '../contexts/LanguageContext';
+import RealLogo from '../assets/Real-logo.jpg';
 
 interface Property {
   id: number;
@@ -284,7 +285,7 @@ const OwnerStatements: React.FC = () => {
       </head>
       <body>
         <div class="header">
-          <img src="/images/Real-logo.jpg" alt="Company Logo" class="logo" />
+          <img src="${RealLogo}" alt="Company Logo" class="logo" />
           <div class="title-section">
             <h1>${t('ownerStatements.detailedReport')}</h1>
             <p>${new Date().toLocaleString()}</p>

@@ -16,6 +16,8 @@ import {
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { useLanguage } from '../contexts/LanguageContext'
+import { apiClient } from '../services/apiClient'
+import RealLogo from '../assets/Real-logo.jpg'
 
 const BookingDetail: React.FC = () => {
   const { bookingId } = useParams<{ bookingId: string }>()
@@ -31,8 +33,8 @@ const BookingDetail: React.FC = () => {
 
   useEffect(() => {
     const fetchBookingDetail = async () => {
-      if (!bookingId || !propertyId || !token) {
-        setError('Missing booking ID, property ID, or authentication token')
+      if (!bookingId || !propertyId) {
+        setError('Missing booking ID or property ID')
         setLoading(false)
         return
       }
@@ -41,18 +43,7 @@ const BookingDetail: React.FC = () => {
         setLoading(true)
         setError(null)
         
-        const response = await fetch(`/api/bookings/detail/${bookingId}?propertyId=${propertyId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        })
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch booking details: ${response.statusText}`)
-        }
-
-        const bookingData = await response.json()
+        const bookingData = await apiClient.get(`/bookings/detail/${bookingId}?propertyId=${propertyId}`)
         setBooking(bookingData)
       } catch (err: any) {
         console.error('Error fetching booking detail:', err)
@@ -173,7 +164,7 @@ const BookingDetail: React.FC = () => {
       </head>
       <body>
         <div class="header">
-          <img src="/images/Real-logo.jpg" alt="Company Logo" class="logo" />
+          <img src="${RealLogo}" alt="Company Logo" class="logo" />
           <div class="title-section">
             <h1>${t('bookingDetail.reportTitle')}</h1>
             <p>${t('bookingDetail.generatedOn')} ${new Date().toLocaleString()}</p>
