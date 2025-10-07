@@ -166,13 +166,13 @@ const Invoices: React.FC = () => {
     if (invoiceUrl && invoiceUrl !== '#') {
       setDownloadingInvoiceId(invoice.id)
       try {
-        // Use AllOrigins CORS proxy to download external files (works on both localhost and deployment)
-        console.log(`🔄 Downloading invoice ${invoice.id} via AllOrigins proxy with URL: ${invoiceUrl}`);
+        // Use Vercel API route to download external files (no CORS issues, same domain)
+        console.log(`🔄 Downloading invoice ${invoice.id} via Vercel API proxy with URL: ${invoiceUrl}`);
         
-        // Use AllOrigins CORS proxy that handles external URLs
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(invoiceUrl)}`;
+        // Use local Vercel API route that handles external URLs
+        const proxyUrl = `/api/invoice-proxy?url=${encodeURIComponent(invoiceUrl)}`;
         
-        // Fetch directly without authentication headers (AllOrigins doesn't allow them)
+        // Fetch from same domain (no CORS issues)
         const response = await fetch(proxyUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
