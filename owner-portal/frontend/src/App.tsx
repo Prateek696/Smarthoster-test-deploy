@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState, AppDispatch } from './store'
 import { getCurrentUserAsync } from './store/auth.slice'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { useSessionTimeout } from './hooks/useSessionTimeout'
 
 // Layout Components
 import DashboardLayout from './components/layout/DashboardLayout'
@@ -49,6 +50,9 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 function App() {
   const dispatch = useDispatch<AppDispatch>()
   const { isAuthenticated, isLoading, user } = useSelector((state: RootState) => state.auth)
+  
+  // Initialize session timeout (only when authenticated)
+  useSessionTimeout()
 
   useEffect(() => {
     if (isAuthenticated && !user) {
