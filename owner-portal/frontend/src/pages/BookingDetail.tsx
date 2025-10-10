@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { useLanguage } from '../contexts/LanguageContext'
 import { apiClient } from '../services/apiClient'
+import { isAdmin } from '../utils/roleUtils'
 import RealLogo from '../assets/Real-logo.jpg'
 
 const BookingDetail: React.FC = () => {
@@ -29,7 +30,8 @@ const BookingDetail: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   
-  const { token } = useSelector((state: RootState) => state.auth)
+  const { token, user } = useSelector((state: RootState) => state.auth)
+  const isAdminUser = isAdmin(user?.role || null)
 
   useEffect(() => {
     const fetchBookingDetail = async () => {
@@ -173,6 +175,7 @@ const BookingDetail: React.FC = () => {
         
         <div class="section">
           <h3>${t('bookingDetail.basicInformation')}</h3>
+          ${isAdminUser ? `
           <div class="info-row">
             <span class="label">${t('bookingDetail.hostawayReservationId')}</span>
             <span class="value">${booking.hostawayReservationId || booking.id || 'N/A'}</span>
@@ -181,6 +184,7 @@ const BookingDetail: React.FC = () => {
             <span class="label">${t('bookingDetail.channelReservationId')}</span>
             <span class="value">${booking.channelReservationId || booking.reservationId || 'N/A'}</span>
           </div>
+          ` : ''}
           <div class="info-row">
             <span class="label">${t('bookingDetail.property')}</span>
             <span class="value">${booking.propertyName}</span>
@@ -399,30 +403,34 @@ const BookingDetail: React.FC = () => {
               </div>
               <div className="card-content">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  {isAdminUser && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
 {t('bookingDetail.hostawayReservationId')}
-                    </label>
-                    <input 
-                      type="text" 
-                      value={booking.hostawayReservationId || booking.id || 'N/A'} 
-                      readOnly
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm font-mono"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                      </label>
+                      <input 
+                        type="text" 
+                        value={booking.hostawayReservationId || booking.id || 'N/A'} 
+                        readOnly
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm font-mono"
+                      />
+                    </div>
+                  )}
+                  {isAdminUser && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
 {t('bookingDetail.channelReservationId')}
-                    </label>
-                    <input 
-                      type="text" 
-                      value={booking.channelReservationId || booking.reservationId || 'N/A'} 
-                      readOnly
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm font-mono"
-                    />
-                  </div>
+                      </label>
+                      <input 
+                        type="text" 
+                        value={booking.channelReservationId || booking.reservationId || 'N/A'} 
+                        readOnly
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm font-mono"
+                      />
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">{t('bookingDetail.guestName')}</label>
                     <p className="text-sm text-gray-900">{booking.guestName}</p>

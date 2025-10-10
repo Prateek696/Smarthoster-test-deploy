@@ -24,6 +24,16 @@ async function fetchInvoices(propertyId, year, month) {
     try {
         const invoicesRaw = await (0, invoice_service_1.getInvoicesService)(propertyId, startDate, endDate) || [];
         return invoicesRaw.map((inv) => {
+            // DEBUG: Log raw invoice data to see what API provides
+            console.log(`[VAT DEBUG] Raw invoice data:`, {
+                id: inv.id,
+                value: inv.value,
+                vat: inv.vat,
+                total: inv.total,
+                taxLines: inv.taxLines,
+                taxes: inv.taxes,
+                allFields: Object.keys(inv)
+            });
             const grossRevenue = typeof inv.value === 'string'
                 ? parseFloat(inv.value || '0')
                 : inv.value || 0;
@@ -52,6 +62,16 @@ async function fetchInvoices(propertyId, year, month) {
                 vat = grossRevenue * 0.06;
                 total = grossRevenue + vat;
             }
+            // Calculate actual VAT rate from API data
+            const calculatedVatRate = grossRevenue > 0 ? (vat / grossRevenue) * 100 : 0;
+            // DEBUG: Log calculated VAT rate
+            console.log(`[VAT DEBUG] Calculated VAT rate:`, {
+                invoiceId: inv.id,
+                grossRevenue,
+                vat,
+                calculatedVatRate: calculatedVatRate.toFixed(2) + '%',
+                total
+            });
             return {
                 id: String(inv.id),
                 date: inv.date ?? '',

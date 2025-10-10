@@ -18,6 +18,7 @@ interface DetailedReportProps {
     totalToInvoice: number;
     totalToPay: number;
     totalToPayFormula: string;
+    isAdminProperty?: boolean;
   };
 }
 
@@ -51,7 +52,7 @@ const DetailedReport: React.FC<DetailedReportProps> = ({ data }) => {
         
         <div className="flex">
           <span className="font-bold text-gray-900 w-48">{t('ownerStatements.commissionableAmount')}</span>
-          <span className="text-gray-700">{formatCurrency(data.commissionableAmount)} {t('ownerStatements.commissionableAmountNote')}</span>
+          <span className="text-gray-700">{formatCurrency(data.commissionableAmount)}</span>
         </div>
         
         <div className="flex">
@@ -62,11 +63,12 @@ const DetailedReport: React.FC<DetailedReportProps> = ({ data }) => {
         <div className="flex">
           <span className="font-bold text-gray-900 w-48">{t('ownerStatements.managementCommissions')}</span>
           <span className="text-gray-700">
-            {formatCurrency(data.managementCommissions)} 
-            {data.managementCommissionsVAT > 0 && (
-              <span className="text-gray-500">
-                {' '}({formatCurrency(data.managementCommissions - data.managementCommissionsVAT)} + {formatCurrency(data.managementCommissionsVAT)} VAT)
-              </span>
+            {data.isAdminProperty ? (
+              formatCurrency(data.managementCommissions)
+            ) : (
+              <>
+                {formatCurrency(data.managementCommissions - data.managementCommissionsVAT)} + VAT 23% = {formatCurrency(data.managementCommissions)}
+              </>
             )}
           </span>
         </div>
@@ -74,7 +76,13 @@ const DetailedReport: React.FC<DetailedReportProps> = ({ data }) => {
         <div className="flex">
           <span className="font-bold text-gray-900 w-48">{t('ownerStatements.cleaningFees')}</span>
           <span className="text-gray-700">
-            {formatCurrency(data.cleaningFees)} ({t('ownerStatements.cleaningFeesNote')})
+            {data.isAdminProperty ? (
+              formatCurrency(data.cleaningFees)
+            ) : (
+              <>
+                {formatCurrency(data.cleaningFees)} + VAT 23% = {formatCurrency(data.cleaningFees * 1.23)}
+              </>
+            )}
           </span>
         </div>
         
@@ -110,10 +118,22 @@ const DetailedReport: React.FC<DetailedReportProps> = ({ data }) => {
         </div>
         
         <div className="border-t border-gray-300 pt-2 mt-3">
-          <div className="flex">
-            <span className="font-bold text-gray-900 w-48">{t('ownerStatements.totalToInvoice')}</span>
-            <span className="font-bold text-gray-900">{formatCurrency(data.totalToInvoice)}</span>
+        <div className="flex">
+          <span className="font-bold text-gray-900 w-48">{t('ownerStatements.totalToInvoice')}</span>
+          <span className="font-bold text-gray-900">
+            {formatCurrency(data.totalToInvoice)}
+          </span>
+        </div>
+        
+        {/* Show VAT note for non-admin properties */}
+        {!data.isAdminProperty && (
+          <div className="flex mt-2">
+            <span className="w-48"></span>
+            <span className="text-sm text-gray-600 italic">
+              VAT is deductable as a business expense
+            </span>
           </div>
+        )}
           
           <div className="flex mt-1">
             <span className="font-bold text-gray-900 w-48">{t('ownerStatements.totalToPay')}</span>

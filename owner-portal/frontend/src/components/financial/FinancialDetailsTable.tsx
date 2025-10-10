@@ -191,9 +191,9 @@ const FinancialDetailsTable: React.FC<FinancialDetailsTableProps> = ({
                 <td className="px-4 py-3 text-sm text-gray-900">
                   <div>
                     <div>{formatCurrency(item.hostCommission)}</div>
-                    {item.receivedAmount > 0 && (
+                    {(item.receivedAmount + item.hostCommission) > 0 && (
                       <div className="text-xs text-gray-500">
-                        ({(item.hostCommission / item.receivedAmount * 100).toFixed(1)}%)
+                        ({(item.hostCommission / (item.receivedAmount + item.hostCommission) * 100).toFixed(1)}%)
                       </div>
                     )}
                   </div>
@@ -218,9 +218,9 @@ const FinancialDetailsTable: React.FC<FinancialDetailsTableProps> = ({
               <td className="px-4 py-3 text-sm text-gray-900">
                 <div>
                   <div>{formatCurrency(totals.hostCommission)}</div>
-                  {totals.receivedAmount > 0 && (
+                  {(totals.receivedAmount + totals.hostCommission) > 0 && (
                     <div className="text-xs text-gray-500">
-                      ({(totals.hostCommission / totals.receivedAmount * 100).toFixed(1)}%)
+                      ({(totals.hostCommission / (totals.receivedAmount + totals.hostCommission) * 100).toFixed(1)}%)
                     </div>
                   )}
                 </div>

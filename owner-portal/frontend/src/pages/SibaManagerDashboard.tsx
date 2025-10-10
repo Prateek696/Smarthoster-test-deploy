@@ -150,7 +150,7 @@ const SibaManagerDashboard: React.FC = () => {
   //   expired: sibaStatuses.filter(status => status.status === 'expired').length
   // };
 
-  return (
+    return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
       {/* Under Development Message */}
       <div className="flex items-center justify-center min-h-screen">
@@ -165,8 +165,8 @@ const SibaManagerDashboard: React.FC = () => {
               <Shield className="h-4 w-4" />
               <span>{t('sibaManager.comingSoon')}</span>
             </div>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );

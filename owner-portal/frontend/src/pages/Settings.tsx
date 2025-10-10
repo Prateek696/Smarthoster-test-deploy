@@ -169,7 +169,7 @@ const Settings: React.FC = () => {
       {/* Header - Fixed */}
       <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200/50 shadow-sm fixed top-16 left-0 right-0 z-20 lg:left-64">
         <div className="container mx-auto px-4 py-8">
-          <div>
+      <div>
             <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Settings</h1>
             <p className="text-lg text-gray-600">
               Manage your account settings and preferences
@@ -189,115 +189,115 @@ const Settings: React.FC = () => {
           {error && (
             <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
               {error}
-            </div>
-          )}
+        </div>
+      )}
 
-          {/* Tabs */}
+      {/* Tabs */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-            <div className="border-b border-gray-200">
+      <div className="border-b border-gray-200">
               <nav className="flex space-x-8 px-6">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
-                  return (
-                    <button
-                      key={tab.id}
+            return (
+              <button
+                key={tab.id}
                       onClick={() => setActiveTab(tab.id as 'profile' | 'companies')}
                       className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
-                        activeTab === tab.id
+                  activeTab === tab.id
                           ? 'border-blue-500 text-blue-600'
-                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                      }`}
-                    >
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
                       <Icon className="h-4 w-4" />
-                      {tab.name}
-                    </button>
+                {tab.name}
+              </button>
                   );
-                })}
-              </nav>
-            </div>
+          })}
+        </nav>
+      </div>
 
             <div className="p-6">
-              {/* Profile Tab */}
-              {activeTab === 'profile' && (
+      {/* Profile Tab */}
+      {activeTab === 'profile' && (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        First Name
-                      </label>
-                      <input
-                        type="text"
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
                         name="firstName"
-                        value={profile.firstName}
+                    value={profile.firstName}
                         onChange={handleInputChange}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
                         name="lastName"
-                        value={profile.lastName}
+                    value={profile.lastName}
                         onChange={handleInputChange}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
-                      />
+                  />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
                       name="email"
-                      value={profile.email}
+                    value={profile.email}
                       disabled
                       className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500"
-                    />
+                  />
                     <p className="text-sm text-gray-500 mt-1">Email cannot be changed</p>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
                       name="phone"
-                      value={profile.phone}
+                    value={profile.phone}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Role
-                    </label>
-                    <input
-                      type="text"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Role
+                  </label>
+                  <input
+                    type="text"
                       name="role"
-                      value={profile.role}
-                      disabled
+                    value={profile.role}
+                    disabled
                       className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500"
-                    />
-                  </div>
-
+                  />
+              </div>
+              
                   <div className="flex justify-end">
-                    <button
+                <button
                       type="submit"
-                      disabled={saving}
+                  disabled={saving}
                       className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {saving ? 'Saving...' : 'Save Changes'}
-                    </button>
-                  </div>
+                >
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
                 </form>
               )}
 
@@ -308,7 +308,7 @@ const Settings: React.FC = () => {
                     <div>
                       <h3 className="text-lg font-medium text-gray-900">Company Information</h3>
                       <p className="text-sm text-gray-500">Manage your company details and NIF numbers</p>
-                    </div>
+            </div>
                     <button
                       type="button"
                       onClick={addCompany}
@@ -334,49 +334,49 @@ const Settings: React.FC = () => {
                                 Remove
                               </button>
                             )}
-                          </div>
+                </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Company Name
-                              </label>
-                              <input
+                  </label>
+                  <input
                                 type="text"
                                 value={company.name}
                                 onChange={(e) => updateCompany(index, 'name', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter company name"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                                 NIF
-                              </label>
-                              <input
+                  </label>
+                  <input
                                 type="text"
                                 value={company.nif}
                                 onChange={(e) => updateCompany(index, 'nif', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter NIF number"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  />
+                </div>
+              </div>
+                  </div>
+                ))}
+              </div>
                   ) : (
                     <div className="text-center py-8">
                       <Building className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                       <h3 className="text-lg font-medium text-gray-900 mb-2">No companies added</h3>
                       <p className="text-gray-500 mb-4">Add your first company to get started.</p>
-                      <button
+                <button
                         type="button"
                         onClick={addCompany}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 mx-auto"
                       >
                         <Building className="h-4 w-4" />
                         Add Company
-                      </button>
+                </button>
                     </div>
                   )}
 
@@ -390,12 +390,12 @@ const Settings: React.FC = () => {
                       {saving ? 'Saving...' : 'Save Companies'}
                     </button>
                   </div>
-                </div>
-              )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };

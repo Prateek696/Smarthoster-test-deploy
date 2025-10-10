@@ -165,7 +165,28 @@ const OwnerStatements: React.FC = () => {
     
     // Calculate values for PDF
     const totalReceivedAmount = statement.reservations.reduce((sum: number, res: any) => sum + res.received_amount, 0);
-    const totalToInvoice = statement.expenses.commission + statement.expenses.fees;
+    
+    // Management commission is already VAT-inclusive from backend
+    const managementCommissionsVATInclusive = statement.expenses.commission;
+    
+    // For admin properties, don't add VAT to cleaning fees
+    // For regular properties, add 23% VAT to cleaning fees
+    const isAdminProperty = statement.isAdminOwned;
+    const cleaningFeesVATInclusive = isAdminProperty 
+      ? statement.expenses.fees  // No VAT for admin properties
+      : statement.expenses.fees * 1.23;  // Add 23% VAT for regular properties
+    
+    // Total to invoice = VAT-inclusive management + cleaning fees (with or without VAT)
+    const totalToInvoice = managementCommissionsVATInclusive + cleaningFeesVATInclusive;
+    
+    // Debug logging
+    console.log('PDF Generation Debug:', {
+      isAdminProperty,
+      managementCommissionsVATInclusive,
+      cleaningFeesNet: statement.expenses.fees,
+      cleaningFeesVATInclusive,
+      totalToInvoice
+    });
     const totalToPay = totalReceivedAmount - totalToInvoice;
     const commissionableAmount = statement.reservations.reduce((sum: number, res: any) => 
       sum + ((res.received_amount + res.host_commission) - res.cleaning_fee), 0
@@ -316,7 +337,7 @@ const OwnerStatements: React.FC = () => {
             </thead>
             <tbody>
               ${statement.reservations.map((res: any) => {
-                const hostCommissionPercentage = res.received_amount > 0 ? ((res.host_commission / res.received_amount) * 100).toFixed(1) : '0.0';
+                const hostCommissionPercentage = (res.received_amount + res.host_commission) > 0 ? ((res.host_commission / (res.received_amount + res.host_commission)) * 100).toFixed(1) : '0.0';
                 return `
                   <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">${statement.propertyName}</td>
@@ -344,7 +365,7 @@ const OwnerStatements: React.FC = () => {
                 <td style="border: 1px solid #ddd; padding: 8px;">€${totalReceivedAmount.toFixed(2)}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">
                   <div>€${statement.reservations.reduce((sum: number, res: any) => sum + res.host_commission, 0).toFixed(2)}</div>
-                  <div style="font-size: 12px; color: #666;">(${totalReceivedAmount > 0 ? ((statement.reservations.reduce((sum: number, res: any) => sum + res.host_commission, 0) / totalReceivedAmount) * 100).toFixed(1) : '0.0'}%)</div>
+                  <div style="font-size: 12px; color: #666;">(${totalReceivedAmount > 0 ? ((statement.reservations.reduce((sum: number, res: any) => sum + res.host_commission, 0) / (totalReceivedAmount + statement.reservations.reduce((sum: number, res: any) => sum + res.host_commission, 0))) * 100).toFixed(1) : '0.0'}%)</div>
                 </td>
                 <td style="border: 1px solid #ddd; padding: 8px;">€${statement.reservations.reduce((sum: number, res: any) => sum + res.cleaning_fee, 0).toFixed(2)}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">€${statement.reservations.reduce((sum: number, res: any) => sum + (statement.isAdminOwned ? 0 : Math.max(0, 0.25 * ((res.received_amount + res.host_commission) - res.cleaning_fee))), 0).toFixed(2)}</td>
@@ -363,20 +384,16 @@ const OwnerStatements: React.FC = () => {
             <span class="value">€${commissionableAmount.toFixed(2)}</span>
           </div>
           <div class="info-row">
-            <span class="label"></span>
-            <span class="value" style="font-style: italic; font-size: 12px;">${t('ownerStatements.commissionableAmountNote')}</span>
-          </div>
-          <div class="info-row">
             <span class="label">${t('ownerStatements.rule')}</span>
-            <span class="value">25% of Commissionable amount</span>
+            <span class="value">(Received amount + Host commission) - Cleaning fee + VAT 23%</span>
           </div>
           <div class="info-row">
             <span class="label">${t('ownerStatements.managementCommissions')}</span>
-            <span class="value">€${statement.expenses.commission.toFixed(2)}</span>
+            <span class="value">${isAdminProperty ? '€' + managementCommissionsVATInclusive.toFixed(2) : '€' + (managementCommissionsVATInclusive / 1.23).toFixed(2) + ' + VAT 23% = €' + managementCommissionsVATInclusive.toFixed(2)}</span>
           </div>
           <div class="info-row">
             <span class="label">${t('ownerStatements.cleaningFees')}</span>
-            <span class="value">€${statement.expenses.fees.toFixed(2)} (${t('ownerStatements.cleaningFeesNote')})</span>
+            <span class="value">€${statement.expenses.fees.toFixed(2)}${isAdminProperty ? '' : ' + VAT 23% = €' + cleaningFeesVATInclusive.toFixed(2)}</span>
           </div>
           <div class="info-row">
             <span class="label">${t('ownerStatements.hostCommissions')}</span>
@@ -408,6 +425,12 @@ const OwnerStatements: React.FC = () => {
             <span>${t('ownerStatements.totalToInvoice')}</span>
             <span>€${totalToInvoice.toFixed(2)}</span>
           </div>
+          ${!statement.isAdminOwned ? `
+          <div class="info-row" style="margin-top: 2px;">
+            <span class="label"></span>
+            <span class="value" style="font-style: italic; font-size: 12px; color: #666;">VAT is deductable as a business expense</span>
+          </div>
+          ` : ''}
           <div class="total-row">
             <span>${t('ownerStatements.totalToPay')}</span>
             <span>€${totalToPay.toFixed(2)}</span>
@@ -555,8 +578,8 @@ const OwnerStatements: React.FC = () => {
                   <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                   <p className="text-lg font-semibold text-gray-700">{t('ownerStatements.generatingStatements')}</p>
                 </div>
-              </div>
-            )}
+        </div>
+      )}
 
             {/* Results */}
             {!loading && statements && statements.length > 0 && (
@@ -625,7 +648,18 @@ const OwnerStatements: React.FC = () => {
 
                 {/* Detailed Report */}
                 {statements[0].reservations && statements[0].reservations.length > 0 && (() => {
-                  const totalToInvoice = statements[0].expenses.commission + statements[0].expenses.fees;
+                  // Management commission is already VAT-inclusive from backend
+                  const managementCommissionsVATInclusive = statements[0].expenses.commission;
+                  
+                  // For admin properties, don't add VAT to cleaning fees
+                  // For regular properties, add 23% VAT to cleaning fees
+                  const isAdminProperty = statements[0].isAdminOwned;
+                  const cleaningFeesVATInclusive = isAdminProperty 
+                    ? statements[0].expenses.fees  // No VAT for admin properties
+                    : statements[0].expenses.fees * 1.23;  // Add 23% VAT for regular properties
+                  
+                  // Total to invoice = VAT-inclusive management + cleaning fees (with or without VAT)
+                  const totalToInvoice = managementCommissionsVATInclusive + cleaningFeesVATInclusive;
                   const totalReceivedAmount = statements[0].reservations.reduce((sum, res) => sum + res.received_amount, 0);
                   return (
                     <div className="mt-6">
@@ -633,7 +667,7 @@ const OwnerStatements: React.FC = () => {
                         data={{
                           calculationBasis: 'Invoices',
                           commissionableAmount: statements[0].reservations.reduce((sum, res) => sum + ((res.received_amount + res.host_commission) - res.cleaning_fee), 0),
-                          rule: '25% of Commissionable amount',
+                          rule: '(Received amount + Host commission) - Cleaning fee + VAT 23%',
                           managementCommissions: statements[0].expenses.commission,
                           managementCommissionsVAT: statements[0].summary?.management_commission_vat || 0,
                           cleaningFees: statements[0].expenses.fees,
@@ -645,7 +679,8 @@ const OwnerStatements: React.FC = () => {
                           recipient: `${statements[0].propertyId} (${statements[0].propertyName})`,
                           totalToInvoice: totalToInvoice,
                           totalToPay: totalReceivedAmount - totalToInvoice,
-                          totalToPayFormula: 'Received amounts - Total to invoice'
+                          totalToPayFormula: 'Received amounts - Total to invoice',
+                          isAdminProperty: statements[0].isAdminOwned
                         }}
                       />
                     </div>
@@ -664,7 +699,7 @@ const OwnerStatements: React.FC = () => {
                 </div>
               </div>
             )}
-          </div>
+                  </div>
         </div>
       </div>
     </div>

@@ -20,21 +20,18 @@ const SAFT: React.FC = () => {
   const navigate = useNavigate();
   const [selectedYear, setSelectedYear] = useState<number>(() => {
     const now = new Date();
-    // If it's January OR first week of any month, show previous year
-    const isEarlyMonth = now.getMonth() === 0 || now.getDate() <= 7;
-    return isEarlyMonth && now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+    // Always default to previous month, so if current month is January, show December of previous year
+    const currentMonth = now.getMonth(); // 0-based (0=Jan, 1=Feb, etc.)
+    return currentMonth === 0 ? now.getFullYear() - 1 : now.getFullYear();
   });
   const [selectedMonth, setSelectedMonth] = useState<number>(() => {
     const now = new Date();
-    // If it's the first week of the month, default to previous month
-    // (SAFT is typically generated after month end)
-    const isEarlyMonth = now.getDate() <= 7;
-    if (now.getMonth() === 0 && isEarlyMonth) {
+    // Always default to previous month
+    const currentMonth = now.getMonth(); // 0-based (0=Jan, 1=Feb, etc.)
+    if (currentMonth === 0) {
       return 12; // December of previous year
-    } else if (isEarlyMonth) {
-      return now.getMonth(); // Previous month (getMonth() is 0-indexed, so current-1)
     } else {
-      return now.getMonth() + 1; // Current month
+      return currentMonth; // Previous month (getMonth() is 0-indexed, so current month - 1)
     }
   });
   const [invoicingNif, setInvoicingNif] = useState<string>('');
