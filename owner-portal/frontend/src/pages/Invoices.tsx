@@ -29,6 +29,7 @@ const Invoices: React.FC = () => {
   const [showFilters, setShowFilters] = useState(true)
   const [selectedDateRange, setSelectedDateRange] = useState('lastMonth')
   const [downloadingInvoiceId, setDownloadingInvoiceId] = useState<string | null>(null)
+  const [isDownloadingAll, setIsDownloadingAll] = useState<boolean>(false)
   
   const dispatch = useDispatch<AppDispatch>()
   const { invoices, isLoading, summary } = useSelector((state: RootState) => state.invoices)
@@ -205,8 +206,69 @@ const Invoices: React.FC = () => {
     }
   }
 
+  // Function to download all invoices
+  const handleDownloadAll = async () => {
+    if (!invoices || invoices.length === 0) {
+      alert('No invoices available to download')
+      return
+    }
 
-
+    setIsDownloadingAll(true)
+    
+    try {
+      // Download invoices with a small delay between each to avoid overwhelming the server
+      for (let i = 0; i < invoices.length; i++) {
+        const invoice = invoices[i]
+        
+        // Check if invoice has valid URL
+        const invoiceUrl = invoice.invoiceUrl || (invoice as any).invoice_url
+        if (invoiceUrl && invoiceUrl !== '#') {
+          console.log(`🔄 Downloading invoice ${i + 1}/${invoices.length}: ${invoice.id}`)
+          
+          try {
+            // Use Vercel API route to download external files
+            const proxyUrl = `/api/invoice-proxy?url=${encodeURIComponent(invoiceUrl)}`
+            
+            const response = await fetch(proxyUrl)
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`)
+            }
+            
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob)
+            
+            // Create download link
+            const link = document.createElement('a')
+            link.href = url
+            link.download = `invoice_${invoice.id}.pdf`
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            
+            // Clean up
+            window.URL.revokeObjectURL(url)
+            
+            // Small delay between downloads to prevent browser from blocking multiple downloads
+            if (i < invoices.length - 1) {
+              await new Promise(resolve => setTimeout(resolve, 500))
+            }
+          } catch (error) {
+            console.error(`Error downloading invoice ${invoice.id}:`, error)
+            // Continue with next invoice even if one fails
+          }
+        } else {
+          console.log(`⚠️ Skipping invoice ${invoice.id} - no valid URL`)
+        }
+      }
+      
+      console.log(`✅ Download all completed for ${invoices.length} invoices`)
+    } catch (error) {
+      console.error('Error in download all:', error)
+      alert('Some invoices failed to download. Please check the console for details.')
+    } finally {
+      setIsDownloadingAll(false)
+    }
+  }
 
   // Auto-fetch for first property on load
   useEffect(() => {
@@ -355,18 +417,45 @@ const Invoices: React.FC = () => {
         {/* Filters */}
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 p-4 shadow-lg">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            {/* Filter Button */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`px-4 py-2 rounded-lg font-semibold shadow-sm transition-all duration-300 flex items-center gap-1 border ${
-                showFilters 
-                  ? 'bg-blue-500/20 text-gray-900 border-blue-200 hover:bg-blue-500/30' 
-                  : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
-              }`}
-            >
-              <Filter className="w-4 h-4 opacity-70" />
-              {t('invoices.filters')}
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              {/* Filter Button */}
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className={`px-4 py-2 rounded-lg font-semibold shadow-sm transition-all duration-300 flex items-center gap-1 border ${
+                  showFilters 
+                    ? 'bg-blue-500/20 text-gray-900 border-blue-200 hover:bg-blue-500/30' 
+                    : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                <Filter className="w-4 h-4 opacity-70" />
+                {t('invoices.filters')}
+              </button>
+
+              {/* Download All Button */}
+              {invoices && invoices.length > 0 && (
+                <button
+                  onClick={handleDownloadAll}
+                  disabled={isDownloadingAll}
+                  className={`px-4 py-2 rounded-lg font-semibold shadow-sm transition-all duration-300 flex items-center gap-1 border ${
+                    isDownloadingAll
+                      ? 'bg-green-500/40 text-gray-900 border-green-200 cursor-not-allowed'
+                      : 'bg-green-500/20 text-gray-900 border-green-200 hover:bg-green-500/30'
+                  }`}
+                >
+                  {isDownloadingAll ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+                      Downloading All...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4 opacity-70" />
+                      Download All ({invoices.length})
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Advanced Filters */}
