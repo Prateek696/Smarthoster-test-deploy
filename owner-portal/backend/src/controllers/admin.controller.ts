@@ -801,7 +801,13 @@ export const getAllProperties = async (req: Request, res: Response) => {
       isAdminOwned: p.isAdminOwned
     })));
     
-    res.json({ data: properties });
+    // Sanitize properties to remove sensitive API keys
+    const sanitizedProperties = properties.map(property => {
+      const { hostkitApiKey, ...sanitizedProperty } = property.toObject();
+      return sanitizedProperty;
+    });
+    
+    res.json({ data: sanitizedProperties });
   } catch (error: any) {
     console.error('Error in getAllProperties:', error);
     res.status(500).json({ message: error.message });

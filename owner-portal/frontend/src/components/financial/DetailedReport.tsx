@@ -16,8 +16,6 @@ interface DetailedReportProps {
     issuerDetails: string;
     recipient: string;
     totalToInvoice: number;
-    totalToPay: number;
-    totalToPayFormula: string;
     isAdminProperty?: boolean;
   };
 }
@@ -134,16 +132,6 @@ const DetailedReport: React.FC<DetailedReportProps> = ({ data }) => {
             </span>
           </div>
         )}
-          
-          <div className="flex mt-1">
-            <span className="font-bold text-gray-900 w-48">{t('ownerStatements.totalToPay')}</span>
-            <span className="font-bold text-gray-900">
-              {formatCurrency(data.totalToPay)} 
-              <span className="text-gray-500 font-normal text-xs ml-2">
-                ({data.totalToPayFormula})
-              </span>
-            </span>
-          </div>
         </div>
       </div>
     </div>

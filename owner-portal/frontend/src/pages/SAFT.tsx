@@ -232,7 +232,31 @@ const SAFT: React.FC = () => {
       });
       
       const data = await apiClient.get(`/saft/get?${params}`);
-      setSaftData(data);
+      
+      // Directly download the SAFT file instead of showing success message
+      if (data?.saft) {
+        // Convert base64 to blob and download
+        const byteCharacters = atob(data.saft);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/xml' });
+        
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `SAFT-T_${selectedYear}_${selectedMonth}.xml`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        // Show success message briefly
+        setSaftData(data);
+        setTimeout(() => setSaftData(null), 3000); // Clear after 3 seconds
+      }
     } catch (error: any) {
       console.error('SAFT retrieval error:', error);
       
@@ -395,12 +419,12 @@ const SAFT: React.FC = () => {
             {isLoading ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
-                <span>{t('saft.retrieving')}</span>
+                <span>{t('saft.downloading')}</span>
               </>
             ) : (
               <>
-                <Receipt className="w-4 h-4 opacity-70" />
-                <span>{t('saft.retrieveSaft')}</span>
+                <Download className="w-4 h-4 opacity-70" />
+                <span>{t('saft.downloadSaft')}</span>
               </>
             )}
           </button>
@@ -427,18 +451,11 @@ const SAFT: React.FC = () => {
           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md flex items-start space-x-3">
               <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
               <div className="flex-1">
-              <h3 className="text-sm font-medium text-green-800">{t('saft.retrievedSuccessfully')}</h3>
+              <h3 className="text-sm font-medium text-green-800">SAFT-T Downloaded Successfully!</h3>
                 <div className="mt-2 text-sm text-green-700">
                 <p><strong>{t('saft.generated')}:</strong> {new Date(saftData.generated).toLocaleString()}</p>
                 <p><strong>{t('saft.sent')}:</strong> {new Date(saftData.sent).toLocaleString()}</p>
                 </div>
-                <button
-                onClick={() => downloadSAFT()}
-                className="mt-3 inline-flex items-center space-x-2 px-4 py-2 bg-green-500/20 text-gray-900 rounded-md hover:bg-green-500/30 border border-green-200 shadow-sm hover:shadow-md transition-all duration-300"
-                >
-                <Download className="w-4 h-4 opacity-70" />
-                <span>{t('saft.downloadSaftFile')}</span>
-                </button>
             </div>
           </div>
         )}

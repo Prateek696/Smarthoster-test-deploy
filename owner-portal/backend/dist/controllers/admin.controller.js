@@ -709,7 +709,12 @@ const getAllProperties = async (req, res) => {
             ownerName: p.owner?.name || 'No owner',
             isAdminOwned: p.isAdminOwned
         })));
-        res.json({ data: properties });
+        // Sanitize properties to remove sensitive API keys
+        const sanitizedProperties = properties.map(property => {
+            const { hostkitApiKey, ...sanitizedProperty } = property.toObject();
+            return sanitizedProperty;
+        });
+        res.json({ data: sanitizedProperties });
     }
     catch (error) {
         console.error('Error in getAllProperties:', error);

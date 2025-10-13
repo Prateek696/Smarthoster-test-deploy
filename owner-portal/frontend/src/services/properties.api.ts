@@ -10,7 +10,7 @@ export interface Property {
   bathrooms: number;
   maxGuests: number;
   hostkitId: string;
-  hostkitApiKey?: string; // Optional for security (not returned in GET requests)
+  // API keys are never returned from backend for security
   status: 'active' | 'inactive' | 'maintenance';
   images: string[];
   amenities: string[];
@@ -27,7 +27,7 @@ export interface CreatePropertyData {
   bathrooms: number;
   maxGuests: number;
   hostkitId: string;
-  hostkitApiKey: string;
+  hostkitApiKey?: string; // Optional for editing existing properties
   status?: 'active' | 'inactive' | 'maintenance';
   images?: string[];
   amenities?: string[];
@@ -123,14 +123,12 @@ export const deleteProperty = async (propertyId: string): Promise<{ message: str
   return response.data;
 };
 
-// Test Hostkit connection
+// Test Hostkit connection securely (no API keys exposed)
 export const testHostkitConnection = async (
-  hostkitId: string, 
-  apiKey: string
+  propertyId: string
 ): Promise<HostkitTestResult> => {
   const response = await apiClient.post('/property-management/test-hostkit', {
-    hostkitId,
-    apiKey
+    propertyId
   });
   return response.data;
 };

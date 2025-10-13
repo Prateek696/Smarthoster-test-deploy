@@ -90,7 +90,6 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
     bathrooms: 1,
     maxGuests: 2,
     hostkitId: '',
-    hostkitApiKey: '',
     status: 'active',
     images: [],
     amenities: [],
@@ -133,10 +132,9 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
   };
 
   const handleTestConnection = async () => {
-    if (formData.hostkitId && formData.hostkitApiKey) {
+    if (localSelectedProperty?.id) {
       await dispatch(testHostkitConnectionAsync({
-        hostkitId: formData.hostkitId,
-        apiKey: formData.hostkitApiKey
+        propertyId: localSelectedProperty.id.toString()
       }));
     }
   };
@@ -386,8 +384,7 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
       id: property.id,
       _id: property._id,
       name: property.name,
-      hostkitApiKey: property.hostkitApiKey ? 'Present' : 'Missing',
-      hostkitApiKeyLength: property.hostkitApiKey ? property.hostkitApiKey.length : 0,
+      hasApiKey: 'API keys not returned for security',
       allPropertyKeys: Object.keys(property)
     });
     setLocalSelectedProperty(property);
@@ -401,15 +398,13 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
       bathrooms: property.bathrooms,
       maxGuests: property.maxGuests,
       hostkitId: property.hostkitId,
-      hostkitApiKey: property.hostkitApiKey || '', // Show API key if available
       status: property.status,
       images: property.images || [],
       amenities: property.amenities || [],
       owner: property.isAdminOwned ? 'admin' : (property.owner?._id || '') // Set owner field
     };
     
-    console.log('🔍 Setting form data with hostkitApiKey:', newFormData.hostkitApiKey ? 'Present' : 'Empty');
-    console.log('🔍 hostkitApiKey value:', newFormData.hostkitApiKey);
+    console.log('🔍 Setting form data:', newFormData);
     
     setFormData(newFormData);
     setShowEditForm(true);
@@ -447,10 +442,10 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
       bathrooms: 1,
       maxGuests: 2,
       hostkitId: '',
-      hostkitApiKey: '',
       status: 'active',
       images: [],
-      amenities: []
+      amenities: [],
+      owner: ''
     });
     setLocalSelectedProperty(null);
     setSelectedImages([]);
@@ -814,19 +809,6 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
                       />
                     </div>
                     
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Hostkit API Key *
-                      </label>
-                      <input
-                        type="password"
-                        name="hostkitApiKey"
-                        value={formData.hostkitApiKey}
-                        onChange={handleInputChange}
-                        className="input font-mono"
-                        required
-                      />
-                    </div>
                   </div>
 
                   <div className="mt-3">
@@ -834,7 +816,7 @@ const PropertyManagement: React.FC<PropertyManagementProps> = ({ filteredPropert
                       type="button"
                       onClick={handleTestConnection}
                       className="btn-outline btn-sm"
-                      disabled={isTesting || !formData.hostkitId || !formData.hostkitApiKey}
+                      disabled={isTesting || !localSelectedProperty?.id}
                     >
                       {isTesting ? (
                         <>

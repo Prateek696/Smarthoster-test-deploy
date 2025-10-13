@@ -89,9 +89,9 @@ export const deletePropertyAsync = createAsyncThunk(
 
 export const testHostkitConnectionAsync = createAsyncThunk(
   'propertyManagement/testHostkitConnection',
-  async ({ hostkitId, apiKey }: { hostkitId: string; apiKey: string }, { rejectWithValue }) => {
+  async ({ propertyId }: { propertyId: string }, { rejectWithValue }) => {
     try {
-      const response = await propertiesAPI.testHostkitConnection(hostkitId, apiKey);
+      const response = await propertiesAPI.testHostkitConnection(propertyId);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to test Hostkit connection');

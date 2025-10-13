@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProperties, updateProperty, getDashboardMetrics, fetchHostawayPropertyDetails } from "../controllers/propertyManagement.controller";
+import { getProperties, updateProperty, getDashboardMetrics, fetchHostawayPropertyDetails, testHostkitConnection } from "../controllers/propertyManagement.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { requireOwner, requireOwnerOrAccountant, requireRole } from "../middlewares/role.middleware";
 
@@ -10,6 +10,13 @@ router.get("/", authMiddleware, getProperties);
 
 // Get dashboard metrics
 router.get("/dashboard/metrics", authMiddleware, getDashboardMetrics);
+
+// Secure test Hostkit connection (no API keys exposed)
+router.post("/test-hostkit", 
+  authMiddleware, 
+  requireRole(['owner', 'admin']), 
+  testHostkitConnection
+);
 
 // Fetch property details from Hostaway by listing ID
 router.get("/fetch-hostaway/:hostawayListingId", 

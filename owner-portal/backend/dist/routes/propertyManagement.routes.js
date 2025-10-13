@@ -9,6 +9,8 @@ const router = (0, express_1.Router)();
 router.get("/", auth_middleware_1.authMiddleware, propertyManagement_controller_1.getProperties);
 // Get dashboard metrics
 router.get("/dashboard/metrics", auth_middleware_1.authMiddleware, propertyManagement_controller_1.getDashboardMetrics);
+// Secure test Hostkit connection (no API keys exposed)
+router.post("/test-hostkit", auth_middleware_1.authMiddleware, (0, role_middleware_1.requireRole)(['owner', 'admin']), propertyManagement_controller_1.testHostkitConnection);
 // Fetch property details from Hostaway by listing ID
 router.get("/fetch-hostaway/:hostawayListingId", auth_middleware_1.authMiddleware, (0, role_middleware_1.requireRole)(['owner', 'admin']), propertyManagement_controller_1.fetchHostawayPropertyDetails);
 // Update property - owners and admins can update

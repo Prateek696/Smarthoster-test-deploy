@@ -272,3 +272,57 @@ export const getDashboardMetrics = async (req: Request, res: Response) => {
     });
   }
 };
+
+// Secure test Hostkit connection using stored API keys
+export const testHostkitConnection = async (req: any, res: any) => {
+  try {
+    const { propertyId } = req.body;
+    
+    if (!propertyId) {
+      return res.status(400).json({
+        message: "Property ID is required"
+      });
+    }
+
+    // Get property from database
+    const property = await Property.findOne({ id: parseInt(propertyId) });
+    if (!property) {
+      return res.status(404).json({
+        message: "Property not found"
+      });
+    }
+
+    // Check if user has permission to test this property
+    const userRole = req.user.role;
+    const userId = req.user.id;
+    
+    if (userRole !== 'admin' && property.owner !== userId) {
+      return res.status(403).json({
+        message: "You don't have permission to test this property's connection"
+      });
+    }
+
+    // Get API key from database (secure)
+    const { getHostkitApiKey } = require('../utils/propertyApiKey');
+    const apiKey = await getHostkitApiKey(parseInt(propertyId));
+    
+    if (!apiKey) {
+      return res.status(400).json({
+        success: false,
+        message: "No API key configured for this property"
+      });
+    }
+
+    // Test connection using stored API key
+    const { testHostkitConnectionService } = require('../services/property.service');
+    const connectionTest = await testHostkitConnectionService(property.hostkitId, apiKey);
+    
+    res.json(connectionTest);
+  } catch (error: any) {
+    console.error('Error testing Hostkit connection:', error);
+    res.status(500).json({
+      message: "Error testing Hostkit connection",
+      error: error.message
+    });
+  }
+};

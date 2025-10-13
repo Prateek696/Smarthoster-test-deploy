@@ -45,12 +45,13 @@ const Bookings: React.FC = () => {
     platform: ''
   })
   const [selectedDateRange, setSelectedDateRange] = useState('')
+  const [showInquiryStatuses, setShowInquiryStatuses] = useState(true) // Toggle for admin users
   
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const { bookings, isLoading, error, filters } = useSelector((state: RootState) => state.bookings)
   const { properties } = useSelector((state: RootState) => state.properties)
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth)
   
   // Listen for property deletion events to refresh property lists
   usePropertyRefresh()
@@ -276,11 +277,11 @@ const Bookings: React.FC = () => {
     // Refetch bookings with the new filters
     const propertyId = tempFilters.propertyId
     if (propertyId) {
-      dispatch(fetchBookingsAsync({ 
-        propertyId,
-        startDate: tempFilters.startDate,
-        endDate: tempFilters.endDate
-      }))
+    dispatch(fetchBookingsAsync({ 
+      propertyId,
+      startDate: tempFilters.startDate,
+      endDate: tempFilters.endDate
+    }))
     }
   }
 
@@ -346,7 +347,21 @@ const Bookings: React.FC = () => {
       booking.status === tempFilters.status
     const matchesPlatform = !tempFilters.platform || booking.platform === tempFilters.platform
     
-    return matchesSearch && matchesProperty && matchesStatus && matchesPlatform
+    // Status filtering based on user role
+    const bookingStatus = booking.status || booking.paymentStatus || 'Pending'
+    let shouldShowBooking = true
+    
+    if (user?.role === 'owner' || user?.role === 'accountant') {
+      // Owner and Accountant: Only show "Modified" status
+      shouldShowBooking = bookingStatus === 'Modified'
+    } else if (user?.role === 'admin') {
+      // Admin: Show all statuses, but respect toggle for inquiry statuses
+      if (!showInquiryStatuses && (bookingStatus === 'In Enquiry' || bookingStatus === 'inquiryPreapproved')) {
+        shouldShowBooking = false
+      }
+    }
+    
+    return matchesSearch && matchesProperty && matchesStatus && matchesPlatform && shouldShowBooking
   })
 
   if (isLoading) {
@@ -382,8 +397,8 @@ const Bookings: React.FC = () => {
 
   // Show empty state when no property is selected
   if (!filters.propertyId) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -489,6 +504,23 @@ const Bookings: React.FC = () => {
               <Filter className="w-4 h-4 opacity-70" />
               Filters
             </button>
+
+            {/* Admin Toggle for Inquiry Statuses */}
+            {user?.role === 'admin' && (
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-semibold text-gray-700">Show Inquiry Statuses:</label>
+                <button
+                  onClick={() => setShowInquiryStatuses(!showInquiryStatuses)}
+                  className={`px-3 py-1 rounded-lg font-semibold shadow-sm transition-all duration-300 flex items-center gap-1 border ${
+                    showInquiryStatuses 
+                      ? 'bg-green-500/20 text-gray-900 border-green-200 hover:bg-green-500/30' 
+                      : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
+                  }`}
+                >
+                  {showInquiryStatuses ? 'ON' : 'OFF'}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Advanced Filters */}
@@ -513,8 +545,13 @@ const Bookings: React.FC = () => {
                       >
                         <option value="">{t('bookings.allStatuses')}</option>
                         <option value="Modified">{t('bookings.modified')}</option>
-                        <option value="In Enquiry">{t('bookings.inquiry')}</option>
-                        <option value="inquiryPreapproved">{t('bookings.inquiryPreapproved')}</option>
+                        {/* Only show inquiry statuses for admin users or when toggle is on */}
+                        {(user?.role === 'admin' && showInquiryStatuses) && (
+                          <>
+                            <option value="In Enquiry">{t('bookings.inquiry')}</option>
+                            <option value="inquiryPreapproved">{t('bookings.inquiryPreapproved')}</option>
+                          </>
+                        )}
                         <option value="Cancelled">{t('bookings.cancelled')}</option>
                       </select>
                 </div>

@@ -187,7 +187,6 @@ const OwnerStatements: React.FC = () => {
       cleaningFeesVATInclusive,
       totalToInvoice
     });
-    const totalToPay = totalReceivedAmount - totalToInvoice;
     const commissionableAmount = statement.reservations.reduce((sum: number, res: any) => 
       sum + ((res.received_amount + res.host_commission) - res.cleaning_fee), 0
     );
@@ -431,14 +430,6 @@ const OwnerStatements: React.FC = () => {
             <span class="value" style="font-style: italic; font-size: 12px; color: #666;">VAT is deductable as a business expense</span>
           </div>
           ` : ''}
-          <div class="total-row">
-            <span>${t('ownerStatements.totalToPay')}</span>
-            <span>€${totalToPay.toFixed(2)}</span>
-          </div>
-          <div class="info-row">
-            <span class="label"></span>
-            <span class="value" style="font-style: italic; font-size: 12px;">${t('ownerStatements.totalToPayNote')}</span>
-          </div>
         </div>
         
         <script>
@@ -548,7 +539,7 @@ const OwnerStatements: React.FC = () => {
               <button
                 onClick={generateStatements}
                 disabled={loading || !selectedProperty || !startDate || !endDate}
-                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center"
+                className="px-6 py-2 bg-blue-600/80 text-white rounded-md hover:bg-blue-700/80 disabled:bg-gray-400/60 disabled:cursor-not-allowed flex items-center opacity-80 hover:opacity-100 transition-opacity duration-200"
               >
                 {loading ? (
                   <>
@@ -678,8 +669,6 @@ const OwnerStatements: React.FC = () => {
                           issuerDetails: 'series: FR COMMLT14 | product: GEST',
                           recipient: `${statements[0].propertyId} (${statements[0].propertyName})`,
                           totalToInvoice: totalToInvoice,
-                          totalToPay: totalReceivedAmount - totalToInvoice,
-                          totalToPayFormula: 'Received amounts - Total to invoice',
                           isAdminProperty: statements[0].isAdminOwned
                         }}
                       />
@@ -691,7 +680,7 @@ const OwnerStatements: React.FC = () => {
                 <div className="flex justify-end mt-6">
                   <button
                     onClick={handleDownloadPDF}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600/80 hover:bg-green-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 opacity-80 hover:opacity-100 transition-opacity duration-200"
                   >
                     <Download className="h-4 w-4 mr-2" />
                     {t('ownerStatements.downloadPdf')}
