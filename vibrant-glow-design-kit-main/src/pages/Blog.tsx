@@ -10,6 +10,7 @@ import { blogCategoriesFr } from '@/data/blogPostsFr';
 import { runBlogLanguageAudit } from '@/utils/auditBlogLanguages';
 import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
+import { strapiApi } from '@/services/strapi.api';
 import { supabase } from '@/integrations/supabase/client';
 import { analytics, useScrollDepthTracking } from '@/utils/analytics';
 
@@ -20,13 +21,15 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [generatedPosts, setGeneratedPosts] = useState([]);
+  const [strapiPosts, setStrapiPosts] = useState([]);
 
   // Track page analytics
   useScrollDepthTracking(location.pathname);
 
-  // Fetch generated content from database
+  // Fetch generated content and Strapi posts from database
   useEffect(() => {
     fetchGeneratedContent();
+    fetchStrapiPosts();
     
     // Track page view
     analytics.trackPageView(location.pathname, `Blog - ${currentLanguage.toUpperCase()}`);
@@ -69,11 +72,58 @@ const Blog = () => {
     }
   };
 
+  const fetchStrapiPosts = async () => {
+    try {
+      console.log('🔍 Fetching Strapi posts...');
+      const response = await strapiApi.getBlogs();
+      console.log('📊 Strapi API response:', response);
+      console.log('📊 Response data:', response.data);
+      
+      if (response.data && response.data.length > 0) {
+        // Transform Strapi posts to match blog post format
+        const transformedPosts = response.data.map((item: any) => {
+          console.log('🔍 Processing item:', item);
+          
+          // Handle both Strapi v4 and v5 data structures
+          const attributes = item.attributes || item;
+          
+          return {
+            id: `strapi-${item.id}`,
+            title: attributes.title || 'Untitled',
+            slug: attributes.slug || `blog-${item.id}`,
+            excerpt: attributes.excerpt || 'No excerpt available',
+            content: attributes.content || 'No content available',
+            author: attributes.author || 'SmartHoster Team',
+            date: attributes.publishedAt || attributes.createdAt || new Date().toISOString(),
+            category: attributes.category || 'General',
+            tags: attributes.tags ? attributes.tags.split(',').map(tag => tag.trim()) : [],
+            readTime: attributes.readTime || '5 min read',
+            image: attributes.coverImage?.data?.attributes?.url 
+              ? `https://smarthoster-blogs.onrender.com${attributes.coverImage.data.attributes.url}`
+              : 'https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_400,h_250/v1761401047/Real-logo_aaqxgq.jpg',
+            featured: attributes.featured || false,
+            isDraft: false,
+            isStrapi: true
+          };
+        });
+        
+        console.log('✅ Transformed Strapi posts:', transformedPosts);
+        setStrapiPosts(transformedPosts);
+      } else {
+        console.log('⚠️ No Strapi posts found');
+        setStrapiPosts([]);
+      }
+    } catch (error) {
+      console.error('❌ Error fetching Strapi posts:', error);
+      setStrapiPosts([]);
+    }
+  };
+
   // Get posts and categories for current language
   const staticPosts = allBlogPosts[currentLanguage] || allBlogPosts.en;
   
-  // Combine static and generated posts
-  const currentPosts = [...staticPosts, ...generatedPosts];
+  // Combine static, generated, and Strapi posts
+  const currentPosts = [...staticPosts, ...generatedPosts, ...strapiPosts];
   
   const currentCategories = currentLanguage === 'pt' ? blogCategoriesPt 
     : currentLanguage === 'fr' ? blogCategoriesFr 
