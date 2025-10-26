@@ -115,14 +115,43 @@ const Blog = () => {
             publishedDate = new Date().toISOString();
           }
           
+          // Handle author field - can be string or object
+          let authorData;
+          if (typeof attributes.author === 'string') {
+            authorData = {
+              name: attributes.author,
+              bio: 'SmartHoster Team Member',
+              avatar: '/placeholder.svg'
+            };
+          } else if (attributes.author?.name) {
+            authorData = attributes.author;
+          } else {
+            authorData = {
+              name: 'SmartHoster Team',
+              bio: 'SmartHoster Team Member',
+              avatar: '/placeholder.svg'
+            };
+          }
+          
           return {
             id: `strapi-${item.id}`,
             title: attributes.title || 'Untitled',
             slug: attributes.slug || `blog-${item.id}`,
             excerpt: attributes.excerpt || 'No excerpt available',
             content: attributes.content || 'No content available',
-            author: attributes.author || 'SmartHoster Team',
-            date: publishedDate,
+            author: authorData,
+            publishedAt: publishedDate,
+            updatedAt: attributes.updatedAt || publishedDate,
+            metaDescription: attributes.excerpt || '',
+            ogImage: (() => {
+              const imageUrl = attributes.coverImage?.data?.attributes?.url 
+                ? attributes.coverImage.data.attributes.url
+                : attributes.coverImage?.url
+                ? attributes.coverImage.url
+                : 'https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_400,h_250/v1761401047/Real-logo_aaqxgq.jpg';
+              return imageUrl.startsWith('http') ? imageUrl : `https://smarthoster-blogs.onrender.com${imageUrl}`;
+            })(),
+            canonicalUrl: `/blog/${attributes.slug}`,
             category: attributes.category || 'General',
             tags: attributes.tags ? 
               (typeof attributes.tags === 'string' 
@@ -131,7 +160,7 @@ const Blog = () => {
                   ? attributes.tags
                   : [])
               : [],
-            readTime: attributes.readTime || '5 min read',
+            readTime: parseInt(attributes.readTime) || 5,
             featuredImage: (() => {
               const imageUrl = attributes.coverImage?.data?.attributes?.url 
                 ? attributes.coverImage.data.attributes.url
@@ -146,7 +175,7 @@ const Blog = () => {
                 : 'https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_400,h_250/v1761401047/Real-logo_aaqxgq.jpg';
               
               console.log('🖼️ Final image URL:', imageUrl);
-              return imageUrl;
+              return imageUrl.startsWith('http') ? imageUrl : `https://smarthoster-blogs.onrender.com${imageUrl}`;
             })(),
             featured: attributes.featured || false,
             isDraft: false,
