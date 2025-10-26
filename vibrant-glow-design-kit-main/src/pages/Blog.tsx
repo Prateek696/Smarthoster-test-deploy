@@ -105,9 +105,11 @@ const Blog = () => {
           console.log('🖼️ Image URL (direct):', attributes.coverImage?.url);
           console.log('🖼️ Image URL (formats):', attributes.coverImage?.formats);
           
-          // Fix date parsing
+          // Fix date parsing - use publishedDate first, then publishedAt, then createdAt
           let publishedDate = null;
-          if (attributes.publishedAt) {
+          if (attributes.publishedDate) {
+            publishedDate = new Date(attributes.publishedDate).toISOString();
+          } else if (attributes.publishedAt) {
             publishedDate = new Date(attributes.publishedAt).toISOString();
           } else if (attributes.createdAt) {
             publishedDate = new Date(attributes.createdAt).toISOString();
