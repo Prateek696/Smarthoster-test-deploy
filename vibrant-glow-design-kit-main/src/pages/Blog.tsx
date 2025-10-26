@@ -75,6 +75,8 @@ const Blog = () => {
   const fetchStrapiPosts = async () => {
     try {
       console.log('🔍 Fetching Strapi posts...');
+      console.log('🌐 Environment:', import.meta.env.MODE);
+      console.log('🌐 Strapi URL:', import.meta.env.VITE_STRAPI_URL);
       const response = await strapiApi.getBlogs();
       console.log('📊 Strapi API response:', response);
       console.log('📊 Response data:', response.data);
@@ -87,6 +89,12 @@ const Blog = () => {
           // Handle both Strapi v4 and v5 data structures
           const attributes = item.attributes || item;
           
+          // Debug image URL
+          console.log('🖼️ Cover image data:', attributes.coverImage);
+          console.log('🖼️ Image URL (nested):', attributes.coverImage?.data?.attributes?.url);
+          console.log('🖼️ Image URL (direct):', attributes.coverImage?.url);
+          console.log('🖼️ Image URL (formats):', attributes.coverImage?.formats);
+          
           return {
             id: `strapi-${item.id}`,
             title: attributes.title || 'Untitled',
@@ -96,11 +104,30 @@ const Blog = () => {
             author: attributes.author || 'SmartHoster Team',
             date: attributes.publishedAt || attributes.createdAt || new Date().toISOString(),
             category: attributes.category || 'General',
-            tags: attributes.tags ? attributes.tags.split(',').map(tag => tag.trim()) : [],
+            tags: attributes.tags ? 
+              (typeof attributes.tags === 'string' 
+                ? attributes.tags.split(',').map(tag => tag.trim())
+                : Array.isArray(attributes.tags) 
+                  ? attributes.tags
+                  : [])
+              : [],
             readTime: attributes.readTime || '5 min read',
-            image: attributes.coverImage?.data?.attributes?.url 
-              ? `https://smarthoster-blogs.onrender.com${attributes.coverImage.data.attributes.url}`
-              : 'https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_400,h_250/v1761401047/Real-logo_aaqxgq.jpg',
+            featuredImage: (() => {
+              const imageUrl = attributes.coverImage?.data?.attributes?.url 
+                ? attributes.coverImage.data.attributes.url
+                : attributes.coverImage?.url
+                ? attributes.coverImage.url
+                : attributes.coverImage?.formats?.large?.url
+                ? attributes.coverImage.formats.large.url
+                : attributes.coverImage?.formats?.medium?.url
+                ? attributes.coverImage.formats.medium.url
+                : attributes.coverImage?.formats?.small?.url
+                ? attributes.coverImage.formats.small.url
+                : 'https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_400,h_250/v1761401047/Real-logo_aaqxgq.jpg';
+              
+              console.log('🖼️ Final image URL:', imageUrl);
+              return imageUrl;
+            })(),
             featured: attributes.featured || false,
             isDraft: false,
             isStrapi: true
