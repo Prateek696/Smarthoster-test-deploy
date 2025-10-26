@@ -77,6 +77,10 @@ const Blog = () => {
       console.log('🔍 Fetching Strapi posts...');
       console.log('🌐 Environment:', import.meta.env.MODE);
       console.log('🌐 Strapi URL:', import.meta.env.VITE_STRAPI_URL);
+      console.log('🌐 Current language:', currentLanguage);
+      
+      // For now, fetch all Strapi posts regardless of language
+      // TODO: Add language filter to Strapi when multi-language is implemented
       const response = await strapiApi.getBlogs();
       console.log('📊 Strapi API response:', response);
       console.log('📊 Response data:', response.data);
