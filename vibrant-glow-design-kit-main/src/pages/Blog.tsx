@@ -93,11 +93,27 @@ const Blog = () => {
           // Handle both Strapi v4 and v5 data structures
           const attributes = item.attributes || item;
           
+          // Debug author and date
+          console.log('👤 Author data:', attributes.author);
+          console.log('📅 PublishedAt:', attributes.publishedAt);
+          console.log('📅 CreatedAt:', attributes.createdAt);
+          console.log('📅 UpdatedAt:', attributes.updatedAt);
+          
           // Debug image URL
           console.log('🖼️ Cover image data:', attributes.coverImage);
           console.log('🖼️ Image URL (nested):', attributes.coverImage?.data?.attributes?.url);
           console.log('🖼️ Image URL (direct):', attributes.coverImage?.url);
           console.log('🖼️ Image URL (formats):', attributes.coverImage?.formats);
+          
+          // Fix date parsing
+          let publishedDate = null;
+          if (attributes.publishedAt) {
+            publishedDate = new Date(attributes.publishedAt).toISOString();
+          } else if (attributes.createdAt) {
+            publishedDate = new Date(attributes.createdAt).toISOString();
+          } else {
+            publishedDate = new Date().toISOString();
+          }
           
           return {
             id: `strapi-${item.id}`,
@@ -106,7 +122,7 @@ const Blog = () => {
             excerpt: attributes.excerpt || 'No excerpt available',
             content: attributes.content || 'No content available',
             author: attributes.author || 'SmartHoster Team',
-            date: attributes.publishedAt || attributes.createdAt || new Date().toISOString(),
+            date: publishedDate,
             category: attributes.category || 'General',
             tags: attributes.tags ? 
               (typeof attributes.tags === 'string' 
