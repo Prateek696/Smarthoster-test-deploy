@@ -63,8 +63,10 @@ credentials.json
 vibrant-glow-design-kit-main/.env
 vibrant-glow-design-kit-main\.env
 
-# Ignore entire vibrant directory (contains .env)
-vibrant-glow-design-kit-main/
+# Ignore env files in vibrant directory
+vibrant-glow-design-kit-main/.env
+vibrant-glow-design-kit-main/.env.local
+vibrant-glow-design-kit-main/.env.production
 
 # IDE files
 .vscode/

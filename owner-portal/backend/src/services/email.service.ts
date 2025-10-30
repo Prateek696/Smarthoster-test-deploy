@@ -47,12 +47,12 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
           
           <!-- Header with gradient -->
           <tr>
-            <td style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 40px 30px; text-align: center;">
+            <td style="background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%); padding: 40px 30px; text-align: center;">
               <img src="https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_80,h_80,b_white/v1761401047/Real-logo_aaqxgq.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 12px; padding: 5px;" />
-              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
+              <h1 style="margin: 0; color: #064e3b; font-size: 28px; font-weight: bold;">
                 SmartHoster Owner Portal
               </h1>
-              <p style="margin: 10px 0 0 0; color: #e0e7ff; font-size: 16px;">
+              <p style="margin: 10px 0 0 0; color: #0c4a6e; font-size: 16px;">
                 Your Account is Ready!
               </p>
             </td>
@@ -105,7 +105,7 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
                 <tr>
                   <td align="center">
-                    <a href="${portalUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                    <a href="${portalUrl}" style="display: inline-block; background: linear-gradient(135deg, #22c55e 0%, #38bdf8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(34, 197, 94, 0.25);">
                       Login to Portal →
                     </a>
                   </td>
@@ -113,7 +113,7 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
               </table>
 
               <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; text-align: center;">
-                Portal URL: <a href="${portalUrl}" style="color: #2563eb; text-decoration: none;">${portalUrl}</a>
+                Portal URL: <a href="${portalUrl}" style="color: #16a34a; text-decoration: none;">${portalUrl}</a>
               </p>
 
               <!-- Divider -->
@@ -146,7 +146,7 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
               <!-- Support Section -->
               <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">
                 Need help? Contact us at 
-                <a href="mailto:contact@smarthoster.io" style="color: #2563eb; text-decoration: none; font-weight: 600;">
+                <a href="mailto:contact@smarthoster.io" style="color: #16a34a; text-decoration: none; font-weight: 600;">
                   contact@smarthoster.io
                 </a>
               </p>
@@ -215,12 +215,12 @@ export const sendAccountantWelcomeEmail = async (data: WelcomeEmailData): Promis
           
           <!-- Header with gradient -->
           <tr>
-            <td style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 40px 30px; text-align: center;">
+            <td style="background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%); padding: 40px 30px; text-align: center;">
               <img src="https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_80,h_80,b_white/v1761401047/Real-logo_aaqxgq.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 12px; padding: 5px;" />
-              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
+              <h1 style="margin: 0; color: #064e3b; font-size: 28px; font-weight: bold;">
                 📊 SmartHoster Accountant Portal
               </h1>
-              <p style="margin: 10px 0 0 0; color: #e0e7ff; font-size: 16px;">
+              <p style="margin: 10px 0 0 0; color: #0c4a6e; font-size: 16px;">
                 Your Account is Ready!
               </p>
             </td>
@@ -273,7 +273,7 @@ export const sendAccountantWelcomeEmail = async (data: WelcomeEmailData): Promis
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
                 <tr>
                   <td align="center">
-                    <a href="${portalUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);">
+                    <a href="${portalUrl}" style="display: inline-block; background: linear-gradient(135deg, #22c55e 0%, #38bdf8 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(34, 197, 94, 0.25);">
                       Login to Portal →
                     </a>
                   </td>
@@ -315,7 +315,7 @@ export const sendAccountantWelcomeEmail = async (data: WelcomeEmailData): Promis
               <!-- Support Section -->
               <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">
                 Need help? Contact us at 
-                <a href="mailto:contact@smarthoster.io" style="color: #2563eb; text-decoration: none; font-weight: 600;">
+                <a href="mailto:contact@smarthoster.io" style="color: #16a34a; text-decoration: none; font-weight: 600;">
                   contact@smarthoster.io
                 </a>
               </p>

@@ -208,16 +208,22 @@ const detectBrowserLanguage = (): Language => {
 };
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('en');
+  // Get language from localStorage or default to English
+  const savedLanguage = (localStorage.getItem('language') as Language) || 'en';
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(savedLanguage);
 
-  // Detect browser language on mount
+  // Detect browser language on mount if no saved language
   useEffect(() => {
-    const detectedLanguage = detectBrowserLanguage();
-    setCurrentLanguage(detectedLanguage);
+    if (!localStorage.getItem('language')) {
+      const detectedLanguage = detectBrowserLanguage();
+      setCurrentLanguage(detectedLanguage);
+      localStorage.setItem('language', detectedLanguage);
+    }
   }, []);
 
   const setLanguage = (language: Language) => {
     setCurrentLanguage(language);
+    localStorage.setItem('language', language);
   };
 
   const t = translations[currentLanguage];

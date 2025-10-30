@@ -11,6 +11,13 @@ const LanguageBand = () => {
     { code: "pt" as const, name: "Português", flag: "🇵🇹" }
   ];
 
+  const handleLanguageClick = (langCode: typeof languages[0]['code']) => {
+    console.log('🌐 Language clicked:', langCode);
+    console.log('🌐 Current language before:', currentLanguage);
+    setLanguage(langCode);
+    console.log('🌐 Language set to:', langCode);
+  };
+
   return (
     <div className="bg-gray-50 border-b border-gray-200 py-3 sm:py-3 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 sm:px-6">

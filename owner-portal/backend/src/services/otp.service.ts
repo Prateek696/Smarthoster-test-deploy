@@ -58,22 +58,24 @@ export const sendOTP = async (email: string, purpose: 'login' | 'signup' | 'forg
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="light">
+        <meta name="supported-color-schemes" content="light">
         <title>SmartHoster OTP Verification</title>
     </head>
-    <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8;">
-        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f6f8; padding: 40px 20px;">
+    <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ecfeff;">
+        <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#ecfeff" style="background-color: #ecfeff; padding: 40px 20px;">
             <tr>
                 <td align="center">
-                    <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                    <table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06); overflow: hidden;">
                         
                         <!-- Header with Logo -->
                         <tr>
-                            <td style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 40px 30px; text-align: center;">
+                            <td style="background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%); padding: 40px 30px; text-align: center;">
                                 <img src="https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_80,h_80,b_white/v1761401047/Real-logo_aaqxgq.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 12px; padding: 5px;" />
                                 <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
                                     SmartHoster Portal
                                 </h1>
-                                <p style="margin: 10px 0 0 0; color: #e0e7ff; font-size: 16px;">
+                                <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px; opacity: 1;">
                                     ${purpose === 'login' ? 'Secure Login Verification' : purpose === 'signup' ? 'Account Verification' : 'Password Reset'}
                                 </p>
                             </td>
@@ -81,7 +83,7 @@ export const sendOTP = async (email: string, purpose: 'login' | 'signup' | 'forg
                         
                         <!-- Main Content -->
                         <tr>
-                            <td style="padding: 40px 30px;">
+                            <td style="padding: 40px 30px; background-color: #ffffff;">
                                 <div style="text-align: center; margin-bottom: 30px;">
                                     <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 24px; font-weight: 600;">
                                         ${purpose === 'login' ? 'Login Verification Code' : purpose === 'signup' ? 'Account Verification Code' : 'Password Reset Code'}
@@ -97,9 +99,9 @@ export const sendOTP = async (email: string, purpose: 'login' | 'signup' | 'forg
                                 </div>
                                 
                                 <!-- OTP Code Box -->
-                                <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 2px solid #e2e8f0; border-radius: 12px; padding: 30px; text-align: center; margin: 30px 0;">
-                                    <div style="background: #ffffff; border: 2px dashed #2563eb; border-radius: 8px; padding: 25px; margin: 0 auto; max-width: 300px;">
-                                        <span style="font-size: 36px; font-weight: bold; color: #2563eb; letter-spacing: 6px; font-family: 'Courier New', monospace;">${otp}</span>
+                                <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 30px; text-align: center; margin: 30px 0;">
+                                    <div style="background: #ffffff; border: 2px dashed #22c55e; border-radius: 8px; padding: 25px; margin: 0 auto; max-width: 300px;">
+                                        <span style="font-size: 36px; font-weight: bold; color: #16a34a; letter-spacing: 6px; font-family: 'Courier New', monospace;">${otp}</span>
                                     </div>
           </div>
           
@@ -122,11 +124,11 @@ export const sendOTP = async (email: string, purpose: 'login' | 'signup' | 'forg
                         
                         <!-- Footer -->
                         <tr>
-                            <td style="background: #f8fafc; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
-                                <p style="color: #9ca3af; font-size: 12px; margin: 0 0 10px 0;">
+                            <td style="background: #f0fdf4; padding: 30px; text-align: center; border-top: 1px solid #bbf7d0;">
+                                <p style="color: #065f46; font-size: 12px; margin: 0 0 10px 0;">
                                     © 2024 SmartHoster. All rights reserved.
                                 </p>
-                                <p style="color: #9ca3af; font-size: 12px; margin: 0;">
+                                <p style="color: #0369a1; font-size: 12px; margin: 0;">
                                     This is an automated message. Please do not reply to this email.
                                 </p>
                             </td>

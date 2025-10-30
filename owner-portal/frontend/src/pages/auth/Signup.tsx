@@ -228,7 +228,34 @@ const Signup: React.FC = () => {
 
           {/* Signup form */}
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
-            {step === 'form' ? (
+            {/* If an administrator already exists, hide the entire form and only show the policy message */}
+            {adminExists ? (
+              <div className="space-y-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <Shield className="h-6 w-6 text-blue-600 mt-0.5" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-blue-900 mb-2">
+                        {t('auth.accountCreationByAdmin')}
+                      </h4>
+                      <p className="text-sm text-blue-700 mb-3">
+                        {t('auth.allAccountsCreatedByAdmin')}
+                      </p>
+                      <div className="bg-white border border-blue-200 rounded-lg p-3">
+                        <p className="text-sm text-blue-800 font-medium mb-1">{t('auth.toRequestAccount')}</p>
+                        <ul className="text-sm text-blue-700 space-y-1">
+                          <li>• {t('auth.contactSystemAdmin')}</li>
+                          <li>• {t('auth.provideEmailAndRole')}</li>
+                          <li>• {t('auth.adminWillCreateAccount')}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : step === 'form' ? (
             <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-5">
                   {/* First Name field */}
@@ -398,41 +425,7 @@ const Signup: React.FC = () => {
               </label>
                     
                     
-                    {adminExists ? (
-                      <>
-                        {/* Admin Contact Message */}
-                        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-4">
-                          <div className="flex items-start space-x-3">
-                            <div className="flex-shrink-0">
-                              <Shield className="h-6 w-6 text-blue-600 mt-0.5" />
-                            </div>
-                            <div>
-                              <h4 className="text-lg font-semibold text-blue-900 mb-2">
-                                {t('auth.accountCreationByAdmin')}
-                              </h4>
-                              <p className="text-sm text-blue-700 mb-3">
-                                {t('auth.allAccountsCreatedByAdmin')}
-                              </p>
-                              <div className="bg-white border border-blue-200 rounded-lg p-3">
-                                <p className="text-sm text-blue-800 font-medium mb-1">{t('auth.toRequestAccount')}</p>
-                                <ul className="text-sm text-blue-700 space-y-1">
-                                  <li>• {t('auth.contactSystemAdmin')}</li>
-                                  <li>• {t('auth.provideEmailAndRole')}</li>
-                                  <li>• {t('auth.adminWillCreateAccount')}</li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Admin Option (Disabled) */}
-                        <div className="flex items-center justify-center px-4 py-3 border-2 border-gray-300 bg-gray-100 rounded-xl">
-                          <Shield className="h-5 w-5 mr-2 text-gray-400" />
-                          <span className="font-medium text-gray-400">{t('auth.adminAccountUnavailable')}</span>
-                          <span className="ml-2 text-xs text-gray-400">{t('auth.alreadyExists')}</span>
-                        </div>
-                      </>
-                    ) : (
+                    {adminExists ? null : (
                       <>
                         {/* First Admin Creation Message */}
                         <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-4">
@@ -472,16 +465,7 @@ const Signup: React.FC = () => {
           </div>
 
             {/* Submit button */}
-            {adminExists ? (
-              <button
-                type="button"
-                disabled={true}
-                className="w-full flex justify-center items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-gray-400 bg-gray-200 cursor-not-allowed transition-all duration-300"
-              >
-                <Shield className="mr-2 h-4 w-4" />
-                {t('auth.contactAdminForAccount')}
-              </button>
-            ) : (
+            {adminExists ? null : (
               <button
                 type="submit"
                 disabled={isLoading}
