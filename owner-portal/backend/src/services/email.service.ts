@@ -49,10 +49,10 @@ export const sendWelcomeEmail = async (data: WelcomeEmailData): Promise<boolean>
           <tr>
             <td style="background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%); padding: 40px 30px; text-align: center;">
               <img src="https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_80,h_80,b_white/v1761401047/Real-logo_aaqxgq.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 12px; padding: 5px;" />
-              <h1 style="margin: 0; color: #064e3b; font-size: 28px; font-weight: bold;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
                 SmartHoster Owner Portal
               </h1>
-              <p style="margin: 10px 0 0 0; color: #0c4a6e; font-size: 16px;">
+              <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px; opacity: 0.95;">
                 Your Account is Ready!
               </p>
             </td>
@@ -217,10 +217,10 @@ export const sendAccountantWelcomeEmail = async (data: WelcomeEmailData): Promis
           <tr>
             <td style="background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%); padding: 40px 30px; text-align: center;">
               <img src="https://res.cloudinary.com/dd5notzuv/image/upload/c_fill,w_80,h_80,b_white/v1761401047/Real-logo_aaqxgq.jpg" alt="SmartHoster Logo" style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 12px; padding: 5px;" />
-              <h1 style="margin: 0; color: #064e3b; font-size: 28px; font-weight: bold;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">
                 📊 SmartHoster Accountant Portal
               </h1>
-              <p style="margin: 10px 0 0 0; color: #0c4a6e; font-size: 16px;">
+              <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px; opacity: 0.95;">
                 Your Account is Ready!
               </p>
             </td>
